@@ -1,6 +1,6 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.35.0.
+-- This file has been generated from package.yaml by hpack version 0.38.0.
 --
 -- see: https://github.com/sol/hpack
 
@@ -47,6 +47,8 @@ library
       Examples.Markov.TwoStageMarkov
       Examples.Markov.TestSimpleMonteCarlo
       Examples.Markov.TestSimpleMonteCarlo.Continuation
+      Security.Deception
+      Security.AttackerDefender
   other-modules:
       Data.Utils
       Examples.Markov.NStageMarkov
@@ -55,6 +57,7 @@ library
       OpenGames.Engine.BayesianGamesNonState
       OpenGames.Engine.ExternalEnvironment
       OpenGames.Engine.IOGames
+      Security.Analytics
       Paths_open_games_hs
   hs-source-dirs:
       src
