@@ -57,6 +57,7 @@ library
       OpenGames.Engine.BayesianGamesNonState
       OpenGames.Engine.ExternalEnvironment
       OpenGames.Engine.IOGames
+      Security.IDSPayoff
       Security.ParameterBuilder
       Paths_open_games_hs
   hs-source-dirs:
