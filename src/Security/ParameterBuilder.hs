@@ -38,118 +38,6 @@ type GeneratePayoffReader a b = a -> PayoffReader b
 runPayoff :: a -> PayoffReader a -> Double
 runPayoff params reader = runReader reader params
 
-visitorPayoff :: VisitorType -> VisitorMove -> AggregatorMove -> Reader IDSParams Double
-visitorPayoff = \case {
-    Attacker -> attackerPayoff ;
-    User ->  userPayoff
-}
-
-defenderPayoff :: VisitorType -> VisitorMove -> AggregatorMove -> Reader IDSParams Double
-defenderPayoff = \case {
-    Attacker -> defenderUnderAttackPayoff ;
-    User -> defenderNormalPayoff;
-}
-
-
-attackerPayoff :: VisitorMove -> AggregatorMove -> Reader IDSParams Double
-attackerPayoff Access Open = attackerAccessPayoff
-attackerPayoff Access Close = asks costOfAttack
-attackerPayoff DoesNotAccess Open = (* (-1)) <$> attackerAccessPayoff
-attackerPayoff DoesNotAccess Close = return 0
-
-userPayoff :: VisitorMove -> AggregatorMove -> Reader IDSParams Double
-userPayoff Access Open = do
-    computingResources <- asks computingResources
-    costOfDefense <- asks costOfDefense
-    return $ (computingResources - costOfDefense) / computingResources
-userPayoff _ _ = return 0
-
--- data IDSParams = IDSParams {
---    probDetected :: HoneypotAllocation -> Double,
---    costOfAttack :: Double,
---    costOfDefense :: HoneypotAllocation -> Double,
---    attackImpact :: Double,
---    priorDistributionDefender :: Double,
---    priorDistributionAttacker :: Double,
---    computingResources :: Double,
---    basePayoff :: Double
--- } 
-
-attackerAccessPayoff :: Reader IDSParams Double
-attackerAccessPayoff =
-     do
-        costOfAttack <- asks costOfAttack
-        basePayoff <- asks basePayoff
-        probDetected <- asks probDetected
-        return $ (basePayoff - costOfAttack) * (1 - probDetected) - costOfAttack * probDetected           -- room to add lines i.e. here we can put more specific parameter changes
-
-defenderUnderAttackPayoff :: VisitorMove -> AggregatorMove -> Reader IDSParams Double
-defenderUnderAttackPayoff Access Open = defenderAccessPayoff
-defenderUnderAttackPayoff Access Close = pure 0
-defenderUnderAttackPayoff DoesNotAccess _ = pure 0
-
-defenderNormalPayoff :: VisitorMove -> AggregatorMove -> Reader IDSParams Double
-defenderNormalPayoff Access Open = asks computingResources
-defenderNormalPayoff DoesNotAccess Open = asks $ (* (-1)) . computingResources
-defenderNormalPayoff _ Close = pure 0
-
-defenderAccessPayoff :: Reader IDSParams Double
-defenderAccessPayoff =
-    do
-        params <- ask
-        costOfDefense <- asks costOfDefense
-        probDetection <- asks probDetected
-        computingResources <- asks computingResources
-        computationReductionUnderAttack <- asks computationReductionUnderAttack
-        return $ (computingResources - costOfDefense) * (probDetection + (1 - probDetection) * computationReductionUnderAttack)
-
-calculateExpectedValueOfAttack :: IDSParams -> Double
-calculateExpectedValueOfAttack params =
-   attackImpact params * (basePayoff params - costOfAttack params) * (1 - probDetected params)
-   - costOfAttack params * probDetected params
-
-
--- calculateEffectiveService :: IDSParams -> HoneypotAllocation -> Double
--- calculateEffectiveService ps allocation = 
---    (availableComputingResources - costOfDefense ps allocation) / availableComputingResources 
-
--- payoffAggregator :: IDSParams -> Double
--- payoffAggregator _ _ _ DoesNotAccess _= 0
--- payoffAggregator _ _ Attacker Access Close = 0 -- add discount here, positive payoff for preventing downtime in the future?
--- payoffAggregator _ _ User _ Close = 0      -- could not provide services to users
-
--- payoffAggregator ps allocation Attacker Access Open = 
---    (availableComputingResources - costOfDefense ps allocation) * probDetected ps allocation
---    + (availableComputingResources - costOfDefense ps allocation) * (1 - probDetected ps allocation) * computationReductionUnderAttack ps allocation
-
--- payoffAggregator _ Normal User Access Open = availableComputingResources
-
--- payoffAggregator ps LowInteractionHP User Access Open = availableComputingResources - costOfDefense ps LowInteractionHP
-
--- payoffAggregator ps HighInteractionHP User Access Open = availableComputingResources - costOfDefense ps HighInteractionHP
-
-
-data HoneypotAllocation = HighInteractionHP | LowInteractionHP | Normal deriving (Eq, Show)
-
-data VisitorMove = Access | DoesNotAccess deriving (Eq,Show)
-
-data VisitorType = Attacker | User deriving (Eq, Ord, Show)
-
-data AggregatorMove = Open | Close deriving (Eq, Ord, Show)
-
-
--- RECORD TYPE FOR HARDCODED VALUES
-
--- data Parameters a = Parameters {
---    probDetected :: a -> Double,
---    costOfAttack :: Double,
---    costOfDefense :: a -> Double,
---    computationReductionUnderAttack :: a -> Double,
---    attackImpact :: a -> Double,
---    priorDistributionDefender :: Double,
---    priorDistributionAttacker :: Double,
---    activeDefenseFactor :: Double
--- }
 
 data Player params x y = CreatePlayer {
     generateOpenGame :: params -> StochasticBayesianOpenGame '[Kleisli Stochastic x y] '[[DiagnosticInfoBayesian x y]] x () y Double,
@@ -158,21 +46,7 @@ data Player params x y = CreatePlayer {
     getStrategy :: Kleisli Stochastic x y
 }
 
-class PayoffBuilder a b where
-    calculatePayoff :: a -> (b -> Double)
 
-
-data IDSParams = IDSParams {
-   probDetected :: Double,
-   costOfAttack :: Double,
-   costOfDefense :: Double,
-   attackImpact :: Double,
-   priorDistributionDefender :: Double,
-   priorDistributionAttacker :: Double,
-   computingResources :: Double,
-   basePayoff :: Double,
-   computationReductionUnderAttack :: Double
-}
 
 
 type AttackerGame a b = OpenGame
@@ -213,32 +87,13 @@ data SecurityInteraction a b c d = SecurityInteraction {
 -- closeGame :: OpenGame
 --      StochasticOptic
 --      StochasticContext
---      '[Kleisli Stochastic VisitorType VisitorMove,
---        Kleisli Stochastic VisitorMove AggregatorMove]
---      '[[DiagnosticInfoBayesian VisitorType VisitorMove],
---        [DiagnosticInfoBayesian VisitorMove AggregatorMove]]
+--      a
+--      b
 --      ()
 --      ()
---      (VisitorType, VisitorMove, AggregatorMove)
---      (Double, Double) -> OpenGame
---      StochasticOptic
---      StochasticContext
---      '[Kleisli Stochastic VisitorType VisitorMove,
---        Kleisli Stochastic VisitorMove AggregatorMove]
---      '[[DiagnosticInfoBayesian VisitorType VisitorMove],
---        [DiagnosticInfoBayesian VisitorMove AggregatorMove]]
---      ()
---      ()
---      (VisitorType, VisitorMove, AggregatorMove)
---      ()
-
-
-
-instance PayoffBuilder IDSParams (VisitorType, VisitorMove, HoneypotAllocation) where
-    calculatePayoff params (visitorType, visitorMove, hpAlloc) = 1.0
-
--- instance PayoffBuilder IDSParams HoneypotAllocation where 
---     calculatePayoff params = (\honeypot -> 1.0)
+--      c
+--      d -> List b
+-- closeGame game = 
 
 data BlockchainModelParams = BlockchainModelParams {
     networkCoefficient :: Double,

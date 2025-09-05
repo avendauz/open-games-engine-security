@@ -54,6 +54,7 @@ library
       Examples.Markov.NStageMarkov
       Examples.Staking.AndGateMarkov
       Examples.Staking.AndGateMarkovMC
+      IDS.IDSA
       OpenGames.Engine.BayesianGamesNonState
       OpenGames.Engine.ExternalEnvironment
       OpenGames.Engine.IOGames

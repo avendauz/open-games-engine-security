@@ -26,25 +26,24 @@ import           Data.Tuple.Extra (uncurry3)
 import OpenGames.Preprocessor
 import OpenGames.Engine.BayesianGamesNonState
 
-distributionUser probAttacker = distFromList [(Attacker, probAttacker), (User, 1 - probAttacker)]
 
 
-natureVisitor :: Double -> OpenGame
-     StochasticOptic StochasticContext '[] '[] () () VisitorType ()
-natureVisitor probAttacker = [opengame|
-   inputs : ;
-   feedback : ;
-   :----------------------------:
+-- natureVisitor :: Stochastic a -> OpenGame
+--      StochasticOptic StochasticContext '[] '[] () () a ()
+-- natureVisitor probAttacker = [opengame|
+--    inputs : ;
+--    feedback : ;
+--    :----------------------------:
 
-   inputs : ;
-   feedback: ;
-   operation : nature (distributionUser probAttacker);
-   outputs   : visitorType;
-   returns : ;
-    :----------------------------:
-   outputs : visitorType;
-   returns : ;
-|]
+--    inputs : ;
+--    feedback: ;
+--    operation : nature b;
+--    outputs   : visitorType;
+--    returns : ;
+--     :----------------------------:
+--    outputs : visitorType;
+--    returns : ;
+-- |]
 
 
 
@@ -91,82 +90,11 @@ attackerLeader attackerName getActionSpace = [opengame|
 
 |]
 
-payoffCalculator :: (VisitorType -> VisitorMove -> AggregatorMove -> Stochastic (Double, Double)) -> OpenGame
-     StochasticOptic
-     StochasticContext
-     '[]
-     '[]
-     (VisitorType, VisitorMove, AggregatorMove)
-     (Double, Double)
-     ()
-     ()
-payoffCalculator payoffBuilder = [opengame|
-   inputs: visitorType, visitorDecision, defenderDecision;
-   feedback : visitorPayoff, defenderPayoff;
-   :----------------------------:
-   inputs: visitorType, visitorDecision, defenderDecision;
-   feedback: ;
-   operation: liftStochastic $ uncurry3 payoffBuilder;
-   outputs: visitorPayoff, defenderPayoff;
-   returns : ;
-
-   :----------------------------:
-   outputs: ;
-   returns : ;
-
-|]
 
 calculatePayoff _ _ _ = playDeterministically (10, -10)
 
 
 
-totalGame :: Double -> OpenGame
-     StochasticOptic
-     StochasticContext
-     '[Kleisli Stochastic VisitorType VisitorMove,
-       Kleisli Stochastic VisitorMove AggregatorMove]
-     '[[DiagnosticInfoBayesian VisitorType VisitorMove],
-       [DiagnosticInfoBayesian VisitorMove AggregatorMove]]
-     ()
-     ()
-     (VisitorType, VisitorMove, AggregatorMove)
-     (Double, Double)
-totalGame prob = [opengame|
-   inputs : ;
-   feedback: ;
-   :----------------------------:
-   inputs: ;
-   feedback: ;
-   operation: natureVisitor prob;
-   outputs: visitorType;
-   returns: ;
-
-   inputs: visitorType;
-   feedback: ;
-   operation: attackerLeader "Alice" actionSpaceAttacker;
-   outputs: attackerDecision;
-   returns: attackerPayoff;
-
-   inputs: attackerDecision;
-   feedback: ;
-   operation: defenderFollower "A" actionSpaceDefender;
-   outputs: defenderDecision;
-   returns: defenderPayoff;
-
-   :----------------------------:
-
-   outputs: visitorType, attackerDecision, defenderDecision;
-   returns: attackerPayoff, defenderPayoff;
-
- |]
-
-
-data VisitorMove = Access | DoesNotAccess deriving (Eq, Ord, Show)
-data AggregatorMove = Open | Close deriving (Eq, Ord, Show)
-data VisitorType = User | Attacker deriving (Eq, Ord, Show)
-
-actionSpaceDefender = const [Open, Close]
-actionSpaceAttacker = const [Access, DoesNotAccess]
 defenderLeader defenderName getActionSpace = [opengame|
 
    inputs    :  ;

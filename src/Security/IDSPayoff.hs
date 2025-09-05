@@ -7,5 +7,4 @@ This definition is rigid and predetermined, in-sync with the model's open game s
 
 -}
 
-type IDSPayoff = PayoffReader IDSParams
 
