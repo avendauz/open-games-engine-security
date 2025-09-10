@@ -28,25 +28,6 @@ import OpenGames.Engine.BayesianGamesNonState
 
 
 
--- natureVisitor :: Stochastic a -> OpenGame
---      StochasticOptic StochasticContext '[] '[] () () a ()
--- natureVisitor probAttacker = [opengame|
---    inputs : ;
---    feedback : ;
---    :----------------------------:
-
---    inputs : ;
---    feedback: ;
---    operation : nature b;
---    outputs   : visitorType;
---    returns : ;
---     :----------------------------:
---    outputs : visitorType;
---    returns : ;
--- |]
-
-
-
 defenderFollower :: (Ord b, Show a, Show b, Eq a) => String -> (a -> [b]) -> OpenGame
      StochasticOptic
      StochasticContext
@@ -91,9 +72,6 @@ attackerLeader attackerName getActionSpace = [opengame|
 |]
 
 
-calculatePayoff _ _ _ = playDeterministically (10, -10)
-
-
 
 defenderLeader defenderName getActionSpace = [opengame|
 
@@ -113,26 +91,32 @@ defenderLeader defenderName getActionSpace = [opengame|
 
  |]
 
--- attackerDefenderGame getAttackerActionSpace getDefenderActionSpace = [opengame|
---    inputs    :  ;
---    feedback  :  ;
 
---    :----------------------------:
+stackelbergGame1 distType actionSpaceAttacker actionSpaceDefender = [opengame|
+   inputs : ;
+   feedback: ;
+   :----------------------------:
+   inputs: ;
+   feedback: ;
+   operation: nature $ distType;
+   outputs: visitorType;
+   returns: ;
 
---    inputs    : ;
---    feedback  :      ;
---    operation : attackerLeader "Alice" getAttackerActionSpace;
---    outputs   : attackerDecision ;
---    returns   : attacker;
+   inputs: visitorType;
+   feedback: ;
+   operation: attackerLeader "Alice" actionSpaceAttacker;
+   outputs: attackerDecision;
+   returns: attackerPayoff;
 
---    inputs    : defenseResourceAllocation, visitorDecision;
---    feedback  :      ;
---    operation : defenderFollower "A" getDefenderActionSpace;
---    outputs   : defenderDecision ;
---    returns   : aggregatorPayoff;
+   inputs: attackerDecision;
+   feedback: ;
+   operation: defenderFollower "A" actionSpaceDefender;
+   outputs: defenderDecision;
+   returns: defenderPayoff;
 
--- :----------------------------:
+   :----------------------------:
 
---    outputs   :;
---    returns   : ;
--- |]
+   outputs: visitorType, attackerDecision, defenderDecision;
+   returns: attackerPayoff, defenderPayoff;
+
+ |]

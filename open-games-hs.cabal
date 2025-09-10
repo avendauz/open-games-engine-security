@@ -54,15 +54,17 @@ library
       Examples.Markov.NStageMarkov
       Examples.Staking.AndGateMarkov
       Examples.Staking.AndGateMarkovMC
+      IDS.DeceptionPayoff
+      IDS.DeceptionStrategies
+      IDS.DeceptiveModel
       IDS.IDSA
       IDS.IDSAPayoff
       IDS.IDSAStrategies
+      IDS.IDSDeception
       IDS.IDSModel
       OpenGames.Engine.BayesianGamesNonState
       OpenGames.Engine.ExternalEnvironment
       OpenGames.Engine.IOGames
-      Security.Evaluator
-      Security.IDSPayoff
       Security.ParameterBuilder
       Paths_open_games_hs
   hs-source-dirs:

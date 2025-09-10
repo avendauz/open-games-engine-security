@@ -4,7 +4,8 @@
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE TypeFamilies #-}
-module IDS.IDSA where 
+
+module IDS.IDSDeception where 
 
 import OpenGames.Engine.Engine hiding (StochasticStatefulOptic
                                       , StochasticStatefulBayesianOpenGame(..)
@@ -25,26 +26,28 @@ import           Data.Tuple.Extra (uncurry3)
 
 import OpenGames.Preprocessor
 import OpenGames.Engine.BayesianGamesNonState
-
+import IDS.DeceptiveModel 
+import Security.AttackerDefender (stackelbergGame1)
+import IDS.DeceptionPayoff (unifyPayoff)
+import IDS.DeceptionStrategies (deceptiveStrategies)
 import Security.ParameterBuilder
-import Security.AttackerDefender
-import Control.Monad.Reader hiding (lift, void)
-import IDS.IDSAPayoff (unifyPayoff)
-import IDS.IDSModel
-import IDS.IDSAStrategies
+{-
+Deceptive Attack and Defense Game in
+Honeypot-Enabled Networks for
+the Internet of Things
+-}
+distributionActive :: DeceptionParams -> Stochastic DeceptiveType
+distributionActive = 
+    f . probActive
+    where f prob = distFromList [(Active, prob), (Passive, 1 - prob)]
 
-distributionUser = 
-  f . priorDistributionAttacker
-  where f probAttacker = distFromList [(Attacker, probAttacker), (User, 1 - probAttacker)]
-actionSpaceDefender = const [Open, Close]
-actionSpaceAttacker = const [Access, DoesNotAccess]
+actionSpaceAttacker = const [Normal, Suspicious]
 
-doEvaluation :: IDSParams -> IO ()
+actionSpaceDefender = const [Regular, Honeypot]
+
+doEvaluation :: DeceptionParams -> IO ()
 doEvaluation params = generateOutput $ 
-  evaluate 
-    (stackelbergGame1 (distributionUser params) actionSpaceAttacker actionSpaceDefender) 
-      (totalGameStrategies params) 
-        ((instantiateContext . uncurry3 . unifyPayoff) params)
-
-
-
+    evaluate 
+        (stackelbergGame1 (distributionActive params) actionSpaceAttacker actionSpaceDefender) 
+            (deceptiveStrategies . deviation $ params) 
+                ((instantiateContext . uncurry3 . unifyPayoff) params)

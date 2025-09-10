@@ -54,7 +54,6 @@ runPayoff params reader = runReader reader params
 
 instantiateContext f = StochasticContext (pure ((), ())) (\_ x -> playDeterministically $ f x)
 
-
 data BlockchainModelParams = BlockchainModelParams {
     networkCoefficient :: Double,
     something :: Double
@@ -68,39 +67,6 @@ Maybe we can have a builder pattern around the params. Each builder needs to kno
 We also need a way of constructively, declaratively designing these problems. 
 
 
-
-
-
 -}
--- buildAgent :: (Eq x, Show x, Ord y, Show y) => a -> StochasticBayesianOpenGame '[Kleisli Stochastic x y] '[[DiagnosticInfoBayesian x y]] x () y Double
--- buildAgent ()
-
---data family StrategySpace a b
---newtype instance StrategySpace VisitorMove HoneypotAllocation = DefenderStrategy (Kleisli Stochastic VisitorMove HoneypotAllocation)
-
---data family StrategySpace a b = Strategy Kleisli Stochastic a b
-
---data instance DefenderStrategy = StrategySpace VisitorMove HoneypotAllocation
-
--- temp :: StrategySpace VisitorMove HoneypotAllocation
--- temp = Strategy $ Kleisli (\case {
---     Access -> playDeterministically HighInteractionHP;
---     DoesNotAccess -> playDeterministically Normal;
--- })
-
-
--- observes, responds are in scope for the game that we introduce, PayoffConfig contains all externals
--- class PlayerConfig observes responds params where 
---     calculatePayoff :: observes -> responds -> params -> Double
---     getStrategy :: params -> Kleisli Stochastic observes responds
-
--- instance PlayerConfig VisitorMove HoneypotAllocation (TempParams HoneypotAllocation) where 
-
---     calculatePayoff visitorMove x = costOfAttack x
-
---     getStrategy = Kleisli (\case {
---         Access -> playDeterministically HighInteractionHP;
---         DoesNotAccess -> playDeterministically HighInteractionHP
---     })
 
 
