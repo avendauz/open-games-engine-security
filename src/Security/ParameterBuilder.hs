@@ -27,73 +27,33 @@ import OpenGames.Preprocessor
 import OpenGames.Engine.BayesianGamesNonState
 import Test.QuickCheck
 
+import OpenGames.Engine.Engine hiding (StochasticStatefulOptic
+                                      , StochasticStatefulBayesianOpenGame(..)
+                                      , Agent(..)
+                                      , dependentDecision
+                                      , dependentEpsilonDecision
+                                      , fromFunctions
+                                      , fromLens
+                                      , uniformDist
+                                      , distFromList
+                                      , pureAction
+                                      , playDeterministically
+                                      , discount
+                                      , nature
+                                      )
+
 import           Control.Monad.Reader
 import Data.Tuple.Extra (uncurry3)
 import GHC.Float (asinDouble)
 
 type PayoffReader a = Reader a Double
-
 type GeneratePayoffReader a b = a -> PayoffReader b
 
 runPayoff :: a -> PayoffReader a -> Double
 runPayoff params reader = runReader reader params
 
+instantiateContext f = StochasticContext (pure ((), ())) (\_ x -> playDeterministically $ f x)
 
-data Player params x y = CreatePlayer {
-    generateOpenGame :: params -> StochasticBayesianOpenGame '[Kleisli Stochastic x y] '[[DiagnosticInfoBayesian x y]] x () y Double,
-    getName :: () -> String,
-    getPayoff :: params -> Double,
-    getStrategy :: Kleisli Stochastic x y
-}
-
-
-
-
-type AttackerGame a b = OpenGame
-     StochasticOptic
-     StochasticContext
-     '[Kleisli Stochastic a b]
-     '[[DiagnosticInfoBayesian a b]]
-     a
-     ()
-     b
-     Double
-
-data SecurityInteraction a b c d = SecurityInteraction {
-
-
-    attacker :: OpenGame
-     StochasticOptic
-     StochasticContext
-     '[Kleisli Stochastic a b]
-     '[[DiagnosticInfoBayesian a b]]
-     a
-     ()
-     b
-     Double,
-
-     defender :: OpenGame
-     StochasticOptic
-     StochasticContext
-     '[Kleisli Stochastic c d]
-     '[[DiagnosticInfoBayesian a b]]
-     a
-     ()
-     b
-     Double
-}
-
-
--- closeGame :: OpenGame
---      StochasticOptic
---      StochasticContext
---      a
---      b
---      ()
---      ()
---      c
---      d -> List b
--- closeGame game = 
 
 data BlockchainModelParams = BlockchainModelParams {
     networkCoefficient :: Double,

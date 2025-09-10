@@ -55,9 +55,13 @@ library
       Examples.Staking.AndGateMarkov
       Examples.Staking.AndGateMarkovMC
       IDS.IDSA
+      IDS.IDSAPayoff
+      IDS.IDSAStrategies
+      IDS.IDSModel
       OpenGames.Engine.BayesianGamesNonState
       OpenGames.Engine.ExternalEnvironment
       OpenGames.Engine.IOGames
+      Security.Evaluator
       Security.IDSPayoff
       Security.ParameterBuilder
       Paths_open_games_hs
