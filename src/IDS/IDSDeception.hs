@@ -27,9 +27,9 @@ import           Data.Tuple.Extra (uncurry3)
 import OpenGames.Preprocessor
 import OpenGames.Engine.BayesianGamesNonState
 import IDS.DeceptiveModel 
-import Security.AttackerDefender (stackelbergGame1)
-import IDS.DeceptionPayoff (unifyPayoff)
-import IDS.DeceptionStrategies (deceptiveStrategies)
+import Security.AttackerDefender (stackelbergGame1, stackelbergGame1Repeated, repeatedStage)
+import IDS.DeceptionPayoff (unifyPayoff, defenderPayoff, visitorPayoff)
+import IDS.DeceptionStrategies (deceptiveStrategies, repeatedDeceptiveStrategies)
 import Security.ParameterBuilder
 {-
 Deceptive Attack and Defense Game in
@@ -51,3 +51,15 @@ doEvaluation params = generateOutput $
         (stackelbergGame1 (distributionActive params) actionSpaceAttacker actionSpaceDefender) 
             (deceptiveStrategies . deviation $ params) 
                 ((instantiateContext . uncurry3 . unifyPayoff) params)
+
+
+-- repeated version
+doRepeatedEvaluation :: DeceptionParams -> IO ()
+doRepeatedEvaluation params = generateOutput $ 
+    evaluate 
+        (stackelbergGame1Repeated 
+            (distributionActive params) actionSpaceAttacker actionSpaceDefender (uncurry3 visitorPayoff) (uncurry3 defenderPayoff) params)
+        strategies
+        (instantiateRepeatedContext 2 strategies (Suspicious, Regular) repeatedGame)
+    where strategies = repeatedDeceptiveStrategies . deviation $ params;
+          repeatedGame = repeatedStage actionSpaceAttacker actionSpaceDefender (uncurry3 visitorPayoff) (uncurry3 defenderPayoff) params

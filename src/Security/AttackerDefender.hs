@@ -25,6 +25,7 @@ import           Data.Tuple.Extra (uncurry3)
 
 import OpenGames.Preprocessor
 import OpenGames.Engine.BayesianGamesNonState
+import Security.ParameterBuilder (runPayoff, PayoffReader, repeatedPayoffGame)
 
 
 
@@ -119,4 +120,57 @@ stackelbergGame1 distType actionSpaceAttacker actionSpaceDefender = [opengame|
    outputs: visitorType, attackerDecision, defenderDecision;
    returns: attackerPayoff, defenderPayoff;
 
+ |]
+
+
+repeatedStage actionSpaceAttacker actionSpaceDefender payoffReader1 payoffReader2 params = [opengame|
+   inputs : visitorType, prevAttackerDecision, prevDefenderDecision;
+   feedback: newAttackerPayoff + attackerPayoff, newDefenderPayoff + defenderPayoff;
+   :----------------------------:
+
+   inputs: visitorType, prevAttackerDecision, prevDefenderDecision;
+   feedback: ;
+   operation: attackerLeader "Alice" actionSpaceAttacker;
+   outputs: attackerDecision;
+   returns: attackerPayoff + newAttackerPayoff;
+
+   inputs: prevAttackerDecision, prevDefenderDecision;
+   feedback: ;
+   operation: defenderFollower "A" actionSpaceDefender;
+   outputs: defenderDecision;
+   returns: defenderPayoff + newDefenderPayoff;
+
+   inputs : visitorType, attackerDecision, defenderDecision;
+   feedback: ;
+   operation: repeatedPayoffGame params payoffReader1 payoffReader2;
+   outputs: newAttackerPayoff, newDefenderPayoff;
+   returns: ;
+
+   :----------------------------:
+
+   outputs: visitorType, attackerDecision, defenderDecision;
+   returns: attackerPayoff, defenderPayoff;
+|]
+
+stackelbergGame1Repeated distType actionSpaceAttacker actionSpaceDefender payoffReader1 payoffReader2 params= [opengame|
+   inputs : initialAttackerDecision, initialDefenderDecision;
+   feedback: ;
+   :----------------------------:
+   inputs: ;
+   feedback: ;
+   operation: nature $ distType;
+   outputs: visitorType;
+   returns: ;
+
+
+   inputs: visitorType, initialAttackerDecision, initialDefenderDecision;
+   feedback: finalPayoffAttacker, finalPayoffDefender;
+   operation: repeatedStage actionSpaceAttacker actionSpaceDefender payoffReader1 payoffReader2 params;
+   outputs: passedVisitorType, attackerDecision, defenderDecision;
+   returns: attackerPayoff, defenderPayoff;
+
+   :----------------------------:
+
+   outputs: passedVisitorType, attackerDecision, defenderDecision;
+   returns: attackerPayoff, defenderPayoff;
  |]

@@ -20,3 +20,16 @@ data DeceptionParams = DeceptionParams {
     deviation :: Double
 }
 
+exampleDeceptionParams = DeceptionParams {
+    probActive = 0.5,
+    attackerSuccess = 10,
+    attackerProbeSuccess = 5,
+    attackerProbeCaughtByHoneypot = 5,
+    attackerCaughtByHonepot = 20,
+    defenderAdmitsUser = 10,
+    defenderCatchesAttacker = 8,
+    defenderPenaltyForAttack = 4,
+    defenderHoneypotCost = 3,
+    defenderProbingCost = 4,
+    deviation = 0.2
+}

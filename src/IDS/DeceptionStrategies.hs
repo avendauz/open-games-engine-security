@@ -22,6 +22,7 @@ import OpenGames.Engine.Engine hiding (StochasticStatefulOptic
 
 deceptiveStrategies deviation = visitorStrategy deviation ::- defenderStrategy ::- Nil
 
+repeatedDeceptiveStrategies deviation = (convertVisitorStrategy . visitorStrategy $ deviation) ::- convertDefenderStrategy defenderStrategy ::- Nil
 
 visitorStrategy :: Double -> Kleisli Stochastic DeceptiveType AttackerDeceptiveMove
 visitorStrategy deviation = Kleisli (\case {
@@ -34,3 +35,23 @@ defenderStrategy = Kleisli (\case {
     Normal -> playDeterministically Regular;
     Suspicious -> playDeterministically Honeypot;
 })
+
+convertVisitorStrategy :: Kleisli Stochastic DeceptiveType AttackerDeceptiveMove -> Kleisli Stochastic (DeceptiveType, AttackerDeceptiveMove, DefenderRouting) AttackerDeceptiveMove
+convertVisitorStrategy x = Kleisli (\case {
+    (Passive, _, _) -> runKleisli x Passive ;
+    (Active, _ , _) -> runKleisli x Active
+})
+
+convertDefenderStrategy :: Kleisli Stochastic AttackerDeceptiveMove DefenderRouting -> Kleisli Stochastic (AttackerDeceptiveMove, DefenderRouting) DefenderRouting
+convertDefenderStrategy x = Kleisli (runKleisli x . fst)
+
+
+-- repeatedVisitorStrategy :: Double -> Kleisli Stochastic (DeceptiveType, AttackerDeceptiveMove, DefenderRouting) AttackerDeceptiveMove
+-- repeatedVisitorStrategy deviation = Kleisli (\case {
+--     (Passive, prevMove, prevDefenderMove) -> repeatedPassiveStrategy prevMove prevDefenderMove;
+--     (Active, prevMove, prevDefenderMove) -> repeatedActiveStrategy prevMove prevDefenderMove
+-- })
+
+-- repeatedPassiveStrategy, repeatedActiveStrategy :: AttackerDeceptiveMove -> DefenderRouting -> Stochastic AttackerDeceptiveMove
+
+-- repeatedPassiveStrategy 

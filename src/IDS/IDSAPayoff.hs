@@ -75,20 +75,5 @@ calculateExpectedValueOfAttack params =
    - costOfAttack params * probDetected params
 
 
--- payoffContext :: StochasticContext
---   () () (VisitorType, VisitorMove, AggregatorMove) (Double, Double)
--- payoffContext = StochasticContext (pure ((),())) 
---   (\_ (a,b,c) -> playDeterministically (runPayoff exampleData $ visitorPayoff a b c, runPayoff exampleData $ defenderPayoff a b c)
---     )
-
 -- TODO: Add quickcheck property checks here for payoff and parameter checks
 
-
--- evaluateReader :: Reader IDSParams 
--- evaluateReader = do 
---     probAttacker <- asks priorDistributionAttacker    -- can come from outside
---     strats <- asks totalGameStrategies 
---     payoff <- asks unifyPayoff
---     let game = totalGameOpen probAttacker
---     let context = instantiateContext payoff
---     return $ evaluate game strats context
