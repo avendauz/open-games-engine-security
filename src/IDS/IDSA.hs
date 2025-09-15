@@ -41,7 +41,7 @@ actionSpaceAttacker = const [Access, DoesNotAccess]
 
 ids params attackerName defenderName = stackelbergGame1Repeated 
             (distributionUser params) actionSpaceAttacker attackerName actionSpaceDefender defenderName (uncurry3 visitorPayoff) (uncurry3 defenderPayoff) params
-            
+idsRepeatedStage = repeatedStage actionSpaceAttacker "Alice" actionSpaceDefender "A" (uncurry3 visitorPayoff) (uncurry3 defenderPayoff) 
 doEvaluation :: IDSParams -> IO ()
 doEvaluation params = generateOutput $ 
   evaluate 
@@ -56,6 +56,6 @@ doRepeatedEvaluation params = generateOutput $
         (stackelbergGame1Repeated 
             (distributionUser params) actionSpaceAttacker "Alice" actionSpaceDefender "A" (uncurry3 visitorPayoff) (uncurry3 defenderPayoff) params)
         strategies
-        (instantiateRepeatedContext 0.9 2 strategies (Access, Open) repeatedGame)
+        (instantiateRepeatedContext 0.9 2 strategies (Access, Open) [0, 0] (idsRepeatedStage params))
     where strategies = repeatedStrategies;
-          repeatedGame = repeatedStage actionSpaceAttacker "Alice" actionSpaceDefender "A" (uncurry3 visitorPayoff) (uncurry3 defenderPayoff) params
+          

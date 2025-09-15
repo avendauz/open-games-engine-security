@@ -59,7 +59,7 @@ runPayoff params reader = runReader reader params
 
 instantiateContext f = StochasticContext (pure ((), ())) (\_ x -> playDeterministically $ f x)
 
-extractContinuation :: StochasticOptic s (Double, Double) a (Double, Double) -> s -> (Double,Double) -> Stochastic (Double, Double)
+extractContinuation :: StochasticOptic s [Double] a [Double] -> s -> [Double] -> Stochastic [Double]
 extractContinuation (StochasticOptic v u) x p = do
   (z,_) <-  v x
   u z p
@@ -69,47 +69,39 @@ extractNextState (StochasticOptic v _) x = do
   (z,a) <- v x
   pure a
 
-repeatedContinuationPayoffs :: Double -> Integer
-  -> List '[Kleisli Stochastic a y, Kleisli Stochastic b z]
+repeatedContinuationPayoffs :: (Unappend a, Unappend b) => Double -> Integer
+  -> List a
   -> i
-  -> (Double, Double)
-  -> OpenGame
-     StochasticOptic
-     StochasticContext
-     '[Kleisli Stochastic a y, Kleisli Stochastic b z]
-     '[[DiagnosticInfoBayesian a y], [DiagnosticInfoBayesian b z]]
-     i
-     (Double, Double)
-     i
-     (Double, Double)
-  -> Stochastic (Double, Double)
-repeatedContinuationPayoffs discountFactor iterator strat action (r1, r2) game 
-  | iterator == 1 = pure (r1,r2)
+  -> [Double]
+  -> OpenGame StochasticOptic StochasticContext a b i [Double] i [Double]
+  -> Stochastic [Double]
+repeatedContinuationPayoffs discountFactor iterator strat action curPayoffs game 
+  | iterator == 1 = pure curPayoffs
   | otherwise     = do
-      (r1',r2') <- extractContinuation (execute strat) action (r1, r2)
+      newPayoffs <- extractContinuation (execute strat) action curPayoffs
       actionNew <-  nextState strat action
-      repeatedContinuationPayoffs discountFactor (pred iterator) strat actionNew (r1'*discountFactor,r2'*discountFactor) game 
+      repeatedContinuationPayoffs discountFactor (pred iterator) strat actionNew (map (*discountFactor) newPayoffs) game 
   where execute = play game 
         nextState strat' = extractNextState (execute strat')
 
 
-
-
-instantiateRepeatedContext :: Double -> Integer
-  -> List '[Kleisli Stochastic a y, Kleisli Stochastic b z]
+instantiateRepeatedContext :: (Unappend a, Unappend b) => Double -> Integer
+  -> List a
   -> s
+  -> [Double]
   -> OpenGame
      StochasticOptic
      StochasticContext
-     '[Kleisli Stochastic a y, Kleisli Stochastic b z]
-     '[[DiagnosticInfoBayesian a y], [DiagnosticInfoBayesian b z]]
+     a
+     b
      i
-     (Double, Double)
+     [Double]
      i
-     (Double, Double)
-  -> StochasticContext s t i (Double, Double)
-instantiateRepeatedContext discountFactor iterator strat initialAction game = 
-    StochasticContext (pure ((),initialAction)) (\_ action -> repeatedContinuationPayoffs discountFactor iterator strat action (0,0) game)
+     [Double]
+  -> StochasticContext s t i [Double]
+instantiateRepeatedContext discountFactor iterator strat initialAction initialPayoff game = 
+    StochasticContext (pure ((),initialAction)) (\_ action -> repeatedContinuationPayoffs discountFactor iterator strat action initialPayoff game)
+
 
 
 

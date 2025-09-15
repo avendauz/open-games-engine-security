@@ -48,6 +48,8 @@ actionSpaceDefender = const [Regular, Honeypot]
 
 deceptionGame params attackerName defenderName = stackelbergGame1Repeated 
             (distributionActive params) actionSpaceAttacker attackerName actionSpaceDefender defenderName (uncurry3 visitorPayoff) (uncurry3 defenderPayoff) params
+
+repeatedDeceptionStage = repeatedStage actionSpaceAttacker "Alice" actionSpaceDefender "A" (uncurry3 visitorPayoff) (uncurry3 defenderPayoff)
 doEvaluation :: DeceptionParams -> IO ()
 doEvaluation params = generateOutput $ 
     evaluate 
@@ -60,8 +62,7 @@ doEvaluation params = generateOutput $
 doRepeatedEvaluation :: DeceptionParams -> IO ()
 doRepeatedEvaluation params = generateOutput $ 
     evaluate 
-        ()
+        (deceptionGame params "Alice" "A" )
         strategies
-        (instantiateRepeatedContext 0.9 2 strategies (Suspicious, Regular) repeatedGame)
+        (instantiateRepeatedContext 0.9 2 strategies (Suspicious, Regular) [0,0] (repeatedDeceptionStage params))
     where strategies = repeatedDeceptiveStrategies . deviation $ params;
-          repeatedGame = repeatedStage actionSpaceAttacker "Alice" actionSpaceDefender "A" (uncurry3 visitorPayoff) (uncurry3 defenderPayoff) params

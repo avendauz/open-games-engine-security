@@ -15,6 +15,7 @@ module OpenGames.Engine.BayesianGamesNonState
   , fromFunctions
   , nature
   , liftStochastic
+  , liftReverse
   , uniformDist
   , distFromList
   , pureAction
@@ -115,6 +116,11 @@ nature a = OpenGame {
 liftStochastic :: (x -> Stochastic y) -> StochasticBayesianOpenGame '[] '[] x () y ()
 liftStochastic f = OpenGame {
   play = \Nil -> StochasticOptic (\x -> do {y <- f x; return ((), y)}) (\() () -> return ()),
+  evaluate = \_ _ -> Nil}
+
+liftReverse :: (y -> Stochastic x) -> StochasticBayesianOpenGame '[] '[] () x () y
+liftReverse f = OpenGame {
+  play = \Nil -> StochasticOptic (const $ pure ((), ())) (\z feedback -> do f feedback),
   evaluate = \_ _ -> Nil}
 
 -- Support functionality for stochastic processes (also interface to the probability module in use)
