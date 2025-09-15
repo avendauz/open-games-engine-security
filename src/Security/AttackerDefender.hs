@@ -93,7 +93,7 @@ defenderLeader defenderName getActionSpace = [opengame|
  |]
 
 
-stackelbergGame1 distType actionSpaceAttacker actionSpaceDefender = [opengame|
+stackelbergGame1 distType actionSpaceAttacker attackerName actionSpaceDefender defenderName = [opengame|
    inputs : ;
    feedback: ;
    :----------------------------:
@@ -105,13 +105,13 @@ stackelbergGame1 distType actionSpaceAttacker actionSpaceDefender = [opengame|
 
    inputs: visitorType;
    feedback: ;
-   operation: attackerLeader "Alice" actionSpaceAttacker;
+   operation: attackerLeader attackerName actionSpaceAttacker;
    outputs: attackerDecision;
    returns: attackerPayoff;
 
    inputs: attackerDecision;
    feedback: ;
-   operation: defenderFollower "A" actionSpaceDefender;
+   operation: defenderFollower defenderName actionSpaceDefender;
    outputs: defenderDecision;
    returns: defenderPayoff;
 
@@ -123,20 +123,20 @@ stackelbergGame1 distType actionSpaceAttacker actionSpaceDefender = [opengame|
  |]
 
 
-repeatedStage actionSpaceAttacker actionSpaceDefender payoffReader1 payoffReader2 params = [opengame|
+repeatedStage actionSpaceAttacker attackerName actionSpaceDefender defenderName payoffReader1 payoffReader2 params = [opengame|
    inputs : visitorType, prevAttackerDecision, prevDefenderDecision;
    feedback: newAttackerPayoff + attackerPayoff, newDefenderPayoff + defenderPayoff;
    :----------------------------:
 
    inputs: visitorType, prevAttackerDecision, prevDefenderDecision;
    feedback: ;
-   operation: attackerLeader "Alice" actionSpaceAttacker;
+   operation: attackerLeader attackerName actionSpaceAttacker;
    outputs: attackerDecision;
    returns: attackerPayoff + newAttackerPayoff;
 
    inputs: prevAttackerDecision, prevDefenderDecision;
    feedback: ;
-   operation: defenderFollower "A" actionSpaceDefender;
+   operation: defenderFollower defenderName actionSpaceDefender;
    outputs: defenderDecision;
    returns: defenderPayoff + newDefenderPayoff;
 
@@ -152,7 +152,7 @@ repeatedStage actionSpaceAttacker actionSpaceDefender payoffReader1 payoffReader
    returns: attackerPayoff, defenderPayoff;
 |]
 
-stackelbergGame1Repeated distType actionSpaceAttacker actionSpaceDefender payoffReader1 payoffReader2 params= [opengame|
+stackelbergGame1Repeated distType actionSpaceAttacker attackerName actionSpaceDefender defenderName payoffReader1 payoffReader2 params= [opengame|
    inputs : initialAttackerDecision, initialDefenderDecision;
    feedback: ;
    :----------------------------:
@@ -165,7 +165,7 @@ stackelbergGame1Repeated distType actionSpaceAttacker actionSpaceDefender payoff
 
    inputs: visitorType, initialAttackerDecision, initialDefenderDecision;
    feedback: finalPayoffAttacker, finalPayoffDefender;
-   operation: repeatedStage actionSpaceAttacker actionSpaceDefender payoffReader1 payoffReader2 params;
+   operation: repeatedStage actionSpaceAttacker attackerName actionSpaceDefender defenderName payoffReader1 payoffReader2 params;
    outputs: passedVisitorType, attackerDecision, defenderDecision;
    returns: attackerPayoff, defenderPayoff;
 

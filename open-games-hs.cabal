@@ -54,6 +54,7 @@ library
       Examples.Markov.NStageMarkov
       Examples.Staking.AndGateMarkov
       Examples.Staking.AndGateMarkovMC
+      IDS.CollaborativeIDS
       IDS.DeceptionPayoff
       IDS.DeceptionStrategies
       IDS.DeceptiveModel
