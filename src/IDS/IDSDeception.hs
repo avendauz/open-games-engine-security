@@ -60,6 +60,6 @@ doRepeatedEvaluation params = generateOutput $
         (stackelbergGame1Repeated 
             (distributionActive params) actionSpaceAttacker actionSpaceDefender (uncurry3 visitorPayoff) (uncurry3 defenderPayoff) params)
         strategies
-        (instantiateRepeatedContext 2 strategies (Suspicious, Regular) repeatedGame)
+        (instantiateRepeatedContext 0.9 2 strategies (Suspicious, Regular) repeatedGame)
     where strategies = repeatedDeceptiveStrategies . deviation $ params;
           repeatedGame = repeatedStage actionSpaceAttacker actionSpaceDefender (uncurry3 visitorPayoff) (uncurry3 defenderPayoff) params

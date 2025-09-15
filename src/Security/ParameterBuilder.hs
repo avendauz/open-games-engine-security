@@ -68,9 +68,8 @@ extractNextState :: StochasticOptic s t a b -> s -> Stochastic a
 extractNextState (StochasticOptic v _) x = do
   (z,a) <- v x
   pure a
-discountFactor = 0.2
 
-repeatedContinuationPayoffs :: Integer
+repeatedContinuationPayoffs :: Double -> Integer
   -> List '[Kleisli Stochastic a y, Kleisli Stochastic b z]
   -> i
   -> (Double, Double)
@@ -84,19 +83,19 @@ repeatedContinuationPayoffs :: Integer
      i
      (Double, Double)
   -> Stochastic (Double, Double)
-repeatedContinuationPayoffs iterator strat action (r1, r2) game 
+repeatedContinuationPayoffs discountFactor iterator strat action (r1, r2) game 
   | iterator == 1 = pure (r1,r2)
   | otherwise     = do
       (r1',r2') <- extractContinuation (execute strat) action (r1, r2)
       actionNew <-  nextState strat action
-      repeatedContinuationPayoffs (pred iterator) strat actionNew (r1'*discountFactor,r2'*discountFactor) game 
+      repeatedContinuationPayoffs discountFactor (pred iterator) strat actionNew (r1'*discountFactor,r2'*discountFactor) game 
   where execute = play game 
         nextState strat' = extractNextState (execute strat')
 
 
 
 
-instantiateRepeatedContext :: Integer
+instantiateRepeatedContext :: Double -> Integer
   -> List '[Kleisli Stochastic a y, Kleisli Stochastic b z]
   -> s
   -> OpenGame
@@ -109,8 +108,8 @@ instantiateRepeatedContext :: Integer
      i
      (Double, Double)
   -> StochasticContext s t i (Double, Double)
-instantiateRepeatedContext iterator strat initialAction game = 
-    StochasticContext (pure ((),initialAction)) (\_ action -> repeatedContinuationPayoffs iterator strat action (0,0) game)
+instantiateRepeatedContext discountFactor iterator strat initialAction game = 
+    StochasticContext (pure ((),initialAction)) (\_ action -> repeatedContinuationPayoffs discountFactor iterator strat action (0,0) game)
 
 
 
