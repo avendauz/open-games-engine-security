@@ -21,8 +21,14 @@ import OpenGames.Engine.Engine hiding (StochasticStatefulOptic
                                       )
 
 deceptiveStrategies deviation = visitorStrategy deviation ::- defenderStrategy ::- Nil
-
+forSureDeceptiveStrategies = forSureVisitorStrategy ::- forSureDefenderStrategy ::- Nil
 repeatedDeceptiveStrategies deviation = (convertVisitorStrategy . visitorStrategy $ deviation) ::- convertDefenderStrategy defenderStrategy ::- Nil
+
+forSureVisitorStrategy :: Kleisli Stochastic DeceptiveType AttackerDeceptiveMove 
+forSureVisitorStrategy = Kleisli (const $ playDeterministically Normal)
+
+forSureDefenderStrategy :: Kleisli Stochastic AttackerDeceptiveMove DefenderRouting 
+forSureDefenderStrategy = Kleisli (const $ playDeterministically Honeypot)
 
 visitorStrategy :: Double -> Kleisli Stochastic DeceptiveType AttackerDeceptiveMove
 visitorStrategy deviation = Kleisli (\case {

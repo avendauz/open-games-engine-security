@@ -118,5 +118,5 @@ doCollaborativeIDS idsParams deceptionParams = generateOutput $
     evaluate 
         (twoIDS idsParams deceptionParams)
         strategies
-        (instantiateRepeatedContext 0.9 2 strategies (Access, Open, Suspicious, Regular) [0,0, 0,0] (doubleRepeatedStage idsParams deceptionParams))
+        (instantiateRepeatedContext 0.9 5 strategies (Access, Open, Suspicious, Regular) [0,0, 0,0] (doubleRepeatedStage idsParams deceptionParams))
     where strategies = repeatedStrategies +:+ (repeatedDeceptiveStrategies . deviation $ deceptionParams);
