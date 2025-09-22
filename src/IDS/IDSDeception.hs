@@ -29,7 +29,7 @@ import OpenGames.Engine.BayesianGamesNonState
 import IDS.DeceptiveModel 
 import Security.AttackerDefender (stackelbergGame1, stackelbergGame1Repeated, repeatedStage)
 import IDS.DeceptionPayoff (unifyPayoff, defenderPayoff, visitorPayoff)
-import IDS.DeceptionStrategies (deceptiveStrategies, repeatedDeceptiveStrategies, forSureDeceptiveStrategies)
+import IDS.DeceptionStrategies (deceptiveStrategies, repeatedDeceptiveStrategies, forSureDeceptiveStrategies, forSureRepeatedDeceptiveStrategies)
 import Security.ParameterBuilder
 {-
 Deceptive Attack and Defense Game in
@@ -62,11 +62,12 @@ doForSureEvaluation params =
         (stackelbergGame1 (distributionActive params) actionSpaceAttacker "Alice" actionSpaceDefender "A") 
             (forSureDeceptiveStrategies) 
                 ((instantiateContext . uncurry3 . unifyPayoff) params)
+                
 -- repeated version
 doRepeatedEvaluation :: DeceptionParams -> IO ()
 doRepeatedEvaluation params = generateOutput $ 
     evaluate 
         (deceptionGame params "Alice" "A" )
         strategies
-        (instantiateRepeatedContext 0.9 2 strategies (Suspicious, Regular) [0,0] (repeatedDeceptionStage params))
-    where strategies = repeatedDeceptiveStrategies . deviation $ params;
+        (instantiateRepeatedContext 0.2 2 strategies (Suspicious, Regular) [0,0] (repeatedDeceptionStage params))
+    where strategies = forSureRepeatedDeceptiveStrategies;

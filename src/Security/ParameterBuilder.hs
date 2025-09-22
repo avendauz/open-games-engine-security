@@ -51,6 +51,7 @@ import Control.Monad.Trans.Reader
 import Data.Tuple.Extra (uncurry3)
 import GHC.Float (asinDouble)
 import Data.Bifunctor
+import Numeric.Probability.Distribution hiding (map, lift)
 type PayoffReader a = Reader a Double
 type GeneratePayoffReader a b = a -> PayoffReader b
 
@@ -59,17 +60,27 @@ runPayoff params reader = runReader reader params
 
 instantiateContext f = StochasticContext (pure ((), ())) (\_ x -> playDeterministically $ f x)
 
-extractContinuation :: StochasticOptic s [Double] a [Double] -> s -> [Double] -> Stochastic [Double]
+bayes :: (Eq y) => Stochastic (x, y) -> y -> Stochastic x
+bayes a y = mapMaybe (\(x, y') -> if y' == y then Just x else Nothing) a
+
+extractContinuation :: (Eq a) => StochasticOptic s [Double] a [Double] -> s -> [Double] -> Stochastic [Double]
 extractContinuation (StochasticOptic v u) x p = do
-  (z,_) <-  v x
+  (z, _) <- v x
   u z p
 
+
+
+-- extractContinuation :: (Eq a) => StochasticOptic s [Double] a [Double] -> s -> [Double] -> Stochastic [Double]
+-- extractContinuation (StochasticOptic v u) x p = do
+--   (_, next) <- v x
+--   t <- (bayes $ v x) next
+--   u t p
 extractNextState :: StochasticOptic s t a b -> s -> Stochastic a
 extractNextState (StochasticOptic v _) x = do
   (z,a) <- v x
   pure a
 
-repeatedContinuationPayoffs :: (Unappend a, Unappend b) => Double -> Integer
+repeatedContinuationPayoffs :: (Unappend a, Unappend b, Eq i) => Double -> Integer
   -> List a
   -> i
   -> [Double]
@@ -85,7 +96,7 @@ repeatedContinuationPayoffs discountFactor iterator strat action curPayoffs game
         nextState strat' = extractNextState (execute strat')
 
 
-instantiateRepeatedContext :: (Unappend a, Unappend b) => Double -> Integer
+instantiateRepeatedContext :: (Unappend a, Unappend b, Eq i) => Double -> Integer
   -> List a
   -> s
   -> [Double]
@@ -125,14 +136,14 @@ repeatedPayoffGame params attackerPayoffReader defenderPayoffReader = [opengame|
             playDeterministically $ join bimap (runPayoff params) (attackerPayoffReader inputs, defenderPayoffReader inputs)
 
 
-
-{-
-
-Maybe we can have a builder pattern around the params. Each builder needs to know what to do with the params (like how to calculate payoff, etc.
-
-We also need a way of constructively, declaratively designing these problems. 
-
-
--}
-
+-- repeatFinite :: (Unappend a, Unappend b, Unappend c, Eq i) => Int 
+--              -> OpenGame StochasticOptic StochasticContext a b x x' x x'
+--              -> OpenGame StochasticOptic StochasticContext a c x x' x x'
+-- repeatFinite 0 g = reindex (\_ -> Nil) 
+--                            (\_ _ -> pure [] ::- pure [] ::- pure [] ::- Nil) 
+--                            (fromFunctions id id)
+-- repeatFinite n g = reindex (\(s1 ::- s2 ::- Nil) -> s1 ::- s2 ::- s1 ::- s2 ::- Nil)
+--                            (\_ (r1 ::- r2 ::- r3 ::- rs1 ::- rs2 ::- rs3 ::- Nil) -> f r1 rs1 ::- f r2 rs2 ::- f r3 rs3 ::- Nil) 
+--                            (g >>> repeatFinite (n - 1) g)
+--   where f r rs = do {x <- r; xs <- rs; pure (x : xs)}
 

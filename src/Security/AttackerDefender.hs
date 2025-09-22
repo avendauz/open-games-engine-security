@@ -162,6 +162,8 @@ repeatedStage actionSpaceAttacker attackerName actionSpaceDefender defenderName 
    returns: previousPayoffs;
 |]
 
+
+
 stackelbergGame1Repeated distType actionSpaceAttacker attackerName actionSpaceDefender defenderName payoffReader1 payoffReader2 params= [opengame|
    inputs : initialAttackerDecision, initialDefenderDecision;
    feedback: ;
