@@ -116,24 +116,7 @@ instantiateRepeatedContext discountFactor iterator strat initialAction initialPa
 
 
 
-repeatedPayoffGame params attackerPayoffReader defenderPayoffReader = [opengame|
 
-   inputs: (visitorType, attackerDecision, defenderDecision);
-   feedback: ;
-   :----------------------------:
-   inputs : (visitorType, attackerDecision, defenderDecision);
-   feedback: ;
-   operation: liftStochastic $ calculatePayoff;
-   outputs: newAttackerPayoff, newDefenderPayoff;
-   returns: ;
-
-   :----------------------------:
-   outputs: newAttackerPayoff, newDefenderPayoff;
-   returns: ;
-
- |] where 
-        calculatePayoff inputs = 
-            playDeterministically $ join bimap (runPayoff params) (attackerPayoffReader inputs, defenderPayoffReader inputs)
 
 
 -- repeatFinite :: (Unappend a, Unappend b, Unappend c, Eq i) => Int 

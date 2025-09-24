@@ -64,7 +64,6 @@ library
       IDS.IDSDeception
       IDS.IDSModel
       OpenGames.Engine.BayesianGamesNonState
-      OpenGames.Engine.BayesianIOGames
       OpenGames.Engine.ExternalEnvironment
       OpenGames.Engine.IOGames
       Security.Evaluator

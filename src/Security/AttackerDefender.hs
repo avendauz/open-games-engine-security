@@ -25,7 +25,7 @@ import           Data.Tuple.Extra (uncurry3)
 
 import OpenGames.Preprocessor
 import OpenGames.Engine.BayesianGamesNonState
-import Security.ParameterBuilder (runPayoff, PayoffReader, repeatedPayoffGame)
+import Security.ParameterBuilder (runPayoff, PayoffReader)
 
 
 
@@ -127,41 +127,27 @@ payoffIndexer = (!!)
 
 repeatedStage actionSpaceAttacker attackerName actionSpaceDefender defenderName payoffReader1 payoffReader2 params = [opengame|
    inputs : visitorType, prevAttackerDecision, prevDefenderDecision;
-   feedback: newPayoffs;
+   feedback: [(payoffIndexer previousPayoffs 0) + calculateCurrAttackerPayoff visitorType attackerDecision defenderDecision, (payoffIndexer previousPayoffs 1) + calculateCurrAttackerPayoff visitorType attackerDecision defenderDecision];
    :----------------------------:
-
-   inputs : ;
-   feedback: newPayoffs;
-   operation : liftReverse (\(x,y) -> playDeterministically $ [x,y]);
-   outputs: ;
-   returns: newAttackerPayoff, newDefenderPayoff;
 
    inputs: visitorType, prevAttackerDecision, prevDefenderDecision;
    feedback: ;
    operation: attackerLeader attackerName actionSpaceAttacker;
    outputs: attackerDecision;
-   returns: (payoffIndexer previousPayoffs 0) + newAttackerPayoff;
+   returns: (payoffIndexer previousPayoffs 0) + calculateCurrAttackerPayoff visitorType attackerDecision defenderDecision;
 
    inputs: prevAttackerDecision, prevDefenderDecision;
    feedback: ;
    operation: defenderFollower defenderName actionSpaceDefender;
    outputs: defenderDecision;
-   returns: (payoffIndexer previousPayoffs 1) + newDefenderPayoff;
-
-   inputs : visitorType, attackerDecision, defenderDecision;
-   feedback: ;
-   operation: repeatedPayoffGame params payoffReader1 payoffReader2;
-   outputs: newAttackerPayoff, newDefenderPayoff;
-   returns: ;
-
-   
-
+   returns: (payoffIndexer previousPayoffs 1) + calculateCurrAttackerPayoff visitorType attackerDecision defenderDecision;
    :----------------------------:
 
    outputs: visitorType, attackerDecision, defenderDecision;
    returns: previousPayoffs;
 |]
-
+   where calculateCurrAttackerPayoff x y z = runPayoff params (payoffReader1 x y z)
+         calculateCurrDefenderPayoff x y z = runPayoff params (payoffReader2 x y z)
 
 
 stackelbergGame1Repeated distType actionSpaceAttacker attackerName actionSpaceDefender defenderName payoffReader1 payoffReader2 params= [opengame|

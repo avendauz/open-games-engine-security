@@ -52,25 +52,14 @@ twoIDS idsParams deceptionParams = [opengame|
    feedback: ;
    operation: ids idsParams "A1" "D1";
    outputs: a1Type, a1New, d1New;
-   returns: idsPayoffs;
+   returns: [payoffIndexer initialPayoffs 0, payoffIndexer initialPayoffs 1];
 
    inputs : a2, d2;
    feedback: ;
    operation: deceptionGame deceptionParams "A2" "D2";
    outputs: a2Type, a2New, d2New;
-   returns: deceptionPayoffs;
+   returns: [payoffIndexer initialPayoffs 2, payoffIndexer initialPayoffs 3];
 
-   inputs: ;
-   feedback: deceptionPayoffs;
-   operation: liftReverse (\payoffs -> playDeterministically [payoffIndexer payoffs 2, payoffIndexer payoffs 3]);
-   outputs: ;
-   returns: initialPayoffs;
-
-   inputs: ;
-   feedback: idsPayoffs;
-   operation: liftReverse (\payoffs -> playDeterministically [payoffIndexer payoffs 0, payoffIndexer payoffs 1]);
-   outputs: ;
-   returns: initialPayoffs;
    :----------------------------:
    outputs: a1Type, a1New, d1New, a2Type, a2New, d2New;
    returns: initialPayoffs;
@@ -86,25 +75,14 @@ doubleRepeatedStage idsParams deceptionParams = [opengame|
    feedback: newIdsGamePayoffs;
    operation: idsRepeatedStage idsParams ;
    outputs: v1New, a1New, d1New;
-   returns: oldIdsPayoffs;
+   returns: [payoffIndexer oldPayoffs 0, payoffIndexer oldPayoffs 1];
 
    inputs: v2, a2, d2;
    feedback: newDeceptionGamePayoffs;
    operation: repeatedDeceptionStage deceptionParams;
    outputs: v2New, a2New, d2New;
-   returns: oldDeceptionPayoffs;
+   returns: [payoffIndexer oldPayoffs 2, payoffIndexer oldPayoffs 3];
 
-   inputs: ;
-   feedback: oldIdsPayoffs;
-   operation: liftReverse (\(x,y) -> playDeterministically [x,y]) ;
-   outputs: ;
-   returns: (payoffIndexer oldPayoffs 0), (payoffIndexer oldPayoffs 1);
-
-   inputs: ;
-   feedback: oldDeceptionPayoffs;
-   operation: liftReverse (\(x,y) -> playDeterministically [x,y]) ;
-   outputs: ;
-   returns: (payoffIndexer oldPayoffs 2), (payoffIndexer oldPayoffs 3);
    :----------------------------:
 
    outputs: v1New, a1New, d1New, v2New, a2New, d2New;
