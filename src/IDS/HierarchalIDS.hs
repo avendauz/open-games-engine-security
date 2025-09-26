@@ -29,7 +29,6 @@ import OpenGames.Engine.BayesianGamesNonState
 import Security.ParameterBuilder
 import Security.AttackerDefender
 import Control.Monad.Reader hiding (lift, void)
-import IDS.IDSAPayoff (unifyPayoff)
 import IDS.IDSModel
 import IDS.IDSAStrategies
 import IDS.IDSA 
@@ -37,6 +36,7 @@ import IDS.IDSDeception (deceptionGame, repeatedDeceptionStage)
 import IDS.DeceptiveModel
 import IDS.DeceptionStrategies
 import IDS.HierarchalIDSModel
+import IDS.IDSModel (IDSParamsSimple)
 
 actionSpaceDefender = const [Report, AllClear]
 actionSpaceAttacker = const [Access, DoesNotAccess]
@@ -91,7 +91,7 @@ doubleRepeatedStage idsParams deceptionParams = [opengame|
 
 
 
-doCollaborativeIDS :: IDSParams -> DeceptionParams -> IO ()
+doCollaborativeIDS :: IDSParamsSimple -> DeceptionParams -> IO ()
 doCollaborativeIDS idsParams deceptionParams = generateOutput $ 
     evaluate 
         (twoIDS idsParams deceptionParams)

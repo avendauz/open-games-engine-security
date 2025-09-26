@@ -29,7 +29,7 @@ import OpenGames.Engine.BayesianGamesNonState
 import Security.ParameterBuilder
 import Security.AttackerDefender
 import Control.Monad.Reader hiding (lift, void)
-import IDS.IDSAPayoff (unifyPayoff, visitorPayoff, defenderPayoff)
+import IDS.IDSAPayoff (visitorPayoff, defenderPayoff)
 import IDS.IDSModel
 import IDS.IDSAStrategies
 
@@ -41,8 +41,9 @@ actionSpaceAttacker = const [Access, DoesNotAccess]
 
 ids params attackerName defenderName = stackelbergGame1Repeated 
             (distributionUser params) actionSpaceAttacker attackerName actionSpaceDefender defenderName (visitorPayoff) (defenderPayoff) params
+
 idsRepeatedStage = repeatedStage actionSpaceAttacker "Alice" actionSpaceDefender "A" (visitorPayoff) (defenderPayoff) 
-doEvaluation :: IDSParams -> IO ()
+doEvaluation :: IDSParamsSimple -> IO ()
 doEvaluation params = generateOutput $ 
   evaluate 
     (stackelbergGame1 (distributionUser params) actionSpaceAttacker "Alice" actionSpaceDefender  "A") 
@@ -50,7 +51,7 @@ doEvaluation params = generateOutput $
         ((instantiateContext . uncurry3 . unifyPayoff) params)
 
 
-doRepeatedEvaluation :: IDSParams -> IO ()
+doRepeatedEvaluation :: IDSParamsSimple -> IO ()
 doRepeatedEvaluation params = generateOutput $ 
     evaluate 
         (stackelbergGame1Repeated 

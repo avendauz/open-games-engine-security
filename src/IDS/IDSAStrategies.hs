@@ -35,6 +35,12 @@ defenderStrategy = Kleisli (\case {
     DoesNotAccess -> playDeterministically Close;
 })
 
+hpDefenderStrategy :: Kleisli Stochastic VisitorMove HoneypotAllocation 
+hpDefenderStrategy = Kleisli (\case {
+    Access -> distFromList [(HighInteractionHP, 0.3), (LowInteractionHP, 0.1), (Normal, 0.6)];
+    DoesNotAccess -> playDeterministically Normal;
+})
+
 
 convertVisitorStrategy :: Kleisli Stochastic VisitorType VisitorMove -> Kleisli Stochastic (VisitorType, VisitorMove, AggregatorMove) VisitorMove
 convertVisitorStrategy x = Kleisli (\case {

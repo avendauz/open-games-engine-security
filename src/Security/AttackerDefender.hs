@@ -149,6 +149,23 @@ repeatedStage actionSpaceAttacker attackerName actionSpaceDefender defenderName 
    where calculateCurrAttackerPayoff x y z = runPayoff params (payoffReader1 x y z)
          calculateCurrDefenderPayoff x y z = runPayoff params (payoffReader2 x y z)
 
+stochasticTransitionGame transitionFunction payoffFn = [opengame|
+
+   inputs : dec1, dec2, oldState;
+   feedback: ;
+   :----------------------------:
+
+   inputs: dec1, dec2, oldState;
+   feedback: ;
+   operation: liftStochastic payoffFn;
+   outputs: newState;
+   returns: ;
+
+   :----------------------------:
+
+   outputs: dec1, dec2, newState;
+   returns: ;
+ |]
 
 stackelbergGame1Repeated distType actionSpaceAttacker attackerName actionSpaceDefender defenderName payoffReader1 payoffReader2 params= [opengame|
    inputs : initialAttackerDecision, initialDefenderDecision;

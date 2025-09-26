@@ -36,11 +36,14 @@ import IDS.IDSA
 import IDS.IDSDeception (deceptionGame, repeatedDeceptionStage)
 import IDS.DeceptiveModel
 import IDS.DeceptionStrategies
+import IDS.CollaborativeIDSModel
 distributionUser = 
   f . priorDistributionAttacker
   where f probAttacker = distFromList [(Attacker, probAttacker), (User, 1 - probAttacker)]
 actionSpaceDefender = const [Open, Close]
 actionSpaceAttacker = const [Access, DoesNotAccess]
+
+stateSpace = const [Secure, Insecure]
 
 twoIDS idsParams deceptionParams = [opengame|
    inputs: a1, d1, a2, d2;

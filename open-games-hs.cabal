@@ -54,6 +54,7 @@ library
       Examples.Staking.AndGateMarkov
       Examples.Staking.AndGateMarkovMC
       IDS.CollaborativeIDS
+      IDS.CollaborativeIDSModel
       IDS.DeceptionPayoff
       IDS.DeceptionStrategies
       IDS.DeceptiveModel
@@ -61,6 +62,7 @@ library
       IDS.HierarchalIDSModel
       IDS.IDSA
       IDS.IDSAPayoff
+      IDS.IDSAPayoffHP
       IDS.IDSAStrategies
       IDS.IDSModel
       OpenGames.Engine.BayesianGamesNonState
