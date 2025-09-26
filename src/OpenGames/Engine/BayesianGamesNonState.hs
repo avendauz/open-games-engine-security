@@ -56,7 +56,7 @@ bayes a y = mapMaybe (\(x, y') -> if y' == y then Just x else Nothing) a
 
 
 deviationsInContext :: (Show x, Show y, Ord y, Show theta)
-                    => Double -> Agent -> x -> theta -> Stochastic y -> (y -> Double) -> [y] -> [DiagnosticInfoBayesian x y]
+                    => Double -> Agent -> x -> theta -> Stochastic y -> (y -> Double) -> [y] ->  [DiagnosticInfoBayesian x y]
 deviationsInContext epsilon name x theta strategy u ys
   = [DiagnosticInfoBayesian { equilibrium = strategicPayoff >= optimalPayoff - epsilon,
                       player = name,
@@ -66,7 +66,8 @@ deviationsInContext epsilon name x theta strategy u ys
                       context = u ,
                       state = x,
                       unobservedState = show theta,
-                      strategy = strategy}]
+                      strategy = strategy
+                      }]
   where strategicPayoff = expected (fmap u strategy)
         (optimalPlay, optimalPayoff) = maximumBy (comparing snd) [(y, u y) | y <- ys]
 

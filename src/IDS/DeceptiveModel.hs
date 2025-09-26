@@ -60,13 +60,12 @@ totalGen :: Gen DeceptionParams
 totalGen = 
     do 
         probActive <- choose (0,1)
-        attackerSuccess <- choose (0,20)
-        attackerProbeSuccess <- choose (0,20)
+        -- attackerSuccess <- choose (0,20)
         --attackerProbeCaughtByHoneypot <- choose (0,20)
         (suchThatParamsSatisfy parameterRestrictions . pure) DeceptionParams {
             probActive = probActive,
-            attackerSuccess = attackerSuccess,
-            attackerProbeSuccess = attackerProbeSuccess,
+            attackerSuccess = 15,
+            attackerProbeSuccess = 10,
             --attackerProbeCaughtByHoneypot = attackerProbeCaughtByHoneypot,
             attackerProbeCaughtByHoneypot = 0,
             attackerCaughtByHonepot = 20,
@@ -83,3 +82,5 @@ instance Arbitrary DeceptionParams where
 
 propDeception :: DeceptionParams -> Bool
 propDeception params = attackerSuccess params > attackerProbeSuccess params
+
+

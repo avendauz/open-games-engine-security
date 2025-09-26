@@ -42,7 +42,8 @@ data DiagnosticInfoBayesian x y = DiagnosticInfoBayesian
   , context         :: (y -> Double)
   , payoff          :: Double
   , state           :: x
-  , unobservedState :: String}
+  , unobservedState :: String
+  }
 
 
 -- prepare string information for Bayesian game

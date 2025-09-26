@@ -120,7 +120,7 @@ instance ContextAdd StochasticStatefulContext where
 
 -- Experimental non state
 data StochasticOptic s t a b where
-  StochasticOptic :: (s -> Stochastic (z, a))
+  StochasticOptic ::  (s -> Stochastic (z, a))
                           -> (z -> b -> Stochastic t)
                           -> StochasticOptic s t a b
 

@@ -40,9 +40,7 @@ library:
     - Examples.Markov.TwoStageMarkov
     - Examples.Markov.TestSimpleMonteCarlo
     - Examples.Markov.TestSimpleMonteCarlo.Continuation
-    - Security.Deception
-    - Security.AttackerDefender
-
+    - IDS.IDSDeception
 dependencies:
     - base >=4.7 && <5
     - mtl
@@ -67,7 +65,10 @@ dependencies:
     - random
     - vector
     - criterion
-
+    - Chart-diagrams
+    - Chart
+    - regex-posix
+    - regex-base
 
 
 executables:

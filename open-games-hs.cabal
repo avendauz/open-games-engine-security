@@ -47,8 +47,7 @@ library
       Examples.Markov.TwoStageMarkov
       Examples.Markov.TestSimpleMonteCarlo
       Examples.Markov.TestSimpleMonteCarlo.Continuation
-      Security.Deception
-      Security.AttackerDefender
+      IDS.IDSDeception
   other-modules:
       Data.Utils
       Examples.Markov.NStageMarkov
@@ -58,21 +57,25 @@ library
       IDS.DeceptionPayoff
       IDS.DeceptionStrategies
       IDS.DeceptiveModel
+      IDS.HierarchalIDS
+      IDS.HierarchalIDSModel
       IDS.IDSA
       IDS.IDSAPayoff
       IDS.IDSAStrategies
-      IDS.IDSDeception
       IDS.IDSModel
       OpenGames.Engine.BayesianGamesNonState
       OpenGames.Engine.ExternalEnvironment
       OpenGames.Engine.IOGames
+      Security.AttackerDefender
       Security.Evaluator
       Security.ParameterBuilder
       Paths_open_games_hs
   hs-source-dirs:
       src
   build-depends:
-      QuickCheck
+      Chart
+    , Chart-diagrams
+    , QuickCheck
     , ad
     , base >=4.7 && <5
     , comonad
@@ -91,6 +94,8 @@ library
     , probability
     , profunctors
     , random
+    , regex-base
+    , regex-posix
     , template-haskell
     , transformers
     , typed-process
@@ -105,7 +110,9 @@ executable open-games-exe
       app
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      QuickCheck
+      Chart
+    , Chart-diagrams
+    , QuickCheck
     , ad
     , base >=4.7 && <5
     , comonad
@@ -125,6 +132,8 @@ executable open-games-exe
     , probability
     , profunctors
     , random
+    , regex-base
+    , regex-posix
     , template-haskell
     , transformers
     , typed-process
