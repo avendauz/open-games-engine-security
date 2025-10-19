@@ -33,14 +33,20 @@ attackerPayoff :: VisitorMove -> AggregatorMove -> PayoffReader IDSParamsSimple
 attackerPayoff Access Open = attackerAccessPayoff
 attackerPayoff Access Close = asks costOfAttack
 attackerPayoff DoesNotAccess Open = (* (-1)) <$> attackerAccessPayoff
-attackerPayoff DoesNotAccess Close = return 0
+attackerPayoff DoesNotAccess Close = local id ()
 
 userPayoff :: VisitorMove -> AggregatorMove -> PayoffReader IDSParamsSimple
-userPayoff Access Open = do
+userPayoff Access Open = local (testUserPayoff) (do
     computingResources <- asks computingResources
     costOfDefense <- asks $ ($ ()) . costOfDefense
-    return $ (computingResources - costOfDefense) / computingResources
+    return (computingResources, costOfDefense))
 userPayoff _ _ = return 0
+
+anotherUserPayoff :: VisitorMove -> AggregatorMove -> Double 
+anotherUserPayoff Access Open = testUserPayoff 
+
+testUserPayoff :: (Double,Double) -> Double 
+testUserPayoff (a,b) = (a - b) / a
 
 
 attackerAccessPayoff :: PayoffReader IDSParamsSimple

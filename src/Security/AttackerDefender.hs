@@ -4,6 +4,9 @@
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE FlexibleContexts #-}
+
+
 module Security.AttackerDefender where 
 
 import OpenGames.Engine.Engine hiding (StochasticStatefulOptic
@@ -125,49 +128,75 @@ stackelbergGame1 distType actionSpaceAttacker attackerName actionSpaceDefender d
 
 payoffIndexer = (!!)
 
-repeatedStage actionSpaceAttacker attackerName actionSpaceDefender defenderName payoffReader1 payoffReader2 params = [opengame|
+repeatedStage actionSpaceAttacker attackerName actionSpaceDefender defenderName payoffGame = [opengame|
    inputs : visitorType, prevAttackerDecision, prevDefenderDecision;
-   feedback: [(payoffIndexer previousPayoffs 0) + calculateCurrAttackerPayoff visitorType attackerDecision defenderDecision, (payoffIndexer previousPayoffs 1) + calculateCurrAttackerPayoff visitorType attackerDecision defenderDecision];
+   feedback: [(payoffIndexer previousPayoffs 0) + attackerPayoff, (payoffIndexer previousPayoffs 1) + defenderPayoff];
    :----------------------------:
 
    inputs: visitorType, prevAttackerDecision, prevDefenderDecision;
    feedback: ;
    operation: attackerLeader attackerName actionSpaceAttacker;
    outputs: attackerDecision;
-   returns: (payoffIndexer previousPayoffs 0) + calculateCurrAttackerPayoff visitorType attackerDecision defenderDecision;
+   returns: (payoffIndexer previousPayoffs 0) + attackerPayoff;
 
    inputs: prevAttackerDecision, prevDefenderDecision;
    feedback: ;
    operation: defenderFollower defenderName actionSpaceDefender;
    outputs: defenderDecision;
-   returns: (payoffIndexer previousPayoffs 1) + calculateCurrAttackerPayoff visitorType attackerDecision defenderDecision;
+   returns: (payoffIndexer previousPayoffs 1) + defenderPayoff;
+
+   inputs: visitorType, attackerDecision, defenderDecision;
+   feedback: ;
+   operation: payoffGame;
+   outputs: attackerPayoff, defenderPayoff;
+   returns : ;
    :----------------------------:
 
    outputs: visitorType, attackerDecision, defenderDecision;
    returns: previousPayoffs;
 |]
-   where calculateCurrAttackerPayoff x y z = runPayoff params (payoffReader1 x y z)
-         calculateCurrDefenderPayoff x y z = runPayoff params (payoffReader2 x y z)
 
-stochasticTransitionGame transitionFunction payoffFn = [opengame|
 
-   inputs : dec1, dec2, oldState;
+repeatedPayoffGame params payoffReader1 payoffReader2 = [opengame|
+   inputs : visitorType, prevAttackerDecision, prevDefenderDecision;
    feedback: ;
    :----------------------------:
 
-   inputs: dec1, dec2, oldState;
+   inputs: visitorType, prevAttackerDecision, prevDefenderDecision;
    feedback: ;
-   operation: liftStochastic payoffFn;
-   outputs: newState;
+   operation: liftStochastic (\(x,y,z) -> playDeterministically (calculateCurrAttackerPayoff x y z, calculateCurrDefenderPayoff x y z));
+   outputs: payoff1, payoff2;
    returns: ;
 
    :----------------------------:
 
-   outputs: dec1, dec2, newState;
+   outputs: payoff1, payoff2;
    returns: ;
- |]
 
-stackelbergGame1Repeated distType actionSpaceAttacker attackerName actionSpaceDefender defenderName payoffReader1 payoffReader2 params= [opengame|
+ |] where calculateCurrAttackerPayoff x y z = runPayoff params (payoffReader1 x y z)
+          calculateCurrDefenderPayoff x y z = runPayoff params (payoffReader2 x y z)
+
+
+
+-- stochasticTransitionGame transitionFunction payoffReader = [opengame|
+
+--    inputs : dec1, dec2, oldState;
+--    feedback: ;
+--    :----------------------------:
+
+--    inputs: dec1, dec2, oldState;
+--    feedback: ;
+--    operation: liftStochastic ;
+--    outputs: newState;
+--    returns: ;
+
+--    :----------------------------:
+
+--    outputs: dec1, dec2, newState;
+--    returns: ;
+--  |]
+
+stackelbergGame1Repeated distType actionSpaceAttacker attackerName actionSpaceDefender defenderName payoffGame= [opengame|
    inputs : initialAttackerDecision, initialDefenderDecision;
    feedback: ;
    :----------------------------:
@@ -180,7 +209,7 @@ stackelbergGame1Repeated distType actionSpaceAttacker attackerName actionSpaceDe
 
    inputs: visitorType, initialAttackerDecision, initialDefenderDecision;
    feedback: finalPayoffs;
-   operation: repeatedStage actionSpaceAttacker attackerName actionSpaceDefender defenderName payoffReader1 payoffReader2 params;
+   operation: repeatedStage actionSpaceAttacker attackerName actionSpaceDefender defenderName payoffGame;
    outputs: passedVisitorType, attackerDecision, defenderDecision;
    returns: oldPayoffs;
 
@@ -189,3 +218,5 @@ stackelbergGame1Repeated distType actionSpaceAttacker attackerName actionSpaceDe
    outputs: passedVisitorType, attackerDecision, defenderDecision;
    returns: oldPayoffs;
  |]
+
+

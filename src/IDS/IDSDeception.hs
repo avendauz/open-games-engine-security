@@ -28,7 +28,7 @@ import           Data.Tuple.Extra (uncurry3)
 import OpenGames.Preprocessor hiding (line)
 import OpenGames.Engine.BayesianGamesNonState
 import IDS.DeceptiveModel 
-import Security.AttackerDefender (stackelbergGame1, stackelbergGame1Repeated, repeatedStage)
+import Security.AttackerDefender (stackelbergGame1, stackelbergGame1Repeated, repeatedStage, repeatedPayoffGame)
 import IDS.DeceptionPayoff (unifyPayoff, defenderPayoff, visitorPayoff)
 import IDS.DeceptionStrategies (deceptiveStrategies, repeatedDeceptiveStrategies, forSureDeceptiveStrategies, forSureRepeatedDeceptiveStrategies)
 import Security.ParameterBuilder
@@ -49,9 +49,9 @@ actionSpaceDefender = const [Regular, Honeypot]
 
 
 deceptionGame params attackerName defenderName = stackelbergGame1Repeated 
-            (distributionActive params) actionSpaceAttacker attackerName actionSpaceDefender defenderName (visitorPayoff) (defenderPayoff) params
+            (distributionActive params) actionSpaceAttacker attackerName actionSpaceDefender defenderName (repeatedPayoffGame params visitorPayoff defenderPayoff)
 
-repeatedDeceptionStage = repeatedStage actionSpaceAttacker "Alice" actionSpaceDefender "A" (visitorPayoff) (defenderPayoff)
+repeatedDeceptionStage params = repeatedStage actionSpaceAttacker "Alice" actionSpaceDefender "A" (repeatedPayoffGame params visitorPayoff defenderPayoff)
 
 doEvaluation params = 
     evaluate 
@@ -77,7 +77,20 @@ doRepeatedEvaluation params rounds =
     where strategies = forSureRepeatedDeceptiveStrategies;
 
 rounds = [0, 1 .. 5]
+activeProbabilities = [0, 0.05 .. 1.00]
 
+staticAnalysisP1 params = 
+    let [a,b] = generatePayoff $ doForSureEvaluation params
+    in head a
+
+staticAnalysisP2 params = 
+    let [a,b] = generatePayoff $ doForSureEvaluation params
+    in head b
+
+
+generateParams = map temp activeProbabilities
+payoffs = zip activeProbabilities (map staticAnalysisP1 generateParams)
+payoffs2 = zip activeProbabilities (map staticAnalysisP2 generateParams)
 p1ActivePayoff params rounds = 
     let [a,b] = generatePayoff $ doRepeatedEvaluation params rounds
     in head a
@@ -94,8 +107,8 @@ p2Payoffs params = map (p2ActivePayoff params) rounds
 plotP1Active :: DeceptionParams -> [(Integer, Double)]
 plotP1Active params = zip rounds [-20, -24,-24.8,-24.96,-24.992]
 plotP2Active params = zip rounds (p2Payoffs params)
-createAggGraph = toFile def ("graphics/aggFixPayoff.svg") $ do 
+createAggGraph = toFile def ("graphics/temp.svg") $ do 
     layout_title .= "Aggregator payoff"
     setColors [opaque black, opaque blue, opaque red]
-    plot (line "Aggregator A" [plotP1Active exampleDeceptionParams])
-    --plot (line "Aggregator B" [plotP2Active exampleDeceptionParams])
+    plot (line "Attacker" [payoffs])
+    --plot (line "Defender" [payoffs2])

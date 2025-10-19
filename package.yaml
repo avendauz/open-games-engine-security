@@ -41,6 +41,7 @@ library:
     - Examples.Markov.TestSimpleMonteCarlo
     - Examples.Markov.TestSimpleMonteCarlo.Continuation
     - IDS.IDSDeception
+    - IDS.IDSA
 dependencies:
     - base >=4.7 && <5
     - mtl
@@ -69,7 +70,7 @@ dependencies:
     - Chart
     - regex-posix
     - regex-base
-
+    - generic-random
 
 executables:
   open-games-exe:

@@ -1,5 +1,7 @@
 module Main where
-import IDS.IDSDeception
+import IDS.IDSA
+import IDS.IDSA (createMixedStratGraph)
 
 main = do
   createAggGraph
+  createMixedStratGraph

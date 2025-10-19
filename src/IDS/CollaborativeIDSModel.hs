@@ -1,15 +1,14 @@
 module IDS.CollaborativeIDSModel where 
 
 import IDS.IDSModel
-import Data.HashMap (HashMap)
+import Data.HashMap (Map)
 
 data State = Healthy | Compromised deriving (Eq, Ord, Show)
-
 
 data CollaborativeIDSParams a = CIDSParams {
     probCompromisedTransition :: Double,
     costOfDeployment :: a -> Double,
-    trustValue :: HashMap String Double,
+    trustValue :: Map String Double
 
 }
 

@@ -21,6 +21,12 @@ import OpenGames.Engine.Engine hiding (StochasticStatefulOptic
                                       )
 
 totalGameStrategies = const $ visitorStrategy ::- defenderStrategy ::- Nil
+totalGameStrategiesMixed openProb = visitorStrategy ::- defenderStrategyMixed openProb ::- Nil
+
+fixedDefenderStrat prob = visitorStrategyMixed prob ::- defenderStrategy ::- Nil
+
+testBothMixed prob1 prob2 = visitorStrategyMixed prob1 ::- defenderStrategyMixed prob2 ::- Nil 
+
 repeatedStrategies = convertVisitorStrategy visitorStrategy ::- convertDefenderStrategy defenderStrategy ::- Nil
 
 visitorStrategy :: Kleisli Stochastic VisitorType VisitorMove
@@ -29,10 +35,22 @@ visitorStrategy = Kleisli (\case {
     User -> playDeterministically Access
 })
 
+visitorStrategyMixed :: Double -> Kleisli Stochastic VisitorType VisitorMove 
+visitorStrategyMixed prob = Kleisli (\case {
+    Attacker -> distFromList [(Access, prob), (DoesNotAccess, 1- prob)];
+    User -> playDeterministically Access
+})
+
 defenderStrategy :: Kleisli Stochastic VisitorMove AggregatorMove
 defenderStrategy = Kleisli (\case {
     Access -> playDeterministically Open;
     DoesNotAccess -> playDeterministically Close;
+})
+
+defenderStrategyMixed :: Double -> Kleisli Stochastic VisitorMove AggregatorMove 
+defenderStrategyMixed openProb = Kleisli (\case {
+    Access -> distFromList [(Open, openProb), (Close, 1-openProb)];
+    DoesNotAccess -> playDeterministically Close
 })
 
 hpDefenderStrategy :: Kleisli Stochastic VisitorMove HoneypotAllocation 

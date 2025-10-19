@@ -47,7 +47,6 @@ import OpenGames.Engine.Engine hiding (StochasticStatefulOptic
                                       )
 
 import           Control.Monad.Reader hiding (lift)
-import Control.Monad.Trans.Reader
 import Data.Tuple.Extra (uncurry3)
 import GHC.Float (asinDouble)
 import Data.Bifunctor
@@ -115,7 +114,7 @@ instantiateRepeatedContext discountFactor iterator strat initialAction initialPa
 
 
 
-
+class PayoffGames a b 
 
 
 

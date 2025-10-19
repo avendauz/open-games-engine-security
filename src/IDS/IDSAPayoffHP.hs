@@ -79,7 +79,7 @@ defenderAccessPayoff :: HoneypotAllocation -> PayoffReader IDSParamsHP
 defenderAccessPayoff hp =
     do
         params <- ask
-        costOfDefense <- asks $ ($ hp ) . costOfDefense
+        costOfDefense <- asks $ ($ hp) . costOfDefense
         probDetection <- asks $ ($ hp) . probDetected
         computingResources <- asks computingResources
         computationReductionUnderAttack <- asks computationReductionUnderAttack
