@@ -54,6 +54,7 @@ attackerAccessPayoff HighInteractionHP =
         basePayoff <- asks basePayoff
         probDetected <- ($ HighInteractionHP) <$> asks probDetected
         return $ (basePayoff - costOfAttack) * (1 - probDetected) - costOfAttack * probDetected     
+        
 attackerAccessPayoff LowInteractionHP =
      do
         costOfAttack <- asks costOfAttack

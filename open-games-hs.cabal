@@ -65,6 +65,7 @@ library
       IDS.IDSAPayoffHP
       IDS.IDSAStrategies
       IDS.IDSModel
+      IDS.Temp
       OpenGames.Engine.BayesianGamesNonState
       OpenGames.Engine.ExternalEnvironment
       OpenGames.Engine.IOGames

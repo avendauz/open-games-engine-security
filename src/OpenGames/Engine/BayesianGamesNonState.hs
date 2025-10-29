@@ -99,6 +99,19 @@ dependentEpsilonDecision epsilon name ys = OpenGame {
                   in deviationsInContext epsilon name x theta strategy u (ys x)
               | (theta, x) <- support h]) ::- Nil }
 
+stackelbergDecision :: (Eq x, Show x, Ord y, Show y) => String -> (x -> [y]) -> StochasticBayesianOpenGame '[Kleisli Stochastic x y] '[[DiagnosticInfoBayesian x y]] x () y Double
+stackelbergDecision name ys = OpenGame {
+  play = \(a ::- Nil) -> let v x = do {y <- runKleisli a x; return ((), y)}
+                             u () _ = return ()
+                            in StochasticOptic v u,
+  evaluate = \(a ::- Nil) (StochasticContext h k) ->
+     (concat [ let u y = expected (do {t <- (bayes h x);
+                                       k t y})
+                   strategy = runKleisli a x
+                  in deviationsInContext 0 name x theta strategy u (ys x)
+              | (theta, x) <- support h]) ::- Nil }
+
+
 -- Branching operator
 (+++) :: forall a1 a2 b1 b2 x1 x2 s r y1 y2. (Unappend a1, Unappend a2, RepNothing b1, RepNothing b2)
       => StochasticBayesianOpenGame a1 b1 x1 s y1 r
