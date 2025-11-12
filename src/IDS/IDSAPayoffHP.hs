@@ -8,85 +8,66 @@ import           Data.Tuple.Extra (uncurry3)
 import IDS.IDSModel
 import Data.Bifunctor
 import Control.Applicative
+import IDS.IDSAPayoff
 
-instance IDSAPayoff HoneypotAllocation HoneypotAllocation where 
-    unifyPayoff params visitorType visitorMove aggMove = join bimap (runPayoff params) (visitorPayoff visitorType visitorMove aggMove,defenderPayoff visitorType visitorMove aggMove)
 
-visitorPayoff :: VisitorType -> VisitorMove -> HoneypotAllocation -> PayoffReader IDSParamsHP
-visitorPayoff = \case {
-    Attacker -> attackerPayoff ;
-    User ->  userPayoff
+visitorPayoffHP :: VisitorType -> VisitorMove -> HoneypotAllocation -> PayoffReader IDSParamsHP
+visitorPayoffHP = \case {
+    Attacker -> attackerPayoffHP ;
+    User ->  userPayoffHP
 }
 
-defenderPayoff :: VisitorType -> VisitorMove -> HoneypotAllocation -> PayoffReader IDSParamsHP
-defenderPayoff = \case {
-    Attacker -> defenderUnderAttackPayoff ;
-    User -> defenderNormalPayoff;
+defenderPayoffHP :: VisitorType -> VisitorMove -> HoneypotAllocation -> PayoffReader IDSParamsHP
+defenderPayoffHP = \case {
+    Attacker -> defenderUnderAttackPayoffHP;
+    User -> defenderNormalPayoffHP;
 }
 
 
-attackerPayoff :: VisitorMove -> HoneypotAllocation -> PayoffReader IDSParamsHP
-attackerPayoff Access hp = attackerAccessPayoff hp
-attackerPayoff DoesNotAccess HighInteractionHP = (* (-1)) <$> attackerAccessPayoff HighInteractionHP
-attackerPayoff DoesNotAccess LowInteractionHP = (* (-1.5)) <$> attackerAccessPayoff LowInteractionHP
-attackerPayoff DoesNotAccess Normal = (* (-2.5)) <$> attackerAccessPayoff Normal
+attackerPayoffHP :: VisitorMove -> HoneypotAllocation -> PayoffReader IDSParamsHP
+attackerPayoffHP Access hp = attackerAccessPayoffHP hp
+attackerPayoffHP DoesNotAccess HighInteractionHP = (* (-1)) <$> attackerAccessPayoffHP HighInteractionHP
+attackerPayoffHP DoesNotAccess LowInteractionHP = (* (-1.5)) <$> attackerAccessPayoffHP LowInteractionHP
+attackerPayoffHP DoesNotAccess Normal = (* (-2.5)) <$> attackerAccessPayoffHP Normal
 
-userPayoff :: VisitorMove -> HoneypotAllocation -> PayoffReader IDSParamsHP
-userPayoff Access HighInteractionHP = do
-    computingResources <- asks computingResources
-    costOfDefense <- ($ HighInteractionHP ) <$> asks costOfDefense
-    return $ (computingResources - costOfDefense) / computingResources
-userPayoff Access LowInteractionHP = do
-    computingResources <- asks computingResources
-    costOfDefense <- ($ LowInteractionHP ) <$> asks costOfDefense
-    return $ (computingResources - costOfDefense) / computingResources
-userPayoff Access Normal = do
-    computingResources <- asks computingResources
-    costOfDefense <- ($ Normal ) <$> asks costOfDefense
-    return $ (computingResources - costOfDefense) / computingResources
-userPayoff _ _ = return 0
+augmentCostOfDefense :: HoneypotAllocation -> (PayoffReader IDSParams -> PayoffReader IDSParams) 
+augmentCostOfDefense HighInteractionHP = local (\params -> params {costOfDefense = costOfDefense params * 2})
+augmentCostOfDefense LowInteractionHP = local (\params -> params {costOfDefense = costOfDefense params * 1.5})
+augmentCostOfDefense Normal = id
+
+augmentComputingResources :: HoneypotAllocation -> (PayoffReader IDSParams -> PayoffReader IDSParams)
+augmentComputingResources HighInteractionHP = local (\params -> params {computingResources = computingResources params * 0.7})
+augmentComputingResources LowInteractionHP = local (\params -> params {computingResources = computingResources params * 0.5})
+augmentComputingResources Normal = id
+-- have an informed individual check this separately
+
+augmentDetectionProb :: HoneypotAllocation -> (PayoffReader IDSParams -> PayoffReader IDSParams)
+augmentDetectionProb HighInteractionHP = local (\params -> params {probDetected = 0.8})
+augmentDetectionProb LowInteractionHP = local (\params -> params {probDetected = 0.65})
+augmentDetectionProb Normal = local (\params -> params {probDetected = 0.5})
 
 
-attackerAccessPayoff :: HoneypotAllocation -> PayoffReader IDSParamsHP
-attackerAccessPayoff HighInteractionHP =
-     do
-        costOfAttack <- asks costOfAttack
-        basePayoff <- asks basePayoff
-        probDetected <- ($ HighInteractionHP) <$> asks probDetected
-        return $ (basePayoff - costOfAttack) * (1 - probDetected) - costOfAttack * probDetected     
-        
-attackerAccessPayoff LowInteractionHP =
-     do
-        costOfAttack <- asks costOfAttack
-        basePayoff <- asks basePayoff
-        probDetected <- ($ LowInteractionHP) <$> asks probDetected
-        return $ (basePayoff - costOfAttack) * (1 - probDetected) - costOfAttack * probDetected    
-attackerAccessPayoff Normal =
-     do
-        costOfAttack <- asks costOfAttack
-        basePayoff <- asks basePayoff
-        probDetected <- ($ Normal) <$> asks probDetected
-        return $ (basePayoff - costOfAttack) * (1 - probDetected) - costOfAttack * probDetected    
 
-defenderUnderAttackPayoff :: VisitorMove -> HoneypotAllocation -> PayoffReader IDSParamsHP
-defenderUnderAttackPayoff Access hp = defenderAccessPayoff hp
-defenderUnderAttackPayoff DoesNotAccess _ = pure 0
 
-defenderNormalPayoff :: VisitorMove -> HoneypotAllocation -> PayoffReader IDSParamsHP
-defenderNormalPayoff Access hp =  (-) <$> asks computingResources <*> asks (($ hp) . costOfDefense)
-defenderNormalPayoff DoesNotAccess _ = asks $ (* (-1)) . computingResources
+userPayoffHP :: VisitorMove -> HoneypotAllocation -> PayoffReader IDSParamsHP
+userPayoffHP Access allocation = augmentCostOfDefense allocation $ userPayoff Access Open
+userPayoffHP _ _ = return 0
 
-defenderAccessPayoff :: HoneypotAllocation -> PayoffReader IDSParamsHP
-defenderAccessPayoff hp =
-    do
-        params <- ask
-        costOfDefense <- asks $ ($ hp) . costOfDefense
-        probDetection <- asks $ ($ hp) . probDetected
-        computingResources <- asks computingResources
-        computationReductionUnderAttack <- asks computationReductionUnderAttack
-        return $ (computingResources - costOfDefense) * (probDetection + (1 - probDetection) * computationReductionUnderAttack)
 
-calculateExpectedValueOfAttack :: HoneypotAllocation -> IDSParamsHP -> Double
-calculateExpectedValueOfAttack hp params =
-   attackImpact params * (basePayoff params - costOfAttack params) * (1 - probDetected params hp)
-   - costOfAttack params * probDetected params hp
+
+attackerAccessPayoffHP :: HoneypotAllocation -> PayoffReader IDSParamsHP
+attackerAccessPayoffHP allocation = augmentDetectionProb allocation $ attackerAccessPayoff 
+
+defenderUnderAttackPayoffHP :: VisitorMove -> HoneypotAllocation -> PayoffReader IDSParamsHP
+defenderUnderAttackPayoffHP Access hp = (augmentCostOfDefense hp . augmentDetectionProb hp) defenderAccessPayoff 
+defenderUnderAttackPayoffHP DoesNotAccess _ = pure 0
+
+defenderNormalPayoffHP :: VisitorMove -> HoneypotAllocation -> PayoffReader IDSParamsHP
+defenderNormalPayoffHP Access hp =  augmentCostOfDefense hp $ asks ((-) . computingResources) <*> asks costOfDefense
+defenderNormalPayoffHP DoesNotAccess _ = asks $ (* (-1)) . computingResources
+
+
+-- calculateExpectedValueOfAttack :: HoneypotAllocation -> IDSParamsHP -> Double
+-- calculateExpectedValueOfAttack hp params =
+--    attackImpact params * (basePayoff params - costOfAttack params) * (1 - probDetected params hp)
+--    - costOfAttack params * probDetected params hp

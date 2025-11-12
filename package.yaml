@@ -71,6 +71,7 @@ dependencies:
     - regex-posix
     - regex-base
     - generic-random
+    - hspec
 
 executables:
   open-games-exe:

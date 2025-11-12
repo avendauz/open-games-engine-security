@@ -63,6 +63,7 @@ library
       IDS.HierarchalIDSModel
       IDS.IDSAPayoff
       IDS.IDSAPayoffHP
+      IDS.IDSASpec
       IDS.IDSAStrategies
       IDS.IDSModel
       IDS.Temp
@@ -72,6 +73,7 @@ library
       Security.AttackerDefender
       Security.Evaluator
       Security.ParameterBuilder
+      Security.Payoffs
       Paths_open_games_hs
   hs-source-dirs:
       src
@@ -90,6 +92,7 @@ library
     , hashable
     , hashmap
     , haskeline
+    , hspec
     , lens
     , mtl
     , mwc-random
@@ -128,6 +131,7 @@ executable open-games-exe
     , hashable
     , hashmap
     , haskeline
+    , hspec
     , lens
     , mtl
     , mwc-random

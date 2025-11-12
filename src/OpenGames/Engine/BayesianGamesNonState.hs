@@ -74,6 +74,21 @@ deviationsInContext epsilon name x theta strategy u ys
   where strategicPayoff = expected (fmap u strategy)
         (optimalPlay, optimalPayoff) = maximumBy (comparing snd) [(y, u y) | y <- ys]
 
+stackelbergDeviations :: (Show x, Show y, Ord y, Show theta)
+                    => Double -> Agent -> x -> theta -> Stochastic y -> (y -> Double) -> [y] ->  [DiagnosticInfoBayesian x y]
+stackelbergDeviations epsilon name x theta strategy u ys
+  = [DiagnosticInfoBayesian { equilibrium = strategicPayoff >= optimalPayoff - epsilon,
+                      player = name,
+                      payoff = strategicPayoff,
+                      optimalMove = optimalPlay,
+                      optimalPayoff = optimalPayoff,
+                      context = u ,
+                      state = x,
+                      unobservedState = show theta,
+                      strategy = strategy
+                      }]
+  where strategicPayoff = expected (fmap u strategy)
+        (optimalPlay, optimalPayoff) = maximumBy (comparing snd) [(y, u y) | y <- ys]
 
 dependentDecision :: (Eq x, Show x, Ord y, Show y) => String -> (x -> [y]) -> StochasticBayesianOpenGame '[Kleisli Stochastic x y] '[[DiagnosticInfoBayesian x y]] x () y Double
 dependentDecision name ys = OpenGame {

@@ -57,7 +57,11 @@ type GeneratePayoffReader a b = a -> PayoffReader b
 runPayoff :: a -> PayoffReader a -> Double
 runPayoff params reader = runReader reader params
 
-instantiateContext f = StochasticContext (pure ((), ())) (\_ x -> playDeterministically $ f x)
+instantiateContext f g params = 
+  StochasticContext (pure ((), ())) (\_ x -> playDeterministically $ h x)
+    where h x = join bimap (runPayoff params) (uncurry3 f x, uncurry3 g x)
+
+
 
 bayes :: (Eq y) => Stochastic (x, y) -> y -> Stochastic x
 bayes a y = mapMaybe (\(x, y') -> if y' == y then Just x else Nothing) a

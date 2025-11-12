@@ -11,11 +11,6 @@ import Control.Applicative
 -- payoff module shouldn't know anything about open games ... 
 
 
-instance IDSAPayoff () AggregatorMove where 
-    unifyPayoff params visitorType visitorMove aggMove = join bimap (runPayoff params) (visitorPayoff visitorType visitorMove aggMove,defenderPayoff visitorType visitorMove aggMove)
-
-
-
 visitorPayoff :: VisitorType -> VisitorMove -> AggregatorMove -> PayoffReader IDSParamsSimple
 visitorPayoff = \case {
     Attacker -> attackerPayoff ;
@@ -33,17 +28,17 @@ attackerPayoff :: VisitorMove -> AggregatorMove -> PayoffReader IDSParamsSimple
 attackerPayoff Access Open = attackerAccessPayoff
 attackerPayoff Access Close = asks costOfAttack
 attackerPayoff DoesNotAccess Open = (* (-1)) <$> attackerAccessPayoff
-attackerPayoff DoesNotAccess Close = local id ()
+attackerPayoff DoesNotAccess Close = return 0
 
 userPayoff :: VisitorMove -> AggregatorMove -> PayoffReader IDSParamsSimple
-userPayoff Access Open = local (testUserPayoff) (do
+userPayoff Access Open = do
     computingResources <- asks computingResources
-    costOfDefense <- asks $ ($ ()) . costOfDefense
-    return (computingResources, costOfDefense))
+    costOfDefense <- asks costOfDefense
+    return 0
 userPayoff _ _ = return 0
 
-anotherUserPayoff :: VisitorMove -> AggregatorMove -> Double 
-anotherUserPayoff Access Open = testUserPayoff 
+-- anotherUserPayoff :: VisitorMove -> AggregatorMove -> Double 
+-- anotherUserPayoff Access Open = testUserPayoff 
 
 testUserPayoff :: (Double,Double) -> Double 
 testUserPayoff (a,b) = (a - b) / a
@@ -54,8 +49,9 @@ attackerAccessPayoff =
      do
         costOfAttack <- asks costOfAttack
         basePayoff <- asks basePayoff
-        probDetected <- asks $ ($ ()) . probDetected
-        return $ (basePayoff - costOfAttack) * (1 - probDetected) - costOfAttack * probDetected           -- room to add lines i.e. here we can put more specific parameter changes
+        probDetected <- asks probDetected
+        return $ (basePayoff - costOfAttack) * (1 - probDetected) - costOfAttack * probDetected     
+
 
 defenderUnderAttackPayoff :: VisitorMove -> AggregatorMove -> PayoffReader IDSParamsSimple
 defenderUnderAttackPayoff Access Open = defenderAccessPayoff
@@ -70,17 +66,16 @@ defenderNormalPayoff _ Close = pure 0
 defenderAccessPayoff :: PayoffReader IDSParamsSimple
 defenderAccessPayoff =
     do
-        params <- ask
-        costOfDefense <- asks (($ ()) . costOfDefense)
-        probDetection <- asks (($ ()) . probDetected)
+        costOfDefense <- asks costOfDefense
+        probDetection <- asks probDetected
         computingResources <- asks $ computingResources
         computationReductionUnderAttack <- asks computationReductionUnderAttack
         return $ (computingResources - costOfDefense) * (probDetection + (1 - probDetection ) * computationReductionUnderAttack)
 
-calculateExpectedValueOfAttack :: IDSParamsSimple -> Double
-calculateExpectedValueOfAttack params =
-   attackImpact params * (basePayoff params - costOfAttack params) * (1 - probDetected params ())
-   - costOfAttack params * probDetected params ()
+-- calculateExpectedValueOfAttack :: IDSParamsSimple -> Double
+-- calculateExpectedValueOfAttack params =
+--    attackImpact params * (basePayoff params - costOfAttack params) * (1 - probDetected params ())
+--    - costOfAttack params * probDetected params ()
 
 
 -- TODO: Add quickcheck property checks here for payoff and parameter checks

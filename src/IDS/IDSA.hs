@@ -31,6 +31,7 @@ import Security.ParameterBuilder
 import Security.AttackerDefender
 import Control.Monad.Reader hiding (lift, void)
 import IDS.IDSAPayoff (visitorPayoff, defenderPayoff)
+import IDS.IDSAPayoffHP
 import IDS.IDSModel
 import IDS.IDSAStrategies
 import Graphics.Rendering.Chart.Easy hiding (Close)
@@ -43,24 +44,33 @@ distributionUser =
 actionSpaceDefender = const [Open, Close]
 actionSpaceAttacker = const [Access, DoesNotAccess]
 
+actionSpaceHPDefender = const [HighInteractionHP, LowInteractionHP, Normal]
+
 ids params attackerName defenderName = stackelbergGame1Repeated 
             (distributionUser params) actionSpaceAttacker attackerName actionSpaceDefender defenderName (repeatedPayoffGame params visitorPayoff defenderPayoff)
 
+idsAGame params = stackelbergGame1 (distributionUser params) actionSpaceAttacker "Alice" actionSpaceDefender  "A"
+idsHPGame params = stackelbergGame1 (distributionUser params) actionSpaceAttacker "Alice" actionSpaceHPDefender  "A"
 idsRepeatedStage params = repeatedStage actionSpaceAttacker "Alice" actionSpaceDefender "A" (repeatedPayoffGame params visitorPayoff defenderPayoff)
 doEvaluation ::
-                    IDSParams ()
+                    IDSParams
                     -> List
                          '[[DiagnosticInfoBayesian VisitorType VisitorMove],
                            [DiagnosticInfoBayesian VisitorMove AggregatorMove]]
 doEvaluation params = evaluate 
     (stackelbergGame1 (distributionUser params) actionSpaceAttacker "Alice" actionSpaceDefender  "A") 
       (totalGameStrategies params) 
-        ((instantiateContext . uncurry3 . unifyPayoff) params)
+        (instantiateContext visitorPayoff defenderPayoff params)
+
+doHPEvaluation params = evaluate 
+    (stackelbergGame1 (distributionUser params) actionSpaceAttacker "Alice" actionSpaceHPDefender  "A") 
+      (totalHPGameStrategies params) 
+        (instantiateContext visitorPayoffHP defenderPayoffHP params)
 
 testDefenderStratAgainstSneakyAttacker p1 p2 = evaluate 
     (stackelbergGame1 (distributionUser exampleData) actionSpaceAttacker "Alice" actionSpaceDefender  "A") 
       (testBothMixed p1 p2 )
-        ((instantiateContext . uncurry3 . unifyPayoff) exampleData)
+        (instantiateContext visitorPayoff defenderPayoff exampleData)
 
 --doSomething = or $ map (generateEquilibrium . (uncurry3 testDefenderStratAgainstSneakyAttacker)) [(a,b,c) | a <- priorAttacker, b <- priorAttacker, c <- [exampleData]]
 
@@ -89,14 +99,14 @@ generateParams = map probAttacker priorAttacker
 payoffs = zip priorAttacker (map getAttackerPayoff generateParams)
 payoffs1 = zip priorAttacker (map getDefenderPayoff generateParams)
 runExamples ::
-                    IDSParams () -> Double 
+                    IDSParams -> Double 
                     -> List
                          '[[DiagnosticInfoBayesian VisitorType VisitorMove],
                            [DiagnosticInfoBayesian VisitorMove AggregatorMove]]
 runExamples params p = evaluate 
     (stackelbergGame1 (distributionUser params) actionSpaceAttacker "Alice" actionSpaceDefender  "A") 
       (totalGameStrategiesMixed p) 
-        ((instantiateContext . uncurry3 . unifyPayoff) params)
+        (instantiateContext visitorPayoff defenderPayoff params)
 
 evaluateRunExamples = map (generateEquilibrium . runExamples exampleData) priorAttacker
 

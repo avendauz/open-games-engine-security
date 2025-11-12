@@ -7,29 +7,32 @@ import Test.QuickCheck
 import Graphics.Rendering.Chart.Easy
 import Graphics.Rendering.Chart.Backend.Diagrams(toFile)
 
-class IDSAPayoff a b where 
-    unifyPayoff :: IDSParams a -> VisitorType -> VisitorMove -> b -> (Double, Double)
+{-
+Problem statement: given an unknown visitor type and observing a visitor move, 
+for different defensive action spaces determine the payoff. Here, b is a defensive action space
 
-data IDSParams a = IDSParams {
-   probDetected :: a -> Double,
+-}
+
+data IDSParams = IDSParams {
+   probDetected :: Double,
    costOfAttack :: Double,
-   costOfDefense :: a -> Double,
+   costOfDefense :: Double,
    attackImpact :: Double,
    priorDistributionAttacker :: Double,
    computingResources :: Double,
    basePayoff :: Double,
    computationReductionUnderAttack :: Double
-} 
+} deriving Show
 
-type IDSParamsSimple = IDSParams ()
+type IDSParamsSimple = IDSParams 
 
-type IDSParamsHP = IDSParams HoneypotAllocation
+type IDSParamsHP = IDSParams
 
-exampleData :: IDSParams ()
+exampleData :: IDSParams
 exampleData = IDSParams {
-    probDetected = const 0.2,
+    probDetected = 0.2,
     costOfAttack = 20,
-    costOfDefense = const 10,
+    costOfDefense = 10,
     attackImpact = 10,
     priorDistributionAttacker = 0.5,
     computingResources = 100,
@@ -38,9 +41,9 @@ exampleData = IDSParams {
 }
 
 probAttacker prob = IDSParams {
-    probDetected = const 0.2,
+    probDetected = 0.2,
     costOfAttack = 20,
-    costOfDefense = const 10,
+    costOfDefense = 10,
     attackImpact = 10,
     priorDistributionAttacker = prob,
     computingResources = 100,
@@ -49,7 +52,7 @@ probAttacker prob = IDSParams {
 }
 
 
-data HoneypotAllocation = HighInteractionHP | LowInteractionHP | Normal deriving (Eq, Show)
+data HoneypotAllocation = HighInteractionHP | LowInteractionHP | Normal deriving (Eq, Ord, Show)
 
 data VisitorMove = Access | DoesNotAccess deriving (Eq,Ord, Show)
 
@@ -58,14 +61,14 @@ data VisitorType = Attacker | User deriving (Eq, Ord, Show)
 data AggregatorMove = Open | Close deriving (Eq, Ord, Show)
 
 
-totalGen :: Gen (IDSParams ())
+totalGen :: Gen (IDSParams)
 totalGen = 
     do 
         probDetected <- choose (0,1)
         return IDSParams {
-                probDetected = const probDetected,
+                probDetected = probDetected,
                 costOfAttack = 20,
-                costOfDefense = const 10,
+                costOfDefense = 10,
                 attackImpact = 10,
                 priorDistributionAttacker = 0.5,
                 computingResources = 100,
@@ -73,6 +76,11 @@ totalGen =
                 computationReductionUnderAttack = 70
         }
 
-instance Arbitrary (IDSParams ()) where 
+-- hpGen :: Gen (IDSParams HoneypotAllocation)
+-- hpGen = 
+--     do 
+
+
+instance Arbitrary (IDSParams) where 
     arbitrary = totalGen
 
