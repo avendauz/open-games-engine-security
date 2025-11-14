@@ -9,12 +9,12 @@ import Control.Applicative
 import Data.Bifunctor
 -- satisfying: 
 
-unifyPayoff :: DeceptionParams -> DeceptiveType -> AttackerDeceptiveMove -> DefenderRouting -> (Double, Double)
-unifyPayoff params deceptionType deceptionMove defensiveRouting = 
-    join bimap (runPayoff params) (visitorPayoff deceptionType deceptionMove defensiveRouting, defenderPayoff deceptionType deceptionMove defensiveRouting)
+-- unifyPayoff :: DeceptionParams -> DeceptiveType -> AttackerDeceptiveMove -> DefenderRouting -> (Double, Double)
+-- unifyPayoff params deceptionType deceptionMove defensiveRouting = 
+--     join bimap (runPayoff params) (visitorPayoff deceptionType deceptionMove defensiveRouting, defenderPayoff deceptionType deceptionMove defensiveRouting)
 
-visitorPayoff :: DeceptiveType -> AttackerDeceptiveMove -> DefenderRouting -> PayoffReader DeceptionParams
-visitorPayoff = \case {
+visitorPayoffDeceptive :: DeceptiveType -> AttackerDeceptiveMove -> DefenderRouting -> PayoffReader DeceptionParams
+visitorPayoffDeceptive = \case {
     Active -> activePayoff ;
     Passive -> passivePayoff
 }
@@ -32,8 +32,8 @@ passivePayoff Normal Regular = asks $ (*(-1)) <$> attackerSuccess
 passivePayoff Normal Honeypot = pure 0
 
 
-defenderPayoff :: DeceptiveType -> AttackerDeceptiveMove -> DefenderRouting -> PayoffReader DeceptionParams
-defenderPayoff = \case {
+defenderPayoffDeceptive :: DeceptiveType -> AttackerDeceptiveMove -> DefenderRouting -> PayoffReader DeceptionParams
+defenderPayoffDeceptive = \case {
     Active -> defenderAgainstActivePayoff;
     Passive -> defenderAgainstPassivePayoff
 }

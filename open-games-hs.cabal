@@ -57,6 +57,7 @@ library
       IDS.CollaborativeIDS
       IDS.CollaborativeIDSModel
       IDS.DeceptionPayoff
+      IDS.DeceptionSpec
       IDS.DeceptionStrategies
       IDS.DeceptiveModel
       IDS.HierarchalIDS

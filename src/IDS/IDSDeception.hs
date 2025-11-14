@@ -29,10 +29,11 @@ import OpenGames.Preprocessor hiding (line)
 import OpenGames.Engine.BayesianGamesNonState
 import IDS.DeceptiveModel 
 import Security.AttackerDefender (stackelbergGame1, stackelbergGame1Repeated, repeatedStage, repeatedPayoffGame)
-import IDS.DeceptionPayoff (unifyPayoff, defenderPayoff, visitorPayoff)
+import IDS.DeceptionPayoff 
 import IDS.DeceptionStrategies (deceptiveStrategies, repeatedDeceptiveStrategies, forSureDeceptiveStrategies, forSureRepeatedDeceptiveStrategies)
 import Security.ParameterBuilder
 import Test.QuickCheck
+import IDS.IDSAPayoffHP (visitorPayoffHP, defenderPayoffHP)
 {-
 Deceptive Attack and Defense Game in
 Honeypot-Enabled Networks for
@@ -49,15 +50,15 @@ actionSpaceDefender = const [Regular, Honeypot]
 
 
 deceptionGame params attackerName defenderName = stackelbergGame1Repeated 
-            (distributionActive params) actionSpaceAttacker attackerName actionSpaceDefender defenderName (repeatedPayoffGame params visitorPayoff defenderPayoff)
+            (distributionActive params) actionSpaceAttacker attackerName actionSpaceDefender defenderName (repeatedPayoffGame params visitorPayoffDeceptive defenderPayoffDeceptive)
 
-repeatedDeceptionStage params = repeatedStage actionSpaceAttacker "Alice" actionSpaceDefender "A" (repeatedPayoffGame params visitorPayoff defenderPayoff)
+repeatedDeceptionStage params = repeatedStage actionSpaceAttacker "Alice" actionSpaceDefender "A" (repeatedPayoffGame params visitorPayoffDeceptive defenderPayoffDeceptive)
 
 doEvaluation params = 
     evaluate 
         (stackelbergGame1 (distributionActive params) actionSpaceAttacker "Alice" actionSpaceDefender "A") 
             (deceptiveStrategies . deviation $ params) 
-                ((instantiateContext . uncurry3 . unifyPayoff) params)
+                (instantiateContext visitorPayoffDeceptive defenderPayoffDeceptive params)
 
 propGame :: DeceptionParams -> Bool
 propGame params = generateEquilibrium $ doEvaluation params 
@@ -66,7 +67,7 @@ doForSureEvaluation params =
     evaluate 
         (stackelbergGame1 (distributionActive params) actionSpaceAttacker "Alice" actionSpaceDefender "A") 
             (forSureDeceptiveStrategies) 
-                ((instantiateContext . uncurry3 . unifyPayoff) params)
+                (instantiateContext visitorPayoffDeceptive defenderPayoffDeceptive params)
                 
 
 doRepeatedEvaluation params rounds = 
