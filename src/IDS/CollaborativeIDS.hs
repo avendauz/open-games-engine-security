@@ -93,7 +93,7 @@ doubleRepeatedStage idsParams deceptionParams = [opengame|
 
 
 
-doCollaborativeIDS :: IDSParams () -> DeceptionParams -> IO ()
+doCollaborativeIDS :: IDSParams -> DeceptionParams -> IO ()
 doCollaborativeIDS idsParams deceptionParams = generateOutput $ 
     evaluate 
         (twoIDS idsParams deceptionParams)

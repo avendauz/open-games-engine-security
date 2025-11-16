@@ -65,6 +65,7 @@ library
       IDS.IDSAPayoff
       IDS.IDSAPayoffHP
       IDS.IDSASpec
+      IDS.IDSAStochastic
       IDS.IDSAStrategies
       IDS.IDSModel
       IDS.Temp
@@ -72,6 +73,7 @@ library
       OpenGames.Engine.ExternalEnvironment
       OpenGames.Engine.IOGames
       Security.AttackerDefender
+      Security.AttackerDefenderRepeated
       Security.Evaluator
       Security.ParameterBuilder
       Security.Payoffs
