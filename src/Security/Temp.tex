@@ -1,3 +1,4 @@
+import OpenGames.Engine.BayesianGamesNonState (playDeterministically)
 %% ODER: format ==         = "\mathrel{==}"
 %% ODER: format /=         = "\neq "
 %
@@ -257,79 +258,16 @@
 \makeatother
 \EndFmtInput
 %
-\begin{section}
 
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{4}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\Varid{stackelbergGame1}\;\Varid{distType}\;\Varid{actionSpaceAttacker}\;\Varid{attackerName}\;\Varid{actionSpaceDefender}\;\Varid{defenderName}\mathrel{=}[\mskip1.5mu \Varid{opengame}\mid {}\<[E]%
+\>[B]{}\Varid{augmentDetectionProb}\mathbin{::}\Conid{HoneypotDeploymentMove}\to (\Conid{PayoffReader}\;\Conid{IDSParams}\to \Conid{PayoffReader}\;\Conid{IDSParams}){}\<[E]%
 \\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{inputs}\mathbin{:};{}\<[E]%
+\>[B]{}\Varid{augmentDetectionProb}\;\Conid{HighInteractionHP}\mathrel{=}\Varid{local}\;(\lambda \Varid{params}\to \Varid{params}\;\{\mskip1.5mu \Varid{probDetected}\mathrel{=}\Varid{probDetected}\;\Varid{params}\mathbin{*}\mathrm{1.4}\mskip1.5mu\}){}\<[E]%
 \\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{feedback}\mathbin{:};{}\<[E]%
+\>[B]{}\Varid{augmentDetectionProb}\;\Conid{LowInteractionHP}\mathrel{=}\Varid{local}\;(\lambda \Varid{params}\to \Varid{params}\;\{\mskip1.5mu \Varid{probDetected}\mathrel{=}\Varid{probDetected}\;\Varid{params}\mathbin{*}\mathrm{1.25}\mskip1.5mu\}){}\<[E]%
 \\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\mathbin{:----------------------------:}{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{inputs}\mathbin{:};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{feedback}\mathbin{:};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{operation}\mathbin{:}\Varid{nature}\mathbin{\$}\Varid{distType};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{outputs}\mathbin{:}\Varid{visitorType};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{returns}\mathbin{:};{}\<[E]%
-\\[\blanklineskip]%
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{inputs}\mathbin{:}\Varid{visitorType};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{feedback}\mathbin{:};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{operation}\mathbin{:}\Varid{attackerLeader}\;\Varid{attackerName}\;\Varid{actionSpaceAttacker};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{outputs}\mathbin{:}\Varid{attackerDecision};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{returns}\mathbin{:}\Varid{attackerPayoff};{}\<[E]%
-\\[\blanklineskip]%
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{inputs}\mathbin{:}\Varid{attackerDecision};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{feedback}\mathbin{:};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{operation}\mathbin{:}\Varid{defenderFollower}\;\Varid{defenderName}\;\Varid{actionSpaceDefender};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{outputs}\mathbin{:}\Varid{defenderDecision};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{returns}\mathbin{:}\Varid{defenderPayoff};{}\<[E]%
-\\[\blanklineskip]%
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\mathbin{:----------------------------:}{}\<[E]%
-\\[\blanklineskip]%
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{outputs}\mathbin{:}\Varid{visitorType},\Varid{attackerDecision},\Varid{defenderDecision};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{returns}\mathbin{:}\Varid{attackerPayoff},\Varid{defenderPayoff};{}\<[E]%
-\\[\blanklineskip]%
-\>[B]{}\mid \mskip1.5mu]{}\<[E]%
+\>[B]{}\Varid{augmentDetectionProb}\;\Conid{Normal}\mathrel{=}\Varid{id}{}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
-\begin{subsection}
-Some other subsection

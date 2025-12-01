@@ -51,6 +51,17 @@ probAttacker prob = IDSParams {
     computationReductionUnderAttack = 70
 }
 
+probDetectedParams prob =  IDSParams {
+    probDetected = prob,
+    costOfAttack = 20,
+    costOfDefense = 10,
+    attackImpact = 10,
+    priorDistributionAttacker = 0.5,
+    computingResources = 100,
+    basePayoff = 100,
+    computationReductionUnderAttack = 70
+}
+
 
 data HoneypotAllocation = HighInteractionHP | LowInteractionHP | Normal deriving (Eq, Ord, Show)
 

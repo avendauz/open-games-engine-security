@@ -123,7 +123,7 @@ stackelbergDecision name ys = OpenGame {
      (concat [ let u y = expected (do {t <- (bayes h x);
                                        k t y})
                    strategy = runKleisli a x
-                  in deviationsInContext 0 name x theta strategy u (ys x)
+                  in stackelbergDeviations 0 name x theta strategy u (ys x)
               | (theta, x) <- support h]) ::- Nil }
 
 
@@ -171,6 +171,11 @@ liftStochastic :: (x -> Stochastic y) -> StochasticBayesianOpenGame '[] '[] x ()
 liftStochastic f = OpenGame {
   play = \Nil -> StochasticOptic (\x -> do {y <- f x; return ((), y)}) (\() () -> return ()),
   evaluate = \_ _ -> Nil}
+
+-- liftContinuation :: StochasticOptic () () () ()-> StochasticBayesianOpenGame '[] '[] (Kleisli Stochastic a y, a) () y ()
+-- liftContinuation optic = OpenGame {
+--   play = \Nil -> optic,
+--   evaluate = \_ _ -> Nil}
 
 -- Support functionality for stochastic processes (also interface to the probability module in use)
 

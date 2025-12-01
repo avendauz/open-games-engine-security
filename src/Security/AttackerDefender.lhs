@@ -1,35 +1,35 @@
 %include polycode.fmt
 \begin{section}
 
-Something about the code here for defender follower
-
 \begin{code}
+stackelbergGame1 distType actionSpaceAttacker attackerName actionSpaceDefender defenderName = [opengame|
+   inputs : ;
+   feedback: ;
+   :----------------------------:
+   inputs: ;
+   feedback: ;
+   operation: nature $ distType;
+   outputs: visitorType;
+   returns: ;
 
-defenderFollower :: (Ord b, Show a, Show b, Eq a) => String -> (a -> [b]) -> OpenGame
-     StochasticOptic
-     StochasticContext
-     '[Kleisli Stochastic a b]
-     '[[DiagnosticInfoBayesian a b]]
-     a
-     ()
-     b
-     Double
-defenderFollower defenderName getActionSpace = [opengame|
+   inputs: visitorType;
+   feedback: ;
+   operation: attackerLeader attackerName actionSpaceAttacker;
+   outputs: attackerDecision;
+   returns: attackerPayoff;
 
-   inputs    :  attackerDecision;
-   feedback  :  ;
+   inputs: attackerDecision;
+   feedback: ;
+   operation: defenderFollower defenderName actionSpaceDefender;
+   outputs: defenderDecision;
+   returns: defenderPayoff;
 
    :----------------------------:
-   inputs    : attackerDecision;
-   feedback  :      ;
-   operation : dependentDecision defenderName getActionSpace;
-   outputs   : defenderDecision;
-   returns   : defenderPayoff ;
-   :----------------------------:
 
-   outputs   : defenderDecision;
-   returns   : defenderPayoff;
-|]
+   outputs: visitorType, attackerDecision, defenderDecision;
+   returns: attackerPayoff, defenderPayoff;
+
+ |]
 
 \end{code}
 \begin{subsection}

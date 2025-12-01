@@ -4,8 +4,11 @@
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE TypeSynonymInstances #-}
 {-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE FlexibleContexts #-}
+
 module IDS.Temp where 
 
 import OpenGames.Engine.Engine hiding (StochasticStatefulOptic
@@ -24,64 +27,187 @@ import OpenGames.Engine.Engine hiding (StochasticStatefulOptic
                                       )
 
 import OpenGames.Preprocessor
-import OpenGames.Engine.BayesianGames 
+import OpenGames.Engine.BayesianGamesNonState
+    ( dependentDecision,
+      distFromList,
+      fromFunctions,
+      playDeterministically,
+      uniformDist )
+import Security.ParameterBuilder
+-- import Numeric.Probability.Distribution hiding (lift)
 
 data AttackerMove = Cheat | NotCheat deriving (Eq, Ord, Show)
-
 data DefenderMove = Inspect | NoInspect deriving (Eq, Ord, Show)
-
+data DefenderType = Aggressive | Passive deriving (Eq, Ord,Show)
 defenderStrat = Kleisli (const $ distFromList [(Inspect, 0.1), (NoInspect, 0.9)])
+offDefenderStrat = Kleisli (const $ distFromList [(Inspect, 0.05), (NoInspect, 0.95)])
 --defenderStrat = Kleisli (const $ playDeterministically Inspect)
 attackerStrat = Kleisli (const $ distFromList [(Cheat, 0.2), (NotCheat, 0.8)])
 --attackerStrat = Kleisli (const $ playDeterministically Cheat)
 
 attackerStratStack = Kleisli (const $ playDeterministically NotCheat)
 
-type StrategiesType = Kleisli Stochastic () DefenderMove
+type DefenderStrategies = Kleisli Stochastic DefenderType DefenderMove
+type ReactionType = Kleisli Stochastic DefenderMove AttackerMove
 
-instance Show StrategiesType where 
+
+instance Show DefenderStrategies where 
   show (Kleisli f) = show "my strategy"
 
 generateStrat p = Kleisli (const $ distFromList [(Inspect, p), (NoInspect, 1-p)])
 
 --generateDistribution :: [Stochastic StrategiesType]
-generateDistribution = uniformDist $ map generateStrat [0.1, 0.2 .. 1.0]
+--generateDistribution = uniformDist $ map generateStrat [0.1, 0.2 .. 1.0]
 
-natureStuff = [opengame|
-   inputs : ;
-   feedback: ;
-   :----------------------------:
-   inputs: ;
-   feedback: ;
-   operation: nature (generateDistribution);
-   outputs: strategyDelivered;
-   returns: ;
+-- natureStuff = [opengame|
+--    inputs : ;
+--    feedback: ;
+--    :----------------------------:
+--    inputs: ;
+--    feedback: ;
+--    operation: nature (generateDistribution);
+--    outputs: strategyDelivered;
+--    returns: ;
 
-   :----------------------------:
+--    :----------------------------:
 
-   outputs: strategyDelivered;
-   returns: ;
+--    outputs: strategyDelivered;
+--    returns: ;
 
- |]
+--  |]
 testingNature = distFromList [(Inspect, 0.1), (NoInspect, 0.9)]
 testingNatureUni = uniformDist [Inspect, NoInspect]
 strats = defenderStrat ::- attackerStrat ::- Nil
-testingStackelberg = [opengame|
+noAttackStrat = Kleisli (const $ playDeterministically NotCheat)
+
+stackelbergEquilbrium leaderStrat followerStrat = f && g 
+  where f = generateEquilibrium $ evaluate followerGameParameterized (followerStrat ::- Nil) (contextFollower leaderStrat)
+        g = generateEquilibrium $ evaluate (standardGameParameterized followerGameParameterized) (leaderStrat ::- followerStrat ::- Nil) void 
+
+-- (cmap identity (play followerGameParameterized (followerStrat ::- Nil)) void)
+
+leaderGame = [opengame|
    inputs : ;
    feedback: ;
    :----------------------------:
 
-
-     inputs: ;
-   feedback: ;
-   operation: dependentDecision "Bob" (const [Inspect, NoInspect]);
-   outputs: defenderDecision;
-   returns: fst $ payoffs defenderDecision attackerDecision;
    inputs: ;
+   feedback: ;
+   operation: dependentDecision "Leader" (const [Inspect, NoInspect]);
+   outputs: defenderDecision;
+   returns: payoffs;
+   :----------------------------:
+
+   outputs: defenderDecision;
+   returns: payoffs;
+
+ |]
+
+followerGame = [opengame|
+   inputs : ;
+   feedback: ;
+   :----------------------------:
+
+   inputs: ;
+   feedback: ;
+   operation: dependentDecision "Follower" (const [Cheat, NotCheat]);
+   outputs: followerDecision;
+   returns: snd $ payoffs;
+   :----------------------------:
+
+   outputs: followerDecision;
+   returns: payoffs;
+
+ |]
+
+followerGameParameterized = [opengame|
+   inputs : leaderMove;
+   feedback: fst $ payoffs leaderMove followerDecision;
+   :----------------------------:
+
+   inputs: ;
+   feedback: ;
+   operation: dependentDecision "Follower" (const [Cheat, NotCheat]);
+   outputs: followerDecision;
+   returns: snd $ payoffs leaderMove followerDecision;
+   :----------------------------:
+
+   outputs: ;
+   returns: ;
+
+ |]
+
+contextFollower strat = StochasticContext (
+  do { next <- runKleisli strat (); return ((), next)
+    }) (\x _ -> pure ())
+
+standardGame = [opengame|
+   inputs : ;
+   feedback: ;
+   :----------------------------:
+
+   inputs: ;
+   feedback: ;
+   operation: leaderGame;
+   outputs: leaderDecision;
+   returns: fst $ payoffs leaderDecision followerDecision;
+
+   inputs: ;
+   feedback: ;
+   operation: followerGame;
+   outputs: followerDecision;
+   returns: payoffs leaderDecision followerDecision;
+   :----------------------------:
+
+   outputs: ;
+   returns: ;
+
+ |]
+
+standardGameParameterized paramedGame= [opengame|
+   inputs : ;
+   feedback: ;
+   :----------------------------:
+
+   inputs: ;
+   feedback: ;
+   operation: leaderGame;
+   outputs: leaderDecision;
+   returns: leaderPayoff;
+
+   inputs: leaderDecision;
+   feedback: leaderPayoff;
+   operation: paramedGame;
+   outputs: ;
+   returns: ;
+   :----------------------------:
+
+   outputs: ;
+   returns: ;
+
+ |]
+
+
+
+-- generateFollowerContext :: (Kleisli Stochastic () DefenderMove) -> StochasticContext DefenderMove 
+-- testingStackelberg :: OpenGame
+--   StochasticOptic
+--   StochasticContext
+--   (('[Kleisli Stochastic DefenderMove AttackerMove] +:+ '[]) +:+ '[])
+--   '[[DiagnosticInfoBayesian DefenderMove AttackerMove]]
+--   (Kleisli Stochastic DefenderMove AttackerMove, DefenderType)
+--   ()
+--   AttackerMove
+--   ()
+testingStackelberg = [opengame|
+   inputs : fixedLeaderDecision;
+   feedback: attackerDecision;
+   :----------------------------:
+   inputs: fixedLeaderDecision;
    feedback: ;
    operation: dependentDecision "Alice" (const [Cheat, NotCheat]);
    outputs: attackerDecision;
-   returns: snd $ payoffs defenderDecision attackerDecision;
+   returns: snd $ payoffs fixedLeaderDecision attackerDecision;
 
 
    :----------------------------:
@@ -91,25 +217,44 @@ testingStackelberg = [opengame|
 
  |]
 
-justBob = [opengame|
-   inputs : attackerDecision;
-   feedback: ;
-   :----------------------------:
+generateMixedStrategies = map (\x -> distFromList [(Inspect, x), (NoInspect, 1-x)]) [0.0, 0.05 .. 1.0]
 
-   inputs: ;
-   feedback: ;
-   operation: dependentDecision "Bob" (const [Inspect, NoInspect]);
-   outputs: defenderDecision;
-   returns: fst $ payoffs defenderDecision attackerDecision;
+-- initializeGame = [opengame|
+--    inputs : proposedLeaderStrategy, ;
+--    feedback: ;
+--    :----------------------------:
 
-   :----------------------------:
+--    inputs: ;
+--    feedback: ; 
+--    operation: dependentDecision "Leader" (const [Inspect, NotInspect]);
+--    outputs: leaderDecision;
+--    returns: fst $ payoffs fixedLeaderDecision attackerDecision;
+ 
+--    inputs: proposedLeaderStrategy;
+--    feedback: ; 
+--    operation: testingStackelberg ;
+--    outputs: attackerDecision;
+--    returns: fst $ payoffs fixedLeaderDecision attackerDecision;
 
-   outputs: defenderDecision;
-   returns: ;
+--    :----------------------------:
 
- |]
+--    outputs: defenderDecision;
+--    returns: ;
 
-runningBob1 = play justBob (defenderStrat ::- Nil)
+--  |]
+
+--  something :: (Unappend a, Unappend b, Eq i) => (Kleisli Stochastic () DefenderMove) 
+--   -> (OpenGame StochasticOptic StochasticContext a b x  )
+
+
+-- attempt1 strats = evaluate testingStackelberg (strats ::- reactionSet ::- Nil) c
+--     where c = StochasticContext (pure ((), )) (\_ (d,a) -> playDeterministically $ payoffs d a)
+
+-- getPayoff strats x = do 
+--         reaction <- extractNextState (play aliceReactionary (reactionSet ::- Nil)) x
+
+--         return $ fst $ payoffs x reaction
+
 
 justAlice = [opengame|
    inputs : defenderDecision;
@@ -130,9 +275,14 @@ justAlice = [opengame|
 
 
 
--- doSomething = generateOutput $ evaluate gameIs testingStackelberg void
+
+
+-- bestResponseStrategy :: Kleisli Stochastic (Kleisli Stochastic () DefenderMove) AttackerMove
+-- bestResponseStrategy = Kleisli Stochastic (const id)
+-- doSomething = generateOutput $ evaluate testingStackelberg bestResponseStrategy ::- Nil void
 --runGame = generateOutput $ evaluate testingStackelberg strats void
-runStackGame = generateOutput $ evaluate testingStackelberg (defenderStrat ::- attackerStratStack ::- Nil) void
+--runStackGame = generateOutput $ evaluate testingStackelberg (defenderStrat ::- (reactionSet defenderStrat) ::- Nil) void
+--runTest = generateOutput $ evaluate testingStackelberg (defenderStrat ::- attackerStrat ::- Nil) void
 payoffs :: DefenderMove -> AttackerMove -> (Double, Double)
 payoffs Inspect Cheat = (-6, -9)
 payoffs Inspect NotCheat = (-1,0)

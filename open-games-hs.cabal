@@ -56,6 +56,8 @@ library
       Examples.Staking.AndGateMarkovMC
       IDS.CollaborativeIDS
       IDS.CollaborativeIDSModel
+      IDS.CollaborativeIDSSpec
+      IDS.CollaborativePayoff
       IDS.DeceptionPayoff
       IDS.DeceptionSpec
       IDS.DeceptionStrategies
@@ -77,6 +79,7 @@ library
       Security.Evaluator
       Security.ParameterBuilder
       Security.Payoffs
+      Security.Temp
       Paths_open_games_hs
   hs-source-dirs:
       src

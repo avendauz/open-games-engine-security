@@ -41,6 +41,15 @@ reindex v u g = OpenGame {
                                                   +:+ evaluate h a' (cmap (play g a) identity c)
 }
 
+-- cond :: (Optic o, Context c o, Unappend a, Unappend b)
+--       => OpenGame o c a b x s y s -> OpenGame o c a' b' y s z q
+--       -> OpenGame o c (a +:+ a') b x s z q
+-- cond g h = OpenGame {
+--   play = \as -> case unappend as of (a, a') -> play g a,
+--   evaluate = \as c -> case unappend as of (a, a') -> evaluate g a (cmap (play g a) (play (g >>> h) as) c)
+                                                
+-- }
+
 (&&&) :: (Optic o, Context c o, Unappend a, Unappend b, Show x, Show x')
       => OpenGame o c a b x s y r -> OpenGame o c a' b' x' s' y' r'
       -> OpenGame o c (a +:+ a') (b +:+ b') (x, x') (s, s') (y, y') (r, r')

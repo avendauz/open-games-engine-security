@@ -20,15 +20,15 @@ import OpenGames.Engine.Engine hiding (StochasticStatefulOptic
                                       , nature
                                       )
 
-totalGameStrategies = const $ visitorStrategy ::- defenderStrategy ::- Nil
+totalGameStrategies = const $ visitorStrategy ::- alwaysOpenStrategy ::- Nil
 totalHPGameStrategies = const $ visitorStrategy ::- hpDefenderStrategy ::- Nil
 totalGameStrategiesMixed openProb = visitorStrategy ::- defenderStrategyMixed openProb ::- Nil
 
-fixedDefenderStrat prob = visitorStrategyMixed prob ::- defenderStrategy ::- Nil
-
+fixedDefenderStrat prob = visitorStrategyMixed prob ::- alwaysOpenStrategy ::- Nil
+testingHPStrats probVisitorAccess probDefenderHP = visitorStrategyMixed probVisitorAccess ::- hpDefenderStrategyHI probDefenderHP ::- Nil
 testBothMixed prob1 prob2 = visitorStrategyMixed prob1 ::- defenderStrategyMixed prob2 ::- Nil 
 
-repeatedStrategies = convertVisitorStrategy visitorStrategy ::- convertDefenderStrategy defenderStrategy ::- Nil
+repeatedStrategies = convertVisitorStrategy visitorStrategy ::- convertDefenderStrategy alwaysOpenStrategy ::- Nil
 
 visitorStrategy :: Kleisli Stochastic VisitorType VisitorMove
 visitorStrategy = Kleisli (\case {
@@ -42,8 +42,8 @@ visitorStrategyMixed prob = Kleisli (\case {
     User -> playDeterministically Access
 })
 
-defenderStrategy :: Kleisli Stochastic VisitorMove AggregatorMove
-defenderStrategy = Kleisli (\case {
+alwaysOpenStrategy :: Kleisli Stochastic VisitorMove AggregatorMove
+alwaysOpenStrategy = Kleisli (\case {
     Access -> playDeterministically Open;
     DoesNotAccess -> playDeterministically Close;
 })
@@ -57,6 +57,12 @@ defenderStrategyMixed openProb = Kleisli (\case {
 hpDefenderStrategy :: Kleisli Stochastic VisitorMove HoneypotAllocation 
 hpDefenderStrategy = Kleisli (\case {
     Access -> distFromList [(HighInteractionHP, 0.3), (LowInteractionHP, 0.1), (Normal, 0.6)];
+    DoesNotAccess -> playDeterministically Normal;
+})
+
+hpDefenderStrategyHI :: Double -> Kleisli Stochastic VisitorMove HoneypotAllocation 
+hpDefenderStrategyHI prob = Kleisli (\case {
+    Access -> distFromList [(HighInteractionHP, prob), (LowInteractionHP, (1-prob)/2), (Normal, (1-prob)/2)];
     DoesNotAccess -> playDeterministically Normal;
 })
 

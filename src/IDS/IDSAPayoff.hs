@@ -11,13 +11,13 @@ import Control.Applicative
 -- payoff module shouldn't know anything about open games ... 
 
 
-visitorPayoff :: VisitorType -> VisitorMove -> AggregatorMove -> PayoffReader IDSParamsSimple
+visitorPayoff :: VisitorType -> VisitorMove -> AggregatorMove -> PayoffReader IDSParams
 visitorPayoff = \case {
     Attacker -> attackerPayoff ;
     User ->  userPayoff
 }
 
-defenderPayoff :: VisitorType -> VisitorMove -> AggregatorMove -> PayoffReader IDSParamsSimple
+defenderPayoff :: VisitorType -> VisitorMove -> AggregatorMove -> PayoffReader IDSParams
 defenderPayoff = \case {
     Attacker -> defenderUnderAttackPayoff ;
     User -> defenderNormalPayoff;

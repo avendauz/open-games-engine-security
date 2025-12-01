@@ -62,6 +62,17 @@ doEvaluation params = evaluate
       (totalGameStrategies params) 
         (instantiateContext visitorPayoff defenderPayoff params)
 
+doEvaluationTemp params = evaluate 
+    (stackelbergGame1 (distributionUser params) actionSpaceAttacker "Alice" actionSpaceDefender  "A") 
+      (attackerStrategy ::- defenderStrategyTemp ::- Nil) 
+        (instantiateContext visitorPayoff defenderPayoff params)
+
+attackerStrategy :: Kleisli Stochastic VisitorType VisitorMove 
+attackerStrategy = Kleisli $ const $ playDeterministically Access
+
+defenderStrategyTemp :: Kleisli Stochastic VisitorMove AggregatorMove 
+defenderStrategyTemp = Kleisli $ const $ playDeterministically Open
+
 doHPEvaluation params = evaluate 
     (stackelbergGame1 (distributionUser params) actionSpaceAttacker "Alice" actionSpaceHPDefender  "A") 
       (totalHPGameStrategies params) 
@@ -82,14 +93,14 @@ getDefenderPayoff params =
   in head b 
 
 
-doRepeatedEvaluation params = generateEquilibrium $ 
+doRepeatedEvaluation params x n = generateEquilibrium $ 
     evaluate 
         (stackelbergGame1Repeated 
             (distributionUser params) actionSpaceAttacker "Alice" actionSpaceDefender "A" (repeatedPayoffGame params visitorPayoff defenderPayoff))
         strategies
-        (instantiateRepeatedContext 0.5 2 strategies (Access, Open) [0, 0] (idsRepeatedStage params))
+        (instantiateRepeatedContext x n strategies (Access, Open) [0, 0] (idsRepeatedStage params))
     where strategies = repeatedStrategies;
-          
+
 
 propEq x = doRepeatedEvaluation x
 priorAttacker = [0.01, 0.05 .. 0.95]

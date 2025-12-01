@@ -96,6 +96,21 @@ defenderLeader defenderName getActionSpace = [opengame|
  |]
 
 
+stackelbergGame1 :: (Ord b, Ord c, Show a, Show b, Show c, Eq a) => 
+   Stochastic a
+   -> (a -> [b])
+   -> String
+   -> (b -> [c])
+   -> String
+   -> OpenGame
+     StochasticOptic
+     StochasticContext
+     '[Kleisli Stochastic a b, Kleisli Stochastic b c]
+     '[[DiagnosticInfoBayesian a b], [DiagnosticInfoBayesian b c]]
+     ()
+     ()
+     (a, b, c)
+     (Double, Double)
 stackelbergGame1 distType actionSpaceAttacker attackerName actionSpaceDefender defenderName = [opengame|
    inputs : ;
    feedback: ;
