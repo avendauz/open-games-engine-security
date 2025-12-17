@@ -93,14 +93,16 @@ getDefenderPayoff params =
   in head b 
 
 
-doRepeatedEvaluation params x n = generateEquilibrium $ 
+doRepeatedEvaluation params x n startingState = 
     evaluate 
         (stackelbergGame1Repeated 
             (distributionUser params) actionSpaceAttacker "Alice" actionSpaceDefender "A" (repeatedPayoffGame params visitorPayoff defenderPayoff))
         strategies
-        (instantiateRepeatedContext x n strategies (Access, Open) [0, 0] (idsRepeatedStage params))
+        (instantiateRepeatedContext x n strategies startingState [0, 0] (idsRepeatedStage params))
     where strategies = repeatedStrategies;
 
+totalEval = writeFile "./src/IDS/Test.txt" f
+  where f = concatMap (generateOutputString . doRepeatedEvaluation exampleData 0.6 5) [(Access, Open), (DoesNotAccess, Open)] 
 
 propEq x = doRepeatedEvaluation x
 priorAttacker = [0.01, 0.05 .. 0.95]

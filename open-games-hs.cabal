@@ -71,6 +71,7 @@ library
       IDS.IDSAStrategies
       IDS.IDSModel
       IDS.Temp
+      IDS.TransitionSystem
       OpenGames.Engine.BayesianGamesNonState
       OpenGames.Engine.ExternalEnvironment
       OpenGames.Engine.IOGames

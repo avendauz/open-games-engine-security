@@ -12,5 +12,5 @@ data CollaborativeIDSParams a = CIDSParams {
 
 }
 
--- transitionBetweenStates :: VisitorType -> VisitorMove -> HoneypotAllocation -> State -> State 
--- transition
+transitionBetweenStates :: VisitorType -> VisitorMove -> HoneypotAllocation -> State -> State 
+transition

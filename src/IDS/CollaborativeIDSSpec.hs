@@ -30,13 +30,5 @@ to access regular systems and trap those with malicious intents.
 
 main :: IO () 
 main = hspec $ do 
-    describe "IDSA vs IDSHP params" $ do 
+    describe "impact of linear influence networks" $ do 
         
-                
-        it "is higher payoff to deploy honeypots for any params " $ -- comparing models
-            property $ \params -> 
-                let [a,b] = generatePayoff $ evaluate (idsAGame params) (totalGameStrategies params) (instantiateContext visitorPayoff defenderPayoff params) in head a >= 
-                let [a, b] = generatePayoff $ evaluate (idsHPGame params) (totalHPGameStrategies params) (instantiateContext visitorPayoffHP defenderPayoffHP params) in head a
-        it "is better to deploy mixed-capability honeypots for any params" $ 
-            property $ \params -> 
-                let regularGame = evaluate (idsAGame params) (totalGameStrategies params)

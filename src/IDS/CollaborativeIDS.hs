@@ -42,7 +42,12 @@ distributionUser =
 actionSpaceDefender = const [Open, Close]
 actionSpaceAttacker = const [Access, DoesNotAccess]
 
-stateSpace = const [Healthy, Compromised]
+
+data CollabIDSParams = Collab {
+  a :: IDSParams,
+  b :: IDSParams,
+  capacity:: Double
+}
 
 twoIDS idsParams deceptionParams = [opengame|
    inputs: a1, d1, a2, d2;
