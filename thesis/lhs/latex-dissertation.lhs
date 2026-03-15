@@ -11,14 +11,25 @@
 \usepackage{babel}
 \usepackage{lipsum} % For demonstration only.
 \usepackage[backend=biber, style=numeric-comp]{biblatex}
+\usepackage{xcolor}
 \addbibresource{bibliography.bib}
 
 % MACROS 
 \newcommand{\C}{\mathcal{C}}
 \newcommand{\Optic}{\mathbf{Optic}_{\C}}
-\newcommand{\Set}{\mathbf{Set}}
+\newcommand{\Set}{\mathcal{Set}}
 \newcommand{\Prob}{\mathbf{D}}
 \newcommand{\KlD}{\mathbf{Kl}(\Prob)}
+
+% lhs2TeX colours
+\definecolor{funcColor}{HTML}{5E2D91}
+\definecolor{typeColor}{HTML}{000080}
+\definecolor{datatype}{RGB}{196, 6, 11}
+\renewcommand{\Conid}[1]{{\color{funcColor}\mathit #1}}
+\renewcommand{\Varid}[1]{{\color{typeColor}\mathit #1}}
+%subst keyword a = "{\color{datatype}{ " a " }}"
+\newcommand{\colorOp}[1]{\textcolor{orange!80!black}{#1}}
+
 
 % 
 %--------------------------------

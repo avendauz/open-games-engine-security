@@ -1,5 +1,5 @@
 \section{Preliminaries}
-
+\subsection{Introduction}
 The primary focus of this thesis is on developing a methodology for the game formulation of cybersecurity models using a Haskell domain-specific-language (DSL) for \textit{open games}. 
 The organization of this chapter is based on the construction of the model of computation
 for open games. These constructions will then be accompanied by their corresponding implementation,
@@ -10,15 +10,17 @@ Compositionality in game theory enables a wider range possibilities for modellin
 Furthermore, abstracting away the specific behaviour of agents by describing a well-defined type system, allowing a software engineering approach, can enable a contextual understanding of an agent as part of a larger system. 
 That dependence and ability to decouple the problem is enabled by considering utility-maximizing agents as a kind of open system, reacting to its environment. 
 In the case of compositional game theory, we can start by using the concept of an open game. The properties of an open game allow a particular modelling workflow to assist a 
-user in testing assumptions or design choices programmatically. If the end goal is for users to treat open games as first-class citizens of this language, practitioners may need a glimpse into the underlying theory before 
+user in testing assumptions or design choices programmatically. If the end goal is for users to treat open games as first-class citizens of this workflow, we want to delve into the underlying theory before 
 describing these design patterns. 
 
 To get started with the tool, users will need \href{https://www.haskell.org/ghcup/install/}{\textbf{ghc}}, 
 and a package manager such as \href{https://docs.haskellstack.org/en/stable/}{Stack}. 
 From here on we will refer to the \textit{open-game-hs} as the library that can be included 
 as a dependency in a Haskell project. The main module is |OpenGames.Engine.Engine|, where all 
-the library's functionalities are available. On the other hand, \textit{open games DSL} is the code block 
-syntax that are compiled to a program using the |OpenGame| data type and the corresponding operations.
+the library's functionalities are available. On the other hand, we'll refer to the code block 
+syntax (the DSL) that is compiled to a program that could be expressed with just the library functions. The purpose of the DSL is to give a language to construct open games with explicit input and output ports, and implicitly facilitate parallel and sequential composition by "plugging" these ports together. 
+
+But black boxing into this DSL the development of these models may not be enough to create intuitive models. If we wanted to ship a certain model expressly as a series of open games written in the DSL, the constraints coworkers have come down to the input and output types of the games. Otherwise, the process of generating strategies to run the game, reading through the console output of simulating the game, or refactoring a single input variable within the game, requires deeper knowledge of |OpenGames.Engine.Engine|. 
 
 Thus we can take a look at the following code example from to introduce the separation 
 of these two concepts: 
@@ -49,13 +51,15 @@ defenderFollower defenderName getActionSpace = [opengame|
    outputs   : defenderDecision;
    returns   : defenderPayoff ;
    :----------------------------:
-
+ 
    outputs   : defenderDecision;
    returns   : defenderPayoff;
 |]
 
 \end{code} 
 
+Some questions to be answered can be separated into two categories: (1) understanding each of the components of the type signature of |defenderFollower| and (2) how to read everything within @[opengame| ...|]@. The following sections will cover the necessary categorical constructions (mostly from \cite{BayesianOpenGames}). Where we depart from the literature covering open games is providing an interpretation and explicit accounting of the implementation of each of these constructions as they're used in \textit{open-games-hs}. 
+ 
 The models developed during the course of this project is a fork from \url{https://github.com/philipp-zahn/open-games-engine}. Various tutorials and  
 READMEs exist, however a comprehensive progression and explicit accounting of the key 
 functionalities to support end-user capabilities of the \textit{open-game-engine} has not been completed. 
@@ -66,17 +70,7 @@ The goal is for readers to use the language given here to help transition from:
 (3) thinking in a software-oriented sense for building these models.\\
 (4) writing the code \\
 
-where the main contributions of this thesis focus on a particular security-oriented focus in (3) and (4).
-
-The organization of this section will bridge the concepts given mostly in \cite{BayesianOpenGames}
-while examining the corresponding implementation.
-
-\begin{enumerate}
-   \item Optics typeclass 
-   \item Context typeclass 
-   \item Open games |data OpenGame|
-\end{enumerate}
-
+where the main contributions of the following chapters focus on a particular security-oriented focus in (3) and (4) using new design patterns.
 
 \subsection{Classical game theory}
 
@@ -86,7 +80,7 @@ We invite readers to read through for a concise overview of these classical game
 
 For example, for normal-form games, we can consider the following diagram for two players taking simultaneous actions and receiving a real-valued payoff accordingly. 
 
-After designing such a model, what can we leShoham2008arn about the agents? Typically, we are concerned with a solution concept such as Nash equilibrium, which intuitively means that every agent has no incentive to deviate from their given strategy given that they know everyone's strategy.
+After designing such a model, what can we learn about the agents? Typically, we are concerned with a solution concept such as Nash equilibrium, which intuitively means that every agent has no incentive to deviate from their given strategy given that they know everyone's strategy.
 
 
 Here we begin to demonstrate more clear-cut separation-of-concerns that goes into creating this game. 
@@ -99,22 +93,11 @@ The foundation of compositional game theory begins with category theory,
 in particular the "compositional" part of compositional game theory being enabled 
 specifically by defining open games as morphisms of a category. In the spirit of staying in 
 an applied setting, this chapter will briefly 
-cover the related categorical constructions, and assumes no working knowledge of 
-category theory. 
-
-The most important takeaway will be the properties of 
-the constructed categories are operationally presented as various Haskell datatypes available in 
-\textit{open-game-engine}. For example, discussing the category of optics $\Optic$ over a symmetric monoidal
-category $\C$ could be discussed by considering types in Haskell as objects of 
-
-Read
+cover the related categorical constructions, assuming knowledge of what categories are, properties such as tensor product for symmetric monoidal categories? 
 
 
 \subsection{Constructing open games in Haskell}
-We'll begin by recounting crucial constructions necessary to understand what an open game is. The deep connection 
-with \textit{lenses} has ultimately led to the current implementation that is used when developing models. But this requires 
-users to understand . A deep-dive is necessary, though this leaves the task of bridging the theory 
-with the implementation. The goal of this section is to present the definitions that are used, and then to explain 
+We'll begin by recounting the construction of open games up to its current implementation. The goal of this section is to present the definitions that are used, and then to explain 
 how to read the corresponding implementation, especially the various types and frequently-used functions. The hope is 
 that this builds an intuition for modellers to be able to understand the bare minimimum for constructing 
 models and effectively using the type system. 
@@ -161,7 +144,7 @@ morphisms from $\mathbf{Set} \times \mathbf{Set}^{\mathbf{op}}$.
 To hint at where we are headed in game-theoretic terms, intuitively
 such a morphism would describe the behaviour of an agent given a certain strategy when operating 
 in a given environment, where: 
-\begin{itemize}
+\begin{itemize} \label{note:hint}
    \item Makes observations of type $S$
    \item Takes actions of type $A$
    \item Recieves some feedback from its local environment of type $T$
@@ -178,7 +161,7 @@ For security games or modelling realistic security scenarios, most current model
 mixed strategies, Bayesian games, or incomplete information games.
 
 \subsubsection{Coend lenses and probability}
-To accommodate the need for modelling games in a probabilisti setting, we would need a more generalized notion of lenses (and then a more general category of open games), where we can do things like take actions $A$ 
+To accommodate the need for modelling games in a probabilistic setting, we would need a more generalized notion of lenses (and then a more general category of open games), where we can do things like take actions $A$ 
 over some probability distribution, or give agents the ability to have some probabilistic belief about their type (as in classic Bayesian games)
 . This turns out not to be as simple as attaching a probability monad 
 to the current definition of lenses, specifically because the tensor product of the category of open games fails to be associative,
@@ -196,7 +179,7 @@ We recall the definition from \cite[\textbf{Definition 2.0.1}]{riley2018categori
 Treating $\C$ as $\textbf{Set}$ reduces this definition to the concrete lenses introduced in the previous section.
 Explicitly, we can treat this set as the pairs of functions $u: S \rightarrow \Theta \otimes A$ and $v: \Theta \otimes B \rightarrow T$
 quotiented by the equivalence relations given by $((f \otimes A)u, v) ~ (u, v(f \otimes B))$ for any 
-$f: \Theta \rightarrow \Gamma$, $u: S \rightarrow \Theta \otimes A$ and $v: \Gamma \otimes B \rightarrow T$. 
+$f: \Theta \rightarrow \Gamma$, $u: S \rightarrow \Theta \otimes A$ and $v: \Gamma \otimes B \rightarrow T$. Indeed, 
 
 
 Effectful lenses have been studied in \cite{xie2025effectful,abou2016reflections}, but \cite[Section 4.9]{riley2018categories} implements some desired effectul properties as "effectful 
@@ -227,7 +210,7 @@ Using $\Theta$ as a type variable to
 store this information to be used later, we can directly express Bayesian updating for agents. For example, 
 this $\Theta$ may be some prior distribution representing an agent's belief of their type. 
 
-For the purposes of the \textit{open-game-engine}, one implementation of coend lenses ties this definition together 
+For the purposes of the \textit{open-game-engine}, the implementation that is used of coend lenses ties this definition together 
 as a data type:
 
 \begin{code}
@@ -240,8 +223,8 @@ data StochasticOptic s t a b where
 Note the implicit |forall z| as part of this definition, which represents $\Theta$. 
 
 Furthermore, $\KlD$ is a symmetric monoidal category and can be used as the underlying category 
-of a coend lense in \ref{Definition:Coends}. By \cite[Proposition 2.0.3]{riley2018categories}, there is a category 
-of coend lenses where objects are pairs of sets, and morphisms are coend lenses. 
+of a coend lense in \ref{Definition:Coends}. By \cite[Proposition 2.0.3]{riley2018categories}, there is a symmetric monoidal category 
+of coend lenses where objects are pairs of sets, and morphisms are coend lenses. Composition and the tensor product is described by the |Optic| typeclass:
 
 \begin{code}
 class Optic o where
@@ -250,11 +233,14 @@ class Optic o where
   (&&&&) :: o s1 t1 a1 b1 -> o s2 t2 a2 b2 -> o (s1, s2) (t1, t2) (a1, a2) (b1, b2)
 \end{code}
 
+which we can parameterize with |StochasticOptic| to get our desired category of "stochastic optics." 
+
 
 \subsubsection{Open games}
+Now we can use the previous sections and build more explicitly on the ideas from \ref{note:hint}.
 By \cite[Theorem 3.10.2]{BayesianOpenGames}, a category of Bayesian open games exists where objects are pairs 
 of objects in the Kleisli category of the distribution monad $\mathbf{Kl}(\textbf{D})$ and morphisms are equivalence classes of open games.
-
+f
 The intuition (best described in \cite[Section 2.1.1]{HedgesThesis}) is to begin thinking 
 of an open game as a process, open to and interacting with its local environment through its inputs 
 and outputs. The most common representation of open games is a box (representing the process or morphism)
@@ -344,16 +330,4 @@ As we see in the corresponding string diagram, the forward (or covariant) arrows
 \textit{inputs}, as expected, is where to declare the input to the game. This is typically used  to define the state of a game, observed types or observed actions of other players. Note that declaring these as variables in this line brings them into scope for all other In a 2-player sequential game in the classical sense, the follower player observes the actions of the fi
 Thus one way of "doing" compositional game theory can be done by drawing a string diagram to represent open games. 
 
-
-
-
-
-\subsubsection{Categorical systems theory}
-We consider compositional game theory an instantiation of a broader scope of work called \textit{categorical systems theory}, where we can design systems by composing components. 
-
-\subsection{Software implementation}
-The subsequent implementation for compositional game theory is written as a Haskell library. 
-The aforementioned tool dubbed as \textit{open game engine} is software that can simulate and analyze open games as described in compositional game theory. Users can use this Haskell module and exported functionalities including constructors, types, and functions for analytics. In this section, we'll cover the most commonly used operators necessary for designing these games with the open-game-engine. In a later chapter, we'll introduce the application-specific games for cybersecurity that use these operators
-
-The line of 
 As outlined in \cite{tan2022a} for designing institutions with a software 
