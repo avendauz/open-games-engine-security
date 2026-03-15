@@ -19,32 +19,6 @@
 
 \refsection{0}
   \datalist[entry]{nty/global//global/global/global}
-    \entry{20squares}{misc}{}{}
-      \name{author}{1}{}{%
-        {{hash=39b3bf3d30a6ba1cff9d1138899de12c}{%
-           family={20squares},
-           familyi={2\bibinitperiod}}}%
-      }
-      \list{publisher}{1}{%
-        {GitHub}%
-      }
-      \strng{namehash}{39b3bf3d30a6ba1cff9d1138899de12c}
-      \strng{fullhash}{39b3bf3d30a6ba1cff9d1138899de12c}
-      \strng{fullhashraw}{39b3bf3d30a6ba1cff9d1138899de12c}
-      \strng{bibnamehash}{39b3bf3d30a6ba1cff9d1138899de12c}
-      \strng{authorbibnamehash}{39b3bf3d30a6ba1cff9d1138899de12c}
-      \strng{authornamehash}{39b3bf3d30a6ba1cff9d1138899de12c}
-      \strng{authorfullhash}{39b3bf3d30a6ba1cff9d1138899de12c}
-      \strng{authorfullhashraw}{39b3bf3d30a6ba1cff9d1138899de12c}
-      \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{howpublished}{\url{https://github.com/20squares/pbs-auctions}}
-      \field{journaltitle}{GitHub repository}
-      \field{title}{pbs-auction}
-      \field{year}{2023}
-    \endentry
     \entry{abou2016reflections}{article}{}{}
       \name{author}{5}{}{%
         {{hash=f09daed03358906ed02c09500a5429ec}{%
@@ -147,6 +121,41 @@
       \verb 10.32408/compositionality-5-9
       \endverb
     \endentry
+    \entry{hedges2017morphismsopengames}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=a54c9ab370ba6f2ac86897eb2730d2ee}{%
+           family={Hedges},
+           familyi={H\bibinitperiod},
+           given={Jules},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{a54c9ab370ba6f2ac86897eb2730d2ee}
+      \strng{fullhash}{a54c9ab370ba6f2ac86897eb2730d2ee}
+      \strng{fullhashraw}{a54c9ab370ba6f2ac86897eb2730d2ee}
+      \strng{bibnamehash}{a54c9ab370ba6f2ac86897eb2730d2ee}
+      \strng{authorbibnamehash}{a54c9ab370ba6f2ac86897eb2730d2ee}
+      \strng{authornamehash}{a54c9ab370ba6f2ac86897eb2730d2ee}
+      \strng{authorfullhash}{a54c9ab370ba6f2ac86897eb2730d2ee}
+      \strng{authorfullhashraw}{a54c9ab370ba6f2ac86897eb2730d2ee}
+      \field{extraname}{1}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{cs.GT}
+      \field{eprinttype}{arXiv}
+      \field{title}{Morphisms of open games}
+      \field{year}{2017}
+      \verb{eprint}
+      \verb 1711.07059
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/1711.07059
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/1711.07059
+      \endverb
+    \endentry
     \entry{HedgesThesis}{thesis}{}{}
       \name{author}{1}{}{%
         {{hash=a54c9ab370ba6f2ac86897eb2730d2ee}{%
@@ -163,6 +172,7 @@
       \strng{authornamehash}{a54c9ab370ba6f2ac86897eb2730d2ee}
       \strng{authorfullhash}{a54c9ab370ba6f2ac86897eb2730d2ee}
       \strng{authorfullhashraw}{a54c9ab370ba6f2ac86897eb2730d2ee}
+      \field{extraname}{2}
       \field{sortinit}{H}
       \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
       \field{labelnamesource}{author}
@@ -272,6 +282,7 @@
       \range{pages}{26}
     \endentry
   \enddatalist
+  \missing{3}
 \endrefsection
 \endinput
 

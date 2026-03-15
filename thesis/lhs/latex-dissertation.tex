@@ -1,4 +1,3 @@
-
 \documentclass[11pt,titlepage,dvipsnames,table,xcdraw,english]{article}
 %!TEX root=./latex-dissertation.tex
 %% ODER: format ==         = "\mathrel{==}"
@@ -695,7 +694,7 @@ The intuition (best described in \cite[Section 2.1.1]{HedgesThesis}) is to begin
 of an open game as a process, open to and interacting with its local environment through its inputs 
 and outputs. The most common representation of open games is a box (representing the process or morphism)
 with two incoming and two outgoing wires (representing objects of the category).
-dd
+
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.5\linewidth]{images/GameSimple.png}
@@ -816,8 +815,567 @@ The aforementioned tool dubbed as \textit{open game engine} is software that can
 The line of 
 As outlined in \cite{tan2022a} for designing institutions with a software 
 
+\section{Modularity in game theoretic cybersecurity modelling}
+\label{sec:1}
+\subsection{Overview}
+
+The stark reality of designing effective cybersecurity games is bridging real-world security concerns with an accurate representation in a game-theoretic terms. Numerous models have been constructed and analyzed according to specific security problems, thus tying the models to their specification. Furthermore, these models often extend or adapt previously existing constructions by making new assumptions, using different payoff schemes, or integrating the model into an automated defensive infrastructure. Although this informal relationship between these models have been surveyed, there has yet to be a generalized framework for mechanizing this relationship as a standardized game formulation process. 
+
+In this chapter, we examine a variety of security games and remark on similarities and differences between game-formulation methods. By identifying and encoding the commonly-used 2-player security game in the open-games-DSL, we show how to recover more complex models using this as a building block. By working in the open-games-DSL, a modeller can control information flow, introduce parallel subsystem security interactions, and reuse models. I review current security game analysis methods and present the possibility of integration with other tools. Finally, I propose an \textit{iterative development}-esque model generation process using the open-game engine.
 
 
+
+
+%Indeed, the same code to analyze the intorduction of a single security interaction can analyze it in the context of a larger security infrastructure in a verifiable way.
+
+%	 With an open-interfaced game representing a single security interaction, I demonstrate how a modeller can parameterize the game according to their security specification. 
+
+%Finally, following
+%The result of creating this representation is a game-theoretic model strictly tied to a security concern that is often encompassed by a larger security infrastructure. The system we may be trying to model is often comprised of subsystems. As attackers or defenders of this system we can think about an attack on the system as a whole or on its parts, or a mixture of both. 
+
+
+ 
+
+
+% DOMAIN EXPERT
+
+\subsection{Current state-of-the-art}
+Using game theory to inform cybersecurity problems has seen growth in recent years with the development of a number of different models for evaluating Denial-of-Service attacks on cloud infrastructures, intrusion detection systems, and advanced persistent threats. Refer to the following surveys \cite{Pawlick2019}, \cite{Hausken2024}, \cite{Manshaei2013} for an overview of the wide collection of game-theoretic models. 
+
+A general procedure for developing these models can be (roughly) summarized in the following steps: 
+\begin{enumerate}
+	\item Detail the security scenario and system, vectors of attack, and defensive capabilities
+	\item Develop abstractions  and parameters for the players, actions, and payoff in a game-theoretic setting according to the security scenario
+	\item Solve for a solution concept (i.e. Nash equilibrium, Subgame perfect Nash Equilibrium) using methods such as linear programming or Q-learning (for stochastic or repeated games)
+	\item Deploy new strategies or technologies in the system according to the solution concept above
+	\item Conduct simulations with a fixed strategy, determine the highest expected utility for players and evaluate system performance under these conditions
+\end{enumerate}
+
+However, the most recent concerns with evolving attacker threats and dynamic security situations requires more complex game-theoretic models. These games can be part of a larger automated defensive system to update defensive strategies in real time as part of a larger infrastructure such as in \cite{Jin2018}, \cite{Zhu2012}. The progression of these models often relies on the extension and variation of these game-theoretic models. For example, we may need to consider scalfing the number of players or repeating strategic interactions. The models presented in \cite{Chen2009}, \cite{Nochenson2012} suggest the use of the models as a basis for extensions and increased-complexity for other security scenarios. Similarly in \cite{Pawlick2015}, the signalling game structure are derived from \cite{Carroll2009}, with adjustments to the utilities. We'll see later how these models written in open games allow for easy extensionality.
+
+According to \cite{Collins2025} evaluating 86 different game-theoretic models in cybersecurity, there already exists a sense of homogeneity between these models, where 76\% of models only cover a two-player security interaction, and 79\% use Nash (or variants of) equilibrium solution concepts for analysis. The authors also recommended a formal method for modellers to state their assumptions of the model that follow more in-line with cybersecurity concepts. Expanding on this idea in particular, we propose that code-based methods for stating assumptions allows for clear, testable specifications (see \ref{sec:2}). Only 24 or the 86 studies shown consider "multiple variants" of the constructed model. The specification of two criterion: (1) "Efficacy of Modelling" and (2) "Practicality of Solutions" serve as a framework for evaluating the tractability of game-theoretic models' representation of the underlying real cyber-interaction. The resulting recommendations are taken into account for the purposes of this thesis: 
+\begin{enumerate}
+	\item The need for a game space abstraction 
+	\item Allow for more flexible assumptions
+\end{enumerate}
+
+In that same vein, \cite{Egan2025}, \cite{Liang2013} call for better scalability of models, in particular addressing models that account for more than two player games. Similarly, \cite{lye2005game} 
+%\subsubsection{Qualitative to quantitiative parameterization}
+%\cite{Rass2017}
+%This necessitates collaboration between a domain expert (e.g. cybersecurity expert) and a game-theorist to translate sensible payoff schemes and parameters. 
+%
+%On the other hand, databases such as NIST and CSVV are directly used in \cite{MacQueen2020} \cite{Furuncu2015}. Diving deeper into \cite{Chen2009}, the work does not consider correlation between attack targets and leaves it for future work. The theoretical basis for the payoffs involving reputation, punishment for loss contrasts with other payoffs using server downtime or capital expenditure from NIST (CVSS) metrics. 
+
+\subsubsection{Discussion on rational verification}
+Rational verification is an approach to verifying the properties of multiagent systems where each agent is self-maximizing over some preference or utility. Inspired by classical model-checking paradigms, a specification is provided as a temporal logical formula describing a desired property of a multi-agent system. Then, the question is to verify whether a run (or simulation) of the system for some strategy profile is an equilibrium satisfying the property. Therefore, I consider open games as exactly the mechanism for expressively developing these systems with a built-in way to simulate behaviour. 
+
+By using the PRISM-model checker and the PRISM property-specification language, it has been shown that security games can be mechanically verified. More recent work has extended PRISM to handle Stackelberg equilibrium for security games \cite{Phetmanee2024}. The complete software for two example models can be found at \cite{phetmanee_2024_13338608}. According to the proposed worfklow, there are automated tools to translate CVEs to attack-defense trees to Stackelberg Security Games, defined as a data structure storing the extensive-form representation of the game and atomic propositions that encode the reward structure as dictated in the attack-defense tree. For future work, encoding attack-defense trees defined in other models to be compatible with supplying payoffs in open games would be an interesting direction.
+
+However, the models developed in \cite{Phetmanee2024} aren't built expressively for the reason of further extensionality in the future. The deliverable allows a user to provide a specific CVE and attacker action as a logical formula, and line-by-line entries for associated costs for specific attacker or defender actions. Finally, a security expert can input a certain patch or security property to test for Stackelberg equilibrium and whether that security property can be satisfied. 
+
+The output of the StEve tool and the open-games diagnostic info are similar in terms of displaying each players associated payoff. However, the open-games-engine doesn't prove any satisfiability constraints, it's up to the modeller to check all possible states, whereas PRISM will be able to compute equilibrium automatically. Thus, StEve requires less understanding from security experts for running the game model, but prevents any amendments to game structure, such as an attacker being first-to-act rather than the defender. Working in the open-games environment necessitates more direct construction of the game with at most the import of the security games provided as a template in this thesis, but allows for greater maneuverability.
+
+Comparatively, working in Haskell vs PRISM comes with the advantage of a type checker and various other language tools that will be expounded upon in the following chapter. An example difference is not needing to translate into a temporal logic formulae, but writing property tests using Hspec. The perceived downside is the inherent difference in computational complexity and running time for these models, which has yet to be determined. But from a useability point-of-view, a modeller can programmatically generate different attack or defense strategy profiles to test for any given model. 
+
+
+\subsection{A first-attempt example}
+In this section I'll detail a contrived example, as a first-pass to using the open-game-engine. I'll briefly cover how to interpret some of the fundamental parts of using the engine and understanding the diagnostic information provided in the output of an evaluation. I'll use code snippets to illustrate the thinking behind constructing each game, but I refer readers to the provided codebase for complete and executable models.
+
+Breaking this down, we'll say the \textit{attackerDefenderGame} is a generic 2-player security game, in this case with the defender being able to observe the attacker's decision. We can represent a utility-maximizing attackers and defenders in code using the \textit{dependentDecision} function, which returns an open game. 
+
+In games of \textit{incomplete information}, players have their own private types that are hidden from others. This is a common structure for security games, where a defender has to optimize their defensive strategies with uncertainty of the type of the adversary. This is a common structure used in Bayesian security games, typically by identifying behaviour of either an attacker or defender and their capabilities. In this case, the \textit{nature} game can be parameterized by a distribution over user-defined visitor types.  
+
+As a modeller, I'm concerned with instantiating this interaction to my needs by supplying the required parameters given as arguments for \textit{attackerDefenderGame}. A well-researched optimization problem in cybersecurity is resolving a networks uncertainty about a user that has logged into the system, whether the user is a typical, honest user or an adversary \cite{}. The following details a way to instantiate this game with the arguments: 
+
+\begin{enumerate}
+	\item  \textit{distType} as a distribution \textit{distFromList[(User, 0.5), (Attacker, 0.5)]} to demonstrate a 50\% chance of encountering an attacker. \textit{distFromList} is a function that returns a distribution according to a list of tuples corresponding to the probability a certain type is drawn. 
+	\item  \textit{actionSpaceAttacker} as a list \textit{[Access, NotAccess]} 
+	\item \textit{actionSpaceDefender} as a list \textit{[Open, Close]}
+\end{enumerate}
+
+As with Bayesian security games, payoff behaviour is inherently tied to the types of the players. A simple hard-coded set of Haskell functions can be used to associate payoffs as \textit{Double} to be supplied to each player as \textit{attackerPayoff} and \textit{defenderPayoff}. Since there has to be a payoff for each possible outcome of the game, that would be exponential in the size of the action space of the model, in this case ${2^3}$ For defining payoffs, we can use a variety of sources but up to the discretion of the way we choose to model this encounter. In the commonly-used story-book style of describing this, we can say if the visitor is an attacker that attempts to access a server and the defender allows this access, the payoff is 100, which corresponds to a base payoff for a successful attack.
+
+Thus this may be written as a Haskell function that pattern matches over each of these possibilities, partially written as: 
+
+Thinking in a classical game theory style, this game can be represented as a balanced extensive form game tree, with sequentially-played subgames corresponding to each possible type doled out by the Nature player at the root node. Under each of the two types, the attacker can make two choices, and for each of these two choices, the defender can make two choices. As expected, each of the 8 leaves of the tree have the corresponding payoffs that would match the above payoff function.
+
+Finally, given this payoff function (or more formally, a context to close the game), we would like to determine whether a strategy profile is included in the best-response relation generated by this model. Let's take a pure strategy profile such that the visitor always accesses regardless of type, and the defender opens access regardless of the visitor's choice. We can write these strategies as Kleisli arrows as follows: 
+
+
+A straightforward to read the type signature of these strategies, assuming no previous knowledge of Kleisli arrows, is providing the \textit{Kleisli} constructor with a function that takes as input exactly what the player observes as input in their open game representation. In this case, for the attacker strategy, the "inputs" field is the \textit{visitorType}, so we need the attacker's corresponding strategy to have \textit{visitorType} as input. Similarly, the return type of the function we pass to the \textit{Kleisli} constructor almost exactly matches up with the "output" field of the open game, again for the attacker the type \textit{VisitorMove}. The only catch is that we're allowing for probabilistic choices as dictated by the \textit{Stochastic} type constructor, so we use the handy \textit{playDeterministically} helper function which wraps the value into this type, "playing" that value with probability 1. 
+
+Now we have the bare ingredients to do some analysis on this game. The basic question we can now ask is, are these strategies for the attacker and defender a Nash Equilibrium? In other words, are the strategies such that no player is incentivized to unilaterally deviate their strategy? The current form of the diagnostics provided by the open-game-engine include payoffs given each player plays according to their supplied strategy, and the maximum possible payoff for another strategy. To put it more explicitly, each \textit{OpenGame} implements functionalities corresponds to the definitions in (\cite{HedgesThesis}, \cite{BayesianOpenGames}), as \textit{play} and \textit{evaluate}. 
+
+\begin{enumerate}
+	\item \textit{play} corresponds to the play function which takes a strategy as input, and returns an optic describing the behaviour of the game. 
+	\item \textit{evaluate} encapsulates the best-response relation (or equilibrium function) found in open games literature, which takes a context and strategy as input, and determines whether that strategy profile is in the best-response set. 
+\end{enumerate}
+
+
+
+
+
+\subsection{Identifying compositional trends}
+%Open games aren't necessarily a catch-all for solving any modelling problem, as briefly outlined in \cite{Hedges2019}. At risk of "overengineering" a problem (another term taken from software design), we'll first verify that the inherent structural similarities of preexisting models are already indicative of a need for a compositional approach. The following figure was inspired from a talk about "flexiformal mathematics" given by Michael Kohlhase at a kick-off meeting about applying LLMs for improving proof assistants, depicting the relationship between formality  and functionality. In the context of this thesis, we'll adapt this relationship such that we'll consider formality brought on by compositionality, hence the figure's depiction of the relationship between compositionality and functionality. 
+We can begin to see some of the advantages of treating game-theoretic modelling in a compositional way: these functionalities are well-defined under the composite of games, so we can observe the behaviour of players relative to each other using the same infrastructure. The interchange of these analytics and how to separate the moving pieces to effectively compare and contrast models thus ends up as a problem of organizing this infrastructure. The following chapter will detail exactly how software-engineering principles exactly encapsulate this infrastructure. 
+
+
+
+
+\begin{Definition}[2-player security game]
+	A 2-player security game is a strategic interaction between two utility-maximizing agents dubbed \textit{attacker} and \textit{defender}, where an attacker seeks to access, gain control, or cause damage to a system, and a defender seeks to deploy countermeasures and prevent damage and intrusion.
+\end{Definition}
+
+This definition is made purposefully vague, with no indication of sequence of play or how exactly we quantify "seeks to ..." in our model. This will be our most general definition of security game, which we will  adapt according to our specification of the problem. This immediately begins to address the issue remarked by Liang in \cite{Liang2013}, which remarks on how rigid security models can be. 
+
+\subsubsection{Model adaptation}
+After reviewing the literature, I identified where compositionality would prove effective for generating these models using open games: 
+
+\begin{enumerate}
+	\item Characterizing an attacker and a defender as an open game
+	\item Lifting 2-player attacker-defender interactions to a multiplayer, layered security scenario
+\end{enumerate}
+
+A prime example of model adaptation in literature is \cite{Pawlick2015} specifically adapts a signalling game from \cite{Carroll2009}, maintaining the same game structure and payoff scheme. 
+
+\subsubsection{Subsystem specification}
+Consider the architecture of a typical IDN as seen in Figure \ref{figure:Fig. 3}. This work formulates a two-layer stochastic, two-player game between an attacker and an IDN, where the states of the game are defined by the status of each subsystem. Here, the assumption is that the capabilities of each of the IDSs and their respective attackers as homogenous. In particular in the \textit{Simulation} section, the proposed model is evaluated with a specific set of parameters in a network of three IDSs and three independent attackers. It's self-evident that if the assumption of homogeneity was to change, the parameters used to evaluate the model must also change. Maintaining consistency across the model requires flexbility, but current game formulation techniques aren't necessarily built with the notion of seamless integration.
+
+From a security design point-of-view, this interaction between subsystems is vital, especially if a vulnerability in one system affects the defensive capabilities of another. After designing games for a subsystem, we can easily direct the flow of the result of the game to a level-higher for resource management. In the typical style of "separation of concerns," designing these models using open games allows us to work on each subsystem separately from the aggregation mechanism. The disjoint nature of these parts allows for testing the efficacy of a different aggregation mechanisms or subsystems. 
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.5\linewidth]{IDNBlockDiagram.png}
+	\caption{A block diagram for an IDN, for three subsystems from \cite{Jin2018} \label{figure:Fig. 3}}
+	
+\end{figure}
+
+In order to run simulations using the constructed model formulation, the authors assigned values such as the detection libraries available to each IDS system $i$ and attacking libraries for each attacker $j$. \cite{He2015} 
+
+
+The spirit of this thesis has certainly been explored in other work, for example in the simulation procedure provided by \cite{Nochenson2012}. This thesis attempts to mechanize the claims for "easily extendable" or "replace lines 9-13 in Algorithm 1" by providing a procedure that randomizes machine vulnerability values for each of 50.000 iterations, 
+
+An iterative-style approach is further alluded to \cite{wellman2006methods}, a simulation-based approach to inform the general game-theoretic design process 
+
+According to section 6.1 on IDS optimization in \cite{Collins2025}, there is a recommendation for characterizing and distinguishing different kinds of attackers and varying objectives.  
+
+\subsection{Constructing an iterative design process}
+\subsubsection{Addressing the ad-hoc design process}
+Many game-theoretic models in security rely on ad-hoc schemes \cite{Liang2013}. The authors also cite a need for standards for designing payoffs and more scalable methods to match the complexity of the security problem, such as building a model that considers more than three players. The cybersecurity problem specifications dictate the parameters and format of the model, creating a hyper-focused game. So translating the real-world security situation to a model using the same toolbox of game-theoretic mechanisms implies the need for the right sandbox to test different real-world translations and how they respond in the game-theoretic model. 
+
+%Therefore, we need to develop abstractions that allow for systematic instantiation of game-theoretic models according to \textit{many} of these real-world translations. 
+The work conducted in \cite{Caulfield2015}, \cite{Caulfield2014} closely resembles compositional and software-supported approach in security modelling by \textit{a priori} designing models that can be composed together later. Here the authors present a systems modelling theory for security policy design. Using a semantic-approach based on process theories to model elements of a security situation as resources of these theories, these concepts can be encoded in Julia to run simulations. They show composition of models is well-defined and demonstrate how to run these models based on individual expected utility. The result is a model to help inform security policy managers make better decisions about security systems and have a framework to convey this information to other stakeholders.  
+
+This modelling approach is focused on the security of an organization comprised of three sequentially-composable models: (1) a device-loss model, (2) a tailgating model, and (3) a document-sharing model. The pitch most strongly reminiscent to this thesis is that a modeller can adaptively see how including or excluding elements of a model to the workflow affects the system in a reactive way. For example, the modeller can examine the simulated data of just the tailgate model with and without the presence of a security guard on the frequency of computer accesses, and then observe the impact of the same presence of a security guard in the large composed model. This layered approach of designing locations and resources on a layer under the decision-making layer of agents hints at a design approach that separates the concerns of the model from its instantiation. This thesis tackles a different class of security problems but mirrors the task of formalizing security problems in a compositional and iterative way.
+
+Furthermore, an iterative, formalized process for refining games is not new. In particular, \textit{empirical game-theoretic analysis} is a methodology that learns payoff profiles and strategy spaces through simulated data to inform the game formulation. Specifically, the goal is to instantiate an empirical game which is parameterized by simulating expected payoffs according to a strategy profile. Two feedback mechanisms are leveraged: (1) payoff estimation and (2) strategy space exploration.  This methodology has seen its applicability in moving target defense \cite{Wellman2015} and adaptive cyber defense \cite{Wellman2019}. Further extensions for a software-induced workflow, including database support and use of Gambit, can be found in \cite{EGTAOnline}. \ref{figure:Fig. 2} provides a pipeline for generating these games. 
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.5\linewidth]{EmpiricalAnalysisPipeline.png}
+		\caption{A general modelling process from \cite{Wellman2015} \label{figure:Fig. 2}}
+		
+	\end{center}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.5\linewidth]{EGTAFeedback.png}
+	\caption{Empirical game-theoretic analysis pipeline from \cite{Wellman2019} \label{figure:Fig. 3}}
+\end{figure}
+
+%The modelling methodology that will be proposed in this thesis follow more closely to \cite{Nochenson2012} and \cite{sengupta2017game}. 
+%\subsection{Towards generating libraries for security models}
+%An ancillary benefit of using a methodology insisting on flexible, open-interfaces is self-documenting, executable models for reuse later. 
+%\subsubsection{Empirical approach to designing utility functions}
+%For Bayesian security games, payoffs can be associated with types assigned to each player. 
+%\subsubsection{Empirical approach to designing strategies}
+
+
+
+
+
+
+
+\subsubsection{Proposed design methodology}
+After conducting these translations and adaptations from pre-existing models in literature, it was clear that there were ways to improve how these models interacted or organizing the same code i.e. DRY ("don't repeat yourself"). A methodology to promote greater synergy between the initial conception of a security problem to it's game-theoretic translation is needed. 
+\begin{enumerate}
+	\item High-level model specification
+	\item Game structure as an open game 
+	\item Designing payoffs according to model specification
+\end{enumerate}
+
+\subsubsection{High-level model specification}
+To begin the formulation process, a modeller identifies the specifications of the problem. We dub this "high-level" as a way of top-down identifying system-level and exogenous parameters relevant to the problem. The objectives of this stage are summarized as: 
+\begin{enumerate}
+	\item Identify players (attackers and defenders)
+	\item Quantify action spaces and encode as Haskell data types
+	\item Encode relevant system parameters as a Haskell data type
+\end{enumerate}
+
+At this point, a modeller may be asking questions such as "is equilibrium reached under this system configuration." Writing the bare-minimum code as per the usual test-driven development paradigm, we can write an identity open game parameterized by these exogenous parameters, verify the test passes, and continue. We'll see in the next chapter how Hspec has a nice tradeoff of writing human-readable specifications, and how to implement \textit{Gen} for these parameters to generate random test-cases for property-based tests. 
+
+\subsubsection{Game-level specifications}
+One level lower, we can consider game-level specifications, or in other words, the variables we consider directly in the game. These consist of action spaces in the usual sense, in this workflow as a list of data types. Constructively speaking, we first fix our exogenous parameters, then we fix the game-level parameters which characterize each player's capabilities.
+ 
+
+% \tikzstyle{startstop} = [rectangle, rounded corners, 
+% minimum width=3cm, 
+% minimum height=1cm,
+% text centered, 
+% draw=black, 
+% fill=red!30]
+
+% \tikzstyle{io} = [trapezium, 
+% trapezium stretches=true, % A later addition
+% trapezium left angle=70, 
+% trapezium right angle=110, 
+% minimum width=3cm, 
+% minimum height=1cm, text centered, 
+% draw=black, fill=blue!30]
+
+% \tikzstyle{process} = [rectangle, 
+% minimum width=3cm, 
+% minimum height=1cm, 
+% text centered, 
+% text width=3cm, 
+% draw=black, 
+% fill=orange!30]
+
+% \tikzstyle{decision} = [diamond, 
+% minimum width=3cm, 
+% minimum height=1cm, 
+% text centered, 
+% draw=black, 
+% fill=green!30]
+% \tikzstyle{arrow} = [thick,->,>=stealth]
+% \begin{figure}
+% 	\centering
+% 	\begin{tikzpicture}[node distance=2cm]
+		
+% 		\node (start) [startstop] {Security specification};
+% 		\node (game) [startstop, below of=start] {Game specification};
+% 		\node (pro1) [process, below of=game] {Process 1};
+% 		\node (dec1) [decision, below of=pro1, yshift=-0.5cm] {Decision 1};
+		
+% 		\node (pro2a) [process, below of=dec1, yshift=-0.5cm] {Process 2a
+% 			text text text text
+% 			text text text 
+% 			text text text};
+		
+% 		\node (pro2b) [process, right of=dec1, xshift=2cm] {Process 2b};
+% 		\node (out1) [io, below of=pro2a] {Output};
+% 		\node (stop) [startstop, below of=out1] {Stop};
+		
+% 		\draw [arrow] (start) -- (game);
+% 		\draw [arrow] (game) -- (pro1);
+% 		\draw [arrow] (pro1) -- (dec1);
+% 		\draw [arrow] (dec1) -- node[anchor=east] {yes} (pro2a);
+% 		\draw [arrow] (dec1) -- node[anchor=south] {no} (pro2b);
+% 		\draw [arrow] (pro2b) |- (pro1);
+% 		\draw [arrow] (pro2a) -- (out1);
+% 		\draw [arrow] (out1) -- (stop);
+		
+% 	\end{tikzpicture}
+% 		\caption{The proposed workflow}
+% \end{figure}
+
+
+\section{Software abstractions for open cybersecurity games}
+\label{sec:2}
+\subsection{Overview}
+The previous chapter identified compositional patterns amongst a series of related game theoretic models for cybersecurity problems. But the process for analyzing the behaviour of the model requires additional work, specifically as the model increases in complexity. 
+
+In this chapter, we show how to use the Haskell environment to generate parameters and specify the parameter space of games. Therefore, after using the DSL to con
+
+There are many computational tools that exist in order to solve for equilibria, produce extensive-form game-trees, and SMT-solvers. But what we would like to outline in this chapter is being able to simultaneously generate games in a declarative manner, where the game formulation process is aided by the open games Haskell DSL. In this chapter we'll see how after a few attempts, generalizing these patterns allow for model \textit{reproducability} and \textit{reusability}, ultimately culminating in a small library of 2-player security games. We will see how this simple subset of game scan be used to rapidly generate game theoretic models in a variety of settings. By leveraging abstract data types, polymorphism, and the reader monad, we can parameterize these models with modules that help organize payoff modules and strategies. 
+
+Providing a small subset of games as a library, this falls short of a clear-cut executable script for a predetermined model. Part of developing or extending a model could be better 
+
+
+
+\subsection{Current state-of-the-art for open games}
+This thesis draws on a key motivation proposed by Zahn in \cite{ZahnCybercat}, towards the synthesis of an encoded library of microeconomic models. The process of developing the "correct" model is therefore framed as a software engineering problem. The open-games-engine has demonstrated its use verifying the most recognizable game theory problems like Prisoner's Dilemma, to auction mechanisms. A series of these models have been met with production-level directions, and a codebase of models have grown. While this thesis departs from the application of this field towards cybersecurity, the bulk of the work that is presented here is an attempt to give guidelines for using the open-games-engine effectively. Specifically, the interdisciplinary and workflow possibilities that are provided by producing models in this environment, achieving easy maneuverability and testing that fits naturally with the requirements for synthesizing effective security models. 
+
+\cite{20squares} has a series of completed projects for auctions and blockchain staking protocols. Capturing the complexity of models with open games is shown in these previous projects, but this chapter will deliberate on formalizing common techniques used to generate these models. I invite readers to refer to the README for \cite{20squares} projects for the syntax of the open-games DSL and common operators that can be used. 
+
+\subsection{Formalizing Stackelberg equilibrium in open games}
+
+\subsubsection{Related work}
+The most recent work that uses software-assisted tools for Stackelberg security games is \cite{Phetmanee2024}, using rational verification. Rational verification is a formal-analysis technique for determining the equilibrium properties of multiagent systems. Specifically by encoding these properties in Linear Temporal Logic, practitioners can use model-checkers such as PRISM to verify that given models satisfy properties. After writing these propositions, PRISM can act as an equilibrium checker by checking all possible states of the game. In particular, \cite{Phetmanee2024} extends the PRISM framework to demonstrate the security properties detailed in CVE-2017-8759, and generates data demonstrating the defensive conditions and recommendations for security advisors. 
+
+This thesis seeks to bring the resultant model closer to its conception, or in other words, more reactive to changes made to the original parameters of its conception. In the StEvE methodology, security experts are tasked with encoding an ADT and the corresponding payoffs, to then be encoded into the temporal logic propositions. A PRISM script can then ingest the CVE data and in-lined cost values to get an evaluation outputted to the terminal with metrics such as payoffs for attackers and defenders in each state.
+
+
+\subsection{Model instantiation}
+Drawing from the habit of separation-of-concerns, 
+\subsection{Towards test-driven modelling}
+Test-driven development (TDD) is a coding paradigm where a programmer begins with unit tests and iteratively refactors code to fulfill these tests and write new ones. A programmer doesn't move on to the next iteration until the entire test suite passes, ensuring that refactors don't cause breaking changes across a code-base. The very first test case in any situation is to verify the most basic assumptions for the behaviour of a program. And as the complexity and dependency of this program grows, these assumptions are always kept in check. TDD enables the coder to think about specifications first, and while those specifications are open to change over time, writing these tests document the expected behaviour of the program. 
+
+Here I propose test-driven modelling as a way to guide experiments in a self-documented fashion, while also maintaining guarantees of a game before its eventual composition with others. 
+
+It's a well-known fact that in the problem of a player allocating finite defensive resources across a series of subsystems, for example by employing maximum, high-cost 
+
+
+\subsubsection{Generating test cases}
+
+\subsection{Leveraging the Haskell type system}
+\label{sec: types}
+Type inference is a powerful tool for checking correctness of your models. And as a developer we can let the language work for us by observing a basic requirement for our model: type correctness. According to the proposed methodology, perhaps I've written that my specification as type sfor inputs and outputs for my attacker. Then to simulate the behaviour of the attacker, I need to supply the expected behaviour as a strategy where the attacker observes the expected input type and returns the expected output type. With these bounds in place, it leaves room for me to specify behaviour according to a wide variety of attack vectors or capabilities. 
+\begin{enumerate}
+	\item What the agent observes
+	\item What the agent can do about it 
+	\item All the 
+\end{enumerate}
+
+
+Working with the open-games DSL allows us to structure our game in a block-by-block style, however some of the major components of the model require Haskell functions to encode payoff matrices, action spaces
+
+Definition: an open-game allows for attachments. As soon as we provide the associated payoff for the building block, we close off an end. So for each complete model, the agents: 
+
+
+Parameters and hardcoded values: we often want to encode our behaviour as Haskell functions. For example, the level of defense may be dependent on the level of honeypot, and ... Often we need to keep track of constraints associated with these, which intuitively follows a specification written in QuickCheck. Following the specification, we can verify that we capture the expected behaviour with these functional tests 
+
+The added benefit of generating test parameters and ensuring variable constraints are met.
+
+The type checker will ensure that closing a game with a given payoff builder will mean that types must line up at the interfaces. 
+
+\subsection{A few SOLID principles}
+Open for extension ,closed for modification. The hallmark of this design strategy . Just as we might want to consider an additional player, we can easily replicate a utility-maximizing agent using the DSL. Similarly, if we would like to consider an additoinal model parameter or 
+
+Having a modular language allows us to construct games open for extension, by interacting with the interfaces exposed by each game. 
+
+IDEA: We want to encode our "assumptions" such as paraemter bounds, sign, and relative values. We cna quickcheck these as part of the simulation process in order to preliminarily check that test parameters used for simulation accurately reflect the given values. 
+\subsubsection{Separation of concerns}
+
+\subsection{Designing payoffs}
+Based on examples provided in \cite{Zahn2024}, some of the following design patterns can be recognized:
+\begin{enumerate}
+	\item Type-specified payoffs 
+	\item State-specified payoffs
+\end{enumerate}
+\subsubsection{Payoff parameterization with the reader monad}
+
+\textbf{Goal:} the development of payoff modules that can be interchanged for a particular game.
+
+Note that from section \ref{sec: types}, the instantiation of games by action space informs the types exactly available for designing payoffs. Since this model doesn't 'require' any specific payoff behaviour beyond these types (and passing some test infrastructure). We can loosely characterize payoff functions by their dependence on the following information: 
+\begin{enumerate}
+	\item The output of the designed game 
+	\item Model-level exogenous parameters 
+\end{enumerate}
+
+An example of 1. in a simple case is a tuple of actions chosen by each player in the game, or the assigned player type. 2. is concerned with system parameters that are relevant to payoff data. Here, we propose the reader monad as the necessary function-passing structure for generating payoff functions according to these model-level exogenous parameters. 
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{type}\;\Conid{PayoffReader}\;\Varid{a}\mathrel{=}\Conid{Reader}\;\Varid{a}\;\Conid{Double}{}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\Varid{runPayoff}\mathbin{::}\Varid{a}\to \Conid{PayoffReader}\;\Varid{a}\to \Conid{Double}{}\<[E]%
+\\
+\>[B]{}\Varid{runPayoff}\;\Varid{params}\;\Varid{reader}\mathrel{=}\Varid{runReader}\;\Varid{reader}\;\Varid{params}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+
+
+
+Notice the parametric type \textit{a}, so we can define a \textit{PayoffReader} for any ADT containing exogenous model parameters. This supports the system-level-first architecture that allows a modeller to introduce relevant variables that are not directly involved and subject to manipulation separate from the interworkings of the open game model. Thus, we can actively test how different payoff schemes affect our game model, either by (1) testing the same game with different system variables or (2) the same system variables with different player capabilities. We can characterize a payoff profile's dependence on two things: the outputs of the open game, and the variables accessible with the \textit{PayoffReader}.
+
+To start with writing payoffs according to the outputs of a game, we can consider the running Bayesian security game example from the previous chapter. Already we can consider branching the payoff functions into helpers associated with each type of player, and pattern-match on these types. If we use the preset template from the Security module, the set of two-player security games requires a \textit{PayoffReader} for each attacker and defender. Then at the execution-level of the game, which runs against the model-level parameters, we use these parameters to instantiate the readers (in this case, \textit{IDSParams}). Thanks to the type-checker, the output type of the model should provide the modeller with the requirements for this \textit{PayoffReader} constructor. In this example, we can define the payoffs as follows: 
+
+% \begin{hscode}\SaveRestoreHook
+% 	\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+% 	\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+% 	\column{14}{@{}>{\hspre}l<{\hspost}@{}}%
+% 	\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+% 	\>[B]{}\Varid{visitorPayoff}\mathbin{::}\Conid{VisitorType}\to \Conid{VisitorMove}\to \Conid{DefenderMove}\to \Conid{PayoffReader}\;\Conid{IDSParams}{}\<[E]%
+% 	\\
+% 	\>[B]{}\Varid{visitorPayoff}\mathrel{=}\lambda \mathbf{case}\;\{\mskip1.5mu {}\<[E]%
+% 	\\
+% 	\>[B]{}\hsindent{5}{}\<[5]%
+% 	\>[5]{}\Conid{Attacker}\to \Varid{attackerPayoff};{}\<[E]%
+% 	\\
+% 	\>[B]{}\hsindent{5}{}\<[5]%
+% 	\>[5]{}\Conid{User}\to {}\<[14]%
+% 	\>[14]{}\Varid{userPayoff}{}\<[E]%
+% 	\\
+% 	\>[B]{}\mskip1.5mu\}{}\<[E]%
+% 	\\[\blanklineskip]%
+% 	\>[B]{}\Varid{defenderPayoff}\mathbin{::}\Conid{VisitorType}\to \Conid{VisitorMove}\to \Conid{DefenderMove}\to \Conid{PayoffReader}\;\Conid{IDSParams}{}\<[E]%
+% 	\\
+% 	\>[B]{}\Varid{defenderPayoff}\mathrel{=}\lambda \mathbf{case}\;\{\mskip1.5mu {}\<[E]%
+% 	\\
+% 	\>[B]{}\hsindent{5}{}\<[5]%
+% 	\>[5]{}\Conid{Attacker}\to \Varid{defenderUnderAttackPayoff};{}\<[E]%
+% 	\\
+% 	\>[B]{}\hsindent{5}{}\<[5]%
+% 	\>[5]{}\Conid{User}\to \Varid{defenderNormalPayoff};{}\<[E]%
+% 	\\
+% 	\>[B]{}\mskip1.5mu\}{}\<[E]%
+% 	\ColumnHook
+% \end{hscode}\resethooks
+
+The type signature of each of these functions corresponds to the output of the completed open game. Then, we can use helper functions associated with each matched type and define the payoff accordingly. Since we've instantiated the reader with our exogenous parameters, the bottom-level of our payoff functions have access to the data of \textit{IDSParams}. Refer to \textbf{IDS/IDSAPayoff.hs} for the complete implementation.
+
+A key feature of using the reader monad is having fine-tuned control over these parameters without worrying about changing them. And if we do need to change them, it's explicit. Consider the payoff scheme used to slightly adapt the previous example by allowing the defender to not just open or close, but deploy two different kinds of honeypots or remain open under normal operation in \textbf{IDS/IDSAHPPayoff.hs}, 
+
+% \begin{hscode}\SaveRestoreHook
+% 	\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+% 	\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+% 	\column{14}{@{}>{\hspre}l<{\hspost}@{}}%
+% 	\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+% 	\>[B]{}\Varid{defenderPayoffHP}\mathbin{::}\Conid{VisitorType}\to \Conid{VisitorMove}\to \Conid{HoneypotDeploymentMove}\to \Conid{PayoffReader}\;\Conid{IDSParams}{}\<[E]%
+% 	\ColumnHook
+% \end{hscode}\resethooks
+
+The type signature only differs in the third argument to the payoff functions. Intuitively, I will have to write the same pattern-matching structure but over the new datatype \textit{HoneypotDeploymentMove}, but the computation of payoff shouldn't have to be rewritten explicitly. Since in my model, deploying a high-interaction honeypot increases the probability of detecting an adversary, this can be reflected by locally altering the \textit{IDSParams} before using the same formula from IDSAPayoff. So given a \textit{HoneypotDeploymentMove}, I want to update my \textit{PayoffReader} with an augmentation function such as: 
+
+% \begin{hscode}\SaveRestoreHook
+% 	\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+% 	\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+% 	\>[B]{}\Varid{augmentDetectionProb}\mathbin{::}\Conid{HoneypotDeploymentMove}\to (\Conid{PayoffReader}\;\Conid{IDSParams}\to \Conid{PayoffReader}\;\Conid{IDSParams}){}\<[E]%
+% 	\\
+% 	\>[B]{}\Varid{augmentDetectionProb}\;\Conid{HighInteractionHP}\mathrel{=}\Varid{local}\;(\lambda \Varid{params}\to \Varid{params}\;\{\mskip1.5mu \Varid{probDetected}\mathrel{=}\Varid{probDetected}\;\Varid{params}\mathbin{*}\mathrm{1.4}\mskip1.5mu\}){}\<[E]%
+% 	\\
+% 	\>[B]{}\Varid{augmentDetectionProb}\;\Conid{LowInteractionHP}\mathrel{=}\Varid{local}\;(\lambda \Varid{params}\to \Varid{params}\;\{\mskip1.5mu \Varid{probDetected}\mathrel{=}\Varid{probDetected}\;\Varid{params}\mathbin{*}\mathrm{1.25}\mskip1.5mu\}){}\<[E]%
+% 	\\
+% 	\>[B]{}\Varid{augmentDetectionProb}\;\Conid{Normal}\mathrel{=}\Varid{id}{}\<[E]%
+% 	\ColumnHook
+% \end{hscode}\resethooks
+
+
+
+To demonstrate the breadth of this granularity, we observe the following example for designing payoffs derived from an initial problem statement.
+
+\begin{enumerate}
+	\item Assumption: there is only one attacker and one defender
+	\item Assumption: the defender can either allow traffic or close the server 
+\end{enumerate}
+
+The factors that we consider that dictates the payoff would be included in the global config instantiating the model as a Haskell record type. Here, without having to change this global config, I use \textit{local} to adjust the detection probability. 
+
+
+\subsubsection{Repeated payoff game structures}
+As elaborated in \cite{Hedges2019}, we can introduce infinitely-repeated games by conditioning an open game according to some set we'll denote \textit{A}. For our purposes, we can consider conditioning a game by all the possible outcomes played in a stage game, whilst discounting the payoffs at each stage by some $\alpha$. 
+
+Notice in the following definition of this repeated stage, besides the usual name and action space parameterization for each player the final argument is itself another open game dubbed \textit{payoffGame}. We can think about \textit{repeatedStage} as an open game with the sole purpose of accumulating passed back payoffs and sending them back to the next iteration in the \textbf{feedback} field. Here we set the \textit{feedback} and \textit{returns} types as a list of Doubles of length two for the two-player security game case. 
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{4}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{11}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Varid{repeatedStage}\;\Varid{actionSpaceAttacker}\;\Varid{attackerName}\;\Varid{actionSpaceDefender}\;\Varid{defenderName}\;\Varid{payoffGame}\mathrel{=}[\mskip1.5mu \Varid{opengame}\mid {}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{inputs}\mathbin{:}\Varid{visitorType},\Varid{prevAttackerDecision},\Varid{prevDefenderDecision};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{feedback}\mathbin{:}[\mskip1.5mu (\Varid{payoffIndexer}\;\Varid{previousPayoffs}\;\mathrm{0})\mathbin{+}\Varid{attackerPayoff},(\Varid{payoffIndexer}\;\Varid{previousPayoffs}\;\mathrm{1})\mathbin{+}\Varid{defenderPayoff}\mskip1.5mu];{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\mathbin{:----------------------------:}{}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{inputs}\mathbin{:}\Varid{visitorType},\Varid{prevAttackerDecision},\Varid{prevDefenderDecision};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{feedback}\mathbin{:};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{operation}\mathbin{:}\Varid{attackerLeader}\;\Varid{attackerName}\;\Varid{actionSpaceAttacker};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{outputs}\mathbin{:}\Varid{attackerDecision};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{returns}\mathbin{:}(\Varid{payoffIndexer}\;\Varid{previousPayoffs}\;\mathrm{0})\mathbin{+}\Varid{attackerPayoff};{}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{inputs}\mathbin{:}\Varid{prevAttackerDecision},\Varid{prevDefenderDecision};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{feedback}\mathbin{:};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{operation}\mathbin{:}\Varid{defenderFollower}\;\Varid{defenderName}\;\Varid{actionSpaceDefender};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{outputs}\mathbin{:}\Varid{defenderDecision};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{returns}\mathbin{:}(\Varid{payoffIndexer}\;\Varid{previousPayoffs}\;\mathrm{1})\mathbin{+}\Varid{defenderPayoff};{}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{inputs}\mathbin{:}\Varid{visitorType},\Varid{attackerDecision},\Varid{defenderDecision};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{feedback}\mathbin{:};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{operation}\mathbin{:}\Varid{payoffGame};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{outputs}\mathbin{:}\Varid{attackerPayoff},\Varid{defenderPayoff};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{returns}\mathbin{:};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\mathbin{:----------------------------:}{}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{outputs}\mathbin{:}\Varid{visitorType},\Varid{attackerDecision},\Varid{defenderDecision};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{returns}\mathbin{:}\Varid{previousPayoffs};{}\<[E]%
+\\
+\>[B]{}\mid \mskip1.5mu]{}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\Varid{repeatedPayoffGame}\;\Varid{params}\;\Varid{payoffReader1}\;\Varid{payoffReader2}\mathrel{=}[\mskip1.5mu \Varid{opengame}\mid {}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{inputs}\mathbin{:}\Varid{visitorType},\Varid{prevAttackerDecision},\Varid{prevDefenderDecision};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{feedback}\mathbin{:};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\mathbin{:----------------------------:}{}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{inputs}\mathbin{:}\Varid{visitorType},\Varid{prevAttackerDecision},\Varid{prevDefenderDecision};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{feedback}\mathbin{:};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{operation}\mathbin{:}\Varid{liftStochastic}\;(\lambda (\Varid{x},\Varid{y},\Varid{z})\to \Varid{playDeterministically}\;(\Varid{calculateCurrAttackerPayoff}\;\Varid{x}\;\Varid{y}\;\Varid{z},\Varid{calculateCurrDefenderPayoff}\;\Varid{x}\;\Varid{y}\;\Varid{z}));{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{outputs}\mathbin{:}\Varid{payoff1},\Varid{payoff2};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{returns}\mathbin{:};{}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\mathbin{:----------------------------:}{}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{outputs}\mathbin{:}\Varid{payoff1},\Varid{payoff2};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{returns}\mathbin{:};{}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\mid \mskip1.5mu]\;\mathbf{where}\;\Varid{calculateCurrAttackerPayoff}\;\Varid{x}\;\Varid{y}\;\Varid{z}\mathrel{=}\Varid{runPayoff}\;\Varid{params}\;(\Varid{payoffReader1}\;\Varid{x}\;\Varid{y}\;\Varid{z}){}\<[E]%
+\\
+\>[B]{}\hsindent{11}{}\<[11]%
+\>[11]{}\Varid{calculateCurrDefenderPayoff}\;\Varid{x}\;\Varid{y}\;\Varid{z}\mathrel{=}\Varid{runPayoff}\;\Varid{params}\;(\Varid{payoffReader2}\;\Varid{x}\;\Varid{y}\;\Varid{z}){}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+\subsection{Collaboration}
+To conceptualize the game requires a translation of the security situation to the game-theoretic situation. Whether we choose tractable solutions like payoffs corresponding to server up-time, there is a need for some system in order to communicate this information. Furthermore, specifications... As demonstrated, we would like reproducability and modularity to rapidly provide analytics according to specifications. (SOURCE CONTROL)
 
 %--------------------------------
 % Bibliography
