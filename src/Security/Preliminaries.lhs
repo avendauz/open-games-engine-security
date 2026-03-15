@@ -1,0 +1,89 @@
+\section{Preliminaries}
+The primary focus of this thesis is on developing a methodology for the game formulation of cybersecurity models using a Haskell domain-specific-language (DSL) for \textit{open games}. Users of the DSL can use it "out-of-the-box" This chapter seeks to give an overview of the progression from (1) thinking in a classical game-theoretic sense (which most current cybersecurity game models use) to (2) thinking in a compositional game-theoretic sense to (3) thinking in a software-oriented sense for building these models. This chapter will introduce basic game-theoretic concepts, the category of open games, and 
+\subsection{Classical game theory}
+
+Game theory is a mathematical formulation for modelling strategic interactions between self-interested actors. To encapsulate this self-interest, we can define a certain reward (or payoffs) according to a set of actions for each player. Typically, this is written as a real-valued payoff function that measures the "happiness" of an agent for each possible action. Thus, we can evaluate the reward for each agent when they act or react according to a \textit{strategy profile}, We invite readers to read through \cite{leyton2008essentials} for a concise overview of these classical game theory formalisms.
+
+For example, for normal-form games, we can consider the following diagram for two players taking simultaneous actions and receiving a real-valued payoff accordingly. 
+
+After designing such a model, what can we learn about the agents? Typically, we are concerned with a solution concept such as Nash equilibrium, which intuitively means that every agent has no incentive to deviate from their given strategy given that they know everyone's strategy.
+
+
+Here we begin to demonstrate more clear-cut separation-of-concerns that goes into creating this game. 
+
+With the development and deployment of complex "socio-technical" systems, the demand for understanding the behaviour of the system interacting with rational actors has increased. While game theory has seen its applications in an economic sense, analyzing security applications begins with assigning adversarial notions to players. 
+
+\subsection{Compositional game theory}
+We direct readers to the thesis \cite{HedgesThesis} for the conception of compositional game theory, and will summarize the important concepts underlying exactly what allows users to model games programmatically.
+
+
+Compositionality in game theory enables a wider range possibilities for modelling, in particular how to develop a particular way to refine this model modularly. Even based on the intuition of deciding the rationality of agents, we can confer their behaviour based on their percieved context, whether that's actions of other agents they directly observe, or the result of some sort of computation. Furthermore, abstracting away the specific behaviour of agents by giving a well-defined type system, allowing an software engineering approach, can enable this contextual understanding of an agent as part of a larger system. That dependence and ability to decouple the problem is enabled by considering utility-maximizing agents as a kind of open system, reacting to its environment. In the case of compositional game theory, we can start by using the concept of an open game. 
+
+\begin{Definition} (Concrete open game, from \cite{BayesianOpenGames}) Let $X$, $S$, $Y$, $R$ be sets. Then a concrete open game $G: (X,S) \rightarrow (Y,R)$ is given by: 
+	\begin{enumerate}
+		\item A set of strategy profiles $\Sigma$
+		\item A play function $P : \Sigma \rightarrow \boldmath{CL}((X,S), (Y,R))$
+		\item A best response function $B: X \times (Y \rightarrow R) \rightarrow Rel(\Sigma)$
+	\end{enumerate}
+
+\end{Definition}
+
+
+
+Starting to think of each of these open games as programs, an open game has four types associated with it. Here variables $X, Y$ are flowing covariantly (intuitively, flowing forwards) and $S, R$ are flowing contravariantly (which represent the feedback of information). Specifically: 
+\begin{itemize}
+	\item $X$ is the set of inputs that the open game can observe 
+	\item $Y$ is the set of actions that the open game can take, or \textit{outcomes}
+	\item $S$ is the set of \textit{co-outcomes} with the purpose of propagating information to precomposed games. 
+	\item $R$ is the set of \textit{outcomes}
+\end{itemize}
+
+The type of $\Sigma$, like a pure strategy profile in normal-form games, can be selecting an action from the set of actions. For sequential games, a strategy would typically involve choosing an action in response to an observed action played previously, thus such a strategy would have type $X \rightarrow Y$ 
+
+Compositional game theory intuitively represent games as processes. When reading a string diagram, we consider each box a morphism and the incoming and outgoing wires as objects in the underlying category. 
+
+\begin{definition}The category of open games, $\mathbf{Open}$
+\end{definition}
+
+
+
+\begin{definition}The category of open games, $\mathbf{Open}$
+\end{definition}
+
+
+Thus, we can begin thinking of an agent as defined by a) what it sees, b) what it does, c) 
+what it sees according to the action it took. Departing from the standard of defining a global structure around agents, payoffs, and strategies, we can understand agents as a wider class of abstract notions called "open games." How we want these open games to be able to interact with each other can have well-defined properties as morphisms of a category. The objects of this category encode the data given in a), b), and c). Readers can refer to \cite{HedgesThesis, BayesianOpenGames} for the formal definition and proof for these categories. But to give a definition related more closely to the implementation, the DSL matches precisely how it's described. 
+
+
+Sometimes we want to write the payoff as follows, notice that the type is given 
+by \ensuremath{\Varid{defenderAccessPayoff}\mathbin{::}\Conid{HoneypotAllocation}\to \Conid{PayoffReader}\;\Conid{IDSParamsHP}} 
+
+
+Consider the following representation of an open game (\ref{code}) in the DSL as a Haskell function.
+
+
+As we see in the corresponding string diagram, the forward (or covariant) arrows correspond to \textit{inputs} and \textit{outputs}, and 
+
+\textit{inputs}, as expected, is where to declare the input to the game. This is typically used  to define the state of a game, observed types or observed actions of other players. Note that declaring these as variables in this line brings them into scope for all other In a 2-player sequential game in the classical sense, the follower player observes the actions of the fi
+Thus one way of "doing" compositional game theory can be done by drawing a string diagram to represent open games. 
+
+For deterministic games, we can consider \inlinehs (dependentDecision :: X -> Y)
+
+However, there has yet to be a detailed accounting of explicitly using the tool to realize some of the ideas set forth in \cite{20squares, tan2022a}. Further work is needed to identify how to effectively use the tool as a software library to manage interactions between models and a broader workflow to instantiating and testing these models. 
+
+
+
+
+\subsubsection{Categorical systems theory}
+We consider compositional game theory an instantiation of a broader scope of work called \textit{categorical systems theory}, where we can design systems by composing components. 
+
+\subsection{Software implementation}
+The subsequent implementation for compositional game theory is written as a Haskell library. 
+The aforementioned tool dubbed as \textit{open game engine} is software that can simulate and analyze open games as described in compositional game theory. Users can use this Haskell module and exported functionalities including constructors, types, and functions for analytics. In this section, we'll cover the most commonly used operators necessary for designing these games with the open-game-engine. In a later chapter, we'll introduce the application-specific games for cybersecurity that use these operators
+
+The line of 
+As outlined in \cite{tan2022a} for designing institutions with a software 
+
+With open games as processes, we can further consider an 
+\subsubsection{Reading the DSL}
+\subsubsection{Using the open-game-engine}

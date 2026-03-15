@@ -1,0 +1,153 @@
+\section{Example section}
+Some interesting ideas are given in Ref.~\cite{turing1950computing}.  A list of comparison operators are given in Table~\ref{table:comparison-operators}.  The colour crest is given in Figure~\ref{figure:colour-crest}.  A source code listing is given in Listing~\ref{listing:program}.
+
+% An example table.
+\begin{table}[h!!]
+  \begin{center}
+    \caption{Python comparison operators.}
+    \label{table:comparison-operators}
+    \begin{tabular}{l|l} \hline
+      \textbf{Operator} & \textbf{Name}\\
+      \hline
+      \texttt{==} & Equal to\\
+      \texttt{!=} & Not equal to\\
+      \texttt{>} & Greater than\\
+      \texttt{<} & Less than\\
+      \texttt{>=} & Greater than or equal to\\
+      \texttt{<=} & Less than or equal to\\ \hline
+    \end{tabular}
+  \end{center}
+\end{table}
+
+% An example figure.
+\begin{figure}[h!!]
+  \begin{center}
+    \includegraphics[scale=0.2]{strath_fullcolour.png}
+    \caption{The University of Strathclyde colour crest.}
+    \label{figure:colour-crest}
+    \cite{HedgesThesis}
+  \end{center}
+\end{figure}
+
+% An example source code listing.
+\begin{lstlisting}[language=Haskell, caption={Demonstrating source code listing.},label=listing:program]
+defenderLeader defenderName getActionSpace = [opengame|
+
+inputs    :  ;
+feedback  :  ;
+
+:----------------------------:
+inputs    : ;
+feedback  :      ;
+operation : dependentDecision defenderName getActionSpace;
+outputs   : defenderDecision;
+returns   : defenderPayoff ;
+:----------------------------:
+
+outputs   : defenderDecision;
+returns   : defenderPayoff;
+
+|]
+\end{lstlisting}
+
+\begin{lstlisting}[language=Haskell, caption={Demonstrating source code listing.},label=listing:program]
+repeatedContinuationPayoffs discountFactor iterator strat action curPayoffs game 
+	| iterator == 1 = pure curPayoffs
+	| otherwise     = do
+			newPayoffs <- extractContinuation (execute strat) action curPayoffs
+			actionNew <-  nextState strat action
+			repeatedContinuationPayoffs discountFactor (pred iterator) strat actionNew (map (*discountFactor) newPayoffs) game 
+					where  execute = play game 
+								nextState strat' = extractNextState (execute strat')
+	
+\end{lstlisting}
+
+
+\lipsum[1-2]
+\subsection{A subsection}
+\lipsum[1-2]
+\begin{hscode}\SaveRestoreHook
+	\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+	\column{4}{@{}>{\hspre}l<{\hspost}@{}}%
+	\column{6}{@{}>{\hspre}l<{\hspost}@{}}%
+	\column{14}{@{}>{\hspre}l<{\hspost}@{}}%
+	\column{17}{@{}>{\hspre}l<{\hspost}@{}}%
+	\column{21}{@{}>{\hspre}c<{\hspost}@{}}%
+	\column{21E}{@{}l@{}}%
+	\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+	\>[B]{}\Varid{defenderFollower}\mathbin{::}(\Conid{Ord}\;\Varid{b},\Conid{Show}\;\Varid{a},\Conid{Show}\;\Varid{b},\Conid{Eq}\;\Varid{a})\Rightarrow \Conid{String}\to (\Varid{a}\to [\mskip1.5mu \Varid{b}\mskip1.5mu])\to \Conid{OpenGame}{}\<[E]%
+	\\
+	\>[B]{}\hsindent{6}{}\<[6]%
+	\>[6]{}\Conid{StochasticOptic}{}\<[E]%
+	\\
+	\>[B]{}\hsindent{6}{}\<[6]%
+	\>[6]{}\Conid{StochasticContext}{}\<[E]%
+	\\
+	\>[B]{}\hsindent{6}{}\<[6]%
+	\>[6]{}\text{\ttfamily '[Kleisli~Stochastic~a~b]\;~~~~~'}\;{}\<[E]%
+	\\
+	\>[B]{}[\mskip1.5mu [\mskip1.5mu \Conid{DiagnosticInfoBayesian}\;\Varid{a}\;\Varid{b}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+	\\
+	\>[B]{}\hsindent{6}{}\<[6]%
+	\>[6]{}\Varid{a}{}\<[E]%
+	\\
+	\>[B]{}\hsindent{6}{}\<[6]%
+	\>[6]{}(){}\<[E]%
+	\\
+	\>[B]{}\hsindent{6}{}\<[6]%
+	\>[6]{}\Varid{b}{}\<[E]%
+	\\
+	\>[B]{}\hsindent{6}{}\<[6]%
+	\>[6]{}\Conid{Double}{}\<[E]%
+	\\
+	\>[B]{}\Varid{defenderFollower}\;\Varid{defenderName}\;\Varid{getActionSpace}\mathrel{=}[\mskip1.5mu \Varid{opengame}\mid {}\<[E]%
+	\\[\blanklineskip]%
+	\>[B]{}\hsindent{4}{}\<[4]%
+	\>[4]{}\Varid{inputs}{}\<[14]%
+	\>[14]{}\mathbin{:}{}\<[17]%
+	\>[17]{}\Varid{attackerDecision};{}\<[E]%
+	\\
+	\>[B]{}\hsindent{4}{}\<[4]%
+	\>[4]{}\Varid{feedback}{}\<[14]%
+	\>[14]{}\mathbin{:}{}\<[17]%
+	\>[17]{};{}\<[E]%
+	\\[\blanklineskip]%
+	\>[B]{}\hsindent{4}{}\<[4]%
+	\>[4]{}\mathbin{:----------------------------:}{}\<[E]%
+	\\
+	\>[B]{}\hsindent{4}{}\<[4]%
+	\>[4]{}\Varid{inputs}{}\<[14]%
+	\>[14]{}\mathbin{:}\Varid{attackerDecision};{}\<[E]%
+	\\
+	\>[B]{}\hsindent{4}{}\<[4]%
+	\>[4]{}\Varid{feedback}{}\<[14]%
+	\>[14]{}\mathbin{:}{}\<[21]%
+	\>[21]{};{}\<[21E]%
+	\\
+	\>[B]{}\hsindent{4}{}\<[4]%
+	\>[4]{}\Varid{operation}\mathbin{:}\Varid{dependentDecision}\;\Varid{defenderName}\;\Varid{getActionSpace};{}\<[E]%
+	\\
+	\>[B]{}\hsindent{4}{}\<[4]%
+	\>[4]{}\Varid{outputs}{}\<[14]%
+	\>[14]{}\mathbin{:}\Varid{defenderDecision};{}\<[E]%
+	\\
+	\>[B]{}\hsindent{4}{}\<[4]%
+	\>[4]{}\Varid{returns}{}\<[14]%
+	\>[14]{}\mathbin{:}\Varid{defenderPayoff};{}\<[E]%
+	\\
+	\>[B]{}\hsindent{4}{}\<[4]%
+	\>[4]{}\mathbin{:----------------------------:}{}\<[E]%
+	\\[\blanklineskip]%
+	\>[B]{}\hsindent{4}{}\<[4]%
+	\>[4]{}\Varid{outputs}{}\<[14]%
+	\>[14]{}\mathbin{:}\Varid{defenderDecision};{}\<[E]%
+	\\
+	\>[B]{}\hsindent{4}{}\<[4]%
+	\>[4]{}\Varid{returns}{}\<[14]%
+	\>[14]{}\mathbin{:}\Varid{defenderPayoff};{}\<[E]%
+	\\
+	\>[B]{}\mid \mskip1.5mu]{}\<[E]%
+	\ColumnHook
+\end{hscode}\resethooks
+\subsubsection{A subsubsection}
+\lipsum[1-2]

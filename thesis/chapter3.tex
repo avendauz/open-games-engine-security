@@ -1,0 +1,28 @@
+\section{Simulation-based analysis and discussion}
+\label{sec:3}
+\subsection{Motivation}
+So far, the 
+\subsection{Equilibria analysis}
+\subsection{Payoff graphs}
+\subsection{Test data generation}
+Fine tuned control over simulation. A straightforward example in a attacker-defender signalling game is the case of a defender assuming the prior probability of an attacker as 0. This ultimately leads to a nonsensical outcome, which is reflected in the DiagnosticInformation as \textit{NaN}. When attempting to 
+\subsection{Utility from Diagnostics}
+Noticing hte expected reward in the payoff section, the average expected utility 
+Deconstructing the returned Diagnostic type, each player recieves a certain expected payoff within the context of the support of the unobservable state. In a simple case, 
+
+
+Subgame perfect equilibrium? 
+
+\subsection{Open interface and value iteration}
+Notice the strategies are supplied, but we can give our system stratregies from an external optimizer.
+\subsection{Sensitivity analysis}
+\subsection{Discussion}
+This approach lacks in designing optimization problems with continuous action spaces or 
+\subsubsection{Peformance issues and scaling}
+\subsubsection{Learning curve}
+As mentioned previously, using this methodology and open-games-hs in it's current iteration requires a modeller to adapt .While we've demonstrated 
+\subsection{Part of a larger framework}
+As seen in A Game Theory Based Multi Layered Intrusion Detection Framework
+for Wireless Sensor Networks, once again the two-player signalling game is used. But it is only relevant to one layer of a larger model involving incentive mchanisms for different IDS's to report honest findings. Would it be possible to design this multi-layered framework as a composition of more open games models? We want to show that each layer can be designed independently, and composed at the end for analyssi.
+Possibility of automation.
+

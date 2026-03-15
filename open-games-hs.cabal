@@ -58,6 +58,7 @@ library
       IDS.CollaborativeIDSModel
       IDS.CollaborativeIDSSpec
       IDS.CollaborativePayoff
+      IDS.CollaborativeTransition
       IDS.DeceptionPayoff
       IDS.DeceptionSpec
       IDS.DeceptionStrategies
@@ -77,6 +78,7 @@ library
       OpenGames.Engine.IOGames
       Security.AttackerDefender
       Security.AttackerDefenderRepeated
+      Security.BasicGame
       Security.Evaluator
       Security.ParameterBuilder
       Security.Payoffs

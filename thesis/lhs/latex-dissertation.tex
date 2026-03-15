@@ -1,0 +1,837 @@
+
+\documentclass[11pt,titlepage,dvipsnames,table,xcdraw,english]{article}
+%!TEX root=./latex-dissertation.tex
+%% ODER: format ==         = "\mathrel{==}"
+%% ODER: format /=         = "\neq "
+%
+%
+\makeatletter
+\@ifundefined{lhs2tex.lhs2tex.sty.read}%
+  {\@namedef{lhs2tex.lhs2tex.sty.read}{}%
+   \newcommand\SkipToFmtEnd{}%
+   \newcommand\EndFmtInput{}%
+   \long\def\SkipToFmtEnd#1\EndFmtInput{}%
+  }\SkipToFmtEnd
+
+\newcommand\ReadOnlyOnce[1]{\@ifundefined{#1}{\@namedef{#1}{}}\SkipToFmtEnd}
+\usepackage{amstext}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\DeclareFontFamily{OT1}{cmtex}{}
+\DeclareFontShape{OT1}{cmtex}{m}{n}
+  {<5><6><7><8>cmtex8
+   <9>cmtex9
+   <10><10.95><12><14.4><17.28><20.74><24.88>cmtex10}{}
+\DeclareFontShape{OT1}{cmtex}{m}{it}
+  {<-> ssub * cmtt/m/it}{}
+\newcommand{\texfamily}{\fontfamily{cmtex}\selectfont}
+\DeclareFontShape{OT1}{cmtt}{bx}{n}
+  {<5><6><7><8>cmtt8
+   <9>cmbtt9
+   <10><10.95><12><14.4><17.28><20.74><24.88>cmbtt10}{}
+\DeclareFontShape{OT1}{cmtex}{bx}{n}
+  {<-> ssub * cmtt/bx/n}{}
+\newcommand{\tex}[1]{\text{\texfamily#1}}	% NEU
+
+\newcommand{\Sp}{\hskip.33334em\relax}
+
+
+\newcommand{\Conid}[1]{\mathit{#1}}
+\newcommand{\Varid}[1]{\mathit{#1}}
+\newcommand{\anonymous}{\kern0.06em \vbox{\hrule\@width.5em}}
+\newcommand{\plus}{\mathbin{+\!\!\!+}}
+\newcommand{\bind}{\mathbin{>\!\!\!>\mkern-6.7mu=}}
+\newcommand{\rbind}{\mathbin{=\mkern-6.7mu<\!\!\!<}}% suggested by Neil Mitchell
+\newcommand{\sequ}{\mathbin{>\!\!\!>}}
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+\usepackage{polytable}
+
+%mathindent has to be defined
+\@ifundefined{mathindent}%
+  {\newdimen\mathindent\mathindent\leftmargini}%
+  {}%
+
+\def\resethooks{%
+  \global\let\SaveRestoreHook\empty
+  \global\let\ColumnHook\empty}
+\newcommand*{\savecolumns}[1][default]%
+  {\g@addto@macro\SaveRestoreHook{\savecolumns[#1]}}
+\newcommand*{\restorecolumns}[1][default]%
+  {\g@addto@macro\SaveRestoreHook{\restorecolumns[#1]}}
+\newcommand*{\aligncolumn}[2]%
+  {\g@addto@macro\ColumnHook{\column{#1}{#2}}}
+
+\resethooks
+
+\newcommand{\onelinecommentchars}{\quad-{}- }
+\newcommand{\commentbeginchars}{\enskip\{-}
+\newcommand{\commentendchars}{-\}\enskip}
+
+\newcommand{\visiblecomments}{%
+  \let\onelinecomment=\onelinecommentchars
+  \let\commentbegin=\commentbeginchars
+  \let\commentend=\commentendchars}
+
+\newcommand{\invisiblecomments}{%
+  \let\onelinecomment=\empty
+  \let\commentbegin=\empty
+  \let\commentend=\empty}
+
+\visiblecomments
+
+\newlength{\blanklineskip}
+\setlength{\blanklineskip}{0.66084ex}
+
+\newcommand{\hsindent}[1]{\quad}% default is fixed indentation
+\let\hspre\empty
+\let\hspost\empty
+\newcommand{\NB}{\textbf{NB}}
+\newcommand{\Todo}[1]{$\langle$\textbf{To do:}~#1$\rangle$}
+
+\EndFmtInput
+\makeatother
+%
+%
+%
+%
+%
+%
+% This package provides two environments suitable to take the place
+% of hscode, called "plainhscode" and "arrayhscode". 
+%
+% The plain environment surrounds each code block by vertical space,
+% and it uses \abovedisplayskip and \belowdisplayskip to get spacing
+% similar to formulas. Note that if these dimensions are changed,
+% the spacing around displayed math formulas changes as well.
+% All code is indented using \leftskip.
+%
+% Changed 19.08.2004 to reflect changes in colorcode. Should work with
+% CodeGroup.sty.
+%
+\ReadOnlyOnce{polycode.fmt}%
+\makeatletter
+
+\newcommand{\hsnewpar}[1]%
+  {{\parskip=0pt\parindent=0pt\par\vskip #1\noindent}}
+
+% can be used, for instance, to redefine the code size, by setting the
+% command to \small or something alike
+\newcommand{\hscodestyle}{}
+
+% The command \sethscode can be used to switch the code formatting
+% behaviour by mapping the hscode environment in the subst directive
+% to a new LaTeX environment.
+
+\newcommand{\sethscode}[1]%
+  {\expandafter\let\expandafter\hscode\csname #1\endcsname
+   \expandafter\let\expandafter\endhscode\csname end#1\endcsname}
+
+% "compatibility" mode restores the non-polycode.fmt layout.
+
+\newenvironment{compathscode}%
+  {\par\noindent
+   \advance\leftskip\mathindent
+   \hscodestyle
+   \let\\=\@normalcr
+   \let\hspre\(\let\hspost\)%
+   \pboxed}%
+  {\endpboxed\)%
+   \par\noindent
+   \ignorespacesafterend}
+
+\newcommand{\compaths}{\sethscode{compathscode}}
+
+% "plain" mode is the proposed default.
+% It should now work with \centering.
+% This required some changes. The old version
+% is still available for reference as oldplainhscode.
+
+\newenvironment{plainhscode}%
+  {\hsnewpar\abovedisplayskip
+   \advance\leftskip\mathindent
+   \hscodestyle
+   \let\hspre\(\let\hspost\)%
+   \pboxed}%
+  {\endpboxed%
+   \hsnewpar\belowdisplayskip
+   \ignorespacesafterend}
+
+\newenvironment{oldplainhscode}%
+  {\hsnewpar\abovedisplayskip
+   \advance\leftskip\mathindent
+   \hscodestyle
+   \let\\=\@normalcr
+   \(\pboxed}%
+  {\endpboxed\)%
+   \hsnewpar\belowdisplayskip
+   \ignorespacesafterend}
+
+% Here, we make plainhscode the default environment.
+
+\newcommand{\plainhs}{\sethscode{plainhscode}}
+\newcommand{\oldplainhs}{\sethscode{oldplainhscode}}
+\plainhs
+
+% The arrayhscode is like plain, but makes use of polytable's
+% parray environment which disallows page breaks in code blocks.
+
+\newenvironment{arrayhscode}%
+  {\hsnewpar\abovedisplayskip
+   \advance\leftskip\mathindent
+   \hscodestyle
+   \let\\=\@normalcr
+   \(\parray}%
+  {\endparray\)%
+   \hsnewpar\belowdisplayskip
+   \ignorespacesafterend}
+
+\newcommand{\arrayhs}{\sethscode{arrayhscode}}
+
+% The mathhscode environment also makes use of polytable's parray 
+% environment. It is supposed to be used only inside math mode 
+% (I used it to typeset the type rules in my thesis).
+
+\newenvironment{mathhscode}%
+  {\parray}{\endparray}
+
+\newcommand{\mathhs}{\sethscode{mathhscode}}
+
+% texths is similar to mathhs, but works in text mode.
+
+\newenvironment{texthscode}%
+  {\(\parray}{\endparray\)}
+
+\newcommand{\texths}{\sethscode{texthscode}}
+
+% The framed environment places code in a framed box.
+
+\def\codeframewidth{\arrayrulewidth}
+\RequirePackage{calc}
+
+\newenvironment{framedhscode}%
+  {\parskip=\abovedisplayskip\par\noindent
+   \hscodestyle
+   \arrayrulewidth=\codeframewidth
+   \tabular{@{}|p{\linewidth-2\arraycolsep-2\arrayrulewidth-2pt}|@{}}%
+   \hline\framedhslinecorrect\\{-1.5ex}%
+   \let\endoflinesave=\\
+   \let\\=\@normalcr
+   \(\pboxed}%
+  {\endpboxed\)%
+   \framedhslinecorrect\endoflinesave{.5ex}\hline
+   \endtabular
+   \parskip=\belowdisplayskip\par\noindent
+   \ignorespacesafterend}
+
+\newcommand{\framedhslinecorrect}[2]%
+  {#1[#2]}
+
+\newcommand{\framedhs}{\sethscode{framedhscode}}
+
+% The inlinehscode environment is an experimental environment
+% that can be used to typeset displayed code inline.
+
+\newenvironment{inlinehscode}%
+  {\(\def\column##1##2{}%
+   \let\>\undefined\let\<\undefined\let\\\undefined
+   \newcommand\>[1][]{}\newcommand\<[1][]{}\newcommand\\[1][]{}%
+   \def\fromto##1##2##3{##3}%
+   \def\nextline{}}{\) }%
+
+\newcommand{\inlinehs}{\sethscode{inlinehscode}}
+
+% The joincode environment is a separate environment that
+% can be used to surround and thereby connect multiple code
+% blocks.
+
+\newenvironment{joincode}%
+  {\let\orighscode=\hscode
+   \let\origendhscode=\endhscode
+   \def\endhscode{\def\hscode{\endgroup\def\@currenvir{hscode}\\}\begingroup}
+   %\let\SaveRestoreHook=\empty
+   %\let\ColumnHook=\empty
+   %\let\resethooks=\empty
+   \orighscode\def\hscode{\endgroup\def\@currenvir{hscode}}}%
+  {\origendhscode
+   \global\let\hscode=\orighscode
+   \global\let\endhscode=\origendhscode}%
+
+\makeatother
+\EndFmtInput
+%
+\usepackage{haskell}
+\usepackage{amsmath}
+\newtheorem{Definition}{Definition}
+\usepackage{listings}
+\usepackage{strath-dissertation}
+\usepackage{setspace}
+\usepackage{tcolorbox}
+\usepackage{babel}
+\usepackage{lipsum} % For demonstration only.
+\usepackage[backend=biber, style=numeric-comp]{biblatex}
+\addbibresource{bibliography.bib}
+
+% MACROS 
+\newcommand{\C}{\mathcal{C}}
+\newcommand{\Optic}{\mathbf{Optic}_{\C}}
+\newcommand{\Set}{\mathbf{Set}}
+\newcommand{\Prob}{\mathbf{D}}
+\newcommand{\KlD}{\mathbf{Kl}(\Prob)}
+
+% 
+%--------------------------------
+% Degree settings
+%--------------------------------
+\newcommand{\degreename}{MPhil}
+\newcommand{\coursename}{Computer and Information Sciences}
+\newcommand{\deptname}{Computer and Information Sciences}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}
+\begin{document}
+
+%--------------------------------
+% Title page.
+%--------------------------------
+\begin{titlepage}
+\vspace*{5mm}
+\titletext{Compositional model formulation\\ techniques for cybersecurity games}
+\vspace{10mm}
+\authortext{Aven Dauz}
+\vspace{15mm}
+\degreetext{\degreename}{\coursename}
+\vspace{40mm}
+\centredcrest
+\vspace{5mm}
+\depttext{\deptname}
+\vspace{5mm}
+\datetext{October, 2025}
+\end{titlepage}
+
+%--------------------------------
+% Front matter numbering.
+%--------------------------------
+\pagenumbering{roman}
+\setcounter{page}{2}
+
+%--------------------------------
+% Setting counter depth.
+%--------------------------------
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{2}
+
+%--------------------------------
+% The front matter.
+%--------------------------------
+\setstretch{1.5} % 1.5 line spacing. 
+\input{abstract}
+\input{declaration}
+\clearpage
+\input{acknowledgements}  % Uncomment to include this page.
+
+%--------------------------------
+% Tables of contents.
+%--------------------------------
+\setstretch{1.0} % 1.0 line spacing.  
+\clearpage
+\tableofcontents
+%\listoffigures   % Uncomment for af list of figures.
+%\listoftables    % Uncomment for a list of tables.
+\clearpage
+
+%--------------------------------
+% The body of the document.
+%--------------------------------
+\pagenumbering{arabic} % Page numbering for rest of document.
+\setstretch{1.5} % 1.5 line spacing. 
+
+%-------------- PRELIMINARIES ------------------
+\section{Preliminaries}
+
+The primary focus of this thesis is on developing a methodology for the game formulation of cybersecurity models using a Haskell domain-specific-language (DSL) for \textit{open games}. 
+The organization of this chapter is based on the construction of the model of computation
+for open games. These constructions will then be accompanied by their corresponding implementation,
+available as typeclasses or type constructors as part of \ensuremath{\Conid{\Conid{OpenGame}.\Conid{Engine}.Engine}}. The remaining chapters of the thesis 
+will propose design patterns and techniques for rapidly developing security models using the tool presented here.
+
+Compositionality in game theory enables a wider range possibilities for modelling, in particular how to develop a particular way to refine this model modularly. Even based on the intuition of deciding the rationality of agents, we can confer their behaviour based on their percieved context, whether that's actions of other agents they directly observe, or the result of some sort of computation. 
+Furthermore, abstracting away the specific behaviour of agents by describing a well-defined type system, allowing a software engineering approach, can enable a contextual understanding of an agent as part of a larger system. 
+That dependence and ability to decouple the problem is enabled by considering utility-maximizing agents as a kind of open system, reacting to its environment. 
+In the case of compositional game theory, we can start by using the concept of an open game. The properties of an open game allow a particular modelling workflow to assist a 
+user in testing assumptions or design choices programmatically. If the end goal is for users to treat open games as first-class citizens of this language, practitioners may need a glimpse into the underlying theory before 
+describing these design patterns. 
+
+To get started with the tool, users will need \href{https://www.haskell.org/ghcup/install/}{\textbf{ghc}}, 
+and a package manager such as \href{https://docs.haskellstack.org/en/stable/}{Stack}. 
+From here on we will refer to the \textit{open-game-hs} as the library that can be included 
+as a dependency in a Haskell project. The main module is \ensuremath{\Conid{\Conid{OpenGames}.\Conid{Engine}.Engine}}, where all 
+the library's functionalities are available. On the other hand, \textit{open games DSL} is the code block 
+syntax that are compiled to a program using the \ensuremath{\Conid{OpenGame}} data type and the corresponding operations.
+
+Thus we can take a look at the following code example from to introduce the separation 
+of these two concepts: 
+\framedhs
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{4}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{6}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{14}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{17}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{21}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{21E}{@{}l@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{import}\;\Conid{\Conid{OpenGames}.Preprocessor}{}\<[E]%
+\\
+\>[B]{}\mathbf{import}\;\Conid{\Conid{OpenGames}.\Conid{Engine}.Engine}{}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\Varid{defenderFollower}\mathbin{::}\Conid{String}\to (\Varid{a}\to [\mskip1.5mu \Varid{b}\mskip1.5mu])\to \Conid{OpenGame}{}\<[E]%
+\\
+\>[B]{}\hsindent{6}{}\<[6]%
+\>[6]{}\Conid{StochasticOptic}{}\<[E]%
+\\
+\>[B]{}\hsindent{6}{}\<[6]%
+\>[6]{}\Conid{StochasticContext}{}\<[E]%
+\\
+\>[B]{}\hsindent{6}{}\<[6]%
+\>[6]{}`[\mskip1.5mu \Conid{Kleisli}\;\Conid{Stochastic}\;\Varid{a}\;\Varid{b}\mskip1.5mu]{}\<[E]%
+\\
+\>[B]{}\hsindent{6}{}\<[6]%
+\>[6]{}`[\mskip1.5mu [\mskip1.5mu \Conid{DiagnosticInfoBayesian}\;\Varid{a}\;\Varid{b}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\\
+\>[B]{}\hsindent{6}{}\<[6]%
+\>[6]{}\Varid{a}{}\<[E]%
+\\
+\>[B]{}\hsindent{6}{}\<[6]%
+\>[6]{}(){}\<[E]%
+\\
+\>[B]{}\hsindent{6}{}\<[6]%
+\>[6]{}\Varid{b}{}\<[E]%
+\\
+\>[B]{}\hsindent{6}{}\<[6]%
+\>[6]{}\Conid{Double}{}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\Varid{defenderFollower}\;\Varid{defenderName}\;\Varid{getActionSpace}\mathrel{=}[\mskip1.5mu \Varid{opengame}\mid {}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{inputs}{}\<[14]%
+\>[14]{}\mathbin{:}{}\<[17]%
+\>[17]{}\Varid{attackerDecision};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{feedback}{}\<[14]%
+\>[14]{}\mathbin{:}{}\<[17]%
+\>[17]{};{}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\mathbin{:----------------------------:}{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{inputs}{}\<[14]%
+\>[14]{}\mathbin{:}\Varid{attackerDecision};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{feedback}{}\<[14]%
+\>[14]{}\mathbin{:}{}\<[21]%
+\>[21]{};{}\<[21E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{operation}\mathbin{:}\Varid{dependentDecision}\;\Varid{defenderName}\;\Varid{getActionSpace};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{outputs}{}\<[14]%
+\>[14]{}\mathbin{:}\Varid{defenderDecision};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{returns}{}\<[14]%
+\>[14]{}\mathbin{:}\Varid{defenderPayoff};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\mathbin{:----------------------------:}{}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{outputs}{}\<[14]%
+\>[14]{}\mathbin{:}\Varid{defenderDecision};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{returns}{}\<[14]%
+\>[14]{}\mathbin{:}\Varid{defenderPayoff};{}\<[E]%
+\\
+\>[B]{}\mid \mskip1.5mu]{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+The models developed during the course of this project is a fork from \url{https://github.com/philipp-zahn/open-games-engine}. Various tutorials and  
+READMEs exist, however a comprehensive progression and explicit accounting of the key 
+functionalities to support end-user capabilities of the \textit{open-game-engine} has not been completed. 
+The goal is for readers to use the language given here to help transition from: 
+
+(1) thinking in a classical game-theoretic sense to \\
+(2) thinking in a compositional game-theoretic sense to \\
+(3) thinking in a software-oriented sense for building these models.\\
+(4) writing the code \\
+
+where the main contributions of this thesis focus on a particular security-oriented focus in (3) and (4).
+
+The organization of this section will bridge the concepts given mostly in \cite{BayesianOpenGames}
+while examining the corresponding implementation.
+
+\begin{enumerate}
+   \item Optics typeclass 
+   \item Context typeclass 
+   \item Open games \ensuremath{\mathbf{data}\;\Conid{OpenGame}}
+\end{enumerate}
+
+
+\subsection{Classical game theory}
+
+
+Game theory is a mathematical formulation for modelling strategic interactions between self-interested actors. To encapsulate this self-interest, we can define a certain reward (or payoffs) according to a set of actions for each player. Typically, this is written as a real-valued payoff function that measures the "happiness" of an agent for each possible action. Thus, we can evaluate the reward for each agent when they act or react according to a \textit{strategy profile}, 
+We invite readers to read through for a concise overview of these classical game theory formalisms.
+
+For example, for normal-form games, we can consider the following diagram for two players taking simultaneous actions and receiving a real-valued payoff accordingly. 
+
+After designing such a model, what can we leShoham2008arn about the agents? Typically, we are concerned with a solution concept such as Nash equilibrium, which intuitively means that every agent has no incentive to deviate from their given strategy given that they know everyone's strategy.
+
+
+Here we begin to demonstrate more clear-cut separation-of-concerns that goes into creating this game. 
+
+
+With the development and deployment of complex "socio-technical" systems, the demand for understanding the behaviour of the system interacting with rational actors has increased. While game theory has seen its applications in an economic sense, analyzing security applications begins with assigning adversarial notions to players. 
+
+\subsection{Category theory}
+The foundation of compositional game theory begins with category theory, 
+in particular the "compositional" part of compositional game theory being enabled 
+specifically by defining open games as morphisms of a category. In the spirit of staying in 
+an applied setting, this chapter will briefly 
+cover the related categorical constructions, and assumes no working knowledge of 
+category theory. 
+
+The most important takeaway will be the properties of 
+the constructed categories are operationally presented as various Haskell datatypes available in 
+\textit{open-game-engine}. For example, discussing the category of optics $\Optic$ over a symmetric monoidal
+category $\C$ could be discussed by considering types in Haskell as objects of 
+
+Read
+
+
+\subsection{Constructing open games in Haskell}
+We'll begin by recounting crucial constructions necessary to understand what an open game is. The deep connection 
+with \textit{lenses} has ultimately led to the current implementation that is used when developing models. But this requires 
+users to understand . A deep-dive is necessary, though this leaves the task of bridging the theory 
+with the implementation. The goal of this section is to present the definitions that are used, and then to explain 
+how to read the corresponding implementation, especially the various types and frequently-used functions. The hope is 
+that this builds an intuition for modellers to be able to understand the bare minimimum for constructing 
+models and effectively using the type system. 
+
+\subsubsection{Concrete lenses and open games}
+Open games that are used in this thesis first relies on machinery that enables the flow of "forwards" and "backwards" 
+information flow. This is encoded using the language of 
+\textit{lenses}. Historically, open games were constructed without any connection to 
+lenses, but was most recently used for defining Bayesian games in \cite{BayesianOpenGames} using a more general 
+definition which broadly encompasses
+the more familiar term, \textit{lenses}. 
+
+Lenses have been used in database theory, defining certain 
+\textit{lens laws} associated with data accessors. These properties dictate the behaviour 
+of a \textit{get} and \textit{put} operations (or colloquially, \textit{view} and \textit{update} operations).
+High-level, \textit{get} allows you to view the contents of a substructure, and 
+\textit{put} allows you to make updates to a substructure, and the lawfullness of these operations ensure that 
+updates to the substrucuture are reflected accordingly in the larger structure. Thus a lens (given by $lens: S \rightarrowtail A$) is a pair of operations typed as $get: S \rightarrow A$
+and $put: S \times A \rightarrow S$, where $A$ is the substructure of $S$. But we can relax the requirement of "substructure"
+and generalize \textit{get} and \textit{put} to the definition of concrete lenses given in 
+\cite{BayesianOpenGames}[Definition 2.2.1]
+
+\begin{Definition}(Concrete lenses) Let $S$, $T$, $A$, $B$ be objects of 
+the category $\Set$. A \textit{concrete lens} l: $(S,T) \rightarrowtail (A,B)$ is a pair of functions 
+$u: S \rightarrow A$ and $v: S \times T \rightarrow B$
+\end{Definition}
+
+
+To see what this would look like in Haskell, we can treat $u$ and $v$ as the two parameters for instantiating 
+a datatype
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{4}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{data}\;\Conid{Lens}\;\Varid{s}\;\Varid{t}\;\Varid{a}\;\Varid{b}\;\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Conid{Lens}\mathbin{::}(\Varid{s}\to \Varid{a})\to (\Varid{s}\to \Varid{b}\to \Varid{t})\to \Conid{Lens}\;\Varid{s}\;\Varid{t}\;\Varid{a}\;\Varid{b}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+One of the important features of these lenses is that they compose sequentially and in parallel,
+or in other words, act as morphisms of a symmetric monoidal category where objects are pairs of sets. 
+We term sequential composition as morphism composition and parallel composition as the tensor product of the 
+symmetric monoidal category. Note that 
+$S$ and $A$ are considered the "boundaries" that dictate 
+covariant morphisms and $R$ and $B$ are the "boundaries" for contravariant morphisms of these lenses, or readers can use 
+morphisms from $\mathbf{Set} \times \mathbf{Set}^{\mathbf{op}}$.
+
+To hint at where we are headed in game-theoretic terms, intuitively
+such a morphism would describe the behaviour of an agent given a certain strategy when operating 
+in a given environment, where: 
+\begin{itemize}
+   \item Makes observations of type $S$
+   \item Takes actions of type $A$
+   \item Recieves some feedback from its local environment of type $T$
+   \item Relays information back to the environment of type $B$
+\end{itemize}
+Thus given a (1) a strategy $S \rightarrow A$, (2) an observation of type $S$, and (3) some continuation or feedback 
+providing some payoff of type $B$, we will be able to describe what this agent would do. 
+
+Considering the behaviour of agents using these lenses is enough to start constructing a category 
+of open games that can model normal-form games (see \cite{HedgesThesis,hedges2017morphismsopengames,BayesianOpenGames} to see how 
+this is done and the construction of the category of open games). We'll only mention that this category of \textit{concrete open games}
+exists, and choose to focus on the successor which is not limited to a deterministic setting. 
+For security games or modelling realistic security scenarios, most current models use
+mixed strategies, Bayesian games, or incomplete information games.
+
+\subsubsection{Coend lenses and probability}
+To accommodate the need for modelling games in a probabilisti setting, we would need a more generalized notion of lenses (and then a more general category of open games), where we can do things like take actions $A$ 
+over some probability distribution, or give agents the ability to have some probabilistic belief about their type (as in classic Bayesian games)
+. This turns out not to be as simple as attaching a probability monad 
+to the current definition of lenses, specifically because the tensor product of the category of open games fails to be associative,
+(see \cite[Section 3.4]{BayesianOpenGames} to understand why this happens). Instead, the authors of 
+\cite{3} use \textit{coend lenses} (or \textit{optics}) to construct Bayesian open games. 
+
+We recall the definition from \cite[\textbf{Definition 2.0.1}]{riley2018categories}
+
+\begin{definition}[Coend lens] \label{Definition:Coends}
+   Given a symmetric monoidal category $\C$ equipped with tensor product $\otimes$, and with pairs of
+   objects $(S,T)$ and $(A,B)$, a \textit{coend lens} 
+   $l: (S, T) \rightarrowtail (A, B)$ is an element of the set $\int^{\Theta:\C} \C(S, \Theta \otimes A) \times \C(\Theta \otimes R, T)$
+\end{definition}
+
+Treating $\C$ as $\textbf{Set}$ reduces this definition to the concrete lenses introduced in the previous section.
+Explicitly, we can treat this set as the pairs of functions $u: S \rightarrow \Theta \otimes A$ and $v: \Theta \otimes B \rightarrow T$
+quotiented by the equivalence relations given by $((f \otimes A)u, v) ~ (u, v(f \otimes B))$ for any 
+$f: \Theta \rightarrow \Gamma$, $u: S \rightarrow \Theta \otimes A$ and $v: \Gamma \otimes B \rightarrow T$. 
+
+
+Effectful lenses have been studied in \cite{xie2025effectful,abou2016reflections}, but \cite[Section 4.9]{riley2018categories} implements some desired effectul properties as "effectful 
+optics" using the coends as defined here with the appropriate monad (i.e. Writer, State). Since the specific application we 
+are interested in for game theoretic modelling is the ability to describe, for example, \textit{behavioural strategies}
+and moves of Nature, we use the finite distribution probability monad. 
+
+Based on the intuition we've introduced in the previous section, a \textit{behavioural strategy} would 
+then have to be represented by a function of type $S \rightarrow \Prob(A)$ where $\Prob(A)$ is the finitary probability distribution
+monad over the actions $A$. This monad is an important type constructor 
+used in the \textit{open-game-engine} for wrapping user-defined types, specifically 
+the constructor \ensuremath{\mathbf{type}\;\Conid{Stochastic}\mathbin{::}\Conid{T}\;\Conid{Double}}, where \ensuremath{\Conid{T}} is the probability monad 
+given by the module \ensuremath{\Conid{\Conid{Numeric}.\Conid{Probability}.Distribution}}.  
+
+A quick way of deriving a function $S \rightarrow \Prob(A)$ from $S \rightarrow A$ is 
+to consider the Kleisli category of the finite distribution monad $\Prob$. 
+Working in the Kleisli category is handy for composing these morphisms without having 
+to open up the monad, but the most common use for our purposes is writing Kleisli arrows of the distribution monad
+to write behavioural strategies for our models. Generally speaking, these will follow the format:
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Varid{someBehaviouralStrategy}\mathbin{::}\Conid{Kleisli}\;\Conid{Stochastic}\;\Varid{s}\;\Varid{a}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+Using this Kleisli category over the finite distribution monad as the category of interest in \ref{Definition:Coends}, we have a way of keeping track of 
+correlations (or \textit{marginals} from probability theory, or \textit{residuals} 
+defined over indirectly observed variables (which we call \textit{unobservables}). 
+Using $\Theta$ as a type variable to 
+store this information to be used later, we can directly express Bayesian updating for agents. For example, 
+this $\Theta$ may be some prior distribution representing an agent's belief of their type. 
+
+For the purposes of the \textit{open-game-engine}, one implementation of coend lenses ties this definition together 
+as a data type:
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{23}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{27}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{data}\;\Conid{StochasticOptic}\;\Varid{s}\;\Varid{t}\;\Varid{a}\;\Varid{b}\;\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Conid{StochasticOptic}\mathbin{::}{}\<[23]%
+\>[23]{}(\Varid{s}\to \Conid{Stochastic}\;(\Varid{z},\Varid{a})){}\<[E]%
+\\
+\>[23]{}\hsindent{4}{}\<[27]%
+\>[27]{}\to (\Varid{z}\to \Varid{b}\to \Conid{Stochastic}\;\Varid{t}){}\<[E]%
+\\
+\>[23]{}\hsindent{4}{}\<[27]%
+\>[27]{}\to \Conid{StochasticOptic}\;\Varid{s}\;\Varid{t}\;\Varid{a}\;\Varid{b}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+Note the implicit \ensuremath{\Varid{forall}\;\Varid{z}} as part of this definition, which represents $\Theta$. 
+
+Furthermore, $\KlD$ is a symmetric monoidal category and can be used as the underlying category 
+of a coend lense in \ref{Definition:Coends}. By \cite[Proposition 2.0.3]{riley2018categories}, there is a category 
+of coend lenses where objects are pairs of sets, and morphisms are coend lenses. 
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{class}\;\Conid{Optic}\;\Varid{o}\;\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Varid{lens}\mathbin{::}(\Varid{s}\to \Varid{a})\to (\Varid{s}\to \Varid{b}\to \Varid{t})\to \Varid{o}\;\Varid{s}\;\Varid{t}\;\Varid{a}\;\Varid{b}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}(\mathbin{>>>>})\mathbin{::}\Varid{o}\;\Varid{s}\;\Varid{t}\;\Varid{a}\;\Varid{b}\to \Varid{o}\;\Varid{a}\;\Varid{b}\;\Varid{p}\;\Varid{q}\to \Varid{o}\;\Varid{s}\;\Varid{t}\;\Varid{p}\;\Varid{q}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}(\mathbin{\&\&\&\&})\mathbin{::}\Varid{o}\;\Varid{s1}\;\Varid{t1}\;\Varid{a1}\;\Varid{b1}\to \Varid{o}\;\Varid{s2}\;\Varid{t2}\;\Varid{a2}\;\Varid{b2}\to \Varid{o}\;(\Varid{s1},\Varid{s2})\;(\Varid{t1},\Varid{t2})\;(\Varid{a1},\Varid{a2})\;(\Varid{b1},\Varid{b2}){}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+
+\subsubsection{Open games}
+By \cite[Theorem 3.10.2]{BayesianOpenGames}, a category of Bayesian open games exists where objects are pairs 
+of objects in the Kleisli category of the distribution monad $\mathbf{Kl}(\textbf{D})$ and morphisms are equivalence classes of open games.
+
+The intuition (best described in \cite[Section 2.1.1]{HedgesThesis}) is to begin thinking 
+of an open game as a process, open to and interacting with its local environment through its inputs 
+and outputs. The most common representation of open games is a box (representing the process or morphism)
+with two incoming and two outgoing wires (representing objects of the category).
+dd
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\linewidth]{images/GameSimple.png}
+	\caption{A string diagram of an open game \label{figure:Fig. 10}}
+	
+\end{figure}
+
+
+\begin{Definition} (Concrete open game, from \cite{BayesianOpenGames}) Let $X$, $S$, $Y$, $R$ be sets. Then a concrete open game $G: (X,S) \rightarrow (Y,R)$ is given by: 
+	\begin{enumerate}
+		\item A set of strategy profiles $\Sigma$
+		\item A play function $P : \Sigma \rightarrow \mathbf{CL}((X,S), (Y,R))$
+		\item A best response function $B: X \times (Y \rightarrow R) \rightarrow Rel(\Sigma)$
+	\end{enumerate}
+
+\end{Definition}
+
+Starting to think of each of these open games as programs, an open game has four types associated with it. 
+Here variables $X, Y$ are flowing covariantly (intuitively, flowing forwards) and $S, R$ are flowing contravariantly (which represent the feedback of information). Specifically: 
+\begin{itemize}
+	\item $X$ is the set of inputs that the open game can observe 
+	\item $Y$ is the set of actions that the open game can take, or \textit{outcomes}
+	\item $S$ is the set of \textit{co-outcomes} with the purpose of propagating information to precomposed games. 
+	\item $R$ is the set of \textit{outcomes}
+\end{itemize}
+
+Note that there is no sense of agency attached to open games right off the bat. We have flexibility to define the behaviour of the open system according to our needs, whether as 
+a representation of a utility-maximizing agent, or simply a function.  
+
+The type of $\Sigma$, like a pure strategy profile in normal-form games, can be selecting an action from the set of actions. 
+For sequential games, a strategy would typically involve choosing an action in response to each possible observed action played previously, 
+thus such a strategy would be a function of type $X \rightarrow Y$.
+
+
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{4}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Varid{openGame}\;\Varid{var1}\;\Varid{var2}\mathrel{=}[\mskip1.5mu \Varid{opengame}\mid {}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{inputs}\mathbin{:};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{feedback}\mathbin{:};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\mathbin{:----------------------------:}{}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{inputs}\mathbin{:};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{feedback}\mathbin{:};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{operation}\mathbin{:};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{outputs}\mathbin{:};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{returns}\mathbin{:};{}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\mathbin{:----------------------------:}{}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{outputs}\mathbin{:};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{returns}\mathbin{:};{}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\mid \mskip1.5mu]{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+
+\begin{enumerate}
+   \item $X \rightarrow Y$
+   \item $X \times R \rightarrow S$
+\end{enumerate}
+
+So what does this lense object represent? As soon as we supply our open system 
+with a strategy, the resultant lense describes the behaviour of the system 
+
+
+Breaking down the best response function, note othe domain $X \times \rightarrow$
+
+\begin{definition}The category of open games, $\mathbf{Open}$
+\end{definition}
+
+
+Thus, we can begin thinking of an agent as defined by a) what it sees, b) what it does, c) what it sees according to the action it took. 
+Departing from the standard of defining a global structure around agents, payoffs, and strategies, we can understand agents as a wider class of abstract notions called "open games." 
+How we want these open games to be able to interact with each other can have well-defined properties as morphisms of a category. T
+he objects of this category encode the data given in a), b), and c). 
+
+
+
+As we see in the corresponding string diagram, the forward (or covariant) arrows correspond to \textit{inputs} and \textit{outputs}, and 
+
+\textit{inputs}, as expected, is where to declare the input to the game. This is typically used  to define the state of a game, observed types or observed actions of other players. Note that declaring these as variables in this line brings them into scope for all other In a 2-player sequential game in the classical sense, the follower player observes the actions of the fi
+Thus one way of "doing" compositional game theory can be done by drawing a string diagram to represent open games. 
+
+
+
+
+
+\subsubsection{Categorical systems theory}
+We consider compositional game theory an instantiation of a broader scope of work called \textit{categorical systems theory}, where we can design systems by composing components. 
+
+\subsection{Software implementation}
+The subsequent implementation for compositional game theory is written as a Haskell library. 
+The aforementioned tool dubbed as \textit{open game engine} is software that can simulate and analyze open games as described in compositional game theory. Users can use this Haskell module and exported functionalities including constructors, types, and functions for analytics. In this section, we'll cover the most commonly used operators necessary for designing these games with the open-game-engine. In a later chapter, we'll introduce the application-specific games for cybersecurity that use these operators
+
+The line of 
+As outlined in \cite{tan2022a} for designing institutions with a software 
+
+
+
+
+%--------------------------------
+% Bibliography
+%--------------------------------
+\clearpage
+\setstretch{1.0}  % 1.0 line spacing. 
+\printbibliography
+\clearpage
+
+%--------------------------------
+% Appendices
+%--------------------------------
+%\appendix
+\setstretch{1.5} % 1.5 line spacing.
+%\input{example-appendix} % Add one file per appendix
+
+\end{document}

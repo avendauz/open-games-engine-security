@@ -258,83 +258,14 @@
 \EndFmtInput
 %
 
-\begin{hscode}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{7}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{9}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{19}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\Varid{repeatedContinuationPayoffs}\mathbin{::}(\Conid{Unappend}\;\Varid{a},\Conid{Unappend}\;\Varid{b},\Conid{Eq}\;\Varid{i})\Rightarrow \Conid{Double}\to \Conid{Integer}{}\<[E]%
-\\
-\>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\to \Conid{List}\;\Varid{a}{}\<[E]%
-\\
-\>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\to \Varid{i}{}\<[E]%
-\\
-\>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\to [\mskip1.5mu \Conid{Double}\mskip1.5mu]{}\<[E]%
-\\
-\>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\to \Conid{OpenGame}\;\Conid{StochasticOptic}\;\Conid{StochasticContext}\;\Varid{a}\;\Varid{b}\;\Varid{i}\;[\mskip1.5mu \Conid{Double}\mskip1.5mu]\;\Varid{i}\;[\mskip1.5mu \Conid{Double}\mskip1.5mu]{}\<[E]%
-\\
-\>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\to \Conid{Stochastic}\;[\mskip1.5mu \Conid{Double}\mskip1.5mu]{}\<[E]%
-\\
-\>[B]{}\Varid{repeatedContinuationPayoffs}\;\Varid{discountFactor}\;\Varid{iterator}\;\Varid{strat}\;\Varid{action}\;\Varid{curPayoffs}\;\Varid{game}{}\<[E]%
-\\
-\>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\mid \Varid{iterator}\equiv \mathrm{1}\mathrel{=}\Varid{pure}\;\Varid{curPayoffs}{}\<[E]%
-\\
-\>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\mid \Varid{otherwise}{}\<[19]%
-\>[19]{}\mathrel{=}\mathbf{do}{}\<[E]%
-\\
-\>[3]{}\hsindent{4}{}\<[7]%
-\>[7]{}\Varid{newPayoffs}\leftarrow \Varid{extractContinuation}\;(\Varid{execute}\;\Varid{strat})\;\Varid{action}\;\Varid{curPayoffs}{}\<[E]%
-\\
-\>[3]{}\hsindent{4}{}\<[7]%
-\>[7]{}\Varid{actionNew}\leftarrow {}\<[21]%
-\>[21]{}\Varid{nextState}\;\Varid{strat}\;\Varid{action}{}\<[E]%
-\\
-\>[3]{}\hsindent{4}{}\<[7]%
-\>[7]{}\Varid{repeatedContinuationPayoffs}\;\Varid{discountFactor}\;(\Varid{pred}\;\Varid{iterator})\;\Varid{strat}\;\Varid{actionNew}\;(\Varid{map}\;(\mathbin{*}\Varid{discountFactor})\;\Varid{newPayoffs})\;\Varid{game}{}\<[E]%
-\\
-\>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\mathbf{where}\;\Varid{execute}\mathrel{=}\Varid{play}\;\Varid{game}{}\<[E]%
-\\
-\>[3]{}\hsindent{6}{}\<[9]%
-\>[9]{}\Varid{nextState}\;\Varid{strat'}\mathrel{=}\Varid{extractNextState}\;(\Varid{execute}\;\Varid{strat'}){}\<[E]%
-\ColumnHook
-\end{hscode}\resethooks
-
-
-
-\begin{hscode}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\Varid{visitorStrategyMixed}\mathbin{::}\Conid{Double}\to \Conid{Kleisli}\;\Conid{Stochastic}\;\Conid{VisitorType}\;\Conid{VisitorMove}{}\<[E]%
-\\
-\>[B]{}\Varid{visitorStrategyMixed}\;\Varid{prob}\mathrel{=}\Conid{Kleisli}\;(\lambda \mathbf{case}\;\{\mskip1.5mu {}\<[E]%
-\\
-\>[B]{}\hsindent{5}{}\<[5]%
-\>[5]{}\Conid{Attacker}\to \Varid{distFromList}\;[\mskip1.5mu (\Conid{Access},\Varid{prob}),(\Conid{DoesNotAccess},\mathrm{1}\mathbin{-}\Varid{prob})\mskip1.5mu];{}\<[E]%
-\\
-\>[B]{}\hsindent{5}{}\<[5]%
-\>[5]{}\Conid{User}\to \Varid{playDeterministically}\;\Conid{Access}{}\<[E]%
-\\
-\>[B]{}\mskip1.5mu\}){}\<[E]%
-\ColumnHook
-\end{hscode}\resethooks
-
-
+Sometimes we want to write the payoff as follows, notice that the type is given 
+by \ensuremath{\Varid{defenderAccessPayoff}\mathbin{::}\Conid{HoneypotAllocation}\to \Conid{PayoffReader}\;\Conid{IDSParamsHP}} 
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{5}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{9}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{13}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{17}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{defenderAccessPayoff}\mathbin{::}\Conid{HoneypotAllocation}\to \Conid{PayoffReader}\;\Conid{IDSParamsHP}{}\<[E]%
 \\
@@ -347,10 +278,10 @@
 \>[9]{}\Varid{params}\leftarrow \Varid{ask}{}\<[E]%
 \\
 \>[5]{}\hsindent{4}{}\<[9]%
-\>[9]{}\Varid{costOfDefense}\leftarrow \Varid{asks}\mathbin{\$}(\mathbin{\$}\Varid{hp})\mathbin{\circ}\Varid{costOfDefense}{}\<[E]%
+\>[9]{}\Varid{costOfDefense}\leftarrow \Varid{asks}\mathbin{\$}(\mathbin{\$}\mathord{@}\Varid{hp})\mathbin{\circ}\Varid{costOfDefense}{}\<[E]%
 \\
 \>[5]{}\hsindent{4}{}\<[9]%
-\>[9]{}\Varid{probDetection}\leftarrow \Varid{asks}\mathbin{\$}(\mathbin{\$}\Varid{hp})\mathbin{\circ}\Varid{probDetected}{}\<[E]%
+\>[9]{}\Varid{probDetection}\leftarrow \Varid{asks}\mathbin{\$}(\mathbin{\$}\mathord{@}\Varid{hp})\mathbin{\circ}\Varid{probDetected}{}\<[E]%
 \\
 \>[5]{}\hsindent{4}{}\<[9]%
 \>[9]{}\Varid{computingResources}\leftarrow \Varid{asks}\;\Varid{computingResources}{}\<[E]%
@@ -359,6 +290,12 @@
 \>[9]{}\Varid{computationReductionUnderAttack}\leftarrow \Varid{asks}\;\Varid{computationReductionUnderAttack}{}\<[E]%
 \\
 \>[5]{}\hsindent{4}{}\<[9]%
-\>[9]{}\Varid{return}\mathbin{\$}(\Varid{computingResources}\mathbin{-}\Varid{costOfDefense})\mathbin{*}(\Varid{probDetection}\mathbin{+}(\mathrm{1}\mathbin{-}\Varid{probDetection})\mathbin{*}\Varid{computationReductionUnderAttack}){}\<[E]%
+\>[9]{}\Varid{return}\mathbin{\$}{}\<[E]%
+\\
+\>[9]{}\hsindent{4}{}\<[13]%
+\>[13]{}(\Varid{computingResources}\mathbin{-}\Varid{costOfDefense})\mathbin{*}{}\<[E]%
+\\
+\>[13]{}\hsindent{4}{}\<[17]%
+\>[17]{}(\Varid{probDetection}\mathbin{+}(\mathrm{1}\mathbin{-}\Varid{probDetection})\mathbin{*}\Varid{computationReductionUnderAttack}){}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks

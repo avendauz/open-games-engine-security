@@ -11,28 +11,10 @@
 
 module IDS.Temp where 
 
-import OpenGames.Engine.Engine hiding (StochasticStatefulOptic
-                                      , StochasticStatefulBayesianOpenGame(..)
-                                      , Agent(..)
-                                      , dependentDecision
-                                      , dependentEpsilonDecision
-                                      , fromFunctions
-                                      , fromLens
-                                      , uniformDist
-                                      , distFromList
-                                      , pureAction
-                                      , playDeterministically
-                                      , discount
-                                      , nature
-                                      )
+import OpenGames.Engine.Engine 
 
 import OpenGames.Preprocessor
-import OpenGames.Engine.BayesianGamesNonState
-    ( dependentDecision,
-      distFromList,
-      fromFunctions,
-      playDeterministically,
-      uniformDist )
+
 import Security.ParameterBuilder
 import Data.Foldable (maximumBy)
 -- import Numeric.Probability.Distribution hiding (lift)
@@ -94,13 +76,13 @@ testGame = [opengame|
    feedback: ;
    :----------------------------:
 
-   inputs: ;
+   inputs: defenderDecisionAgain;
    feedback: ;
    operation: dependentDecision "Leader" (const [Inspect, NoInspect]);
    outputs: defenderDecision;
    returns: testPayoff defenderDecision defenderDecisionAgain;
 
-   inputs: defenderDecision;
+   inputs: ;
    feedback: ;
    operation: dependentDecision "Leader" (const [Inspect, NoInspect]);
    outputs: defenderDecisionAgain;
@@ -115,7 +97,8 @@ testPayoff Inspect Inspect = 10
 testPayoff Inspect NoInspect = 20
 testPayoff NoInspect NoInspect = 15
 testPayoff NoInspect Inspect = 5
-runTestGame = generateOutput $ evaluate testGame (defenderStrat ::- defenderStrat ::- Nil) void
+
+runTestGame = generateOutput $ evaluate testGame (Kleisli (const $ playDeterministically Inspect) ::- Kleisli (const $ playDeterministically NoInspect) ::- Nil) void
 
 leaderGame = [opengame|
    inputs : ;

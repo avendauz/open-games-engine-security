@@ -1,0 +1,277 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global/global}
+    \entry{20squares}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=39b3bf3d30a6ba1cff9d1138899de12c}{%
+           family={20squares},
+           familyi={2\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {GitHub}%
+      }
+      \strng{namehash}{39b3bf3d30a6ba1cff9d1138899de12c}
+      \strng{fullhash}{39b3bf3d30a6ba1cff9d1138899de12c}
+      \strng{fullhashraw}{39b3bf3d30a6ba1cff9d1138899de12c}
+      \strng{bibnamehash}{39b3bf3d30a6ba1cff9d1138899de12c}
+      \strng{authorbibnamehash}{39b3bf3d30a6ba1cff9d1138899de12c}
+      \strng{authornamehash}{39b3bf3d30a6ba1cff9d1138899de12c}
+      \strng{authorfullhash}{39b3bf3d30a6ba1cff9d1138899de12c}
+      \strng{authorfullhashraw}{39b3bf3d30a6ba1cff9d1138899de12c}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://github.com/20squares/pbs-auctions}}
+      \field{journaltitle}{GitHub repository}
+      \field{title}{pbs-auction}
+      \field{year}{2023}
+    \endentry
+    \entry{abou2016reflections}{article}{}{}
+      \name{author}{5}{}{%
+        {{hash=f09daed03358906ed02c09500a5429ec}{%
+           family={Abou-Saleh},
+           familyi={A\bibinithyphendelim S\bibinitperiod},
+           given={Faris},
+           giveni={F\bibinitperiod}}}%
+        {{hash=f4919fe7a53de0806121150ca7f0372b}{%
+           family={Cheney},
+           familyi={C\bibinitperiod},
+           given={James},
+           giveni={J\bibinitperiod}}}%
+        {{hash=d7effacc4950f11aea627dc1bac84255}{%
+           family={Gibbons},
+           familyi={G\bibinitperiod},
+           given={Jeremy},
+           giveni={J\bibinitperiod}}}%
+        {{hash=24d5d8237bc34516929c905f31aab05c}{%
+           family={McKinna},
+           familyi={M\bibinitperiod},
+           given={James},
+           giveni={J\bibinitperiod}}}%
+        {{hash=426639589e8d0824f72cd13dc0498d00}{%
+           family={Stevens},
+           familyi={S\bibinitperiod},
+           given={Perdita},
+           giveni={P\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{897f289c615ebf70e379e47e99dae90c}
+      \strng{fullhash}{a2a8363142372e2b1c388fd81c47f97d}
+      \strng{fullhashraw}{a2a8363142372e2b1c388fd81c47f97d}
+      \strng{bibnamehash}{897f289c615ebf70e379e47e99dae90c}
+      \strng{authorbibnamehash}{897f289c615ebf70e379e47e99dae90c}
+      \strng{authornamehash}{897f289c615ebf70e379e47e99dae90c}
+      \strng{authorfullhash}{a2a8363142372e2b1c388fd81c47f97d}
+      \strng{authorfullhashraw}{a2a8363142372e2b1c388fd81c47f97d}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{A List of Successes That Can Change the World: Essays Dedicated to Philip Wadler on the Occasion of His 60th Birthday}
+      \field{title}{Reflections on monadic lenses}
+      \field{year}{2016}
+      \field{pages}{1\bibrangedash 31}
+      \range{pages}{31}
+    \endentry
+    \entry{BayesianOpenGames}{article}{}{}
+      \name{author}{6}{}{%
+        {{hash=af25108ce4c9b87b9e8798084bed46f4}{%
+           family={Bolt},
+           familyi={B\bibinitperiod},
+           given={Joe},
+           giveni={J\bibinitperiod}}}%
+        {{hash=af25108ce4c9b87b9e8798084bed46f4}{%
+           family={Bolt},
+           familyi={B\bibinitperiod},
+           given={Joe},
+           giveni={J\bibinitperiod}}}%
+        {{hash=a54c9ab370ba6f2ac86897eb2730d2ee}{%
+           family={Hedges},
+           familyi={H\bibinitperiod},
+           given={Jules},
+           giveni={J\bibinitperiod}}}%
+        {{hash=a54c9ab370ba6f2ac86897eb2730d2ee}{%
+           family={Hedges},
+           familyi={H\bibinitperiod},
+           given={Jules},
+           giveni={J\bibinitperiod}}}%
+        {{hash=d7628d212224322fe7e5e1ce9542c416}{%
+           family={Zahn},
+           familyi={Z\bibinitperiod},
+           given={Philipp},
+           giveni={P\bibinitperiod}}}%
+        {{hash=d7628d212224322fe7e5e1ce9542c416}{%
+           family={Zahn},
+           familyi={Z\bibinitperiod},
+           given={Philipp},
+           giveni={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{fd80a0abc469bc9a3c0fb00b20f276d2}
+      \strng{fullhash}{c974fce0572a175261c59ff5138afe82}
+      \strng{fullhashraw}{c974fce0572a175261c59ff5138afe82}
+      \strng{bibnamehash}{fd80a0abc469bc9a3c0fb00b20f276d2}
+      \strng{authorbibnamehash}{fd80a0abc469bc9a3c0fb00b20f276d2}
+      \strng{authornamehash}{fd80a0abc469bc9a3c0fb00b20f276d2}
+      \strng{authorfullhash}{c974fce0572a175261c59ff5138afe82}
+      \strng{authorfullhashraw}{c974fce0572a175261c59ff5138afe82}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{This paper generalises the treatment of compositional game theory as introduced by the second and third authors with Ghani and Winschel, where games are modelled as morphisms of a symmetric monoidal category. From an economic modelling perspective, the existing notion of an open game is not expressive enough for many applications. This includes stochastic environments, stochastic choices by players, as well as incomplete information regarding the game being played. The current paper addresses these three issue all at once. To achieve this we make significant use of category theory, especially the 'coend optics' of Riley.}
+      \field{journaltitle}{arXiv: Computer Science and Game Theory}
+      \field{title}{Bayesian open games.}
+      \field{year}{2019}
+      \verb{doi}
+      \verb 10.32408/compositionality-5-9
+      \endverb
+    \endentry
+    \entry{HedgesThesis}{thesis}{}{}
+      \name{author}{1}{}{%
+        {{hash=a54c9ab370ba6f2ac86897eb2730d2ee}{%
+           family={Hedges},
+           familyi={H\bibinitperiod},
+           given={Jules},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{a54c9ab370ba6f2ac86897eb2730d2ee}
+      \strng{fullhash}{a54c9ab370ba6f2ac86897eb2730d2ee}
+      \strng{fullhashraw}{a54c9ab370ba6f2ac86897eb2730d2ee}
+      \strng{bibnamehash}{a54c9ab370ba6f2ac86897eb2730d2ee}
+      \strng{authorbibnamehash}{a54c9ab370ba6f2ac86897eb2730d2ee}
+      \strng{authornamehash}{a54c9ab370ba6f2ac86897eb2730d2ee}
+      \strng{authorfullhash}{a54c9ab370ba6f2ac86897eb2730d2ee}
+      \strng{authorfullhashraw}{a54c9ab370ba6f2ac86897eb2730d2ee}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Towards compositional game theory}
+      \field{type}{phdthesis}
+      \field{year}{2016}
+    \endentry
+    \entry{riley2018categories}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=1996defd263ab2379863dfbfe3ffd9c6}{%
+           family={Riley},
+           familyi={R\bibinitperiod},
+           given={Mitchell},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{1996defd263ab2379863dfbfe3ffd9c6}
+      \strng{fullhash}{1996defd263ab2379863dfbfe3ffd9c6}
+      \strng{fullhashraw}{1996defd263ab2379863dfbfe3ffd9c6}
+      \strng{bibnamehash}{1996defd263ab2379863dfbfe3ffd9c6}
+      \strng{authorbibnamehash}{1996defd263ab2379863dfbfe3ffd9c6}
+      \strng{authornamehash}{1996defd263ab2379863dfbfe3ffd9c6}
+      \strng{authorfullhash}{1996defd263ab2379863dfbfe3ffd9c6}
+      \strng{authorfullhashraw}{1996defd263ab2379863dfbfe3ffd9c6}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{arXiv preprint arXiv:1809.00738}
+      \field{title}{Categories of optics}
+      \field{year}{2018}
+    \endentry
+    \entry{tan2022a}{thesis}{}{}
+      \name{author}{2}{}{%
+        {{hash=2ca377c2911fee6d6da5222856cd5fcc}{%
+           family={Tan},
+           familyi={T\bibinitperiod},
+           given={JZ},
+           giveni={J\bibinitperiod}}}%
+        {{hash=9fe5cdf69e7c21fb4768948b13101d02}{%
+           family={Abramsky},
+           familyi={A\bibinitperiod},
+           given={S},
+           giveni={S\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {University of Oxford}%
+      }
+      \list{publisher}{1}{%
+        {University of Oxford}%
+      }
+      \strng{namehash}{6c736532f1d244bc9151db9db96ecb25}
+      \strng{fullhash}{6c736532f1d244bc9151db9db96ecb25}
+      \strng{fullhashraw}{6c736532f1d244bc9151db9db96ecb25}
+      \strng{bibnamehash}{6c736532f1d244bc9151db9db96ecb25}
+      \strng{authorbibnamehash}{6c736532f1d244bc9151db9db96ecb25}
+      \strng{authornamehash}{6c736532f1d244bc9151db9db96ecb25}
+      \strng{authorfullhash}{6c736532f1d244bc9151db9db96ecb25}
+      \strng{authorfullhashraw}{6c736532f1d244bc9151db9db96ecb25}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Institutions under composition}
+      \field{type}{phdthesis}
+      \field{year}{2022}
+    \endentry
+    \entry{xie2025effectful}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=40d3a6c590d6ad072ffd38d8b0edd802}{%
+           family={Xie},
+           familyi={X\bibinitperiod},
+           given={Ruifeng},
+           giveni={R\bibinitperiod}}}%
+        {{hash=ee8884e6f5c55d796fda4df39c101ebf}{%
+           family={Schrijvers},
+           familyi={S\bibinitperiod},
+           given={Tom},
+           giveni={T\bibinitperiod}}}%
+        {{hash=aa123f617e3811bba0121021e0329f91}{%
+           family={Hu},
+           familyi={H\bibinitperiod},
+           given={Zhenjiang},
+           giveni={Z\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {ACM New York, NY, USA}%
+      }
+      \strng{namehash}{58bf775efed607d953bb1fe7d26eee61}
+      \strng{fullhash}{58bf775efed607d953bb1fe7d26eee61}
+      \strng{fullhashraw}{58bf775efed607d953bb1fe7d26eee61}
+      \strng{bibnamehash}{58bf775efed607d953bb1fe7d26eee61}
+      \strng{authorbibnamehash}{58bf775efed607d953bb1fe7d26eee61}
+      \strng{authornamehash}{58bf775efed607d953bb1fe7d26eee61}
+      \strng{authorfullhash}{58bf775efed607d953bb1fe7d26eee61}
+      \strng{authorfullhashraw}{58bf775efed607d953bb1fe7d26eee61}
+      \field{sortinit}{X}
+      \field{sortinithash}{1965c258adceecf23ce3d67b05113442}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Proceedings of the ACM on Programming Languages}
+      \field{number}{ICFP}
+      \field{title}{Effectful Lenses: There and Back with Different Monads}
+      \field{volume}{9}
+      \field{year}{2025}
+      \field{pages}{541\bibrangedash 566}
+      \range{pages}{26}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

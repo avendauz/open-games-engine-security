@@ -1,0 +1,35 @@
+\section{Case study: collaborative intrusion detection system}
+\label{sec:4}
+    \subsection{Motivation}
+    Using the code abstractions and the (small) library of 2-player security games as defined in the previous two chapters, we demonstrate the efficacy of this procedure by designing a game theoretic model for a collaborative intrusion detection network (CIDN). By starting with smaller games representing each interaction individually, we have granulated control over the a framework of these games interacting in unison. With the definition of payoffs and model parameters semi-separate from the game structure, property-based tests ... 
+    
+    \subsection{Problem statement}
+    We can consider an IDS as a singular machine running some kind of defensive process such as detection libraries
+    \subsection{Game formulation IDS game}
+    \\subsection{Payoff scheme 1: }
+    \subsection{Extension 1: deception}
+  
+  	\subsection{Extension 2: IDN administrator}
+  	\subsection{Limitations}
+    \subsection{Background}
+Game theory has been used to model interactions between attackers and defenders in a variety of honeynet scenarios. [cite] focuses specifically in a Bayesian signalling game, where prior beliefs about the types of attacker and defender are factored into the game. For modelling deception, we allow defenders to display "fake" signals representing the presence of "fake honeypots" or camouflage the honeypots to look like normal servers. In this chapter, we will focus on representing this interaction in open games, and demonstrating the use of composability to treat these interactions as subgames to be used in future models.  
+
+
+    \subsection{Design}
+For this model, we can start with a two-player Bayesian sequential game. The following table [table] provides the model parameters, including the probability distribution assigning the types of visitor and server type. A particular advantage we would like to show is a more realistic depiction of a distributed denial of service attack, where an adversary controls a number of nodes to conduct simultaneous accesses to the same or different servers.
+
+As shown in Figure [figure], we can draw a prior distribution representing the beliefs over the types of visitors on the network. 
+
+We'll model this game assuming a network administrator's "meta-role" of allocating defense resources to different parts of the network. Based on the abstraction of the AMI network given in [cite], we can focus on defending against disruptions that prevent communication between two levels: 1) the transformers, aggregators, and meters, and 2) the energy provider.  
+
+Furthermore, a shortcoming for other models would be taking into account the attacker and defense resource capabilities. For e
+
+The first building block will be a singular interaction between an d 
+
+A key aspect of this design process is the ability to parameterize each aggregator system independently of each other. 
+
+First, we can start with a signalling game, where a (single) adversary's action acts as a signal for the defender i.e. resource allocator. Given a prior distribution over the types of users accessing a server, nature draws a type to assign to an adversary. Then, this adversary can decide to Access or Leave a particular server given this type. 
+
+However, we might have to consider a different prior belief of the type of user depending on the subsystem that is being examined. A 
+
+Posit that with the right system, extensions and variants should be easily realizable with minimal code changes.

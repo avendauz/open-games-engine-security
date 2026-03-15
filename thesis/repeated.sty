@@ -112,7 +112,7 @@
 \newcommand{\hsnewpar}[1]%
   {{\parskip=0pt\parindent=0pt\par\vskip #1\noindent}}
 
-% can be used, for instance, to redefine the code , by setting the
+% can be used, for instance, to redefine the code size, by setting the
 % command to \small or something alike
 \newcommand{\hscodestyle}{}
 
@@ -257,123 +257,54 @@
 \makeatother
 \EndFmtInput
 %
-\begin{section}
-
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{4}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{6}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{7}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{9}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{19}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\Varid{stackelbergGame1}\mathbin{::}(\Conid{Ord}\;\Varid{b},\Conid{Ord}\;\Varid{c},\Conid{Show}\;\Varid{a},\Conid{Show}\;\Varid{b},\Conid{Show}\;\Varid{c},\Conid{Eq}\;\Varid{a})\Rightarrow {}\<[E]%
+\>[B]{}\Varid{repeatedContinuationPayoffs}\mathbin{::}(\Conid{Unappend}\;\Varid{a},\Conid{Unappend}\;\Varid{b},\Conid{Eq}\;\Varid{i})\Rightarrow \Conid{Double}\to \Conid{Integer}{}\<[E]%
 \\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Conid{Stochastic}\;\Varid{a}{}\<[E]%
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\to \Conid{List}\;\Varid{a}{}\<[E]%
 \\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\to (\Varid{a}\to [\mskip1.5mu \Varid{b}\mskip1.5mu]){}\<[E]%
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\to \Varid{i}{}\<[E]%
 \\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\to \Conid{String}{}\<[E]%
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\to [\mskip1.5mu \Conid{Double}\mskip1.5mu]{}\<[E]%
 \\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\to (\Varid{b}\to [\mskip1.5mu \Varid{c}\mskip1.5mu]){}\<[E]%
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\to \Conid{OpenGame}\;\Conid{StochasticOptic}\;\Conid{StochasticContext}\;\Varid{a}\;\Varid{b}\;\Varid{i}\;[\mskip1.5mu \Conid{Double}\mskip1.5mu]\;\Varid{i}\;[\mskip1.5mu \Conid{Double}\mskip1.5mu]{}\<[E]%
 \\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\to \Conid{String}{}\<[E]%
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\to \Conid{Stochastic}\;[\mskip1.5mu \Conid{Double}\mskip1.5mu]{}\<[E]%
 \\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\to \Conid{OpenGame}{}\<[E]%
+\>[B]{}\Varid{repeatedContinuationPayoffs}\;\Varid{discountFactor}\;\Varid{iterator}\;\Varid{strat}\;\Varid{action}\;\Varid{curPayoffs}\;\Varid{game}{}\<[E]%
 \\
-\>[4]{}\hsindent{2}{}\<[6]%
-\>[6]{}\Conid{StochasticOptic}{}\<[E]%
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mid \Varid{iterator}\equiv \mathrm{1}\mathrel{=}\Varid{pure}\;\Varid{curPayoffs}{}\<[E]%
 \\
-\>[4]{}\hsindent{2}{}\<[6]%
-\>[6]{}\Conid{StochasticContext}{}\<[E]%
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mid \Varid{otherwise}{}\<[19]%
+\>[19]{}\mathrel{=}\mathbf{do}{}\<[E]%
 \\
-\>[4]{}\hsindent{2}{}\<[6]%
-\>[6]{}\text{\ttfamily '[Kleisli~Stochastic~a~b,~Kleisli~Stochastic~b~c]\;~~~~~'}\;{}\<[E]%
+\>[3]{}\hsindent{4}{}\<[7]%
+\>[7]{}\Varid{newPayoffs}\leftarrow \Varid{extractContinuation}\;(\Varid{execute}\;\Varid{strat})\;\Varid{action}\;\Varid{curPayoffs}{}\<[E]%
 \\
-\>[B]{}[\mskip1.5mu [\mskip1.5mu \Conid{DiagnosticInfoBayesian}\;\Varid{a}\;\Varid{b}\mskip1.5mu],[\mskip1.5mu \Conid{DiagnosticInfoBayesian}\;\Varid{b}\;\Varid{c}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\>[3]{}\hsindent{4}{}\<[7]%
+\>[7]{}\Varid{actionNew}\leftarrow {}\<[21]%
+\>[21]{}\Varid{nextState}\;\Varid{strat}\;\Varid{action}{}\<[E]%
 \\
-\>[B]{}\hsindent{6}{}\<[6]%
-\>[6]{}(){}\<[E]%
+\>[3]{}\hsindent{4}{}\<[7]%
+\>[7]{}\Varid{repeatedContinuationPayoffs}\;\Varid{discountFactor}\;(\Varid{pred}\;\Varid{iterator})\;\Varid{strat}\;\Varid{actionNew}\;(\Varid{map}\;(\mathbin{*}\Varid{discountFactor})\;\Varid{newPayoffs})\;\Varid{game}{}\<[E]%
 \\
-\>[B]{}\hsindent{6}{}\<[6]%
-\>[6]{}(){}\<[E]%
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{where}\;\Varid{execute}\mathrel{=}\Varid{play}\;\Varid{game}{}\<[E]%
 \\
-\>[B]{}\hsindent{6}{}\<[6]%
-\>[6]{}(\Varid{a},\Varid{b},\Varid{c}){}\<[E]%
-\\
-\>[B]{}\hsindent{6}{}\<[6]%
-\>[6]{}(\Conid{Double},\Conid{Double}){}\<[E]%
-\\
-\>[B]{}\Varid{stackelbergGame1}\;\Varid{distType}\;\Varid{actionSpaceAttacker}\;\Varid{attackerName}\;\Varid{actionSpaceDefender}\;\Varid{defenderName}\mathrel{=}[\mskip1.5mu \Varid{opengame}\mid {}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{inputs}\mathbin{:};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{feedback}\mathbin{:};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\mathbin{:----------------------------:}{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{inputs}\mathbin{:};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{feedback}\mathbin{:};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{operation}\mathbin{:}\Varid{nature}\mathbin{\$}\Varid{distType};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{outputs}\mathbin{:}\Varid{visitorType};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{returns}\mathbin{:};{}\<[E]%
-\\[\blanklineskip]%
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{inputs}\mathbin{:}\Varid{visitorType};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{feedback}\mathbin{:};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{operation}\mathbin{:}\Varid{attackerLeader}\;\Varid{attackerName}\;\Varid{actionSpaceAttacker};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{outputs}\mathbin{:}\Varid{attackerDecision};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{returns}\mathbin{:}\Varid{attackerPayoff};{}\<[E]%
-\\[\blanklineskip]%
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{inputs}\mathbin{:}\Varid{attackerDecision};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{feedback}\mathbin{:};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{operation}\mathbin{:}\Varid{defenderFollower}\;\Varid{defenderName}\;\Varid{actionSpaceDefender};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{outputs}\mathbin{:}\Varid{defenderDecision};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{returns}\mathbin{:}\Varid{defenderPayoff};{}\<[E]%
-\\[\blanklineskip]%
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\mathbin{:----------------------------:}{}\<[E]%
-\\[\blanklineskip]%
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{outputs}\mathbin{:}\Varid{visitorType},\Varid{attackerDecision},\Varid{defenderDecision};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{returns}\mathbin{:}\Varid{attackerPayoff},\Varid{defenderPayoff};{}\<[E]%
-\\[\blanklineskip]%
-\>[B]{}\mid \mskip1.5mu]{}\<[E]%
+\>[3]{}\hsindent{6}{}\<[9]%
+\>[9]{}\Varid{nextState}\;\Varid{strat'}\mathrel{=}\Varid{extractNextState}\;(\Varid{execute}\;\Varid{strat'}){}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
-\begin{subsection}
-Some other subsection
