@@ -283,9 +283,9 @@
 \definecolor{funcColor}{HTML}{5E2D91}
 \definecolor{typeColor}{HTML}{000080}
 \definecolor{datatype}{RGB}{196, 6, 11}
-\renewcommand{\Conid}[1]{{\color{funcColor}\mathit #1}}
-\renewcommand{\Varid}[1]{{\color{typeColor}\mathit #1}}
-\newcommand{\colorOp}[1]{\textcolor{orange!80!black}{#1}}
+\renewcommand{\Conid}[1]{{\color{funcColor}\texttt{#1}}}
+\renewcommand{\Varid}[1]{{\color{typeColor}\texttt{#1}}}
+\newcommand{\colorOp}[1]{\textcolor{orange!80!black}{\texttt{#1}}}
 
 
 % 
@@ -391,9 +391,9 @@ of these two concepts:
 \column{21}{@{}>{\hspre}c<{\hspost}@{}}%
 \column{21E}{@{}l@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}{\color{datatype}{ import }}\;\Conid{\Conid{OpenGames}.Preprocessor}{}\<[E]%
+\>[B]{}\color{datatype}\texttt{import}\;\Conid{\Conid{OpenGames}.Preprocessor}{}\<[E]%
 \\
-\>[B]{}{\color{datatype}{ import }}\;\Conid{\Conid{OpenGames}.\Conid{Engine}.Engine}{}\<[E]%
+\>[B]{}\color{datatype}\texttt{import}\;\Conid{\Conid{OpenGames}.\Conid{Engine}.Engine}{}\<[E]%
 \\[\blanklineskip]%
 \>[B]{}\Varid{defenderFollower}\mathbin{::}\Conid{String}\to (\Varid{a}\to [\mskip1.5mu \Varid{b}\mskip1.5mu])\to \Conid{OpenGame}{}\<[E]%
 \\
@@ -545,7 +545,7 @@ a datatype
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{4}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}{\color{datatype}{ data }}\;\Conid{Lens}\;\Varid{s}\;\Varid{t}\;\Varid{a}\;\Varid{b}\;{\color{datatype}{ where }}{}\<[E]%
+\>[B]{}\color{datatype}\texttt{data}\;\Conid{Lens}\;\Varid{s}\;\Varid{t}\;\Varid{a}\;\Varid{b}\;\color{datatype}\texttt{where}{}\<[E]%
 \\
 \>[B]{}\hsindent{4}{}\<[4]%
 \>[4]{}\Conid{Lens}\mathbin{::}(\Varid{s}\to \Varid{a})\to (\Varid{s}\to \Varid{b}\to \Varid{t})\to \Conid{Lens}\;\Varid{s}\;\Varid{t}\;\Varid{a}\;\Varid{b}{}\<[E]%
@@ -610,7 +610,7 @@ Based on the intuition we've introduced in the previous section, a \textit{behav
 then have to be represented by a function of type $S \rightarrow \Prob(A)$ where $\Prob(A)$ is the finitary probability distribution
 monad over the actions $A$. This monad is an important type constructor 
 used in the \textit{open-game-engine} for wrapping user-defined types, specifically 
-the constructor \ensuremath{{\color{datatype}{ type }}\;\Conid{Stochastic}\mathbin{::}\Conid{T}\;\Conid{Double}}, where \ensuremath{\Conid{T}} is the probability monad 
+the constructor \ensuremath{\color{datatype}\texttt{type}\;\Conid{Stochastic}\mathbin{::}\Conid{T}\;\Conid{Double}}, where \ensuremath{\Conid{T}} is the probability monad 
 given by the module \ensuremath{\Conid{\Conid{Numeric}.\Conid{Probability}.Distribution}}.  
 
 A quick way of deriving a function $S \rightarrow \Prob(A)$ from $S \rightarrow A$ is 
@@ -641,7 +641,7 @@ as a data type:
 \column{23}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{27}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}{\color{datatype}{ data }}\;\Conid{StochasticOptic}\;\Varid{s}\;\Varid{t}\;\Varid{a}\;\Varid{b}\;{\color{datatype}{ where }}{}\<[E]%
+\>[B]{}\color{datatype}\texttt{data}\;\Conid{StochasticOptic}\;\Varid{s}\;\Varid{t}\;\Varid{a}\;\Varid{b}\;\color{datatype}\texttt{where}{}\<[E]%
 \\
 \>[B]{}\hsindent{3}{}\<[3]%
 \>[3]{}\Conid{StochasticOptic}\mathbin{::}{}\<[23]%
@@ -665,7 +665,7 @@ of coend lenses where objects are pairs of sets, and morphisms are coend lenses.
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{3}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}{\color{datatype}{ class }}\;\Conid{Optic}\;\Varid{o}\;{\color{datatype}{ where }}{}\<[E]%
+\>[B]{}\color{datatype}\texttt{class}\;\Conid{Optic}\;\Varid{o}\;\color{datatype}\texttt{where}{}\<[E]%
 \\
 \>[B]{}\hsindent{3}{}\<[3]%
 \>[3]{}\Varid{lens}\mathbin{::}(\Varid{s}\to \Varid{a})\to (\Varid{s}\to \Varid{b}\to \Varid{t})\to \Varid{o}\;\Varid{s}\;\Varid{t}\;\Varid{a}\;\Varid{b}{}\<[E]%
@@ -1154,7 +1154,7 @@ An example of 1. in a simple case is a tuple of actions chosen by each player in
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}{\color{datatype}{ type }}\;\Conid{PayoffReader}\;\Varid{a}\mathrel{=}\Conid{Reader}\;\Varid{a}\;\Conid{Double}{}\<[E]%
+\>[B]{}\color{datatype}\texttt{type}\;\Conid{PayoffReader}\;\Varid{a}\mathrel{=}\Conid{Reader}\;\Varid{a}\;\Conid{Double}{}\<[E]%
 \\[\blanklineskip]%
 \>[B]{}\Varid{runPayoff}\mathbin{::}\Varid{a}\to \Conid{PayoffReader}\;\Varid{a}\to \Conid{Double}{}\<[E]%
 \\
@@ -1352,7 +1352,7 @@ Notice in the following definition of this repeated stage, besides the usual nam
 \>[B]{}\hsindent{4}{}\<[4]%
 \>[4]{}\Varid{returns}\mathbin{:};{}\<[E]%
 \\[\blanklineskip]%
-\>[B]{}\mid \mskip1.5mu]\;{\color{datatype}{ where }}\;\Varid{calculateCurrAttackerPayoff}\;\Varid{x}\;\Varid{y}\;\Varid{z}\mathrel{=}\Varid{runPayoff}\;\Varid{params}\;(\Varid{payoffReader1}\;\Varid{x}\;\Varid{y}\;\Varid{z}){}\<[E]%
+\>[B]{}\mid \mskip1.5mu]\;\color{datatype}\texttt{where}\;\Varid{calculateCurrAttackerPayoff}\;\Varid{x}\;\Varid{y}\;\Varid{z}\mathrel{=}\Varid{runPayoff}\;\Varid{params}\;(\Varid{payoffReader1}\;\Varid{x}\;\Varid{y}\;\Varid{z}){}\<[E]%
 \\
 \>[B]{}\hsindent{11}{}\<[11]%
 \>[11]{}\Varid{calculateCurrDefenderPayoff}\;\Varid{x}\;\Varid{y}\;\Varid{z}\mathrel{=}\Varid{runPayoff}\;\Varid{params}\;(\Varid{payoffReader2}\;\Varid{x}\;\Varid{y}\;\Varid{z}){}\<[E]%

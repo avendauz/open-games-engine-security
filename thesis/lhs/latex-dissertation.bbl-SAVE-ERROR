@@ -19,6 +19,44 @@
 
 \refsection{0}
   \datalist[entry]{nty/global//global/global/global}
+    \entry{20squares}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=39b3bf3d30a6ba1cff9d1138899de12c}{%
+           family={20squares},
+           familyi={2\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {GitHub}%
+      }
+      \strng{namehash}{39b3bf3d30a6ba1cff9d1138899de12c}
+      \strng{fullhash}{39b3bf3d30a6ba1cff9d1138899de12c}
+      \strng{fullhashraw}{39b3bf3d30a6ba1cff9d1138899de12c}
+      \strng{bibnamehash}{39b3bf3d30a6ba1cff9d1138899de12c}
+      \strng{authorbibnamehash}{39b3bf3d30a6ba1cff9d1138899de12c}
+      \strng{authornamehash}{39b3bf3d30a6ba1cff9d1138899de12c}
+      \strng{authorfullhash}{39b3bf3d30a6ba1cff9d1138899de12c}
+      \strng{authorfullhashraw}{39b3bf3d30a6ba1cff9d1138899de12c}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://github.com/20squares/pbs-auctions}}
+      \field{journaltitle}{GitHub repository}
+      \field{title}{pbs-auction}
+      \field{year}{2023}
+    \endentry
+    \entry{ZahnCybercat}{misc}{}{}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{labeltitlesource}{title}
+      \field{title}{A software engine for game theoretic modelling part 2}
+      \verb{urlraw}
+      \verb https://cybercat.institute/2022/06/24/a-software-engine-for-game-theoretic-modelling-part-2/
+      \endverb
+      \verb{url}
+      \verb https://cybercat.institute/2022/06/24/a-software-engine-for-game-theoretic-modelling-part-2/
+      \endverb
+    \endentry
     \entry{abou2016reflections}{article}{}{}
       \name{author}{5}{}{%
         {{hash=f09daed03358906ed02c09500a5429ec}{%
@@ -121,7 +159,418 @@
       \verb 10.32408/compositionality-5-9
       \endverb
     \endentry
-    \entry{hedges2017morphismsopengames}{misc}{}{}
+    \entry{Carroll2009}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{hash=8578d7749d2d53c0ee90ee62c239b374}{%
+           family={Carroll},
+           familyi={C\bibinitperiod},
+           given={Thomas\bibnamedelima E.},
+           giveni={T\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+        {{hash=2834c8e542776953c7d1e6443105585c}{%
+           family={Grosu},
+           familyi={G\bibinitperiod},
+           given={Daniel},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{99c40dbcbb63caa05cc0fce798cafb3f}
+      \strng{fullhash}{99c40dbcbb63caa05cc0fce798cafb3f}
+      \strng{fullhashraw}{99c40dbcbb63caa05cc0fce798cafb3f}
+      \strng{bibnamehash}{99c40dbcbb63caa05cc0fce798cafb3f}
+      \strng{authorbibnamehash}{99c40dbcbb63caa05cc0fce798cafb3f}
+      \strng{authornamehash}{99c40dbcbb63caa05cc0fce798cafb3f}
+      \strng{authorfullhash}{99c40dbcbb63caa05cc0fce798cafb3f}
+      \strng{authorfullhashraw}{99c40dbcbb63caa05cc0fce798cafb3f}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{2009 Proceedings of 18th International Conference on Computer Communications and Networks}
+      \field{title}{A Game Theoretic Investigation of Deception in Network Security}
+      \field{year}{2009}
+      \field{pages}{1\bibrangedash 6}
+      \range{pages}{6}
+      \verb{doi}
+      \verb 10.1109/ICCCN.2009.5235344
+      \endverb
+      \keyw{Game theory;Information systems;Protection;Computer science;Computer networks;Bayesian methods;Military computing;Computer security;Uncertainty;Computer hacking}
+    \endentry
+    \entry{EGTAOnline}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{hash=431fc92e64b67eccbcd113dba6ec46a9}{%
+           family={Cassell},
+           familyi={C\bibinitperiod},
+           given={Ben-Alexander},
+           giveni={B\bibinithyphendelim A\bibinitperiod}}}%
+        {{hash=1b765f5dca25c61f99b31403087f0586}{%
+           family={Wellman},
+           familyi={W\bibinitperiod},
+           given={Michael\bibnamedelima P.},
+           giveni={M\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
+      }
+      \name{editor}{2}{}{%
+        {{hash=56fa80cf8bfcfc732af776104e06adf0}{%
+           family={Giardini},
+           familyi={G\bibinitperiod},
+           given={Francesca},
+           giveni={F\bibinitperiod}}}%
+        {{hash=fb024af9dd7b9935d6343422f0aa408d}{%
+           family={Amblard},
+           familyi={A\bibinitperiod},
+           given={Frédéric},
+           giveni={F\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Berlin, Heidelberg}%
+      }
+      \list{publisher}{1}{%
+        {Springer Berlin Heidelberg}%
+      }
+      \strng{namehash}{dbbd9f1c32b3f20115cfa383cf6b602c}
+      \strng{fullhash}{dbbd9f1c32b3f20115cfa383cf6b602c}
+      \strng{fullhashraw}{dbbd9f1c32b3f20115cfa383cf6b602c}
+      \strng{bibnamehash}{dbbd9f1c32b3f20115cfa383cf6b602c}
+      \strng{authorbibnamehash}{dbbd9f1c32b3f20115cfa383cf6b602c}
+      \strng{authornamehash}{dbbd9f1c32b3f20115cfa383cf6b602c}
+      \strng{authorfullhash}{dbbd9f1c32b3f20115cfa383cf6b602c}
+      \strng{authorfullhashraw}{dbbd9f1c32b3f20115cfa383cf6b602c}
+      \strng{editorbibnamehash}{247afb36c780323186c3f50f97392ab8}
+      \strng{editornamehash}{247afb36c780323186c3f50f97392ab8}
+      \strng{editorfullhash}{247afb36c780323186c3f50f97392ab8}
+      \strng{editorfullhashraw}{247afb36c780323186c3f50f97392ab8}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Empirical game-theoretic analysis (EGTA) is a promising methodology for studying complex strategic scenarios through agent-based simulation. One challenge of utilizing this methodology is that it can require tremendous amounts of computation. Constructing the payoff matrix for a game of even moderate complexity entails significant data gathering and management concerns. We present EGTAOnline, an experiment management system that simplifies the application of the EGTA methodology to large games. We describe the architecture of EGTAOnline, explain why such a tool is practically important, and discuss avenues of research that are suggested through the use of EGTAOnline.}
+      \field{booktitle}{Multi-Agent-Based Simulation XIII}
+      \field{isbn}{978-3-642-38859-0}
+      \field{title}{EGTAOnline: An Experiment Manager for Simulation-Based Game Studies}
+      \field{year}{2013}
+      \field{pages}{85\bibrangedash 100}
+      \range{pages}{16}
+    \endentry
+    \entry{Caulfield2015}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=862d90be7b3a7939e76b6a3e91de8dd6}{%
+           family={Caulfield},
+           familyi={C\bibinitperiod},
+           given={Tristan},
+           giveni={T\bibinitperiod}}}%
+        {{hash=33f2b1bd82fe3390a7fe622647aefbd7}{%
+           family={Pym},
+           familyi={P\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Los Alamitos, CA, USA}%
+      }
+      \list{publisher}{1}{%
+        {IEEE Computer Society}%
+      }
+      \strng{namehash}{e73435c5aaaaf0d783ac464ece732526}
+      \strng{fullhash}{e73435c5aaaaf0d783ac464ece732526}
+      \strng{fullhashraw}{e73435c5aaaaf0d783ac464ece732526}
+      \strng{bibnamehash}{e73435c5aaaaf0d783ac464ece732526}
+      \strng{authorbibnamehash}{e73435c5aaaaf0d783ac464ece732526}
+      \strng{authornamehash}{e73435c5aaaaf0d783ac464ece732526}
+      \strng{authorfullhash}{e73435c5aaaaf0d783ac464ece732526}
+      \strng{authorfullhashraw}{e73435c5aaaaf0d783ac464ece732526}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{A rigorous methodology, grounded in mathematical systems modeling and the economics of decision making, can help security managers explore the operational consequences of their design choices and make better decisions.}
+      \field{issn}{1558-4046}
+      \field{journaltitle}{IEEE Security \& Privacy}
+      \field{month}{9}
+      \field{number}{05}
+      \field{title}{{ Improving Security Policy Decisions with Models }}
+      \field{volume}{13}
+      \field{year}{2015}
+      \field{pages}{34\bibrangedash 41}
+      \range{pages}{8}
+      \verb{doi}
+      \verb 10.1109/MSP.2015.97
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.ieeecomputersociety.org/10.1109/MSP.2015.97
+      \endverb
+      \verb{url}
+      \verb https://doi.ieeecomputersociety.org/10.1109/MSP.2015.97
+      \endverb
+      \keyw{Biological system modeling;Computer security;Mathematical model;Computational modeling;Productivity}
+    \endentry
+    \entry{Caulfield2014}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=862d90be7b3a7939e76b6a3e91de8dd6}{%
+           family={Caulfield},
+           familyi={C\bibinitperiod},
+           given={Tristan},
+           giveni={T\bibinitperiod}}}%
+        {{hash=33f2b1bd82fe3390a7fe622647aefbd7}{%
+           family={Pym},
+           familyi={P\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod}}}%
+        {{hash=3a142ad4bd0eab567a533815c0e39251}{%
+           family={Williams},
+           familyi={W\bibinitperiod},
+           given={Julian},
+           giveni={J\bibinitperiod}}}%
+      }
+      \name{editor}{2}{}{%
+        {{hash=1d2152e394868565623a2b8a35ef184e}{%
+           family={Tryfonas},
+           familyi={T\bibinitperiod},
+           given={Theo},
+           giveni={T\bibinitperiod}}}%
+        {{hash=6aa86cfd3ae341060f722f5add832c6a}{%
+           family={Askoxylakis},
+           familyi={A\bibinitperiod},
+           given={Ioannis},
+           giveni={I\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {"Springer International Publishing}%
+      }
+      \strng{namehash}{c4f4f73d47154000905aff9f804e6ed3}
+      \strng{fullhash}{c4f4f73d47154000905aff9f804e6ed3}
+      \strng{fullhashraw}{c4f4f73d47154000905aff9f804e6ed3}
+      \strng{bibnamehash}{c4f4f73d47154000905aff9f804e6ed3}
+      \strng{authorbibnamehash}{c4f4f73d47154000905aff9f804e6ed3}
+      \strng{authornamehash}{c4f4f73d47154000905aff9f804e6ed3}
+      \strng{authorfullhash}{c4f4f73d47154000905aff9f804e6ed3}
+      \strng{authorfullhashraw}{c4f4f73d47154000905aff9f804e6ed3}
+      \strng{editorbibnamehash}{799919097458a88ef6a166fb1622da40}
+      \strng{editornamehash}{799919097458a88ef6a166fb1622da40}
+      \strng{editorfullhash}{799919097458a88ef6a166fb1622da40}
+      \strng{editorfullhashraw}{799919097458a88ef6a166fb1622da40}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Security managers face the challenge of formulating and implementing policies that deliver their desired system security postures --- for example, their preferred balance of confidentiality, integrity, and availability --- within budget (monetary and otherwise). In this paper, we describe a security modelling methodology, grounded in rigorous mathematical systems modelling and economics, that captures the managers' policies and the behavioural choices of agents operating within the system. Models are executable, so allowing systematic experimental exploration of the system-policy co-design space, and compositional, so managing the complexity of large-scale systems.}
+      \field{booktitle}{Human Aspects of Information Security, Privacy, and Trust}
+      \field{isbn}{978-3-319-07620-1}
+      \field{title}{Compositional Security Modelling}
+      \field{year}{2014}
+      \field{pages}{233\bibrangedash 245}
+      \range{pages}{13}
+    \endentry
+    \entry{Chen2009}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=17e889465f015f567550ebf95e2ff125}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Lin},
+           giveni={L\bibinitperiod}}}%
+        {{hash=8cf41a4051179761252218192c097b7a}{%
+           family={Leneutre},
+           familyi={L\bibinitperiod},
+           given={Jean},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{45ec1583d16e5eac7a8e92114c876af8}
+      \strng{fullhash}{45ec1583d16e5eac7a8e92114c876af8}
+      \strng{fullhashraw}{45ec1583d16e5eac7a8e92114c876af8}
+      \strng{bibnamehash}{45ec1583d16e5eac7a8e92114c876af8}
+      \strng{authorbibnamehash}{45ec1583d16e5eac7a8e92114c876af8}
+      \strng{authornamehash}{45ec1583d16e5eac7a8e92114c876af8}
+      \strng{authorfullhash}{45ec1583d16e5eac7a8e92114c876af8}
+      \strng{authorfullhashraw}{45ec1583d16e5eac7a8e92114c876af8}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Transactions on Information Forensics and Security}
+      \field{number}{2}
+      \field{title}{A Game Theoretical Framework on Intrusion Detection in Heterogeneous Networks}
+      \field{volume}{4}
+      \field{year}{2009}
+      \field{pages}{165\bibrangedash 178}
+      \range{pages}{14}
+      \verb{doi}
+      \verb 10.1109/TIFS.2009.2019154
+      \endverb
+      \keyw{Game theory;Intrusion detection;Guidelines;Nash equilibrium;Monitoring;Computational modeling;Computer networks;Distributed computing;Data security;Information security;Game theory;intrusion detection system (IDS);Nash equilibrium (NE)}
+    \endentry
+    \entry{Collins2025}{misc}{}{}
+      \name{author}{3}{}{%
+        {{hash=ddcd3849d7bb4fc1d9745c402f41ab24}{%
+           family={Collins},
+           familyi={C\bibinitperiod},
+           given={Brandon},
+           giveni={B\bibinitperiod}}}%
+        {{hash=50a7617b933c2e8176946d628dc2164f}{%
+           family={Xu},
+           familyi={X\bibinitperiod},
+           given={Shouhuai},
+           giveni={S\bibinitperiod}}}%
+        {{hash=01e9cd986b07a7480f2553db2d4cd8bb}{%
+           family={Brown},
+           familyi={B\bibinitperiod},
+           given={Philip\bibnamedelima N.},
+           giveni={P\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
+      }
+      \strng{namehash}{5f46fff0ffbbfb010449de42fcee851c}
+      \strng{fullhash}{5f46fff0ffbbfb010449de42fcee851c}
+      \strng{fullhashraw}{5f46fff0ffbbfb010449de42fcee851c}
+      \strng{bibnamehash}{5f46fff0ffbbfb010449de42fcee851c}
+      \strng{authorbibnamehash}{5f46fff0ffbbfb010449de42fcee851c}
+      \strng{authornamehash}{5f46fff0ffbbfb010449de42fcee851c}
+      \strng{authorfullhash}{5f46fff0ffbbfb010449de42fcee851c}
+      \strng{authorfullhashraw}{5f46fff0ffbbfb010449de42fcee851c}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{cs.GT}
+      \field{eprinttype}{arXiv}
+      \field{title}{Game-Theoretic Cybersecurity: the Good, the Bad and the Ugly}
+      \field{year}{2025}
+      \verb{eprint}
+      \verb 2401.13815
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/2401.13815
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/2401.13815
+      \endverb
+    \endentry
+    \entry{Egan2025}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=76d82ed989cbedec37d384b30a2c8429}{%
+           family={Egan},
+           familyi={E\bibinitperiod},
+           given={Matthew},
+           giveni={M\bibinitperiod}}}%
+        {{hash=13966a31badf72b4ef84f879bbe1b450}{%
+           family={Gautam},
+           familyi={G\bibinitperiod},
+           given={Mukesh},
+           giveni={M\bibinitperiod}}}%
+        {{hash=827d3fc858c0d9e3e0b6164a117b8b32}{%
+           family={Ben-Idris},
+           familyi={B\bibinithyphendelim I\bibinitperiod},
+           given={Mohammed},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{b6cc61ba41b93b9c2eaa8319d50683a5}
+      \strng{fullhash}{b6cc61ba41b93b9c2eaa8319d50683a5}
+      \strng{fullhashraw}{b6cc61ba41b93b9c2eaa8319d50683a5}
+      \strng{bibnamehash}{b6cc61ba41b93b9c2eaa8319d50683a5}
+      \strng{authorbibnamehash}{b6cc61ba41b93b9c2eaa8319d50683a5}
+      \strng{authornamehash}{b6cc61ba41b93b9c2eaa8319d50683a5}
+      \strng{authorfullhash}{b6cc61ba41b93b9c2eaa8319d50683a5}
+      \strng{authorfullhashraw}{b6cc61ba41b93b9c2eaa8319d50683a5}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{2025 IEEE Kansas Power and Energy Conference (KPEC)}
+      \field{title}{Game Theory in Cybersecurity: A Review of Applications, Models, and Challenges}
+      \field{year}{2025}
+      \field{pages}{1\bibrangedash 5}
+      \range{pages}{5}
+      \verb{doi}
+      \verb 10.1109/KPEC65465.2025.11045006
+      \endverb
+      \keyw{Training;Privacy;Reviews;Information sharing;Games;Nash equilibrium;Information age;Planning;Internet;Computer security;Colonel Blotto systems;Cybersecurity;Game Theory;Nash equilibrium}
+    \endentry
+    \entry{Hausken2024}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=583a9d60f211ca749d220870d2f992f6}{%
+           family={Hausken},
+           familyi={H\bibinitperiod},
+           given={Kjell},
+           giveni={K\bibinitperiod}}}%
+        {{hash=555908bd35e21f238fbf7b34523b3a30}{%
+           family={Welburn},
+           familyi={W\bibinitperiod},
+           given={Jonathan\bibnamedelima W.},
+           giveni={J\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+        {{hash=feecf7d9a563f29edc9c534b6e595ec9}{%
+           family={Zhuang},
+           familyi={Z\bibinitperiod},
+           given={Jun},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{3f7eae0af3928629541bd32bfa40b6ec}
+      \strng{fullhash}{3f7eae0af3928629541bd32bfa40b6ec}
+      \strng{fullhashraw}{3f7eae0af3928629541bd32bfa40b6ec}
+      \strng{bibnamehash}{3f7eae0af3928629541bd32bfa40b6ec}
+      \strng{authorbibnamehash}{3f7eae0af3928629541bd32bfa40b6ec}
+      \strng{authornamehash}{3f7eae0af3928629541bd32bfa40b6ec}
+      \strng{authorfullhash}{3f7eae0af3928629541bd32bfa40b6ec}
+      \strng{authorfullhashraw}{3f7eae0af3928629541bd32bfa40b6ec}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{The focus of this review is the long and broad history of attacker–defender games as a foundation for the narrower and shorter history of cyber security. The purpose is to illustrate the role of game theory in cyber security and which areas have received attention and to indicate future research directions. The methodology uses the search terms game theory, attack, defense, and cyber security in Web of Science, augmented with the authors’ knowledge of the field. Games may involve multiple attackers and defenders over multiple periods. Defense involves security screening and inspection, the detection of invaders, jamming, secrecy, and . Incomplete information is reviewed due to its inevitable presence in cyber security. The findings pertain to players sharing information weighted against the security investment, influenced by social planning. Attackers stockpile zero-day cyber vulnerabilities. Defenders build deterrent resilient systems. Stochastic cyber security games play a role due to uncertainty and the need to build probabilistic models. Such games can be further developed. Cyber security games based on traffic and transportation are reviewed; they are influenced by the more extensive communication of GPS data. Such games should be extended to comprise air, land, and sea. Finally, cyber security education and board games are reviewed, which play a prominent role.}
+      \field{issn}{2073-4336}
+      \field{journaltitle}{Games}
+      \field{number}{4}
+      \field{title}{A Review of Attacker–Defender Games and Cyber Security}
+      \field{volume}{15}
+      \field{year}{2024}
+      \verb{doi}
+      \verb 10.3390/g15040028
+      \endverb
+      \verb{urlraw}
+      \verb https://www.mdpi.com/2073-4336/15/4/28
+      \endverb
+      \verb{url}
+      \verb https://www.mdpi.com/2073-4336/15/4/28
+      \endverb
+    \endentry
+    \entry{He2015}{inproceedings}{}{}
+      \name{author}{4}{}{%
+        {{hash=5aa58a2bca6c4e324c9c427263692fe8}{%
+           family={He},
+           familyi={H\bibinitperiod},
+           given={Xiaofan},
+           giveni={X\bibinitperiod}}}%
+        {{hash=bae62e9da1bbdeaeac1386cd29233049}{%
+           family={Dai},
+           familyi={D\bibinitperiod},
+           given={Huaiyu},
+           giveni={H\bibinitperiod}}}%
+        {{hash=ac060b50fc38c4b5fe953185f3f9b728}{%
+           family={Ning},
+           familyi={N\bibinitperiod},
+           given={Peng},
+           giveni={P\bibinitperiod}}}%
+        {{hash=47cfafe9b600f8e1c67da892105b76fd}{%
+           family={Dutta},
+           familyi={D\bibinitperiod},
+           given={Rudra},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{4702dc4aaf7139b6c01bf6ee268244be}
+      \strng{fullhash}{98a9c3a03fc3b271b23c4ba63cef0590}
+      \strng{fullhashraw}{98a9c3a03fc3b271b23c4ba63cef0590}
+      \strng{bibnamehash}{4702dc4aaf7139b6c01bf6ee268244be}
+      \strng{authorbibnamehash}{4702dc4aaf7139b6c01bf6ee268244be}
+      \strng{authornamehash}{4702dc4aaf7139b6c01bf6ee268244be}
+      \strng{authorfullhash}{98a9c3a03fc3b271b23c4ba63cef0590}
+      \strng{authorfullhashraw}{98a9c3a03fc3b271b23c4ba63cef0590}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{2015 IEEE Global Communications Conference (GLOBECOM)}
+      \field{title}{Dynamic IDS configuration in the presence of intruder type uncertainty}
+      \field{year}{2015}
+      \field{pages}{1\bibrangedash 6}
+      \range{pages}{6}
+    \endentry
+    \entry{Hedges2019}{misc}{}{}
       \name{author}{1}{}{%
         {{hash=a54c9ab370ba6f2ac86897eb2730d2ee}{%
            family={Hedges},
@@ -138,6 +587,37 @@
       \strng{authorfullhash}{a54c9ab370ba6f2ac86897eb2730d2ee}
       \strng{authorfullhashraw}{a54c9ab370ba6f2ac86897eb2730d2ee}
       \field{extraname}{1}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{10}
+      \field{title}{Are open games useful for my problem?}
+      \field{year}{2019}
+      \verb{urlraw}
+      \verb https://julesh.com/2019/10/13/are-open-games-useful-for-my-problem/
+      \endverb
+      \verb{url}
+      \verb https://julesh.com/2019/10/13/are-open-games-useful-for-my-problem/
+      \endverb
+    \endentry
+    \entry{hedges2017morphismsopengames}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=a54c9ab370ba6f2ac86897eb2730d2ee}{%
+           family={Hedges},
+           familyi={H\bibinitperiod},
+           given={Jules},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{a54c9ab370ba6f2ac86897eb2730d2ee}
+      \strng{fullhash}{a54c9ab370ba6f2ac86897eb2730d2ee}
+      \strng{fullhashraw}{a54c9ab370ba6f2ac86897eb2730d2ee}
+      \strng{bibnamehash}{a54c9ab370ba6f2ac86897eb2730d2ee}
+      \strng{authorbibnamehash}{a54c9ab370ba6f2ac86897eb2730d2ee}
+      \strng{authornamehash}{a54c9ab370ba6f2ac86897eb2730d2ee}
+      \strng{authorfullhash}{a54c9ab370ba6f2ac86897eb2730d2ee}
+      \strng{authorfullhashraw}{a54c9ab370ba6f2ac86897eb2730d2ee}
+      \field{extraname}{2}
       \field{sortinit}{H}
       \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
       \field{labelnamesource}{author}
@@ -172,7 +652,7 @@
       \strng{authornamehash}{a54c9ab370ba6f2ac86897eb2730d2ee}
       \strng{authorfullhash}{a54c9ab370ba6f2ac86897eb2730d2ee}
       \strng{authorfullhashraw}{a54c9ab370ba6f2ac86897eb2730d2ee}
-      \field{extraname}{2}
+      \field{extraname}{3}
       \field{sortinit}{H}
       \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
       \field{labelnamesource}{author}
@@ -180,6 +660,487 @@
       \field{title}{Towards compositional game theory}
       \field{type}{phdthesis}
       \field{year}{2016}
+    \endentry
+    \entry{Jin2018}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=621e41cecf70774b96857f08dc038a3a}{%
+           family={Jin},
+           familyi={J\bibinitperiod},
+           given={Richeng},
+           giveni={R\bibinitperiod}}}%
+        {{hash=5aa58a2bca6c4e324c9c427263692fe8}{%
+           family={He},
+           familyi={H\bibinitperiod},
+           given={Xiaofan},
+           giveni={X\bibinitperiod}}}%
+        {{hash=bae62e9da1bbdeaeac1386cd29233049}{%
+           family={Dai},
+           familyi={D\bibinitperiod},
+           given={Huaiyu},
+           giveni={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{0e335bac3e42504883ce09294c08aef4}
+      \strng{fullhash}{0e335bac3e42504883ce09294c08aef4}
+      \strng{fullhashraw}{0e335bac3e42504883ce09294c08aef4}
+      \strng{bibnamehash}{0e335bac3e42504883ce09294c08aef4}
+      \strng{authorbibnamehash}{0e335bac3e42504883ce09294c08aef4}
+      \strng{authornamehash}{0e335bac3e42504883ce09294c08aef4}
+      \strng{authorfullhash}{0e335bac3e42504883ce09294c08aef4}
+      \strng{authorfullhashraw}{0e335bac3e42504883ce09294c08aef4}
+      \field{sortinit}{J}
+      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Transactions on Cognitive Communications and Networking}
+      \field{number}{4}
+      \field{title}{Collaborative IDS Configuration: A Two-Layer Game-Theoretic Approach}
+      \field{volume}{4}
+      \field{year}{2018}
+      \field{pages}{803\bibrangedash 815}
+      \range{pages}{13}
+      \verb{doi}
+      \verb 10.1109/TCCN.2018.2856207
+      \endverb
+      \keyw{Collaborative work;Intrusion detection;Game theory;Nash equilibrium;Resource management;Load modeling;Collaborative intrusion detection systems;game theory;Nash-Q learning}
+    \endentry
+    \entry{Liang2013}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=95cf580836df90c56a38079eb8029b77}{%
+           family={Liang},
+           familyi={L\bibinitperiod},
+           given={Xiannuan},
+           giveni={X\bibinitperiod}}}%
+        {{hash=1f6352fb541fa4d76fa406a7a227e942}{%
+           family={Xiao},
+           familyi={X\bibinitperiod},
+           given={Yang},
+           giveni={Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{95c5fec0b9734f6772274039a9a6e24f}
+      \strng{fullhash}{95c5fec0b9734f6772274039a9a6e24f}
+      \strng{fullhashraw}{95c5fec0b9734f6772274039a9a6e24f}
+      \strng{bibnamehash}{95c5fec0b9734f6772274039a9a6e24f}
+      \strng{authorbibnamehash}{95c5fec0b9734f6772274039a9a6e24f}
+      \strng{authornamehash}{95c5fec0b9734f6772274039a9a6e24f}
+      \strng{authorfullhash}{95c5fec0b9734f6772274039a9a6e24f}
+      \strng{authorfullhashraw}{95c5fec0b9734f6772274039a9a6e24f}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Communications Surveys \& Tutorials, IEEE}
+      \field{month}{01}
+      \field{title}{Game Theory for Network Security}
+      \field{volume}{15}
+      \field{year}{2013}
+      \field{pages}{472\bibrangedash 486}
+      \range{pages}{15}
+      \verb{doi}
+      \verb 10.1109/SURV.2012.062612.00056
+      \endverb
+    \endentry
+    \entry{lye2005game}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=8a49c225cccc2011de469e9fc6662e17}{%
+           family={Lye},
+           familyi={L\bibinitperiod},
+           given={Kong-wei},
+           giveni={K\bibinithyphendelim w\bibinitperiod}}}%
+        {{hash=fc244460284339da385f5113c9207b79}{%
+           family={Wing},
+           familyi={W\bibinitperiod},
+           given={Jeannette\bibnamedelima M},
+           giveni={J\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{8214edee1c61eeb58c25024d10e11963}
+      \strng{fullhash}{8214edee1c61eeb58c25024d10e11963}
+      \strng{fullhashraw}{8214edee1c61eeb58c25024d10e11963}
+      \strng{bibnamehash}{8214edee1c61eeb58c25024d10e11963}
+      \strng{authorbibnamehash}{8214edee1c61eeb58c25024d10e11963}
+      \strng{authornamehash}{8214edee1c61eeb58c25024d10e11963}
+      \strng{authorfullhash}{8214edee1c61eeb58c25024d10e11963}
+      \strng{authorfullhashraw}{8214edee1c61eeb58c25024d10e11963}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{International Journal of Information Security}
+      \field{number}{1}
+      \field{title}{Game strategies in network security}
+      \field{volume}{4}
+      \field{year}{2005}
+      \field{pages}{71\bibrangedash 86}
+      \range{pages}{16}
+    \endentry
+    \entry{Manshaei2013}{article}{}{}
+      \name{author}{5}{}{%
+        {{hash=abfeeb9683cf0f95578323ee4d849a9e}{%
+           family={Manshaei},
+           familyi={M\bibinitperiod},
+           given={Mohammad\bibnamedelima Hossein},
+           giveni={M\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+        {{hash=ac733f1ebc4d357170b624d9dd702e07}{%
+           family={Zhu},
+           familyi={Z\bibinitperiod},
+           given={Quanyan},
+           giveni={Q\bibinitperiod}}}%
+        {{hash=12e1244b772004ea85b2420a18bc5c18}{%
+           family={Alpcan},
+           familyi={A\bibinitperiod},
+           given={Tansu},
+           giveni={T\bibinitperiod}}}%
+        {{hash=09bc5dbe7ad41bbf904954a759917b2f}{%
+           family={Bacşar},
+           familyi={B\bibinitperiod},
+           given={Tamer},
+           giveni={T\bibinitperiod}}}%
+        {{hash=2b954638b586f9eb53d1c8d19f5689d0}{%
+           family={Hubaux},
+           familyi={H\bibinitperiod},
+           given={Jean-Pierre},
+           giveni={J\bibinithyphendelim P\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New York, NY, USA}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{0604bdc2f851257cc7a16962d4abf043}
+      \strng{fullhash}{c79e8935ae37eae59a6950eb31a13b30}
+      \strng{fullhashraw}{c79e8935ae37eae59a6950eb31a13b30}
+      \strng{bibnamehash}{0604bdc2f851257cc7a16962d4abf043}
+      \strng{authorbibnamehash}{0604bdc2f851257cc7a16962d4abf043}
+      \strng{authornamehash}{0604bdc2f851257cc7a16962d4abf043}
+      \strng{authorfullhash}{c79e8935ae37eae59a6950eb31a13b30}
+      \strng{authorfullhashraw}{c79e8935ae37eae59a6950eb31a13b30}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{This survey provides a structured and comprehensive overview of research on security and privacy in computer and communication networks that use game-theoretic approaches. We present a selected set of works to highlight the application of game theory in addressing different forms of security and privacy problems in computer networks and mobile applications. We organize the presented works in six main categories: security of the physical and MAC layers, security of self-organizing networks, intrusion detection systems, anonymity and privacy, economics of network security, and cryptography. In each category, we identify security problems, players, and game models. We summarize the main results of selected works, such as equilibrium analysis and security mechanism designs. In addition, we provide a discussion on the advantages, drawbacks, and future direction of using game theory in this field. In this survey, our goal is to instill in the reader an enhanced understanding of different research approaches in applying game-theoretic methods to network security. This survey can also help researchers from various fields develop game-theoretic solutions to current and emerging security problems in computer networking.}
+      \field{issn}{0360-0300}
+      \field{journaltitle}{ACM Comput. Surv.}
+      \field{month}{7}
+      \field{number}{3}
+      \field{title}{Game theory meets network security and privacy}
+      \field{volume}{45}
+      \field{year}{2013}
+      \verb{doi}
+      \verb 10.1145/2480741.2480742
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1145/2480741.2480742
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1145/2480741.2480742
+      \endverb
+      \keyw{wireless security,revocation,network security and privacy,multiparty computation,location privacy,intrusion detection system,cryptography,Game theory}
+    \endentry
+    \entry{Nochenson2012}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{hash=f3e7b076522b8f9ffaf53f4ad725cbe1}{%
+           family={Nochenson},
+           familyi={N\bibinitperiod},
+           given={Alan},
+           giveni={A\bibinitperiod}}}%
+        {{hash=e77f18a6591cdc5783e2383ef4b9b6a3}{%
+           family={Heimann},
+           familyi={H\bibinitperiod},
+           given={C.\bibnamedelimi F.\bibnamedelimi Larry},
+           giveni={C\bibinitperiod\bibinitdelim F\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
+      }
+      \name{editor}{2}{}{%
+        {{hash=22035557fcd32a95d6316aa9f13e5ec8}{%
+           family={Grossklags},
+           familyi={G\bibinitperiod},
+           given={Jens},
+           giveni={J\bibinitperiod}}}%
+        {{hash=f61a79436eea4c7bc87a3f1411b25914}{%
+           family={Walrand},
+           familyi={W\bibinitperiod},
+           given={Jean},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Berlin, Heidelberg}%
+      }
+      \list{publisher}{1}{%
+        {Springer Berlin Heidelberg}%
+      }
+      \strng{namehash}{b53038b040806b9eb7f713d61d933008}
+      \strng{fullhash}{b53038b040806b9eb7f713d61d933008}
+      \strng{fullhashraw}{b53038b040806b9eb7f713d61d933008}
+      \strng{bibnamehash}{b53038b040806b9eb7f713d61d933008}
+      \strng{authorbibnamehash}{b53038b040806b9eb7f713d61d933008}
+      \strng{authornamehash}{b53038b040806b9eb7f713d61d933008}
+      \strng{authorfullhash}{b53038b040806b9eb7f713d61d933008}
+      \strng{authorfullhashraw}{b53038b040806b9eb7f713d61d933008}
+      \strng{editorbibnamehash}{39c25fc22281c8e10262ce40c3c4d141}
+      \strng{editornamehash}{39c25fc22281c8e10262ce40c3c4d141}
+      \strng{editorfullhash}{39c25fc22281c8e10262ce40c3c4d141}
+      \strng{editorfullhashraw}{39c25fc22281c8e10262ce40c3c4d141}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{This paper uses agent-based simulation to determine appropriate strategies for attackers and defenders in a simple network security game, using a method which is generalizable to many other security games. In this game, both sides are modeled as strategic entities. The attacker is trying to maximize the amount of damage he causes, and the defender is trying to minimize her loss subject to cost constraints. Through simulation, we derive Nash equilibrium strategies for each side under a variety of cost conditions in order to better inform network administrators about attacker behaviors and possible mitigations.}
+      \field{booktitle}{Decision and Game Theory for Security}
+      \field{isbn}{978-3-642-34266-0}
+      \field{title}{Simulation and Game-Theoretic Analysis of an Attacker-Defender Game}
+      \field{year}{2012}
+      \field{dateera}{ce}
+      \field{pages}{138\bibrangedash 151}
+      \range{pages}{14}
+    \endentry
+    \entry{Pawlick2019}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=4138cdd014be1d965cc8c3b2caf28133}{%
+           family={Pawlick},
+           familyi={P\bibinitperiod},
+           given={Jeffrey},
+           giveni={J\bibinitperiod}}}%
+        {{hash=ff13f6effcf4343c8131d4c36bc01eb5}{%
+           family={Colbert},
+           familyi={C\bibinitperiod},
+           given={Edward},
+           giveni={E\bibinitperiod}}}%
+        {{hash=ac733f1ebc4d357170b624d9dd702e07}{%
+           family={Zhu},
+           familyi={Z\bibinitperiod},
+           given={Quanyan},
+           giveni={Q\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New York, NY, USA}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{cf3f09e749031644fe9230e2c24b1c61}
+      \strng{fullhash}{cf3f09e749031644fe9230e2c24b1c61}
+      \strng{fullhashraw}{cf3f09e749031644fe9230e2c24b1c61}
+      \strng{bibnamehash}{cf3f09e749031644fe9230e2c24b1c61}
+      \strng{authorbibnamehash}{cf3f09e749031644fe9230e2c24b1c61}
+      \strng{authornamehash}{cf3f09e749031644fe9230e2c24b1c61}
+      \strng{authorfullhash}{cf3f09e749031644fe9230e2c24b1c61}
+      \strng{authorfullhashraw}{cf3f09e749031644fe9230e2c24b1c61}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Cyberattacks on both databases and critical infrastructure have threatened public and private sectors. Ubiquitous tracking and wearable computing have infringed upon privacy. Advocates and engineers have recently proposed using defensive deception as a means to leverage the information asymmetry typically enjoyed by attackers as a tool for defenders. The term deception, however, has been employed broadly and with a variety of meanings. In this article, we survey 24 articles from 2008 to 2018 that use game theory to model defensive deception for cybersecurity and privacy. Then, we propose a taxonomy that defines six types of deception: perturbation, moving target defense, obfuscation, mixing, honey-x, and attacker engagement. These types are delineated by their information structures, agents, actions, and duration: precisely concepts captured by game theory. Our aims are to rigorously define types of defensive deception, to capture a snapshot of the state of the literature, to provide a menu of models that can be used for applied research, and to identify promising areas for future work. Our taxonomy provides a systematic foundation for understanding different types of defensive deception commonly encountered in cybersecurity and privacy.}
+      \field{issn}{0360-0300}
+      \field{journaltitle}{ACM Comput. Surv.}
+      \field{month}{8}
+      \field{number}{4}
+      \field{title}{A Game-theoretic Taxonomy and Survey of Defensive Deception for Cybersecurity and Privacy}
+      \field{volume}{52}
+      \field{year}{2019}
+      \verb{doi}
+      \verb 10.1145/3337772
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1145/3337772
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1145/3337772
+      \endverb
+      \keyw{Cybersecurity,attacker engagement,deception,game theory,honeypot,mix network,moving target defense,obfuscation,perturbation,privacy,survey,taxonomy}
+    \endentry
+    \entry{Pawlick2015}{misc}{}{}
+      \name{author}{2}{}{%
+        {{hash=4138cdd014be1d965cc8c3b2caf28133}{%
+           family={Pawlick},
+           familyi={P\bibinitperiod},
+           given={Jeffrey},
+           giveni={J\bibinitperiod}}}%
+        {{hash=ac733f1ebc4d357170b624d9dd702e07}{%
+           family={Zhu},
+           familyi={Z\bibinitperiod},
+           given={Quanyan},
+           giveni={Q\bibinitperiod}}}%
+      }
+      \strng{namehash}{eff4b806085f1d23a9628075e7ca1079}
+      \strng{fullhash}{eff4b806085f1d23a9628075e7ca1079}
+      \strng{fullhashraw}{eff4b806085f1d23a9628075e7ca1079}
+      \strng{bibnamehash}{eff4b806085f1d23a9628075e7ca1079}
+      \strng{authorbibnamehash}{eff4b806085f1d23a9628075e7ca1079}
+      \strng{authornamehash}{eff4b806085f1d23a9628075e7ca1079}
+      \strng{authorfullhash}{eff4b806085f1d23a9628075e7ca1079}
+      \strng{authorfullhashraw}{eff4b806085f1d23a9628075e7ca1079}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{cs.CR}
+      \field{eprinttype}{arXiv}
+      \field{title}{Deception by Design: Evidence-Based Signaling Games for Network Defense}
+      \field{year}{2015}
+      \verb{eprint}
+      \verb 1503.05458
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/1503.05458
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/1503.05458
+      \endverb
+    \endentry
+    \entry{Phetmanee2024}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=429c83eaf499436643ced1e201012204}{%
+           family={Phetmanee},
+           familyi={P\bibinitperiod},
+           given={Surasak},
+           giveni={S\bibinitperiod}}}%
+        {{hash=0f68000601b5f6c46efbfeff7e08dde6}{%
+           family={Sevegnani},
+           familyi={S\bibinitperiod},
+           given={Michele},
+           giveni={M\bibinitperiod}}}%
+        {{hash=79e9d42b32a59db6d15c3dff126264f4}{%
+           family={Andrei},
+           familyi={A\bibinitperiod},
+           given={Oana},
+           giveni={O\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Manchester, United Kingdom}%
+      }
+      \list{publisher}{1}{%
+        {Springer-Verlag}%
+      }
+      \strng{namehash}{d8ed7046becfef4b0b06d9950e2313bf}
+      \strng{fullhash}{d8ed7046becfef4b0b06d9950e2313bf}
+      \strng{fullhashraw}{d8ed7046becfef4b0b06d9950e2313bf}
+      \strng{bibnamehash}{d8ed7046becfef4b0b06d9950e2313bf}
+      \strng{authorbibnamehash}{d8ed7046becfef4b0b06d9950e2313bf}
+      \strng{authornamehash}{d8ed7046becfef4b0b06d9950e2313bf}
+      \strng{authorfullhash}{d8ed7046becfef4b0b06d9950e2313bf}
+      \strng{authorfullhashraw}{d8ed7046becfef4b0b06d9950e2313bf}
+      \field{extraname}{1}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{We present StEVe, a prototype tool modelling Stackelberg Security Games (SSGs) and employing rational verification based on bespoke Stackelberg equilibrium computation. StEVe automatically extracts technical details from public vulnerability databases, transforming these into Attack Defence Trees and then into SSG models. By using the temporal logic rPATL, the tool enables the synthesis of optimal defence strategies through Stackelberg equilibrium analysis, which is implemented as a PRISM-games extension. Preliminary results demonstrate StEVe’s ability to model and counteract cyber threats, reducing potential damages and financial losses.}
+      \field{booktitle}{Integrated Formal Methods: 19th International Conference, IFM 2024, Manchester, UK, November 13–15, 2024, Proceedings}
+      \field{isbn}{978-3-031-76553-7}
+      \field{title}{StEVe: A Rational Verification Tool for Stackelberg Security Games}
+      \field{year}{2024}
+      \field{pages}{267\bibrangedash 275}
+      \range{pages}{9}
+      \verb{doi}
+      \verb 10.1007/978-3-031-76554-4_15
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1007/978-3-031-76554-4_15
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1007/978-3-031-76554-4_15
+      \endverb
+      \keyw{Rational Verification,Security Games,Temporal Logic}
+    \endentry
+    \entry{phetmanee_2024_13338608}{software}{}{}
+      \name{author}{3}{}{%
+        {{hash=429c83eaf499436643ced1e201012204}{%
+           family={Phetmanee},
+           familyi={P\bibinitperiod},
+           given={Surasak},
+           giveni={S\bibinitperiod}}}%
+        {{hash=0f68000601b5f6c46efbfeff7e08dde6}{%
+           family={Sevegnani},
+           familyi={S\bibinitperiod},
+           given={Michele},
+           giveni={M\bibinitperiod}}}%
+        {{hash=79e9d42b32a59db6d15c3dff126264f4}{%
+           family={Andrei},
+           familyi={A\bibinitperiod},
+           given={Oana},
+           giveni={O\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Zenodo}%
+      }
+      \strng{namehash}{d8ed7046becfef4b0b06d9950e2313bf}
+      \strng{fullhash}{d8ed7046becfef4b0b06d9950e2313bf}
+      \strng{fullhashraw}{d8ed7046becfef4b0b06d9950e2313bf}
+      \strng{bibnamehash}{d8ed7046becfef4b0b06d9950e2313bf}
+      \strng{authorbibnamehash}{d8ed7046becfef4b0b06d9950e2313bf}
+      \strng{authornamehash}{d8ed7046becfef4b0b06d9950e2313bf}
+      \strng{authorfullhash}{d8ed7046becfef4b0b06d9950e2313bf}
+      \strng{authorfullhashraw}{d8ed7046becfef4b0b06d9950e2313bf}
+      \field{extraname}{2}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{8}
+      \field{title}{StEVe: A Rational Verification Tool for Stackelberg Security Games}
+      \field{year}{2024}
+      \verb{doi}
+      \verb 10.5281/zenodo.13338608
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.5281/zenodo.13338608
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.5281/zenodo.13338608
+      \endverb
+    \endentry
+    \entry{Wellman2015}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{hash=f0386e56ebcc1ebfaf908100ebdb830b}{%
+           family={Prakash},
+           familyi={P\bibinitperiod},
+           given={Achintya},
+           giveni={A\bibinitperiod}}}%
+        {{hash=1b765f5dca25c61f99b31403087f0586}{%
+           family={Wellman},
+           familyi={W\bibinitperiod},
+           given={Michael\bibnamedelima P.},
+           giveni={M\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Denver, Colorado, USA}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{fcdedb794be39649f9d1901761422234}
+      \strng{fullhash}{fcdedb794be39649f9d1901761422234}
+      \strng{fullhashraw}{fcdedb794be39649f9d1901761422234}
+      \strng{bibnamehash}{fcdedb794be39649f9d1901761422234}
+      \strng{authorbibnamehash}{fcdedb794be39649f9d1901761422234}
+      \strng{authornamehash}{fcdedb794be39649f9d1901761422234}
+      \strng{authorfullhash}{fcdedb794be39649f9d1901761422234}
+      \strng{authorfullhashraw}{fcdedb794be39649f9d1901761422234}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{The effectiveness of a moving target defense depends on how it is deployed through specific system operations over time, and how attackers may respond to this deployment. We define a generic cyber-defense scenario, and examine the interplay between attack and defense strategies using empirical game-theoretic techniques. In this approach, the scenario is defined procedurally by a simulator, and data derived from systematic simulation is used to induce a game model. We explore a space of 72 game instances, defined by differences in agent objectives, attack cost, and ability of the defender to detect attack actions. We observe a range of qualitative strategic behaviors, which vary in clear patterns across environmental conditions. In particular, we find that the efficacy of deterrent defense is critically sensitive to detection capability, and in the absence of perfect detection the defender is often driven to proactive moving-target actions.}
+      \field{booktitle}{Proceedings of the Second ACM Workshop on Moving Target Defense}
+      \field{isbn}{9781450338233}
+      \field{series}{MTD '15}
+      \field{title}{Empirical Game-Theoretic Analysis for Moving Target Defense}
+      \field{year}{2015}
+      \field{pages}{57\bibrangedash 65}
+      \range{pages}{9}
+      \verb{doi}
+      \verb 10.1145/2808475.2808483
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1145/2808475.2808483
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1145/2808475.2808483
+      \endverb
+      \keyw{cyber security,game theory,moving target defense}
     \endentry
     \entry{riley2018categories}{article}{}{}
       \name{author}{1}{}{%
@@ -240,6 +1201,117 @@
       \field{type}{phdthesis}
       \field{year}{2022}
     \endentry
+    \entry{wellman2006methods}{inproceedings}{}{}
+      \name{author}{1}{}{%
+        {{hash=1b765f5dca25c61f99b31403087f0586}{%
+           family={Wellman},
+           familyi={W\bibinitperiod},
+           given={Michael\bibnamedelima P},
+           giveni={M\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
+      }
+      \strng{namehash}{1b765f5dca25c61f99b31403087f0586}
+      \strng{fullhash}{1b765f5dca25c61f99b31403087f0586}
+      \strng{fullhashraw}{1b765f5dca25c61f99b31403087f0586}
+      \strng{bibnamehash}{1b765f5dca25c61f99b31403087f0586}
+      \strng{authorbibnamehash}{1b765f5dca25c61f99b31403087f0586}
+      \strng{authornamehash}{1b765f5dca25c61f99b31403087f0586}
+      \strng{authorfullhash}{1b765f5dca25c61f99b31403087f0586}
+      \strng{authorfullhashraw}{1b765f5dca25c61f99b31403087f0586}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{AAAI}
+      \field{title}{Methods for empirical game-theoretic analysis}
+      \field{volume}{980}
+      \field{year}{2006}
+      \field{pages}{1552\bibrangedash 1556}
+      \range{pages}{5}
+    \endentry
+    \entry{Wellman2019}{inbook}{}{}
+      \name{author}{3}{}{%
+        {{hash=1b765f5dca25c61f99b31403087f0586}{%
+           family={Wellman},
+           familyi={W\bibinitperiod},
+           given={Michael\bibnamedelima P.},
+           giveni={M\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
+        {{hash=abd01f09e01325ddfdffd26f3b0a293c}{%
+           family={Nguyen},
+           familyi={N\bibinitperiod},
+           given={Thanh\bibnamedelima H.},
+           giveni={T\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+        {{hash=01467e4f19f5d03be1182837b4b8b602}{%
+           family={Wright},
+           familyi={W\bibinitperiod},
+           given={Mason},
+           giveni={M\bibinitperiod}}}%
+      }
+      \name{editor}{5}{}{%
+        {{hash=f21aa520ad69374e7b6d40b5c0891da7}{%
+           family={Jajodia},
+           familyi={J\bibinitperiod},
+           given={Sushil},
+           giveni={S\bibinitperiod}}}%
+        {{hash=5f82e084564c9fa2622446ae39f882ed}{%
+           family={Cybenko},
+           familyi={C\bibinitperiod},
+           given={George},
+           giveni={G\bibinitperiod}}}%
+        {{hash=2c112d9d43345185672db278b5111bc4}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Peng},
+           giveni={P\bibinitperiod}}}%
+        {{hash=d8cebcf1e56cf51e52b71f41b949cba5}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Cliff},
+           giveni={C\bibinitperiod}}}%
+        {{hash=cd643c0f87744310c4937c3b7c89dbee}{%
+           family={Wellman},
+           familyi={W\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Cham}%
+      }
+      \list{publisher}{1}{%
+        {Springer International Publishing}%
+      }
+      \strng{namehash}{3cc3cc95348bcb2df39b12ac75627f27}
+      \strng{fullhash}{3cc3cc95348bcb2df39b12ac75627f27}
+      \strng{fullhashraw}{3cc3cc95348bcb2df39b12ac75627f27}
+      \strng{bibnamehash}{3cc3cc95348bcb2df39b12ac75627f27}
+      \strng{authorbibnamehash}{3cc3cc95348bcb2df39b12ac75627f27}
+      \strng{authornamehash}{3cc3cc95348bcb2df39b12ac75627f27}
+      \strng{authorfullhash}{3cc3cc95348bcb2df39b12ac75627f27}
+      \strng{authorfullhashraw}{3cc3cc95348bcb2df39b12ac75627f27}
+      \strng{editorbibnamehash}{e2aea07e414d1b259ee4435636d7c145}
+      \strng{editornamehash}{e2aea07e414d1b259ee4435636d7c145}
+      \strng{editorfullhash}{f2dcebd4a6fd342056663065cf139ea3}
+      \strng{editorfullhashraw}{f2dcebd4a6fd342056663065cf139ea3}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Game-theoretic applications in cyber-security are often restricted by the need to simplify complex domains to render them amenable to analysis. In the empirical game-theoretic analysis approach, games are modeled by simulation, thus significantly increasing the level of complexity that can be addressed. We survey applications of this approach to scenarios of adaptive cyber-defense, illustrating how the method operates, and assessing its strengths and limitations.}
+      \field{booktitle}{Adversarial and Uncertain Reasoning for Adaptive Cyber Defense: Control- and Game-Theoretic Approaches to Cyber Security}
+      \field{isbn}{978-3-030-30719-6}
+      \field{title}{Empirical Game-Theoretic Methods for Adaptive Cyber-Defense}
+      \field{year}{2019}
+      \field{pages}{112\bibrangedash 128}
+      \range{pages}{17}
+      \verb{doi}
+      \verb 10.1007/978-3-030-30719-6_6
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1007/978-3-030-30719-6_6
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1007/978-3-030-30719-6_6
+      \endverb
+    \endentry
     \entry{xie2025effectful}{article}{}{}
       \name{author}{3}{}{%
         {{hash=40d3a6c590d6ad072ffd38d8b0edd802}{%
@@ -280,6 +1352,84 @@
       \field{year}{2025}
       \field{pages}{541\bibrangedash 566}
       \range{pages}{26}
+    \endentry
+    \entry{Zahn2024}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=66afefdf2b5dd90d66ca0f1e8654c0bb}{%
+           family={Zahn},
+           familyi={Z\bibinitperiod},
+           given={Philip},
+           giveni={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{66afefdf2b5dd90d66ca0f1e8654c0bb}
+      \strng{fullhash}{66afefdf2b5dd90d66ca0f1e8654c0bb}
+      \strng{fullhashraw}{66afefdf2b5dd90d66ca0f1e8654c0bb}
+      \strng{bibnamehash}{66afefdf2b5dd90d66ca0f1e8654c0bb}
+      \strng{authorbibnamehash}{66afefdf2b5dd90d66ca0f1e8654c0bb}
+      \strng{authornamehash}{66afefdf2b5dd90d66ca0f1e8654c0bb}
+      \strng{authorfullhash}{66afefdf2b5dd90d66ca0f1e8654c0bb}
+      \strng{authorfullhashraw}{66afefdf2b5dd90d66ca0f1e8654c0bb}
+      \field{sortinit}{Z}
+      \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Cybercat Institute}
+      \field{month}{07}
+      \field{title}{Compositionality and the mass customization of Economic Models}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://cybercat.institute/2024/07/15/usefulness-models/
+      \endverb
+      \verb{url}
+      \verb https://cybercat.institute/2024/07/15/usefulness-models/
+      \endverb
+    \endentry
+    \entry{Zhu2012}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=ac733f1ebc4d357170b624d9dd702e07}{%
+           family={Zhu},
+           familyi={Z\bibinitperiod},
+           given={Quanyan},
+           giveni={Q\bibinitperiod}}}%
+        {{hash=6b086f378a1f75237e792de90804e252}{%
+           family={Fung},
+           familyi={F\bibinitperiod},
+           given={Carol},
+           giveni={C\bibinitperiod}}}%
+        {{hash=d3d1b736ac1075a3461208441558f16d}{%
+           family={Boutaba},
+           familyi={B\bibinitperiod},
+           given={Raouf},
+           giveni={R\bibinitperiod}}}%
+        {{hash=9579ceec43b3910e986951532ab0a598}{%
+           family={Basar},
+           familyi={B\bibinitperiod},
+           given={Tamer},
+           giveni={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{44f3e1603a39a5b75469e165751d5326}
+      \strng{fullhash}{757426ce4bc86c688ea49b732335eec3}
+      \strng{fullhashraw}{757426ce4bc86c688ea49b732335eec3}
+      \strng{bibnamehash}{44f3e1603a39a5b75469e165751d5326}
+      \strng{authorbibnamehash}{44f3e1603a39a5b75469e165751d5326}
+      \strng{authornamehash}{44f3e1603a39a5b75469e165751d5326}
+      \strng{authorfullhash}{757426ce4bc86c688ea49b732335eec3}
+      \strng{authorfullhashraw}{757426ce4bc86c688ea49b732335eec3}
+      \field{sortinit}{Z}
+      \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Journal on Selected Areas in Communications}
+      \field{number}{11}
+      \field{title}{GUIDEX: A Game-Theoretic Incentive-Based Mechanism for Intrusion Detection Networks}
+      \field{volume}{30}
+      \field{year}{2012}
+      \field{pages}{2220\bibrangedash 2230}
+      \range{pages}{11}
+      \verb{doi}
+      \verb 10.1109/JSAC.2012.121214
+      \endverb
+      \keyw{Economics;Telecommunication services;Communication networks;Computer crime;Computer security;Security;Intrusion detection;Intrusion detection systems;collaborative networks;game theory;network optimization;incentive compatibility;network security and economics}
     \endentry
   \enddatalist
   \missing{3}

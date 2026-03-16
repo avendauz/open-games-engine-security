@@ -25,10 +25,10 @@
 \definecolor{funcColor}{HTML}{5E2D91}
 \definecolor{typeColor}{HTML}{000080}
 \definecolor{datatype}{RGB}{196, 6, 11}
-\renewcommand{\Conid}[1]{{\color{funcColor}\mathit #1}}
-\renewcommand{\Varid}[1]{{\color{typeColor}\mathit #1}}
-%subst keyword a = "{\color{datatype}{ " a " }}"
-\newcommand{\colorOp}[1]{\textcolor{orange!80!black}{#1}}
+\renewcommand{\Conid}[1]{{\color{funcColor}\texttt{#1}}}
+\renewcommand{\Varid}[1]{{\color{typeColor}\texttt{#1}}}
+%subst keyword a = "\color{datatype}\texttt{"a"}"
+\newcommand{\colorOp}[1]{\textcolor{orange!80!black}{\texttt{#1}}}
 
 
 % 
