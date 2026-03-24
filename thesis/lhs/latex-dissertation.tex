@@ -556,11 +556,11 @@ One of the important features of these lenses is that they compose sequentially 
 or in other words, act as morphisms of a symmetric monoidal category where objects are pairs of sets. 
 We term sequential composition as morphism composition and parallel composition as the tensor product of the 
 symmetric monoidal category. Note that 
-$S$ and $A$ are considered the "boundaries" that dictate 
-covariant morphisms and $R$ and $B$ are the "boundaries" for contravariant morphisms of these lenses, or readers can use 
-morphisms from $\mathbf{Set} \times \mathbf{Set}^{\mathbf{op}}$.
+$S$ and $A$ are the types for domain and codomain of the
+covariant morphisms and $R$ and $B$ are the domain and codomain for contravariant morphisms of these lenses \footnote{Or readers can use 
+morphisms from $\mathbf{Set} \times \mathbf{Set}^{\mathbf{op}}$.}
 
-To hint at where we are headed in game-theoretic terms, intuitively
+To hint at where we are headed towards describing open games as \textit{processes that care about their environment}, intuitively
 such a morphism would describe the behaviour of an agent given a certain strategy when operating 
 in a given environment, where: 
 \begin{itemize} \label{note:hint}
@@ -569,7 +569,7 @@ in a given environment, where:
    \item Recieves some feedback from its local environment of type $T$
    \item Relays information back to the environment of type $B$
 \end{itemize}
-Thus given a (1) a strategy $S \rightarrow A$, (2) an observation of type $S$, and (3) some continuation or feedback 
+Thus given (1) a strategy $S \rightarrow A$, (2) an observation of type $S$, and (3) some continuation or feedback 
 providing some payoff of type $B$, we will be able to describe what this agent would do. 
 
 Considering the behaviour of agents using these lenses is enough to start constructing a category 
@@ -585,7 +585,7 @@ over some probability distribution, or give agents the ability to have some prob
 . This turns out not to be as simple as attaching a probability monad 
 to the current definition of lenses, specifically because the tensor product of the category of open games fails to be associative,
 (see \cite[Section 3.4]{BayesianOpenGames} to understand why this happens). Instead, the authors of 
-\cite{3} use \textit{coend lenses} (or \textit{optics}) to construct Bayesian open games. 
+\cite{3} use \textit{coend lenses} (or \textit{optics}). 
 
 We recall the definition from \cite[\textbf{Definition 2.0.1}]{riley2018categories}
 
@@ -595,11 +595,10 @@ We recall the definition from \cite[\textbf{Definition 2.0.1}]{riley2018categori
    $l: (S, T) \rightarrowtail (A, B)$ is an element of the set $\int^{\Theta:\C} \C(S, \Theta \otimes A) \times \C(\Theta \otimes R, T)$
 \end{definition}
 
-Treating $\C$ as $\textbf{Set}$ reduces this definition to the concrete lenses introduced in the previous section.
+Treating $\C$ as $\mathbf{Set}$ produces the definition of the concrete lenses introduced in the previous section. 
 Explicitly, we can treat this set as the pairs of functions $u: S \rightarrow \Theta \otimes A$ and $v: \Theta \otimes B \rightarrow T$
 quotiented by the equivalence relations given by $((f \otimes A)u, v) ~ (u, v(f \otimes B))$ for any 
-$f: \Theta \rightarrow \Gamma$, $u: S \rightarrow \Theta \otimes A$ and $v: \Gamma \otimes B \rightarrow T$. Indeed, 
-
+$f: \Theta \rightarrow \Gamma$, $u: S \rightarrow \Theta \otimes A$ and $v: \Gamma \otimes B \rightarrow T$. 
 
 Effectful lenses have been studied in \cite{xie2025effectful,abou2016reflections}, but \cite[Section 4.9]{riley2018categories} implements some desired effectul properties as "effectful 
 optics" using the coends as defined here with the appropriate monad (i.e. Writer, State). Since the specific application we 
@@ -613,7 +612,7 @@ used in the \textit{open-game-engine} for wrapping user-defined types, specifica
 the constructor \ensuremath{\color{datatype}\texttt{type}\;\Conid{Stochastic}\mathbin{::}\Conid{T}\;\Conid{Double}}, where \ensuremath{\Conid{T}} is the probability monad 
 given by the module \ensuremath{\Conid{\Conid{Numeric}.\Conid{Probability}.Distribution}}.  
 
-A quick way of deriving a function $S \rightarrow \Prob(A)$ from $S \rightarrow A$ is 
+A way of deriving a function $S \rightarrow \Prob(A)$ from $S \rightarrow A$ is 
 to consider the Kleisli category of the finite distribution monad $\Prob$. 
 Working in the Kleisli category is handy for composing these morphisms without having 
 to open up the monad, but the most common use for our purposes is writing Kleisli arrows of the distribution monad
@@ -625,12 +624,10 @@ to write behavioural strategies for our models. Generally speaking, these will f
 \ColumnHook
 \end{hscode}\resethooks
 
-Using this Kleisli category over the finite distribution monad as the category of interest in \ref{Definition:Coends}, we have a way of keeping track of 
-correlations (or \textit{marginals} from probability theory, or \textit{residuals} 
-defined over indirectly observed variables (which we call \textit{unobservables}). 
+Using this Kleisli category over the finite distribution monad as the category of interest in Definition \ref{Definition:Coends}, we have a way of keeping track of 
+joint probability distributions between \textit{unobservables} and directly observable inputs. 
 Using $\Theta$ as a type variable to 
-store this information to be used later, we can directly express Bayesian updating for agents. For example, 
-this $\Theta$ may be some prior distribution representing an agent's belief of their type. 
+store priors as information to be used later, we can directly express Bayesian updating for agents. \footnote{See \href{Bruno Gavaranovic's blog post}{https://www.brunogavranovic.com/posts/2022-02-10-optics-vs-lenses-operationally.html} for an explanation for how composition works with a nice graphical simulation of how this "internal state" works} 
 
 For the purposes of the \textit{open-game-engine}, the implementation that is used of coend lenses ties this definition together 
 as a data type:
@@ -655,11 +652,11 @@ as a data type:
 \ColumnHook
 \end{hscode}\resethooks
 
-Note the implicit \ensuremath{\Varid{forall}\;\Varid{z}} as part of this definition, which represents $\Theta$. 
+Note the implicit quantification \ensuremath{\Varid{forall}\;\Varid{z}} as part of this data type.
 
 Furthermore, $\KlD$ is a symmetric monoidal category and can be used as the underlying category 
-of a coend lense in \ref{Definition:Coends}. By \cite[Proposition 2.0.3]{riley2018categories}, there is a symmetric monoidal category 
-of coend lenses where objects are pairs of sets, and morphisms are coend lenses. Composition and the tensor product is described by the \ensuremath{\Conid{Optic}} typeclass:
+of a coend lens in \ref{Definition:Coends}. By \cite[Proposition 2.0.3]{riley2018categories}, there is a symmetric monoidal category 
+of coend lenses $\mathbf{Optic}_{\KlD}$ where objects are pairs of sets, and morphisms are coend lenses. Composition and the tensor product is described by the \ensuremath{\Conid{Optic}} typeclass:
 
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -678,15 +675,32 @@ of coend lenses where objects are pairs of sets, and morphisms are coend lenses.
 \ColumnHook
 \end{hscode}\resethooks
 
-which we can parameterize with \ensuremath{\Conid{StochasticOptic}} to get our desired category of "stochastic optics." 
+which we can parameterize with the datatype \ensuremath{\Conid{StochasticOptic}} to get our desired operations for "stochastic optics," located at \ensuremath{\Conid{\Conid{OpenGames}.\Conid{Engine}.OpticClass}}. 
+
+Now that we've set our formalization for stochastic optics, we can introduce the  interpretation for these morphisms of $\mathbf{Optic}_{\KlD}$, which describes an \textit{open play} according to a supplied strategy. Given a strategy that assigns an outcome of type \ensuremath{\Conid{Stochastic}\;\Varid{a}} representing probability distribution over actions for each observation of type \ensuremath{\Varid{s}}, we generate a stochastic optic that is "preloaded" with the behaviour of this strategy. This optic \ensuremath{\Conid{StochasticOptic}\;\Varid{s}\;\Varid{t}\;\Varid{a}\;\Varid{b}} is open in the sense that it's ready to respond by choosing an action according to its local \textit{context} \footnote{see the following section, \ref{sec:contexts}}. So we can describe a family of optics indexed by behavioural strategies using a function:
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Varid{play}\mathbin{:}\Conid{Kleisli}\;\Conid{Stochastic}\;\Varid{s}\;\Varid{a}\to \Conid{StochasticOptic}\;\Varid{s}\;\Varid{t}\;\Varid{a}\;\Varid{b}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
+
+
+\subsubsection{Contexts}\label{sec:contexts}
+
+Contexts of open games are just as important as open games themselves, precisely because they are the arena for modellers to parameterize and "run" the constructed games. Having the categorical definition for open games allows for a well-defined (and well-typed) context, and much of the work of the modeller goes into designing this context to understand how a game behaves given certain constraints. 
+
+In the string-diagrammatic calculus of open games, a context is given by two components of a coend diagram, with (1) a triangle on the far-left side of the diagram and (2) a triangle on the far-right side of the diagram that essentially "close" our games. 
+
 
 
 \subsubsection{Open games}
-Now we can use the previous sections and build more explicitly on the ideas from \ref{note:hint}.
+Now we can use the previous sections and build more explicitly on the ideas alluded to in Section \ref{note:hint}.
 By \cite[Theorem 3.10.2]{BayesianOpenGames}, a category of Bayesian open games exists where objects are pairs 
 of objects in the Kleisli category of the distribution monad $\mathbf{Kl}(\textbf{D})$ and morphisms are equivalence classes of open games.
-f
-The intuition (best described in \cite[Section 2.1.1]{HedgesThesis}) is to begin thinking 
+
+The intuition (as described in \cite[Section 2.1.1]{HedgesThesis}) is to begin thinking 
 of an open game as a process, open to and interacting with its local environment through its inputs 
 and outputs. The most common representation of open games is a box (representing the process or morphism)
 with two incoming and two outgoing wires (representing objects of the category).
@@ -698,16 +712,25 @@ with two incoming and two outgoing wires (representing objects of the category).
 	
 \end{figure}
 
+Putting this all together, we can refine the play function that takes a strategy as input, and returns a coend lens giving the execution of that strategy and a continuation giving some real-valued payoff. 
 
-\begin{Definition} (Concrete open game, from \cite{BayesianOpenGames}) Let $X$, $S$, $Y$, $R$ be sets. Then a concrete open game $G: (X,S) \rightarrow (Y,R)$ is given by: 
+\begin{Definition} (Bayesian agent, from \cite[Definition 4.4.1]{BayesianOpenGames}) Let $S$, $A$ be sets. Then a Bayesian agent $G: (S,I) \rightarrow (A,B)$ is given by: 
 	\begin{enumerate}
-		\item A set of strategy profiles $\Sigma$
+		\item A set of strategy profiles $\Sigma: X -> \Prob(A)$
 		\item A play function $P : \Sigma \rightarrow \mathbf{CL}((X,S), (Y,R))$
 		\item A best response function $B: X \times (Y \rightarrow R) \rightarrow Rel(\Sigma)$
 	\end{enumerate}
 
 \end{Definition}
 
+A Bayesian agent corresponds to the open game given by the function \ensuremath{\Varid{dependentDecision}}, which restricts 
+
+By precomposing a game that makes an observation with a copy operation (\cite[Definition 4.4.3]{BayesianOpenGames}), we give the rest of the model access to this observation (and its distribution). 
+
+For example, 
+this $\Theta$ may be some prior distribution representing an agent's belief of their type. Given a prior joint distribution $\Prob(\Theta \times S)$ where $\Theta$ is the unobservables and $S$ is the observable states, the agent can update this prior to a posterior and maximize their expected utility. 
+
+This maximization is baked into the function \ensuremath{\Varid{dependentDecision}}, which generates an open game of a particular type. 
 Starting to think of each of these open games as programs, an open game has four types associated with it. 
 Here variables $X, Y$ are flowing covariantly (intuitively, flowing forwards) and $S, R$ are flowing contravariantly (which represent the feedback of information). Specifically: 
 \begin{itemize}
@@ -775,10 +798,6 @@ thus such a strategy would be a function of type $X \rightarrow Y$.
    \item $X \times R \rightarrow S$
 \end{enumerate}
 
-So what does this lense object represent? As soon as we supply our open system 
-with a strategy, the resultant lense describes the behaviour of the system 
-
-
 Breaking down the best response function, note othe domain $X \times \rightarrow$
 
 \begin{definition}The category of open games, $\mathbf{Open}$
@@ -798,6 +817,9 @@ As we see in the corresponding string diagram, the forward (or covariant) arrows
 Thus one way of "doing" compositional game theory can be done by drawing a string diagram to represent open games. 
 
 As outlined in \cite{tan2022a} for designing institutions with a software 
+
+\subsubsection{Contexts}
+
 
 \section{Modularity in game theoretic cybersecurity modelling}
 \label{sec:1}

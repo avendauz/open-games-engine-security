@@ -144,7 +144,7 @@ data StochasticContext s t a b where
 
 instance Precontext StochasticContext where
   void = StochasticContext (return ((), ())) (\() () -> return ())
-
+ 
 instance Context StochasticContext StochasticOptic where
   cmap (StochasticOptic v1 u1) (StochasticOptic v2 u2) (StochasticContext h k)
             = let h' = do {(z, s) <- h; (_, s') <- v1 s; return (z, s')}
