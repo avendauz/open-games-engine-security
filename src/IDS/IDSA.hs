@@ -41,6 +41,7 @@ distributionUser =
   f . priorDistributionAttacker
   where f probAttacker = distFromList [(Attacker, probAttacker), (User, 1 - probAttacker)]
 
+actionSpaceDefender :: b -> [AggregatorMove]
 actionSpaceDefender = const [Open, Close]
 actionSpaceAttacker = const [Access, DoesNotAccess]
 

@@ -1166,41 +1166,6 @@
       \field{title}{Categories of optics}
       \field{year}{2018}
     \endentry
-    \entry{tan2022a}{thesis}{}{}
-      \name{author}{2}{}{%
-        {{hash=2ca377c2911fee6d6da5222856cd5fcc}{%
-           family={Tan},
-           familyi={T\bibinitperiod},
-           given={JZ},
-           giveni={J\bibinitperiod}}}%
-        {{hash=9fe5cdf69e7c21fb4768948b13101d02}{%
-           family={Abramsky},
-           familyi={A\bibinitperiod},
-           given={S},
-           giveni={S\bibinitperiod}}}%
-      }
-      \list{institution}{1}{%
-        {University of Oxford}%
-      }
-      \list{publisher}{1}{%
-        {University of Oxford}%
-      }
-      \strng{namehash}{6c736532f1d244bc9151db9db96ecb25}
-      \strng{fullhash}{6c736532f1d244bc9151db9db96ecb25}
-      \strng{fullhashraw}{6c736532f1d244bc9151db9db96ecb25}
-      \strng{bibnamehash}{6c736532f1d244bc9151db9db96ecb25}
-      \strng{authorbibnamehash}{6c736532f1d244bc9151db9db96ecb25}
-      \strng{authornamehash}{6c736532f1d244bc9151db9db96ecb25}
-      \strng{authorfullhash}{6c736532f1d244bc9151db9db96ecb25}
-      \strng{authorfullhashraw}{6c736532f1d244bc9151db9db96ecb25}
-      \field{sortinit}{T}
-      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{Institutions under composition}
-      \field{type}{phdthesis}
-      \field{year}{2022}
-    \endentry
     \entry{wellman2006methods}{inproceedings}{}{}
       \name{author}{1}{}{%
         {{hash=1b765f5dca25c61f99b31403087f0586}{%

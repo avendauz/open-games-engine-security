@@ -3,7 +3,6 @@
 %include polycode.fmt
 \usepackage{haskell}
 \usepackage{amsmath}
-\newtheorem{Definition}{Definition}
 \usepackage{listings}
 \usepackage{strath-dissertation}
 \usepackage{setspace}
@@ -12,24 +11,45 @@
 \usepackage{lipsum} % For demonstration only.
 \usepackage[backend=biber, style=numeric-comp]{biblatex}
 \usepackage{xcolor}
+\usepackage{etoolbox}
 \addbibresource{bibliography.bib}
 
 % MACROS 
 \newcommand{\C}{\mathcal{C}}
 \newcommand{\Optic}{\mathbf{Optic}_{\C}}
-\newcommand{\Set}{\mathcal{Set}}
+\newcommand{\Set}{\mathbf{Set}}
 \newcommand{\Prob}{\mathbf{D}}
 \newcommand{\KlD}{\mathbf{Kl}(\Prob)}
-
+\newcommand{\StochOpt}{\mathbf{Optic}_{\KlD}}
 % lhs2TeX colours
 \definecolor{funcColor}{HTML}{5E2D91}
 \definecolor{typeColor}{HTML}{000080}
 \definecolor{datatype}{RGB}{196, 6, 11}
-\renewcommand{\Conid}[1]{{\color{funcColor}\texttt{#1}}}
-\renewcommand{\Varid}[1]{{\color{typeColor}\texttt{#1}}}
-%subst keyword a = "\color{datatype}\texttt{"a"}"
+\renewcommand{\Conid}[1]{{\color{funcColor}{#1}}}
+\renewcommand{\Varid}[1]{{\color{typeColor}{#1}}}
+
+
+% \renewcommand{\Conid}[1]{{\color{funcColor}\texttt{#1}}}
+% \renewcommand{\Varid}[1]{{\color{typeColor}\texttt{#1}}}
+%subst keyword a = "\mathbf{"a"}"
+%format \_ = "\lambda\_"
 \newcommand{\colorOp}[1]{\textcolor{orange!80!black}{\texttt{#1}}}
 
+
+\usepackage{mdframed}
+\mdfsetup{
+    skipabove=20pt,   % Space between the previous paragraph and the box
+    skipbelow=20pt,   % Space between the box and the following paragraph
+}
+\newtheorem{Definition}{Definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}
+\newtheorem{example}{Example}
+
+% \AtBeginEnvironment{example}{
+%   \renewcommand{\Conid}[1]{{\color{funcColor}\texttt{#1}}}
+%   \renewcommand{\Varid}[1]{{\color{typeColor}\texttt{#1}}}
+% }
 
 % 
 %--------------------------------
@@ -38,8 +58,7 @@
 \newcommand{\degreename}{MPhil}
 \newcommand{\coursename}{Computer and Information Sciences}
 \newcommand{\deptname}{Computer and Information Sciences}
-\newtheorem{definition}{Definition}[section]
-\newtheorem{theorem}{Theorem}
+
 \begin{document}
 
 %--------------------------------
