@@ -21,7 +21,7 @@ import OpenGames.Engine.Engine hiding (StochasticStatefulOptic
                                       )
 
 totalGameStrategies = const $ visitorStrategy ::- alwaysOpenStrategy ::- Nil
-totalHPGameStrategies = const $ visitorStrategy ::- hpDefenderStrategy ::- Nil
+totalHPGameStrategies = const $ visitorStrategyMixed 0.5 ::- hpDefenderStrategy ::- Nil
 totalGameStrategiesMixed openProb = visitorStrategy ::- defenderStrategyMixed openProb ::- Nil
 
 fixedDefenderStrat prob = visitorStrategyMixed prob ::- alwaysOpenStrategy ::- Nil

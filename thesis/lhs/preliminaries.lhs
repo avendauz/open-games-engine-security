@@ -170,7 +170,7 @@ in a given environment, where:
    \item Relays information back to the environment of type $B$
 \end{itemize}
 Thus given (1) a strategy $S \rightarrow A$, (2) an observation of type $S$, and (3) some continuation or feedback 
-providing some payoff of type $B$, we will be able to describe what this agent would do. 
+providing some payoff of type $B$, we will be able to describe what this strategic agent would do to maximize its expected payoff.
 
 Considering the behaviour of agents using these lenses is enough to start constructing a category 
 of open games that can model normal-form games \footnote{(see \cite{HedgesThesis,hedges2017morphismsopengames,BayesianOpenGames} to see how 
@@ -299,7 +299,7 @@ class Optic o where
   (&&&&) :: o s1 t1 a1 b1 -> o s2 t2 a2 b2 -> o (s1, s2) (t1, t2) (a1, a2) (b1, b2)
 \end{code}
 
-which we can parameterize with the datatype |StochasticOptic| to get our desired operations for "stochastic optics," located in |OpenGames.Engine.OpticClass|. Optic sequential and parallel composition will form the basis of how agent's game-theoretic behaviour compose, with extra details about how to interpret their local contexts given in the next section. We'll also use this opportunity to show how these optics plug together using the type parameters. First, note the type of |(>>>>)| enforces that the output type |a| and the contravariant input type |b| of the first optic correspond to the input type and the contravariant output type of the second optic. Similarly, the type of |(&&&&)| enforces that each of the input and output types are tupled together. Most IDEs will give a pop-up corresponding to the \textbf{ghc} typechecker to help a user line these types up, or a direct error message will be given when trying to compile in \textbf{ghci}.  
+which we can parameterize with the datatype |StochasticOptic| to get our desired operations for "stochastic optics," located in |OpenGames.Engine.OpticClass|. Optic sequential and parallel composition will form the basis of how agent's game-theoretic behaviour compose, with extra details about how to interpret their local contexts given in the next section. We'll also use this opportunity to show how these optics plug together using the type parameters. First, note the type of |(>>>>)| enforces that the output type |a| and the contravariant input type |b| of the first optic correspond to the input type and the contravariant output type of the second optic. Similarly, the type of |(&&&&)| enforces that each of the input and output types are tupled together. Most IDEs will give a pop-up corresponding to the \textbf{ghc} typechecker to help a user line these types up when usingthese operations, or a direct error message will be given when trying to compile in \textbf{ghci}.  
 
 % \begin{mdframed}
 
@@ -314,8 +314,8 @@ which we can parameterize with the datatype |StochasticOptic| to get our desired
 
 
 
-\subsubsection{Open games}
-We'll start with the formal definition of general open games from \cite[Definition 3.6.1]{BayesianOpenGames} and then demonstrate each of its components. 
+\subsubsection{Play function of open games}
+Now that we've set our formalization for stochastic optics, we can introduce the  interpretation for these morphisms of $\mathbf{Optic}_{\KlD}$, which describes an \textit{open play} according to a supplied strategy. This open play along with a best-response relation over the possible strategies will be the components of an open game. We'll start with the formal definition of general open games from \cite[Definition 3.6.1]{BayesianOpenGames} and then demonstrate each of its components. 
 
 \begin{definition}[Open game]
    An open game is comprised of the following data, with $(S,T)$ and $(A,B)$ objects of $\StochOpt((S,T), (A,B))$: 
@@ -326,7 +326,7 @@ We'll start with the formal definition of general open games from \cite[Definiti
    \end{enumerate}
 \end{definition}
 
-Now that we've set our formalization for stochastic optics, we can introduce the  interpretation for these morphisms of $\mathbf{Optic}_{\KlD}$, which describes an \textit{open play} according to a supplied strategy. Given a strategy that assigns an outcome of type |Stochastic a| representing probability distribution over actions for each observation of type |s|, we generate a stochastic optic that is "preloaded" with the behaviour of this strategy. This optic |StochasticOptic s t a b| is open in the sense that it's ready to respond by choosing an action according to its local \textit{context} \footnote{see the following section, \ref{sec:contexts}}. So we can describe a family of optics indexed by behavioural strategies using the Haskell function:
+Given a strategy from the set of strategies from (1) that assigns an outcome of type |Stochastic a| representing probability distribution over actions for each observation of type |s|, we generate a stochastic optic that is "preloaded" with the behaviour of this strategy. This optic |StochasticOptic s t a b| is open in the sense that it's ready to respond by choosing an action according to its local \textit{context} \footnote{see the following section, \ref{sec:contexts}}. So we can describe a family of optics indexed by behavioural strategies using the Haskell function:
 \begin{code}
 play: Kleisli Stochastic s a -> StochasticOptic s () a Double
 play strategy = StochasticOptic 
@@ -336,7 +336,12 @@ play strategy = StochasticOptic
 
 This construction doesn't necessitate a strategic play, and can be used to model computations (processes with no preferences, as seen in \hyperref[example:forward]{Example 4}. This implementation follows from the play function given for \textit{Bayesian agent} in \cite[Definition 4.4.1]{BayesianOpenGames}, which makes an observation, computes an action according to the given strategy, and throws away any real-valued payoff propagated back to it. 
 
-Of the many definitions of open games, we've chosen to follow more closely to the definition for the best response function which takes a strategy and a context to produce the strategies that are in equilibrium. With the following data type, we've reached the highest level for which modellers would be interacting with the open-game-engine when conducting experiments:
+\subsubsection{Best-response of open games}
+The final component in the definition of the open games is the best-response function, or the best-response relation. This is where the utility-maximization characterization of open games is encoded. Similarly defined according to the concept of best-response functions in classical game theory, the best-response function gives a strategy that a player would be incentivezed to follow given that every other player follows another strategy. Given a best-response function, a solution concept such as Nash equilibrium would be fixpoints of this function. Departing from the classical game-theoretic interpretation, we can consider these best-response relations relative to \textit{history} and an abstract \textit{continuation}.
+
+The open-game-engine won't give a direct 
+
+With the following data type, we've reached the highest level for which modellers would be interacting with the open-game-engine when simulating and evaluating their models:  
 
 \begin{minipage}\textwidth
    \begin{code}
@@ -348,6 +353,10 @@ Of the many definitions of open games, we've chosen to follow more closely to th
 \end{minipage}
 
 \begin{mdframed}
+
+
+The following 
+
 \begin{example}[Nature open game]\label{example:nature}
 The open-game-engine provides an operator |nature| for instantiating an open game according to a user-defined random draw. Nature corresponds to the terminology used in classical extensive-form Bayesian games, where the first node of the tree is the Nature player providing a type. 
 
@@ -369,24 +378,18 @@ natureUser =
 
 \subsubsection{The context aside}\label{sec:contexts}
 
-So far we alluded to the idea of \textit{context} in open games. Contexts have taken many different forms in the literature, from more bare-bones necessitation of a \textit{history/cohistory} pair, to more formally using a \textit{context functor} to define contexts as elements of $\mathbb{C}((S,T),(A,B))$n \cite{BayesianOpenGames}. 
+So far we alluded to the idea of \textit{context} in open games. Contexts have taken many different forms in the literature, from more bare-bones necessitation of a \textit{history/cohistory} and \textit{continuation} pair, to more formally using a \textit{context functor} to define contexts as elements of $\mathbb{C}((S,T),(A,B))$. 
 
 
 % Ideally, a modeller would only need to procedurally type games starting with |OpenGame StochasticOptic StochasticContext ... | and use |void| to , but this works against separation-of-concerns, when in fact the 
 
 % Contexts form the arena for modellers to eventually parameterize and "run" the . Having the categorical definition for open games allows for a well-defined (and well-typed) context, and much of the work of the modeller goes into designing this context to understand how a game behaves given certain constraints. 
 
+The name of the open game is to describe rational agents interacting with some environment. Thinking about Nash equilibrium in classical game theory, in equilibrium players are not incentivized to change their action assuming they know the other players' strategy. In the field of view of players, we act according to how we expect other players to act. By knowing other player's |play| function, we have a characterization of describing this pre/post behaviour of other players, which becomes part of the player's field of vision, or \textit{local context}. 
 
+In the string-diagrammatic calculus of open games, a context is given by two components of a coend diagram, with (1) a triangle on the far-left side of the diagram and (2) a triangle on the far-right side of the diagram that essentially "close" our games. The graphical calculus gives an intuitive "hole" that describes this player's position, and the rest of the boxes to form the local context for that player.
 
-The name of the game is to describe rational behaviour interacting with an environment. And like in classical-game theory, players make assumptions of other players making utility-maximizing decisions. In the field of view of players, we act according to how we expect other players to act. By knowing other player's |play| function, we have a characterization of describing this pre/post behaviour of other players, which becomes part of the player's field of vision, or \textit{local context}. 
-
-In the string-diagrammatic calculus of open games, a context is given by two components of a coend diagram, with (1) a triangle on the far-left side of the diagram and (2) a triangle on the far-right side of the diagram that essentially "close" our games. The graphical calculus gives an intuitive "hole" that describes this player's position in the flow of information, and explicitly the play of 
-
-Expectedly, the open-game-engine isn't as 
-
-
-
-\cite{BayesianOpenGames} . In practice for modelling, the most useful characterization of this context will be through the datatype: 
+In practice for the open-game-engine, the  characterization of contexts is the datatype: 
 
 \begin{code}
 data StochasticContext s t a b where
@@ -394,12 +397,22 @@ data StochasticContext s t a b where
       -> StochasticContext s t a b
 \end{code}
 
-which represents a history/cohistory pair of functions. A typical usage can be simplified 
+which represents the aforementioned history/cohistory and continuation pair of functions to close an open game. The first parameter for the data constructor represents the initial state to input into a game representing the computations conducted before the open game, and the second parameter describes how to transform outputs of a game into a real-valued payoff or any feedback information from other games as part of that context. 
 
 
-Closing a game requires an initial state and a continuation  by payoff functions. 
 
-Rather than inlining payoffs, we take the approach of keeping to the components separately and defining a context with the payoffs.
+\begin{mdframed}
+\begin{example}[Testing a computation using a context]\label{example:context}
+By 
+
+\begin{code}
+
+\end{code}
+\end{example}
+\end{mdframed}
+
+
+
 
 \subsubsection{The category of open games and operations}
 
@@ -422,13 +435,14 @@ userGame:: OpenGame
   ((), Double)
 userGame = 
    natureUser >>> copyGame >>> 
-   (deleteGame >>> (idGame &&& dependentDecision "Bob" [Heads,Tails]))
+   (deleteGame >>> (idGame &&& dependentDecision "Bob" [Normal,Adversary]))
 \end{code}
-Note that the tensor product of open games concatenates the resultant types into tuples. This eventually means in order to close a game using a tensor produce, we could be working with games that involve types like |((),())| which becomes unwieldy to work with, so we would have to precompose with |deleteGame| which flattens these tuples in the contravariant direction. Otherwise, we can read this expression as 
+Note that the tensor product of open games concatenates the resultant types into tuples. This eventually means in order to close a game using a tensor produce, we could be working with games that involve types like |((),())| which becomes unwieldy to work with, so we would have to precompose with |deleteGame| which flattens these tuples in the contravariant direction. Otherwise, we can read this expression as a guessing game (like a matching pennies game) where Bob needs to decide if it's encountering an adversary or or a normal user.
 \begin{enumerate}
-   \item Nature draws a private state 
+   \item The \textit{Nature} atom draws a type, either Normal or Adversary which is not directly observable by Bob 
 \end{enumerate}
 
+Reading this equationally is not as clear to give an interpretation. The next layer to enhance the understandability of this formula is through the DSL, which allows direct wiring of each of these games as code blocks.
 
 The most important function for modellers to use that bakes in Bayesian updating and maximization of the expected payoff after updating their belief is the |dependentDecision| function which implements the selection function given in \cite{BayesianOpenGames}[Definition 4.4.1] for Bayesian agents. 
 
@@ -473,36 +487,68 @@ For sequential games, a strategy would typically involve choosing an action in r
 thus such a strategy would be a function of type $X \rightarrow Y$.
 
 \subsubsection{Reading the DSL}
-Rather than constructing games using the aforementioned functions, we can use a DSL that compiles to Haskell. The following example 
-
+Rather than constructing games using the aforementioned functions, we can use a DSL that compiles to Haskell. In this section, we'll explain the DSL syntax. We will use the following example of the prisoner's dilemma game.
+\begin{mdframed}
+\begin{example}[Prisoner's Dilemma in the DSL]\label{example:prisoner}
+The following example is an open game representation of the well-known Prisoner's Dilemma. For simultaneous play, we would consider the tensor of two utility-maximizing agents each represented by an open game generated by the |dependentDecision| function. In the DSl, we can stack code blocks representing these agents, and pipe their fields together accordingly. The input fields remain blank because neither player makes any observations prior to making their move. Two variables are declared in the outputs fields, |decisionPlayer1| and |decisionPlayer2|, which makes these values accessible to other games. Although the player2 open game is below player1, the Haskell expression in the returns fields have access to both variables |decisionPlayer1| and |decisionPlayer2| to calculate the payoff that each agent recieves. 
 \begin{code}
-openGame exoVar = [opengame|
-   inputs : ;
-   feedback: ;
-   :----------------------------:
-
-   inputs:;
-   feedback:;
-   operation: dependentDecision;
-   outputs:;
-   returns: ;
+myOpenGame exoVar1 exoVar2 exoVar3 ... = [opengame|
+   inputs    :      ;
+   feedback  :      ;
 
    :----------------------------:
+   inputs    :      ;
+   feedback  :      ;
+   operation : dependentDecision "player1" (const [Cooperate,Defect]);
+   outputs   : decisionPlayer1 ;
+   returns   : prisonersDilemmaMatrix decisionPlayer1 decisionPlayer2 ;
 
-   outputs: ;
-   returns:;
+   inputs    :      ;
+   feedback  :      ;
+   operation : dependentDecision "player2" (const [Cooperate,Defect]);
+   outputs   : decisionPlayer2 ;
+   returns   : prisonersDilemmaMatrix decisionPlayer2 decisionPlayer1 ;
+
+   :----------------------------:
+
+   outputs   :      ;
+   returns   :      ;
 
  |]
 
 \end{code}
+   \end{example}
+\end{mdframed}
 
-We treat any parameters such as |exoVar| as exogenous parameters introduced outside the game.
+
+Here, |[opengame|...|]| is TemplateHaskell's quotation syntax, which returns the |OpenGame| data type. The syntax is divided into two sections, (1) the external components and (2) the internals of the open game. The external components are comprised of the two fields |inputs| and |feedback| above the delimiter |:----:|, and |outputs| and |returns| at the bottom. As introduced before in the formal definition of open games, these fields correspond to the pairs of objects corresponding to the type of the open game, with |inputs| and |feedback| as the pair $(S,T)$ amd |outputs| and |returns| as $(A, B)$. These fields designate the variables available for use, and the values produced by the internals of the game. Note that user-declared variables are in scope for the internals of the game and correspond with the |inputs| and |returns| fields. On the other hand, the remaining two fields designate the values that will be generated by the internals of the game to be passed to other games. As in the above example, the variables declared in the outputs field can be used in any of the inputs or returns fields.
 
 
+We treat any parameters such as |exoVar| as exogenous parameters introduced outside the game. This ends up being an appropriate place to pipeline the infrastructure required to characterize payoff functions, parameterize strategies, and other techniques in order to keep the DSL syntax generic. See chapter 2 for the infrastructure and coding patterns used to best utilize this concept.  
 
+Threading these variables together through these fields is up to the discretion of the modeller. An open game can completely change with a small change, for example puting |decisionPlayer1| into the inputs field of the |player2| code block. In this representation, |player1| moves first and |player2| will be able to observe the output. The compiler will be responsible for making sure the types line up accordingly, but matching the modeller's intention to what's being written as an open game is the modeller's responsibility.
+
+There is some assistance from the type-checker, however, to make sure that dependencies are consistent when making changes like this. By exposing the first player's decision to the second, the model execution code should fail to compile because now the strategy of player 2 is dependent on this variable. The type-checker will follow a top-down ordering when typing, so when supplying a list of strategies to run this game, this should be a list ordered left-to-right lining up with the code blocks. We can read this from the type signature for each game, where the |`[]| constructor in the type parameters exactly corresponds with the strategies the game is expecting for each of the code blocks. We can also see that the final four parameters are |()|, which designates a closed game. 
+\begin{minipage}\textwidth
+\begin{code}
+myOpenGame :: OpenGame
+  StochasticOptic
+  StochasticContext
+  `[Kleisli Stochastic () PrisonerMove, 
+   Kleisli Stochastic () PrisonerMove]
+  `[[DiagnosticInfoBayesian () PrisonerMove], 
+   [DiagnosticInfoBayesian () PrisonerMove]]
+  ()
+  ()
+  ()
+  ()
+\end{code}
+   
+\end{minipage}
 
 \subsubsection{Custom types and specifiying strategies}
 The \textit{behavioural strategies} of type |Kleisli Stochastic s a| have already been described in a previous section, but we made no indication for what |s| and |a| had to be. The 
-
+\subsubsection{Evaluation and reading analytics}
+As mentioned previously, Nash equilibrium corresponds to fixpoints of the best-response function of games. Correspondingly in the typical engine output, modellers can read an optimal move and the strategic move and the corresponding expected payoffs for 
 \subsubsection{Debugging}
 We make mistakes or make independent changes to one function which may cause an entire code block not to compile because types are not consistent. In the case of open games, tracking four inputs and outputs for each building block can be cumbersome. Fortunately, Haskell's typechecker and 

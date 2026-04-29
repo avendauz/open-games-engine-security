@@ -610,7 +610,7 @@ in a given environment, where:
    \item Relays information back to the environment of type $B$
 \end{itemize}
 Thus given (1) a strategy $S \rightarrow A$, (2) an observation of type $S$, and (3) some continuation or feedback 
-providing some payoff of type $B$, we will be able to describe what this agent would do. 
+providing some payoff of type $B$, we will be able to describe what this strategic agent would do to maximize its expected payoff.
 
 Considering the behaviour of agents using these lenses is enough to start constructing a category 
 of open games that can model normal-form games \footnote{(see \cite{HedgesThesis,hedges2017morphismsopengames,BayesianOpenGames} to see how 
@@ -794,7 +794,7 @@ of coend lenses $\mathbf{Optic}_{\KlD}$ where objects are pairs of sets, and mor
 \ColumnHook
 \end{hscode}\resethooks
 
-which we can parameterize with the datatype \ensuremath{\Conid{StochasticOptic}} to get our desired operations for "stochastic optics," located in \ensuremath{\Conid{\Conid{OpenGames}.\Conid{Engine}.OpticClass}}. Optic sequential and parallel composition will form the basis of how agent's game-theoretic behaviour compose, with extra details about how to interpret their local contexts given in the next section. We'll also use this opportunity to show how these optics plug together using the type parameters. First, note the type of \ensuremath{(\mathbin{>>>>})} enforces that the output type \ensuremath{\Varid{a}} and the contravariant input type \ensuremath{\Varid{b}} of the first optic correspond to the input type and the contravariant output type of the second optic. Similarly, the type of \ensuremath{(\mathbin{\&\&\&\&})} enforces that each of the input and output types are tupled together. Most IDEs will give a pop-up corresponding to the \textbf{ghc} typechecker to help a user line these types up, or a direct error message will be given when trying to compile in \textbf{ghci}.  
+which we can parameterize with the datatype \ensuremath{\Conid{StochasticOptic}} to get our desired operations for "stochastic optics," located in \ensuremath{\Conid{\Conid{OpenGames}.\Conid{Engine}.OpticClass}}. Optic sequential and parallel composition will form the basis of how agent's game-theoretic behaviour compose, with extra details about how to interpret their local contexts given in the next section. We'll also use this opportunity to show how these optics plug together using the type parameters. First, note the type of \ensuremath{(\mathbin{>>>>})} enforces that the output type \ensuremath{\Varid{a}} and the contravariant input type \ensuremath{\Varid{b}} of the first optic correspond to the input type and the contravariant output type of the second optic. Similarly, the type of \ensuremath{(\mathbin{\&\&\&\&})} enforces that each of the input and output types are tupled together. Most IDEs will give a pop-up corresponding to the \textbf{ghc} typechecker to help a user line these types up when usingthese operations, or a direct error message will be given when trying to compile in \textbf{ghci}.  
 
 % \begin{mdframed}
 
@@ -809,8 +809,8 @@ which we can parameterize with the datatype \ensuremath{\Conid{StochasticOptic}}
 
 
 
-\subsubsection{Open games}
-We'll start with the formal definition of general open games from \cite[Definition 3.6.1]{BayesianOpenGames} and then demonstrate each of its components. 
+\subsubsection{Play function of open games}
+Now that we've set our formalization for stochastic optics, we can introduce the  interpretation for these morphisms of $\mathbf{Optic}_{\KlD}$, which describes an \textit{open play} according to a supplied strategy. This open play along with a best-response relation over the possible strategies will be the components of an open game. We'll start with the formal definition of general open games from \cite[Definition 3.6.1]{BayesianOpenGames} and then demonstrate each of its components. 
 
 \begin{definition}[Open game]
    An open game is comprised of the following data, with $(S,T)$ and $(A,B)$ objects of $\StochOpt((S,T), (A,B))$: 
@@ -821,7 +821,7 @@ We'll start with the formal definition of general open games from \cite[Definiti
    \end{enumerate}
 \end{definition}
 
-Now that we've set our formalization for stochastic optics, we can introduce the  interpretation for these morphisms of $\mathbf{Optic}_{\KlD}$, which describes an \textit{open play} according to a supplied strategy. Given a strategy that assigns an outcome of type \ensuremath{\Conid{Stochastic}\;\Varid{a}} representing probability distribution over actions for each observation of type \ensuremath{\Varid{s}}, we generate a stochastic optic that is "preloaded" with the behaviour of this strategy. This optic \ensuremath{\Conid{StochasticOptic}\;\Varid{s}\;\Varid{t}\;\Varid{a}\;\Varid{b}} is open in the sense that it's ready to respond by choosing an action according to its local \textit{context} \footnote{see the following section, \ref{sec:contexts}}. So we can describe a family of optics indexed by behavioural strategies using the Haskell function:
+Given a strategy from the set of strategies from (1) that assigns an outcome of type \ensuremath{\Conid{Stochastic}\;\Varid{a}} representing probability distribution over actions for each observation of type \ensuremath{\Varid{s}}, we generate a stochastic optic that is "preloaded" with the behaviour of this strategy. This optic \ensuremath{\Conid{StochasticOptic}\;\Varid{s}\;\Varid{t}\;\Varid{a}\;\Varid{b}} is open in the sense that it's ready to respond by choosing an action according to its local \textit{context} \footnote{see the following section, \ref{sec:contexts}}. So we can describe a family of optics indexed by behavioural strategies using the Haskell function:
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{7}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -840,7 +840,12 @@ Now that we've set our formalization for stochastic optics, we can introduce the
 
 This construction doesn't necessitate a strategic play, and can be used to model computations (processes with no preferences, as seen in \hyperref[example:forward]{Example 4}. This implementation follows from the play function given for \textit{Bayesian agent} in \cite[Definition 4.4.1]{BayesianOpenGames}, which makes an observation, computes an action according to the given strategy, and throws away any real-valued payoff propagated back to it. 
 
-Of the many definitions of open games, we've chosen to follow more closely to the definition for the best response function which takes a strategy and a context to produce the strategies that are in equilibrium. With the following data type, we've reached the highest level for which modellers would be interacting with the open-game-engine when conducting experiments:
+\subsubsection{Best-response of open games}
+The final component in the definition of the open games is the best-response function, or the best-response relation. This is where the utility-maximization characterization of open games is encoded. Similarly defined according to the concept of best-response functions in classical game theory, the best-response function gives a strategy that a player would be incentivezed to follow given that every other player follows another strategy. Given a best-response function, a solution concept such as Nash equilibrium would be fixpoints of this function. Departing from the classical game-theoretic interpretation, we can consider these best-response relations relative to \textit{history} and an abstract \textit{continuation}.
+
+The open-game-engine won't give a direct ``````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+With the following data type, we've reached the highest level for which modellers would be interacting with the open-game-engine when simulating and evaluating their models:  
 
 \begin{minipage}\textwidth
    \begin{hscode}\SaveRestoreHook
@@ -862,6 +867,10 @@ Of the many definitions of open games, we've chosen to follow more closely to th
 \end{minipage}
 
 \begin{mdframed}
+
+
+The following 
+
 \begin{example}[Nature open game]\label{example:nature}
 The open-game-engine provides an operator \ensuremath{\Varid{nature}} for instantiating an open game according to a user-defined random draw. Nature corresponds to the terminology used in classical extensive-form Bayesian games, where the first node of the tree is the Nature player providing a type. 
 
@@ -892,24 +901,18 @@ In security games, a defender monitoring traffic cannot identify whether a user 
 
 \subsubsection{The context aside}\label{sec:contexts}
 
-So far we alluded to the idea of \textit{context} in open games. Contexts have taken many different forms in the literature, from more bare-bones necessitation of a \textit{history/cohistory} pair, to more formally using a \textit{context functor} to define contexts as elements of $\mathbb{C}((S,T),(A,B))$n \cite{BayesianOpenGames}. 
+So far we alluded to the idea of \textit{context} in open games. Contexts have taken many different forms in the literature, from more bare-bones necessitation of a \textit{history/cohistory} and \textit{continuation} pair, to more formally using a \textit{context functor} to define contexts as elements of $\mathbb{C}((S,T),(A,B))$. 
 
 
 % Ideally, a modeller would only need to procedurally type games starting with |OpenGame StochasticOptic StochasticContext ... | and use |void| to , but this works against separation-of-concerns, when in fact the 
 
 % Contexts form the arena for modellers to eventually parameterize and "run" the . Having the categorical definition for open games allows for a well-defined (and well-typed) context, and much of the work of the modeller goes into designing this context to understand how a game behaves given certain constraints. 
 
+The name of the open game is to describe rational agents interacting with some environment. Thinking about Nash equilibrium in classical game theory, in equilibrium players are not incentivized to change their action assuming they know the other players' strategy. In the field of view of players, we act according to how we expect other players to act. By knowing other player's \ensuremath{\Varid{play}} function, we have a characterization of describing this pre/post behaviour of other players, which becomes part of the player's field of vision, or \textit{local context}. 
 
+In the string-diagrammatic calculus of open games, a context is given by two components of a coend diagram, with (1) a triangle on the far-left side of the diagram and (2) a triangle on the far-right side of the diagram that essentially "close" our games. The graphical calculus gives an intuitive "hole" that describes this player's position, and the rest of the boxes to form the local context for that player.
 
-The name of the game is to describe rational behaviour interacting with an environment. And like in classical-game theory, players make assumptions of other players making utility-maximizing decisions. In the field of view of players, we act according to how we expect other players to act. By knowing other player's \ensuremath{\Varid{play}} function, we have a characterization of describing this pre/post behaviour of other players, which becomes part of the player's field of vision, or \textit{local context}. 
-
-In the string-diagrammatic calculus of open games, a context is given by two components of a coend diagram, with (1) a triangle on the far-left side of the diagram and (2) a triangle on the far-right side of the diagram that essentially "close" our games. The graphical calculus gives an intuitive "hole" that describes this player's position in the flow of information, and explicitly the play of 
-
-Expectedly, the open-game-engine isn't as 
-
-
-
-\cite{BayesianOpenGames} . In practice for modelling, the most useful characterization of this context will be through the datatype: 
+In practice for the open-game-engine, the  characterization of contexts is the datatype: 
 
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -926,12 +929,22 @@ Expectedly, the open-game-engine isn't as
 \ColumnHook
 \end{hscode}\resethooks
 
-which represents a history/cohistory pair of functions. A typical usage can be simplified 
+which represents the aforementioned history/cohistory and continuation pair of functions to close an open game. The first parameter for the data constructor represents the initial state to input into a game representing the computations conducted before the open game, and the second parameter describes how to transform outputs of a game into a real-valued payoff or any feedback information from other games as part of that context. 
 
 
-Closing a game requires an initial state and a continuation  by payoff functions. 
 
-Rather than inlining payoffs, we take the approach of keeping to the components separately and defining a context with the payoffs.
+\begin{mdframed}
+\begin{example}[Testing a computation using a context]\label{example:context}
+By 
+
+\begin{hscode}\SaveRestoreHook
+\ColumnHook
+\end{hscode}\resethooks
+\end{example}
+\end{mdframed}
+
+
+
 
 \subsubsection{The category of open games and operations}
 
@@ -979,14 +992,15 @@ Without the DSL, we can write Haskell functions for the \textit{copy} and \texti
 \>[4]{}\Varid{natureUser}\mathbin{>>>}\Varid{copyGame}\mathbin{>>>}{}\<[E]%
 \\
 \>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}(\Varid{deleteGame}\mathbin{>>>}(\Varid{idGame}\mathbin{\&\&\&}\Varid{dependentDecision}\;\text{\ttfamily \char34 Bob\char34}\;[\mskip1.5mu \Conid{Heads},\Conid{Tails}\mskip1.5mu])){}\<[E]%
+\>[4]{}(\Varid{deleteGame}\mathbin{>>>}(\Varid{idGame}\mathbin{\&\&\&}\Varid{dependentDecision}\;\text{\ttfamily \char34 Bob\char34}\;[\mskip1.5mu \Conid{Normal},\Conid{Adversary}\mskip1.5mu])){}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
-Note that the tensor product of open games concatenates the resultant types into tuples. This eventually means in order to close a game using a tensor produce, we could be working with games that involve types like \ensuremath{((),())} which becomes unwieldy to work with, so we would have to precompose with \ensuremath{\Varid{deleteGame}} which flattens these tuples in the contravariant direction. Otherwise, we can read this expression as 
+Note that the tensor product of open games concatenates the resultant types into tuples. This eventually means in order to close a game using a tensor produce, we could be working with games that involve types like \ensuremath{((),())} which becomes unwieldy to work with, so we would have to precompose with \ensuremath{\Varid{deleteGame}} which flattens these tuples in the contravariant direction. Otherwise, we can read this expression as a guessing game (like a matching pennies game) where Bob needs to decide if it's encountering an adversary or or a normal user.
 \begin{enumerate}
-   \item Nature draws a private state 
+   \item The \textit{Nature} atom draws a type, either Normal or Adversary which is not directly observable by Bob 
 \end{enumerate}
 
+Reading this equationally is not as clear to give an interpretation. The next layer to enhance the understandability of this formula is through the DSL, which allows direct wiring of each of these games as code blocks.
 
 The most important function for modellers to use that bakes in Bayesian updating and maximization of the expected payoff after updating their belief is the \ensuremath{\Varid{dependentDecision}} function which implements the selection function given in \cite{BayesianOpenGames}[Definition 4.4.1] for Bayesian agents. 
 
@@ -1031,59 +1045,148 @@ For sequential games, a strategy would typically involve choosing an action in r
 thus such a strategy would be a function of type $X \rightarrow Y$.
 
 \subsubsection{Reading the DSL}
-Rather than constructing games using the aforementioned functions, we can use a DSL that compiles to Haskell. The following example 
-
+Rather than constructing games using the aforementioned functions, we can use a DSL that compiles to Haskell. In this section, we'll explain the DSL syntax. We will use the following example of the prisoner's dilemma game.
+\begin{mdframed}
+\begin{example}[Prisoner's Dilemma in the DSL]\label{example:prisoner}
+The following example is an open game representation of the well-known Prisoner's Dilemma. For simultaneous play, we would consider the tensor of two utility-maximizing agents each represented by an open game generated by the \ensuremath{\Varid{dependentDecision}} function. In the DSl, we can stack code blocks representing these agents, and pipe their fields together accordingly. The input fields remain blank because neither player makes any observations prior to making their move. Two variables are declared in the outputs fields, \ensuremath{\Varid{decisionPlayer1}} and \ensuremath{\Varid{decisionPlayer2}}, which makes these values accessible to other games. Although the player2 open game is below player1, the Haskell expression in the returns fields have access to both variables \ensuremath{\Varid{decisionPlayer1}} and \ensuremath{\Varid{decisionPlayer2}} to calculate the payoff that each agent recieves. 
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{4}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{14}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{21}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{21E}{@{}l@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\Varid{openGame}\;\Varid{exoVar}\mathrel{=}[\mskip1.5mu \Varid{opengame}\mid {}\<[E]%
+\>[B]{}\Varid{myOpenGame}\;\Varid{exoVar1}\;\Varid{exoVar2}\;\Varid{exoVar3}\mathbin{...}\mathrel{=}[\mskip1.5mu \Varid{opengame}\mid {}\<[E]%
 \\
 \>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{inputs}\mathbin{:};{}\<[E]%
+\>[4]{}\Varid{inputs}{}\<[14]%
+\>[14]{}\mathbin{:}{}\<[21]%
+\>[21]{};{}\<[21E]%
 \\
 \>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{feedback}\mathbin{:};{}\<[E]%
+\>[4]{}\Varid{feedback}{}\<[14]%
+\>[14]{}\mathbin{:}{}\<[21]%
+\>[21]{};{}\<[21E]%
+\\[\blanklineskip]%
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\mathbin{:----------------------------:}{}\<[E]%
 \\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{inputs}{}\<[14]%
+\>[14]{}\mathbin{:}{}\<[21]%
+\>[21]{};{}\<[21E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{feedback}{}\<[14]%
+\>[14]{}\mathbin{:}{}\<[21]%
+\>[21]{};{}\<[21E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{operation}\mathbin{:}\Varid{dependentDecision}\;\text{\ttfamily \char34 player1\char34}\;(\Varid{const}\;[\mskip1.5mu \Conid{Cooperate},\Conid{Defect}\mskip1.5mu]);{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{outputs}{}\<[14]%
+\>[14]{}\mathbin{:}\Varid{decisionPlayer1};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{returns}{}\<[14]%
+\>[14]{}\mathbin{:}\Varid{prisonersDilemmaMatrix}\;\Varid{decisionPlayer1}\;\Varid{decisionPlayer2};{}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{inputs}{}\<[14]%
+\>[14]{}\mathbin{:}{}\<[21]%
+\>[21]{};{}\<[21E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{feedback}{}\<[14]%
+\>[14]{}\mathbin{:}{}\<[21]%
+\>[21]{};{}\<[21E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{operation}\mathbin{:}\Varid{dependentDecision}\;\text{\ttfamily \char34 player2\char34}\;(\Varid{const}\;[\mskip1.5mu \Conid{Cooperate},\Conid{Defect}\mskip1.5mu]);{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{outputs}{}\<[14]%
+\>[14]{}\mathbin{:}\Varid{decisionPlayer2};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{returns}{}\<[14]%
+\>[14]{}\mathbin{:}\Varid{prisonersDilemmaMatrix}\;\Varid{decisionPlayer2}\;\Varid{decisionPlayer1};{}\<[E]%
+\\[\blanklineskip]%
 \>[B]{}\hsindent{4}{}\<[4]%
 \>[4]{}\mathbin{:----------------------------:}{}\<[E]%
 \\[\blanklineskip]%
 \>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{inputs}\mathbin{:};{}\<[E]%
+\>[4]{}\Varid{outputs}{}\<[14]%
+\>[14]{}\mathbin{:}{}\<[21]%
+\>[21]{};{}\<[21E]%
 \\
 \>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{feedback}\mathbin{:};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{operation}\mathbin{:}\Varid{dependentDecision};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{outputs}\mathbin{:};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{returns}\mathbin{:};{}\<[E]%
-\\[\blanklineskip]%
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\mathbin{:----------------------------:}{}\<[E]%
-\\[\blanklineskip]%
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{outputs}\mathbin{:};{}\<[E]%
-\\
-\>[B]{}\hsindent{4}{}\<[4]%
-\>[4]{}\Varid{returns}\mathbin{:};{}\<[E]%
+\>[4]{}\Varid{returns}{}\<[14]%
+\>[14]{}\mathbin{:}{}\<[21]%
+\>[21]{};{}\<[21E]%
 \\[\blanklineskip]%
 \>[B]{}\mid \mskip1.5mu]{}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
+   \end{example}
+\end{mdframed}
 
-We treat any parameters such as \ensuremath{\Varid{exoVar}} as exogenous parameters introduced outside the game.
+
+Here, \ensuremath{[\mskip1.5mu \Varid{opengame}}...\ensuremath{\mskip1.5mu]} is TemplateHaskell's quotation syntax, which returns the \ensuremath{\Conid{OpenGame}} data type. The syntax is divided into two sections, (1) the external components and (2) the internals of the open game. The external components are comprised of the two fields \ensuremath{\Varid{inputs}} and \ensuremath{\Varid{feedback}} above the delimiter \ensuremath{\mathbin{:----:}}, and \ensuremath{\Varid{outputs}} and \ensuremath{\Varid{returns}} at the bottom. As introduced before in the formal definition of open games, these fields correspond to the pairs of objects corresponding to the type of the open game, with \ensuremath{\Varid{inputs}} and \ensuremath{\Varid{feedback}} as the pair $(S,T)$ amd \ensuremath{\Varid{outputs}} and \ensuremath{\Varid{returns}} as $(A, B)$. These fields designate the variables available for use, and the values produced by the internals of the game. Note that user-declared variables are in scope for the internals of the game and correspond with the \ensuremath{\Varid{inputs}} and \ensuremath{\Varid{returns}} fields. On the other hand, the remaining two fields designate the values that will be generated by the internals of the game to be passed to other games. As in the above example, the variables declared in the outputs field can be used in any of the inputs or returns fields.
 
 
+We treat any parameters such as \ensuremath{\Varid{exoVar}} as exogenous parameters introduced outside the game. This ends up being an appropriate place to pipeline the infrastructure required to characterize payoff functions, parameterize strategies, and other techniques in order to keep the DSL syntax generic. See chapter 2 for the infrastructure and coding patterns used to best utilize this concept.  
 
+Threading these variables together through these fields is up to the discretion of the modeller. An open game can completely change with a small change, for example puting \ensuremath{\Varid{decisionPlayer1}} into the inputs field of the \ensuremath{\Varid{player2}} code block. In this representation, \ensuremath{\Varid{player1}} moves first and \ensuremath{\Varid{player2}} will be able to observe the output. The compiler will be responsible for making sure the types line up accordingly, but matching the modeller's intention to what's being written as an open game is the modeller's responsibility.
+
+There is some assistance from the type-checker, however, to make sure that dependencies are consistent when making changes like this. By exposing the first player's decision to the second, the model execution code should fail to compile because now the strategy of player 2 is dependent on this variable. The type-checker will follow a top-down ordering when typing, so when supplying a list of strategies to run this game, this should be a list ordered left-to-right lining up with the code blocks. We can read this from the type signature for each game, where the \ensuremath{`[\mskip1.5mu \mskip1.5mu]} constructor in the type parameters exactly corresponds with the strategies the game is expecting for each of the code blocks. We can also see that the final four parameters are \ensuremath{()}, which designates a closed game. 
+\begin{minipage}\textwidth
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{4}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Varid{myOpenGame}\mathbin{::}\Conid{OpenGame}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Conid{StochasticOptic}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\Conid{StochasticContext}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}`[\mskip1.5mu \Conid{Kleisli}\;\Conid{Stochastic}\;()\;\Conid{PrisonerMove},{}\<[E]%
+\\
+\>[3]{}\hsindent{1}{}\<[4]%
+\>[4]{}\Conid{Kleisli}\;\Conid{Stochastic}\;()\;\Conid{PrisonerMove}\mskip1.5mu]{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}`[\mskip1.5mu [\mskip1.5mu \Conid{DiagnosticInfoBayesian}\;()\;\Conid{PrisonerMove}\mskip1.5mu],{}\<[E]%
+\\
+\>[3]{}\hsindent{1}{}\<[4]%
+\>[4]{}[\mskip1.5mu \Conid{DiagnosticInfoBayesian}\;()\;\Conid{PrisonerMove}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}(){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}(){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}(){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}(){}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+   
+\end{minipage}
 
 \subsubsection{Custom types and specifiying strategies}
 The \textit{behavioural strategies} of type \ensuremath{\Conid{Kleisli}\;\Conid{Stochastic}\;\Varid{s}\;\Varid{a}} have already been described in a previous section, but we made no indication for what \ensuremath{\Varid{s}} and \ensuremath{\Varid{a}} had to be. The 
-
+\subsubsection{Evaluation and reading analytics}
+As mentioned previously, Nash equilibrium corresponds to fixpoints of the best-response function of games. Correspondingly in the typical engine output, modellers can read an optimal move and the strategic move and the corresponding expected payoffs for 
 \subsubsection{Debugging}
 We make mistakes or make independent changes to one function which may cause an entire code block not to compile because types are not consistent. In the case of open games, tracking four inputs and outputs for each building block can be cumbersome. Fortunately, Haskell's typechecker and 
 
@@ -1147,8 +1250,18 @@ However, the models developed in \cite{Phetmanee2024} aren't built expressively 
 
 The output of the StEve tool and the open-games diagnostic info are similar in terms of displaying each players associated payoff. However, the open-games-engine doesn't prove any satisfiability constraints, it's up to the modeller to check all possible states, whereas PRISM will be able to compute equilibrium automatically. Thus, StEve requires less understanding from security experts for running the game model, but prevents any amendments to game structure, such as an attacker being first-to-act rather than the defender. Working in the open-games environment necessitates more direct construction of the game with at most the import of the security games provided as a template in this thesis, but allows for greater maneuverability.
 
-Comparatively, working in Haskell vs PRISM comes with the advantage of a type checker and various other language tools that will be expounded upon in the following chapter. An example difference is not needing to translate into a temporal logic formulae, but writing property tests using Hspec. The perceived downside is the inherent difference in computational complexity and running time for these models, which has yet to be determined. But from a useability point-of-view, a modeller can programmatically generate different attack or defense strategy profiles to test for any given model. 
+Comparatively, working in Haskell vs PRISM comes with the advantage of a type checker and various other language tools that will be expounded upon in the following chapter. An example difference is not needing to translate into a temporal logic formulae, but writing property tests using Hspec. The perceived downside is the inherent difference in computational complexity and running time for these models, which has yet to be determined. But from a useability point-of-view, a modeller can programmatically generate different attack or defense strategy profiles to test for any given model, with the tradeoff of not having a compact logic to run through the usual model-checking techniques. 
 
+\subsubsection{Study methodology}
+Based on these observations, the study of this thesis proceeded as follows.
+\begin{enumerate}
+	\item Identify pre-existing security game models in literature 
+	\item Implement these models to reproduce the expected results using open games
+	\item Identify and generalize constructions used across models
+	\item Analyze flexibility of models and analytical techniques 
+\end{enumerate}
+
+For the final point, no metric has been established for conducting a comparative analysis with other tools. We leave this for a future behavioural study, for security modellers across disciplines and skillsets to follow the presented design patterns to generate models. Possible metrics could involve productivity or real-system performance parameterized by the findings given by the model. 
 
 \subsection{A first-attempt example}
 In this section I'll detail a contrived example, as a first-pass to using the open-game-engine. I'll briefly cover how to interpret some of the fundamental parts of using the engine and understanding the diagnostic information provided in the output of an evaluation. I'll use code snippets to illustrate the thinking behind constructing each game, but I refer readers to the provided codebase for complete and executable models.
