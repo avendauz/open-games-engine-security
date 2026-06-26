@@ -64,6 +64,6 @@ main = hspec $ do
         
         it "improves performance by having more defensive resources for some strategies" $ 
             property $ \params -> or [getIDSHPPayoff x y params > getIDSPayoff params | x <- [0, 0.1 .. 1], y <- [0, 0.1 .. 1]]
-    describe "repeated games" $ do 
-        it "should have a stationary equilibrium" $ property $ 
-            \x -> doRepeatedEvaluation exampleData x 3
+    -- describe "repeated games" $ do 
+    --     it "should have a stationary equilibrium" $ property $ 
+    --         \x -> doRepeatedEvaluation exampleData x 3

@@ -71,34 +71,34 @@ noAttackStrat = Kleisli (const $ playDeterministically NotCheat)
 --         g = generateEquilibrium $ evaluate (standardGameParameterized followerGameParameterized) (leaderStrat ::- followerStrat ::- Nil) void 
 
 -- (cmap identity (play followerGameParameterized (followerStrat ::- Nil)) void)
-testGame = [opengame|
-   inputs : ;
-   feedback: ;
-   :----------------------------:
+-- testGame = [opengame|
+--    inputs : ;
+--    feedback: ;
+--    :----------------------------:
 
-   inputs: defenderDecisionAgain;
-   feedback: ;
-   operation: dependentDecision "Leader" (const [Inspect, NoInspect]);
-   outputs: defenderDecision;
-   returns: testPayoff defenderDecision defenderDecisionAgain;
+--    inputs: defenderDecisionAgain;
+--    feedback: ;
+--    operation: dependentDecision "Leader" (const [Inspect, NoInspect]);
+--    outputs: defenderDecision;
+--    returns: testPayoff defenderDecision defenderDecisionAgain;
 
-   inputs: ;
-   feedback: ;
-   operation: dependentDecision "Leader" (const [Inspect, NoInspect]);
-   outputs: defenderDecisionAgain;
-   returns: testPayoff defenderDecision defenderDecisionAgain;
-   :----------------------------:
+--    inputs: ;
+--    feedback: ;
+--    operation: dependentDecision "Leader" (const [Inspect, NoInspect]);
+--    outputs: defenderDecisionAgain;
+--    returns: testPayoff defenderDecision defenderDecisionAgain;
+--    :----------------------------:
 
-   outputs: ;
-   returns: ;
+--    outputs: ;
+--    returns: ;
 
- |]
+--  |]
 testPayoff Inspect Inspect = 10
 testPayoff Inspect NoInspect = 20
 testPayoff NoInspect NoInspect = 15
 testPayoff NoInspect Inspect = 5
 
-runTestGame = generateOutput $ evaluate testGame (Kleisli (const $ playDeterministically Inspect) ::- Kleisli (const $ playDeterministically NoInspect) ::- Nil) void
+-- runTestGame = generateOutput $ evaluate testGame (Kleisli (const $ playDeterministically Inspect) ::- Kleisli (const $ playDeterministically NoInspect) ::- Nil) void
 
 leaderGame = [opengame|
    inputs : ;

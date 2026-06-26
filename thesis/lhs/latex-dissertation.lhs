@@ -123,6 +123,9 @@
 
 %include chapter2.lhs
 
+%include chapter3.lhs
+\include{cyberbattlesim.tex}
+
 %--------------------------------
 % Bibliography
 %--------------------------------

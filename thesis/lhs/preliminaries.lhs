@@ -10,7 +10,7 @@ Compositionality in game theory enables a wider range possibilities for modellin
 Furthermore, abstracting away the specific behaviour of agents by describing a well-defined type system, allowing a software engineering approach, can enable a contextual understanding of an agent as part of a larger system. 
 That dependence and ability to decouple the problem is enabled by considering utility-maximizing agents as a kind of open system, reacting to its environment. 
 In the case of compositional game theory, we can start by using the concept of an open game. The properties of an open game allow a particular modelling workflow to assist a 
-user in testing assumptions or design choices programmatically. If the end goal is for users to treat open games as first-class citizens of this workflow, we want to delve into the underlying theory before 
+user in testing modelling assumptions or design choices programmatically. If the end goal is for users to treat open games as first-class citizens of this workflow, we want to delve into the underlying theory before 
 describing these design patterns. 
 
 To get started with the tool, users will need \href{https://www.haskell.org/ghcup/install/}{\textbf{ghc}}, 
@@ -20,10 +20,9 @@ as a dependency in a Haskell project. The main module is |OpenGames.Engine.Engin
 the library's functionalities are available. On the other hand, we'll refer to the code block 
 syntax (the DSL) that is compiled to a program that could be expressed with just the library functions. The purpose of the DSL is to give a language to construct open games with explicit input and output ports, and implicitly facilitate parallel and sequential composition by "plugging" these ports together. 
 
-But black boxing into this DSL the development of these models may not be enough to create intuitive models. If we wanted to ship a certain model expressly as a series of open games written in the DSL, the only constraints to guide its usage have come down to four types inherent to each game. Otherwise, the process of generating strategies to run the game, reading through the console output of simulating the game, or refactoring a single input variable within the game, requires deeper knowledge of |OpenGames.Engine.Engine|. 
+But black boxing into this DSL the development of these models may not be enough to create intuitive models. If we wanted to ship a certain model expressly as a series of open games written in the DSL, the only constraints to guide its usage comes down to specific functions exported by |OpenGames.Engine.Engine| to construct well-typed games and run diagnostic functions. The process of generating strategies to run the game, reading through the console output of simulating the game, or refactoring a single input variable within the game, requires deeper knowledge of |OpenGames.Engine.Engine|. 
 
-Thus we can take a look at the following code example from to introduce the separation 
-of these two concepts: 
+We can start by examining the following code example which acts as a typical template game for defining larger security games. 
 
 \begin{minipage}\textwidth
 \begin{code}
@@ -60,12 +59,12 @@ defenderFollower defenderName getActionSpace = [opengame|
 \end{code} 
 \end{minipage}
 
-Some questions to be answered can be separated into two categories: (1) understanding each of the components of the type signature of |defenderFollower| and (2) how to read everything within @[opengame| ...|]@. The following sections will cover the necessary categorical constructions (mostly from \cite{BayesianOpenGames}). Where we depart from the literature covering open games is providing an interpretation and explicit accounting of the implementation of each of these constructions as they're used in \textit{open-games-hs}. 
+We aim to give readers a basic understanding for reading this code block along two facets: (1) understanding each of the components of the type signature of |defenderFollower| and (2) how to read everything within @[opengame| ...|]@. The following sections will cover the necessary categorical constructions (mostly from \cite{BayesianOpenGames}). Where we depart from the literature covering open games is providing an interpretation and explicit accounting of the implementation of each of these constructions as they're used in \textit{open-games-hs}. 
  
 The models developed during the course of this project is a fork from \url{https://github.com/philipp-zahn/open-games-engine}. Various tutorials and  
 READMEs exist, however a comprehensive progression and explicit accounting of the key 
 functionalities to support end-user capabilities of the \textit{open-game-engine} has not been completed. 
-The goal is for readers to use the language given here to help transition from: 
+The hope is for readers to use the language given here to help transition from: 
 
 (1) thinking in a classical game-theoretic sense to \\
 (2) thinking in a compositional game-theoretic sense to \\
@@ -77,24 +76,19 @@ where the main contributions of the following chapters focus on a particular sec
 \subsection{Classical game theory}
 
 
-Game theory is a mathematical formulation for modelling strategic interactions between self-interested actors. To encapsulate this self-interest, we can define a certain reward (or payoffs) according to a set of actions for each player. Typically, this is written as a real-valued payoff function that measures the "happiness" of an agent for each possible action. Thus, we can evaluate the reward for each agent when they act or react according to a \textit{strategy profile}, 
-We invite readers to read through for a concise overview of these classical game theory formalisms.
+Game theory is a mathematical formulation for modelling strategic interactions between self-interested actors. To encapsulate this self-interest in quantifiable game theoretic models, we can define a certain reward (or payoffs) according to a set of actions for each player. Typically, this is written as a real-valued payoff function that measures the "happiness" of an agent for each possible action. Thus, we can evaluate the reward for each agent when they act or react according to a \textit{strategy profile}. We refer to classical game theory in the sense of the original instantiation of game theory as it was used in mostly economics. Readers can use \cite{leyton2008essentials} as reference for the few classical game theory terms used in this thesis.
+Since we primarily rely on constructing games using compositional game theory, we found that classical game theoretic terms come more in handy as a post-hoc interpretation and evaulation of these models. Another way to put this is compositional game theory boils down to classical results, but it is more useful not to restrict ourselves by thinking classically from the get-go. This is especially relevant when constructing games in the domain of application, in this case cybersecurity games. 
 
-For example, for normal-form games, we can consider the following diagram for two players taking simultaneous actions and receiving a real-valued payoff accordingly. 
+% For example, for normal-form games, we can consider the following diagram for two players taking simultaneous actions and receiving a real-valued payoff accordingly. 
 
-After designing such a model, what can we learn about the agents? Typically, we are concerned with a solution concept such as Nash equilibrium, which intuitively means that every agent has no incentive to deviate from their given strategy given that they know everyone's strategy.
+% After designing such a model, what can we learn about the agents? Typically, we are concerned with a solution concept such as Nash equilibrium, which intuitively means that every agent has no incentive to deviate from their given strategy given that they know everyone's strategy.
 
+% With the development and deployment of complex "socio-technical" systems, the demand for understanding the behaviour of the system interacting with rational actors has increased. While game theory has seen its applications in an economic sense, analyzing security applications begins with assigning adversarial notions to players. 
 
-Here we begin to demonstrate more clear-cut separation-of-concerns that goes into creating this game. 
-
-With the development and deployment of complex "socio-technical" systems, the demand for understanding the behaviour of the system interacting with rational actors has increased. While game theory has seen its applications in an economic sense, analyzing security applications begins with assigning adversarial notions to players. 
-
-\subsection{Category theory}
-The foundation of compositional game theory begins with category theory, 
+\subsection{(Applied) category theory}
+The foundation of compositional game theory relies on category theory, 
 in particular the "compositional" part of compositional game theory being enabled 
-specifically by defining open games as morphisms of a category. In the spirit of staying in 
-an applied setting, this chapter will briefly 
-cover the related categorical constructions, assuming knowledge of what categories are, properties such as tensor product for symmetric monoidal categories? 
+specifically by defining open games as morphisms of a category. Treating category theory as a mechanism to interpret systems and mechanisms in other disciplines such as engineering, machine learning, programming language theory, quantum theory, and probability theory falls in the more recently-growing area of applied category theory. Whether practitioners of some discipline find meaning in a categorical interpretation, or category theorists find constructions useful in a certain discipline, the result is a nice interdisciplinary area of research. We suggest \cite{fong2018sevensketchescompositionalityinvitation} as an introduction to more of these topics. 
 
 \subsection{Haskell fundamentals}
 
@@ -339,7 +333,6 @@ This construction doesn't necessitate a strategic play, and can be used to model
 \subsubsection{Best-response of open games}
 The final component in the definition of the open games is the best-response function, or the best-response relation. This is where the utility-maximization characterization of open games is encoded. Similarly defined according to the concept of best-response functions in classical game theory, the best-response function gives a strategy that a player would be incentivezed to follow given that every other player follows another strategy. Given a best-response function, a solution concept such as Nash equilibrium would be fixpoints of this function. Departing from the classical game-theoretic interpretation, we can consider these best-response relations relative to \textit{history} and an abstract \textit{continuation}.
 
-The open-game-engine won't give a direct 
 
 With the following data type, we've reached the highest level for which modellers would be interacting with the open-game-engine when simulating and evaluating their models:  
 

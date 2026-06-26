@@ -211,6 +211,10 @@ At this point, a modeller may be asking questions such as "is equilibrium reache
 
 \subsubsection{Game-level specifications}
 One level lower, we can consider game-level specifications, or in other words, the variables we consider directly in the game. These consist of action spaces in the usual sense, in this workflow as a list of data types. Constructively speaking, we first fix our exogenous parameters, then we fix the game-level parameters which characterize each player's capabilities.
+
+\subsection{Separating equilibrium for Bayesian open games}
+
+\cite{BoltThesis} provides an example of a Bayesian game with sequential play. In this section we'll elaborate on some of the ideas that have been presented in \cite{BoltThesis} and \cite{hedges2017morphismsopengames} to detail a solution concept that can be interpreted from the engine output. Rather than having to think in terms of information sets, the diagnostic information already parses the different histories and the corresponding best-response for each of those histories. We'll use the following security example
  
 
 % \tikzstyle{startstop} = [rectangle, rounded corners, 

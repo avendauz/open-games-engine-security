@@ -106,9 +106,9 @@ We want to define an operator to facilitate Bayesian inverses.
 
 data Honeypot = Active | Passive deriving (Show, Eq)
 
-priorBias = distFromList [(Active, 0.4), (Passive, 0.6)]
-priorZ = distFromList [(On, 0.6), (Off, 0.4)]
-observation = do {x <- priorBias; return ((), x)}
+-- priorBias = distFromList [(Active, 0.4), (Passive, 0.6)]
+-- priorZ = distFromList [(On, 0.6), (Off, 0.4)]
+-- observation = do {x <- priorBias; return ((), x)}
 
 firstUpdate = 
   Kleisli 
@@ -120,31 +120,31 @@ data StochasticContext s t a b where
 
 -}
 
-backwards z b = do playDeterministically $ 0.5
-continuation :: (z -> a -> Stochastic b)
-continuation z = Kleisli $ const $ playDeterministically 0.5 
-support :: Stochastic x -> [x]
-support = map fst . decons
+-- backwards z b = do playDeterministically $ 0.5
+-- continuation :: (z -> a -> Stochastic b)
+-- continuation z = Kleisli $ const $ playDeterministically 0.5 
+-- support :: Stochastic x -> [x]
+-- support = map fst . decons
 
 bayes :: (Eq y) => Stochastic (x, y) -> y -> Stochastic x
 bayes a y = mapMaybe (\(x, y') -> if y' == y then Just x else Nothing) a
 
-doUpdate x = expected $ 
-    do 
-       t <- bayes observation x
-       backwards t observation
+-- doUpdate x = expected $ 
+--     do 
+--        t <- bayes observation x
+--        backwards t observation
 
-firstOptic cond = StochasticOptic (\s -> 
-    do 
-      a <- runKleisli cond s
-      return ((), a) 
-    )
-    (\() _ -> return doUpdate )
+-- firstOptic cond = StochasticOptic (\s -> 
+--     do 
+--       a <- runKleisli cond s
+--       return ((), a) 
+--     )
+--     (\() _ -> return doUpdate )
 
-secondOptic cond = StochasticOptic (\s -> 
-    do 
-      a <- runKleisli cond s
-      return ((), a) 
-    )
-    (\() _ -> return ())
+-- secondOptic cond = StochasticOptic (\s -> 
+--     do 
+--       a <- runKleisli cond s
+--       return ((), a) 
+--     )
+--     (\() _ -> return ())
 

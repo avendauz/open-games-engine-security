@@ -1,0 +1,36 @@
+\section{CyberBattleSim}
+As discussed in previous chapters, . The same infrastructure and abstractions for programmatically defining security model parameters could perhaps be leveraged more easily in different environments. A few major drawbacks involve performance and data analytic solutions that become harder to work with in the Haskell environment. Additionally, we are limited to the realm of rational verification, without explicit security guarantees. Developing a layer to bridge game-theoretic saolution concepts to address real-system defensive mechanisms remains as a problem in its own right. Moving towards reinforcement learning techniques to develop dynamic models, the open-game-engine needs more development. Additionally, we would be saddled with developing data structures for applications such as enterprise computer networks (i.e. directed graphs) which may be unwieldy to work with compared to other languages such as Python. In the same vein of compositionality at the user/modeller level, perhaps using a model-checking paradigm as our engine for verification allows for more tractable solutions. In this chapter, we present our findings investigating an approach to cybersecurity model verification by integrating two tools. VITAMIN and CyberBattleSim. 
+
+
+
+\subsection{Towards cybersecurity applications using \textbf{OATL}}
+To address the gap between formally-verified defensive strategies in multi-agent systems paradigms, we attempt to construct the infrastructure for translating these strategies into a simulatable environment. 
+
+We'll start by presenting the semantics and syntax of obstruction alternating-time temporal logic (\textbf{OATL}) from \cite{catta2024obstruction}
+
+\subsubsection{Implementing OATL Demon strategies in CyberBattleSim}
+We will need to implement OATL strategies which strictly prevent hte connection of nodes while the attacker is on a search path. 
+
+With a restriction check happening every timestep, we need to implement the code logic for tracking the cumulated cost for implementing these edge removals. 
+
+The first (naive) implementation involves thinking of states in OATL as the state space in CyberBattleSim, where each state represents a machine instantiated in the model. However, this abstraction fails because there's no sense of \textit{attacker current state}. At each time-step, the attacker has a set of possible exploits according to the owned/discovered nodes. Thus, we need a translation layer for determining the state space as dictated in the real-world topology in CyberSim, define a concurrent game structure according to this topology to extract a defensive strategy, then reinsert it into the model.
+
+Assume we define an OATL logic associated with the running list of owned nodes by an attacker. Each state has an associated edge corresponding to a possible exploit which adds this node to the owned nodes. 
+
+\subsubsection{Methodology}
+First, users of the CyberbattleSAim software can use Python and existing examples to generate complex networks. We believe this gives the proper working environment to define the security problem statement and the defender goals with an expressive syntax for defining the properties of nodes. This is done through NodeInfo datatype, where we can track name, url, dependencies, and accessible and vulnerable nodes (or neighbours). Additionally, we can leverage networkx diGraph to visualize and manipulate directed graphs. 
+
+After providing a realistic model in CyberBattleSim, we introduce a middleware to transform the node specification to a concurrent game structure. We arbitrarily choose a CGS where the states represent ,m but future work can be involved in giving a flexible solution for generating different CGSs to different needs. 
+
+Furthermore, there's a major gap of realism between VITAMIN and CyberBattleSim formalisms. Mainly, CyberBattleSim is more easily extendable to real-world data, annotations for referencing exploits, or storing other attack-related data. Here, we propose a middle-ware to convert CyberBattleSim attack graph representation to a concurrent game structure, according to specifications required by the user. We aim to keep this conversion process flexible enough to label states with atomic propositions beyond just "these machines are owned." This translation is also not trivial. Briefly, a CyberBattleSim attack graph is concerned with edges annotated by successful vulnerabilities, built purely for an attacker to build (not necessarily just traverse) the graph. However, certain security specifications that we would like to check in VITAMIN involve propositions representing "a defender knows the identity of the attacker." The states and transitions don't correspond one-to-one. We choose to treat the CyberBattleSim graph representation as the entrypoint for the user due to it's accommodation for real-world data and higher-level representation, and are now tasked with abstracting a VITAMIN-compatible CGS that extends this graph for these types of propositions.
+
+Node properties, discovery of attack paths. 
+
+in CyberBattleSim, we keep a runing string of properties that are discovered upon successful attacks (like ProbeSuccessful). These preconditions are required for other attacks to go through
+
+
+\subsection{Problem formulation}
+
+The beginnings of 
+
+CyberBattleSim accounts for a flexible set of ttypes of vulnerabilities directly encoded from vulnerability databases. We are tasked with flatting this representation to a model-checking format, while balancing the expressibility of the problem. Furthermore, we will need to recover the format of this data to inject the prodcued defender strategy into CyberBattleSim. 

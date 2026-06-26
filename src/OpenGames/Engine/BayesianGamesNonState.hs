@@ -21,11 +21,12 @@ module OpenGames.Engine.BayesianGamesNonState
   , distFromList
   , pureAction
   , playDeterministically
+  , (+++)
   ) where
 
 import Unsafe.Coerce
 
-import           Control.Arrow                      hiding ((+:+))
+import           Control.Arrow                      hiding ((+:+), (+++))
 import           Control.Monad.State                hiding (state)
 import           Control.Monad.Trans.Class
 import GHC.TypeLits

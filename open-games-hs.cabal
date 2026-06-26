@@ -1,6 +1,6 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.38.0.
+-- This file has been generated from package.yaml by hpack version 0.38.3.
 --
 -- see: https://github.com/sol/hpack
 
@@ -56,7 +56,6 @@ library
       Examples.Staking.AndGateMarkovMC
       IDS.CollaborativeIDS
       IDS.CollaborativeIDSModel
-      IDS.CollaborativeIDSSpec
       IDS.CollaborativePayoff
       IDS.CollaborativeTransition
       IDS.DeceptionPayoff
@@ -71,18 +70,16 @@ library
       IDS.IDSAStochastic
       IDS.IDSAStrategies
       IDS.IDSModel
+      IDS.SeparatingEquilibrium
       IDS.Temp
       IDS.TransitionSystem
       OpenGames.Engine.BayesianGamesNonState
       OpenGames.Engine.ExternalEnvironment
       OpenGames.Engine.IOGames
       Security.AttackerDefender
-      Security.AttackerDefenderRepeated
-      Security.BasicGame
       Security.Evaluator
       Security.ParameterBuilder
-      Security.Payoffs
-      Security.Temp
+      Security.SignallingExample
       Paths_open_games_hs
   hs-source-dirs:
       src

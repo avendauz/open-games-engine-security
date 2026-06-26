@@ -36,12 +36,12 @@ data CollaborativeIDSParams a = CIDSParams {
 
 }
 
-attackerStrategy :: Kleisli Stochastic Component AttackerActions
-attackerStrategy = Kleisli (\case 
-    WebServer -> playDeterministically HTTPD ; 
-    FileServer -> playDeterministically SNIFFER;
-    Workstation -> playDeterministically CRACKFSROOT;
-    )  
+-- attackerStrategy :: Kleisli Stochastic Component AttackerActions
+-- attackerStrategy = Kleisli (\case 
+--     WebServer -> playDeterministically HTTPD ; 
+--     FileServer -> playDeterministically SNIFFER;
+--     Workstation -> playDeterministically CRACKFSROOT;
+--     )  
 
 -- instance ActionByComponent 
 -- transitionBetweenComponents :: Component -> a ->  Component

@@ -75,3 +75,6 @@ convertVisitorStrategy x = Kleisli (\case {
 
 convertDefenderStrategy :: Kleisli Stochastic VisitorMove AggregatorMove -> Kleisli Stochastic (VisitorMove, AggregatorMove) AggregatorMove
 convertDefenderStrategy x = Kleisli (runKleisli x . fst)
+
+---------- pooling equilibrium
+
