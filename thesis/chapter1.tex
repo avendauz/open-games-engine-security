@@ -1,10 +1,19 @@
-\section{Modularity in game theoretic cybersecurity modelling}
-\label{sec:1}
+\section{Open games design patterns}
+\label{sec:design}
 \subsection{Overview}
 
 The stark reality of designing effective cybersecurity games is bridging real-world security concerns with an accurate representation in a game-theoretic terms. Numerous models have been constructed and analyzed according to specific security problems, thus tying the models to their specification. Furthermore, these models often extend or adapt previously existing constructions by making new assumptions, using different payoff schemes, or integrating the model into an automated defensive infrastructure. Although this informal relationship between these models have been surveyed, there has yet to be a generalized framework for mechanizing this relationship as a standardized game formulation process. 
 
-In this chapter, I examine a variety of security games and remark on similarities and differences between game-formulation methods. By identifying and encoding the commonly-used 2-player security game in the open-games-DSL, we show how to recover more complex models using this as a building block. By working in the open-games-DSL, a modeller can control information flow, introduce parallel subsystem security interactions, and reuse models. I review current security game analysis methods and present the possibility of integration with other tools. Finally, I propose an \textit{iterative development}-esque model generation process using the open-game engine.
+As a software tool, open games can accommodate the security models setting, but not without specific Haskell setup-code for running and evaluating a model. Insofar that for investigating a large problem, an open games user can end up with a huge series of top-down Haskell scripts representing a specific simulation, with few structural or helper modules to tie everything together. 
+
+In this chapter, we propose a metamodelling design process over the open-games-hs software. We first review 
+\begin{enumerate}
+	\item a direct translation of models from literature to serve as a baseline and identify key issues (model reuse, scalability, replicability) that should be addressed 
+	\item three Haskell modules and one testing framework that were developed which encapsulate the design patterns that address those key issues 
+	\item 
+\end{enumerate}
+
+In this chapter, we examine a variety of security games and remark on similarities and differences between game-formulation methods. By generalizing certain patterns such as identifying and encoding the commonly-used 2-player security game in the open-games-DSL, we show how to recover more complex models. By working in the open-games-DSL, a modeller can control information flow, introduce parallel subsystem security interactions, and reuse models. We review current security game analysis methods and present the possibility of integration with other tools. We propose an \textit{iterative development} framework using these design patterns to maintain a model library in a collaborative work setting.
 
 
 
@@ -22,7 +31,8 @@ In this chapter, I examine a variety of security games and remark on similaritie
 
 % DOMAIN EXPERT
 
-\subsection{Current state-of-the-art}
+\subsection{State-of-the-art}
+\label{}
 Using game theory to inform cybersecurity problems has seen growth in recent years with the development of a number of different models for evaluating Denial-of-Service attacks on cloud infrastructures, intrusion detection systems, and advanced persistent threats. Refer to the following surveys \cite{Pawlick2019}, \cite{Hausken2024}, \cite{Manshaei2013} for an overview of the wide collection of game-theoretic models. 
 
 A general procedure for developing these models can be (roughly) summarized in the following steps: 
@@ -60,9 +70,6 @@ The output of the StEve tool and the open-games diagnostic info are similar in t
 
 Comparatively, working in Haskell vs PRISM comes with the advantage of a type checker and various other language tools that will be expounded upon in the following chapter. An example difference is not needing to translate into a temporal logic formulae, but writing property tests using Hspec. The perceived downside is the inherent difference in computational complexity and running time for these models, which has yet to be determined. But from a useability point-of-view, a modeller can programmatically generate different attack or defense strategy profiles to test for any given model. 
 
-
-\subsection{A first-attempt example}
-In this section I'll detail a contrived example, as a first-pass to using the open-game-engine. I'll briefly cover how to interpret some of the fundamental parts of using the engine and understanding the diagnostic information provided in the output of an evaluation. I'll use code snippets to illustrate the thinking behind constructing each game, but I refer readers to the provided codebase for complete and executable models.
 
 
 %When composing these agents into larger games, we can tie them together either \textbf{sequentially} or in \textbf{parallel}. The terms sequential and parallel coincide with arrow composition and the tensor respectively, not necessarily the sequence of play of the game.

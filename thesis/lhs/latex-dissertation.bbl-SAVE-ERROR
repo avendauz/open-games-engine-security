@@ -106,6 +106,30 @@
       \field{pages}{1\bibrangedash 31}
       \range{pages}{31}
     \endentry
+    \entry{BoltThesis}{thesis}{}{}
+      \name{author}{1}{}{%
+        {{hash=af25108ce4c9b87b9e8798084bed46f4}{%
+           family={Bolt},
+           familyi={B\bibinitperiod},
+           given={Joe},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{af25108ce4c9b87b9e8798084bed46f4}
+      \strng{fullhash}{af25108ce4c9b87b9e8798084bed46f4}
+      \strng{fullhashraw}{af25108ce4c9b87b9e8798084bed46f4}
+      \strng{bibnamehash}{af25108ce4c9b87b9e8798084bed46f4}
+      \strng{authorbibnamehash}{af25108ce4c9b87b9e8798084bed46f4}
+      \strng{authornamehash}{af25108ce4c9b87b9e8798084bed46f4}
+      \strng{authorfullhash}{af25108ce4c9b87b9e8798084bed46f4}
+      \strng{authorfullhashraw}{af25108ce4c9b87b9e8798084bed46f4}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Probability and nondeterminism in compositional game theory}
+      \field{type}{phdthesis}
+      \field{year}{2019}
+    \endentry
     \entry{BayesianOpenGames}{article}{}{}
       \name{author}{6}{}{%
         {{hash=af25108ce4c9b87b9e8798084bed46f4}{%
@@ -158,6 +182,45 @@
       \verb{doi}
       \verb 10.32408/compositionality-5-9
       \endverb
+    \endentry
+    \entry{capucci2021translating}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=2f174406fd3061220c36204e0b0c69a7}{%
+           family={Capucci},
+           familyi={C\bibinitperiod},
+           given={Matteo},
+           giveni={M\bibinitperiod}}}%
+        {{hash=b5218dee7dae4467575a433614e4d6f4}{%
+           family={Ghani},
+           familyi={G\bibinitperiod},
+           given={Neil},
+           giveni={N\bibinitperiod}}}%
+        {{hash=135474065c5f7d0f1b4e2b58e64cdaa0}{%
+           family={Ledent},
+           familyi={L\bibinitperiod},
+           given={Jérémy},
+           giveni={J\bibinitperiod}}}%
+        {{hash=98bf8dc12dd9de58a9780ab9601a8e5b}{%
+           family={Forsberg},
+           familyi={F\bibinitperiod},
+           given={Fredrik\bibnamedelima Nordvall},
+           giveni={F\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
+      }
+      \strng{namehash}{89bb97292bfb4a83d4ec67bad69e9b9e}
+      \strng{fullhash}{837f01f9581d4e6fbe111633286196f7}
+      \strng{fullhashraw}{837f01f9581d4e6fbe111633286196f7}
+      \strng{bibnamehash}{89bb97292bfb4a83d4ec67bad69e9b9e}
+      \strng{authorbibnamehash}{89bb97292bfb4a83d4ec67bad69e9b9e}
+      \strng{authornamehash}{89bb97292bfb4a83d4ec67bad69e9b9e}
+      \strng{authorfullhash}{837f01f9581d4e6fbe111633286196f7}
+      \strng{authorfullhashraw}{837f01f9581d4e6fbe111633286196f7}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{arXiv preprint arXiv:2105.06763}
+      \field{title}{Translating extensive form games to open games with agency}
+      \field{year}{2021}
     \endentry
     \entry{Carroll2009}{inproceedings}{}{}
       \name{author}{2}{}{%
@@ -248,6 +311,47 @@
       \field{year}{2013}
       \field{pages}{85\bibrangedash 100}
       \range{pages}{16}
+    \endentry
+    \entry{catta2024obstruction}{inproceedings}{}{}
+      \name{author}{4}{}{%
+        {{hash=bbc56702885dac388df341f1c98ca06c}{%
+           family={Catta},
+           familyi={C\bibinitperiod},
+           given={Davide},
+           giveni={D\bibinitperiod}}}%
+        {{hash=8cf41a4051179761252218192c097b7a}{%
+           family={Leneutre},
+           familyi={L\bibinitperiod},
+           given={Jean},
+           giveni={J\bibinitperiod}}}%
+        {{hash=2f68497dd4b6edae79533d44eaaabbeb}{%
+           family={Malvone},
+           familyi={M\bibinitperiod},
+           given={Vadim},
+           giveni={V\bibinitperiod}}}%
+        {{hash=77a7acb744920c5d53c7213a16db7c88}{%
+           family={Murano},
+           familyi={M\bibinitperiod},
+           given={Aniello},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{c3a57fb5102bdf09a98d770d79f6c218}
+      \strng{fullhash}{cb43513df7b077b964bc3ff3aa6ecec4}
+      \strng{fullhashraw}{cb43513df7b077b964bc3ff3aa6ecec4}
+      \strng{bibnamehash}{c3a57fb5102bdf09a98d770d79f6c218}
+      \strng{authorbibnamehash}{c3a57fb5102bdf09a98d770d79f6c218}
+      \strng{authornamehash}{c3a57fb5102bdf09a98d770d79f6c218}
+      \strng{authorfullhash}{cb43513df7b077b964bc3ff3aa6ecec4}
+      \strng{authorfullhashraw}{cb43513df7b077b964bc3ff3aa6ecec4}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems}
+      \field{title}{Obstruction alternating-time temporal logic: A strategic logic to reason about dynamic models}
+      \field{year}{2024}
+      \field{pages}{271\bibrangedash 280}
+      \range{pages}{10}
     \endentry
     \entry{Caulfield2015}{article}{}{}
       \name{author}{2}{}{%
@@ -357,6 +461,55 @@
       \field{year}{2014}
       \field{pages}{233\bibrangedash 245}
       \range{pages}{13}
+    \endentry
+    \entry{cceker2016deception}{inproceedings}{}{}
+      \name{author}{5}{}{%
+        {{hash=20511fcf902bc00264b91a6727467500}{%
+           family={Çeker},
+           familyi={Ç\bibinitperiod},
+           given={Hayreddin},
+           giveni={H\bibinitperiod}}}%
+        {{hash=feecf7d9a563f29edc9c534b6e595ec9}{%
+           family={Zhuang},
+           familyi={Z\bibinitperiod},
+           given={Jun},
+           giveni={J\bibinitperiod}}}%
+        {{hash=aa8ae472950d04d2cc8a9f1be8001c88}{%
+           family={Upadhyaya},
+           familyi={U\bibinitperiod},
+           given={Shambhu},
+           giveni={S\bibinitperiod}}}%
+        {{hash=6f83a1326f91a2527a7f4c1461b0ac20}{%
+           family={La},
+           familyi={L\bibinitperiod},
+           given={Quang\bibnamedelima Duy},
+           giveni={Q\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+        {{hash=f6cac601ff9f77753cdf23dd5b2a2d97}{%
+           family={Soong},
+           familyi={S\bibinitperiod},
+           given={Boon-Hee},
+           giveni={B\bibinithyphendelim H\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{d603d2d990b62bfb70f62af3a55e90fe}
+      \strng{fullhash}{1850c6ca2e0d7a604bec0f595617f5cf}
+      \strng{fullhashraw}{1850c6ca2e0d7a604bec0f595617f5cf}
+      \strng{bibnamehash}{d603d2d990b62bfb70f62af3a55e90fe}
+      \strng{authorbibnamehash}{d603d2d990b62bfb70f62af3a55e90fe}
+      \strng{authornamehash}{d603d2d990b62bfb70f62af3a55e90fe}
+      \strng{authorfullhash}{1850c6ca2e0d7a604bec0f595617f5cf}
+      \strng{authorfullhashraw}{1850c6ca2e0d7a604bec0f595617f5cf}
+      \field{sortinit}{Ç}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{International conference on decision and game theory for security}
+      \field{title}{Deception-based game theoretical approach to mitigate DoS attacks}
+      \field{year}{2016}
+      \field{pages}{18\bibrangedash 38}
+      \range{pages}{21}
     \endentry
     \entry{Chen2009}{article}{}{}
       \name{author}{2}{}{%
@@ -478,6 +631,94 @@
       \verb 10.1109/KPEC65465.2025.11045006
       \endverb
       \keyw{Training;Privacy;Reviews;Information sharing;Games;Nash equilibrium;Information age;Planning;Internet;Computer security;Colonel Blotto systems;Cybersecurity;Game Theory;Nash equilibrium}
+    \endentry
+    \entry{fong2018sevensketchescompositionalityinvitation}{misc}{}{}
+      \name{author}{2}{}{%
+        {{hash=73645f147c1a5ec6f127cac2c822e9c6}{%
+           family={Fong},
+           familyi={F\bibinitperiod},
+           given={Brendan},
+           giveni={B\bibinitperiod}}}%
+        {{hash=7166f43636239436a149410550ca5a32}{%
+           family={Spivak},
+           familyi={S\bibinitperiod},
+           given={David\bibnamedelima I},
+           giveni={D\bibinitperiod\bibinitdelim I\bibinitperiod}}}%
+      }
+      \strng{namehash}{608947142260f6d9b2ed22f13484e8ef}
+      \strng{fullhash}{608947142260f6d9b2ed22f13484e8ef}
+      \strng{fullhashraw}{608947142260f6d9b2ed22f13484e8ef}
+      \strng{bibnamehash}{608947142260f6d9b2ed22f13484e8ef}
+      \strng{authorbibnamehash}{608947142260f6d9b2ed22f13484e8ef}
+      \strng{authornamehash}{608947142260f6d9b2ed22f13484e8ef}
+      \strng{authorfullhash}{608947142260f6d9b2ed22f13484e8ef}
+      \strng{authorfullhashraw}{608947142260f6d9b2ed22f13484e8ef}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{math.CT}
+      \field{eprinttype}{arXiv}
+      \field{title}{Seven Sketches in Compositionality: An Invitation to Applied Category Theory}
+      \field{year}{2018}
+      \verb{eprint}
+      \verb 1803.05316
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/1803.05316
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/1803.05316
+      \endverb
+    \endentry
+    \entry{ghani2017compositionaltreatmentiteratedopen}{misc}{}{}
+      \name{author}{4}{}{%
+        {{hash=b5218dee7dae4467575a433614e4d6f4}{%
+           family={Ghani},
+           familyi={G\bibinitperiod},
+           given={Neil},
+           giveni={N\bibinitperiod}}}%
+        {{hash=309490ecc8486a6678906e7920bae725}{%
+           family={Kupke},
+           familyi={K\bibinitperiod},
+           given={Clemens},
+           giveni={C\bibinitperiod}}}%
+        {{hash=049e1885bdee8723e7e99cc4a5fba22b}{%
+           family={Lambert},
+           familyi={L\bibinitperiod},
+           given={Alasdair},
+           giveni={A\bibinitperiod}}}%
+        {{hash=98bf8dc12dd9de58a9780ab9601a8e5b}{%
+           family={Forsberg},
+           familyi={F\bibinitperiod},
+           given={Fredrik\bibnamedelima Nordvall},
+           giveni={F\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
+      }
+      \strng{namehash}{3abab8fbf5990d6fcf9298112db52514}
+      \strng{fullhash}{6ed68e35449f6b0d93f15dd74bd58a8e}
+      \strng{fullhashraw}{6ed68e35449f6b0d93f15dd74bd58a8e}
+      \strng{bibnamehash}{3abab8fbf5990d6fcf9298112db52514}
+      \strng{authorbibnamehash}{3abab8fbf5990d6fcf9298112db52514}
+      \strng{authornamehash}{3abab8fbf5990d6fcf9298112db52514}
+      \strng{authorfullhash}{6ed68e35449f6b0d93f15dd74bd58a8e}
+      \strng{authorfullhashraw}{6ed68e35449f6b0d93f15dd74bd58a8e}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{cs.GT}
+      \field{eprinttype}{arXiv}
+      \field{title}{A Compositional Treatment of Iterated Open Games}
+      \field{year}{2017}
+      \verb{eprint}
+      \verb 1711.07968
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/1711.07968
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/1711.07968
+      \endverb
     \endentry
     \entry{Hausken2024}{article}{}{}
       \name{author}{3}{}{%
@@ -703,6 +944,129 @@
       \endverb
       \keyw{Collaborative work;Intrusion detection;Game theory;Nash equilibrium;Resource management;Load modeling;Collaborative intrusion detection systems;game theory;Nash-Q learning}
     \endentry
+    \entry{la2016deceptive}{article}{}{}
+      \name{author}{5}{}{%
+        {{hash=6f83a1326f91a2527a7f4c1461b0ac20}{%
+           family={La},
+           familyi={L\bibinitperiod},
+           given={Quang\bibnamedelima Duy},
+           giveni={Q\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+        {{hash=e24534f43a0ac23ce82b621ef2b75fab}{%
+           family={Quek},
+           familyi={Q\bibinitperiod},
+           given={Tony\bibnamedelima QS},
+           giveni={T\bibinitperiod\bibinitdelim Q\bibinitperiod}}}%
+        {{hash=1a105e8153b280b86bd2485316350a9d}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={Jemin},
+           giveni={J\bibinitperiod}}}%
+        {{hash=c59d8dd54aa89c2a33d932d96e6f4bbd}{%
+           family={Jin},
+           familyi={J\bibinitperiod},
+           given={Shi},
+           giveni={S\bibinitperiod}}}%
+        {{hash=38884a1aa7709107b85f9db0f6df984c}{%
+           family={Zhu},
+           familyi={Z\bibinitperiod},
+           given={Hongbo},
+           giveni={H\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{05d25b974803365a5c3bc564ef1819b9}
+      \strng{fullhash}{13d275f85745b06aea92f8ffe4256fa9}
+      \strng{fullhashraw}{13d275f85745b06aea92f8ffe4256fa9}
+      \strng{bibnamehash}{05d25b974803365a5c3bc564ef1819b9}
+      \strng{authorbibnamehash}{05d25b974803365a5c3bc564ef1819b9}
+      \strng{authornamehash}{05d25b974803365a5c3bc564ef1819b9}
+      \strng{authorfullhash}{13d275f85745b06aea92f8ffe4256fa9}
+      \strng{authorfullhashraw}{13d275f85745b06aea92f8ffe4256fa9}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Internet of Things Journal}
+      \field{number}{6}
+      \field{title}{Deceptive attack and defense game in honeypot-enabled networks for the internet of things}
+      \field{volume}{3}
+      \field{year}{2016}
+      \field{pages}{1025\bibrangedash 1035}
+      \range{pages}{11}
+    \endentry
+    \entry{leyton2008essentials}{book}{}{}
+      \name{author}{2}{}{%
+        {{hash=91d47c0d6ebf96d50082140932162381}{%
+           family={Leyton-Brown},
+           familyi={L\bibinithyphendelim B\bibinitperiod},
+           given={Kevin},
+           giveni={K\bibinitperiod}}}%
+        {{hash=774e2e16526f33f383bed004b13bf326}{%
+           family={Shoham},
+           familyi={S\bibinitperiod},
+           given={Yoav},
+           giveni={Y\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Morgan \& Claypool Publishers}%
+      }
+      \strng{namehash}{3bce5ed745b51b567bf516adbb0fd3d1}
+      \strng{fullhash}{3bce5ed745b51b567bf516adbb0fd3d1}
+      \strng{fullhashraw}{3bce5ed745b51b567bf516adbb0fd3d1}
+      \strng{bibnamehash}{3bce5ed745b51b567bf516adbb0fd3d1}
+      \strng{authorbibnamehash}{3bce5ed745b51b567bf516adbb0fd3d1}
+      \strng{authornamehash}{3bce5ed745b51b567bf516adbb0fd3d1}
+      \strng{authorfullhash}{3bce5ed745b51b567bf516adbb0fd3d1}
+      \strng{authorfullhashraw}{3bce5ed745b51b567bf516adbb0fd3d1}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Essentials of game theory: A concise multidisciplinary introduction}
+      \field{year}{2008}
+    \endentry
+    \entry{li2019game}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=2af761d9bef859ea29248418adce0dd7}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Yang},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=14b22d43afdfc9b0a1d9ffda6744a1a4}{%
+           family={Shi},
+           familyi={S\bibinitperiod},
+           given={Leyi},
+           giveni={L\bibinitperiod}}}%
+        {{hash=cc6f13e45a93c35d13d7c2f771909387}{%
+           family={Feng},
+           familyi={F\bibinitperiod},
+           given={Haijie},
+           giveni={H\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {MDPI}%
+      }
+      \strng{namehash}{f8fe98e4a1c9190d9ae3cef01779843e}
+      \strng{fullhash}{f8fe98e4a1c9190d9ae3cef01779843e}
+      \strng{fullhashraw}{f8fe98e4a1c9190d9ae3cef01779843e}
+      \strng{bibnamehash}{f8fe98e4a1c9190d9ae3cef01779843e}
+      \strng{authorbibnamehash}{f8fe98e4a1c9190d9ae3cef01779843e}
+      \strng{authornamehash}{f8fe98e4a1c9190d9ae3cef01779843e}
+      \strng{authorfullhash}{f8fe98e4a1c9190d9ae3cef01779843e}
+      \strng{authorfullhashraw}{f8fe98e4a1c9190d9ae3cef01779843e}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Future Internet}
+      \field{number}{3}
+      \field{title}{A game-theoretic analysis for distributed honeypots}
+      \field{volume}{11}
+      \field{year}{2019}
+      \field{pages}{65}
+      \range{pages}{1}
+    \endentry
     \entry{Liang2013}{article}{}{}
       \name{author}{2}{}{%
         {{hash=95cf580836df90c56a38079eb8029b77}{%
@@ -774,6 +1138,38 @@
       \field{year}{2005}
       \field{pages}{71\bibrangedash 86}
       \range{pages}{16}
+    \endentry
+    \entry{mac1971categories}{book}{}{}
+      \name{author}{2}{}{%
+        {{hash=d35756c9f39a938d9533376dfaa5ad43}{%
+           family={Mac\bibnamedelima Lane},
+           familyi={M\bibinitperiod\bibinitdelim L\bibinitperiod},
+           given={Saunders},
+           giveni={S\bibinitperiod}}}%
+        {{hash=d35756c9f39a938d9533376dfaa5ad43}{%
+           family={MacLane},
+           familyi={M\bibinitperiod},
+           given={Saunders},
+           giveni={S\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{a88371111dc0cfe3d97e9d4ac451fe24}
+      \strng{fullhash}{a88371111dc0cfe3d97e9d4ac451fe24}
+      \strng{fullhashraw}{a88371111dc0cfe3d97e9d4ac451fe24}
+      \strng{bibnamehash}{a88371111dc0cfe3d97e9d4ac451fe24}
+      \strng{authorbibnamehash}{a88371111dc0cfe3d97e9d4ac451fe24}
+      \strng{authornamehash}{a88371111dc0cfe3d97e9d4ac451fe24}
+      \strng{authorfullhash}{a88371111dc0cfe3d97e9d4ac451fe24}
+      \strng{authorfullhashraw}{a88371111dc0cfe3d97e9d4ac451fe24}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Categories for the working mathematician}
+      \field{volume}{5}
+      \field{year}{1971}
     \endentry
     \entry{Manshaei2013}{article}{}{}
       \name{author}{5}{}{%
@@ -1165,6 +1561,41 @@
       \field{journaltitle}{arXiv preprint arXiv:1809.00738}
       \field{title}{Categories of optics}
       \field{year}{2018}
+    \endentry
+    \entry{tan2022a}{thesis}{}{}
+      \name{author}{2}{}{%
+        {{hash=2ca377c2911fee6d6da5222856cd5fcc}{%
+           family={Tan},
+           familyi={T\bibinitperiod},
+           given={JZ},
+           giveni={J\bibinitperiod}}}%
+        {{hash=9fe5cdf69e7c21fb4768948b13101d02}{%
+           family={Abramsky},
+           familyi={A\bibinitperiod},
+           given={S},
+           giveni={S\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {University of Oxford}%
+      }
+      \list{publisher}{1}{%
+        {University of Oxford}%
+      }
+      \strng{namehash}{6c736532f1d244bc9151db9db96ecb25}
+      \strng{fullhash}{6c736532f1d244bc9151db9db96ecb25}
+      \strng{fullhashraw}{6c736532f1d244bc9151db9db96ecb25}
+      \strng{bibnamehash}{6c736532f1d244bc9151db9db96ecb25}
+      \strng{authorbibnamehash}{6c736532f1d244bc9151db9db96ecb25}
+      \strng{authornamehash}{6c736532f1d244bc9151db9db96ecb25}
+      \strng{authorfullhash}{6c736532f1d244bc9151db9db96ecb25}
+      \strng{authorfullhashraw}{6c736532f1d244bc9151db9db96ecb25}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Institutions under composition}
+      \field{type}{phdthesis}
+      \field{year}{2022}
     \endentry
     \entry{wellman2006methods}{inproceedings}{}{}
       \name{author}{1}{}{%

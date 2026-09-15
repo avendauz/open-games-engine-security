@@ -1,0 +1,78 @@
+----Analytics begin----
+Player: Alice
+Optimal Move: Access
+Current Strategy: fromFreqs [(Access,1.0)]
+Optimal Payoff: 149.09300736
+Current Payoff: 149.09300736
+Observable State: (Attacker,Access,Open)
+Unobservable State: "((((),(Access,Open,Attacker)),(Attacker,Access,Open)),(Attacker,Access,Open))"
+ --other game-- 
+Player: Alice
+Optimal Move: DoesNotAccess
+Current Strategy: fromFreqs [(Access,1.0)]
+Optimal Payoff: 0.0
+Current Payoff: 0.0
+Observable State: (User,Access,Open)
+Unobservable State: "((((),(Access,Open,User)),(User,Access,Open)),(User,Access,Open))"
+ --other game-- 
+ --No more information--
+ NEWGAME: 
+
+Player: A
+Optimal Move: Open
+Current Strategy: fromFreqs [(Open,1.0)]
+Optimal Payoff: 6408.514433024
+Current Payoff: 6408.514433024
+Observable State: (Access,Open)
+Unobservable State: "((((),(Access,Open,Attacker)),(Attacker,Access,Open,Access)),(Access,Open))"
+ --other game-- 
+Player: A
+Optimal Move: Open
+Current Strategy: fromFreqs [(Open,1.0)]
+Optimal Payoff: 6408.514433024
+Current Payoff: 6408.514433024
+Observable State: (Access,Open)
+Unobservable State: "((((),(Access,Open,User)),(User,Access,Open,Access)),(Access,Open))"
+ --other game-- 
+ --No more information--
+ NEWGAME: 
+----Analytics end----
+----Analytics begin----
+Player: Alice
+Optimal Move: Access
+Current Strategy: fromFreqs [(Access,1.0)]
+Optimal Payoff: 109.09300736
+Current Payoff: 109.09300736
+Observable State: (Attacker,DoesNotAccess,Open)
+Unobservable State: "((((),(DoesNotAccess,Open,Attacker)),(Attacker,DoesNotAccess,Open)),(Attacker,DoesNotAccess,Open))"
+ --other game-- 
+Player: Alice
+Optimal Move: DoesNotAccess
+Current Strategy: fromFreqs [(Access,1.0)]
+Optimal Payoff: 0.0
+Current Payoff: 0.0
+Observable State: (User,DoesNotAccess,Open)
+Unobservable State: "((((),(DoesNotAccess,Open,User)),(User,DoesNotAccess,Open)),(User,DoesNotAccess,Open))"
+ --other game-- 
+ --No more information--
+ NEWGAME: 
+
+Player: A
+Optimal Move: Open
+Current Strategy: fromFreqs [(Close,1.0)]
+Optimal Payoff: 6408.514433024
+Current Payoff: 3829.5144330239996
+Observable State: (DoesNotAccess,Open)
+Unobservable State: "((((),(DoesNotAccess,Open,Attacker)),(Attacker,DoesNotAccess,Open,Access)),(DoesNotAccess,Open))"
+ --other game-- 
+Player: A
+Optimal Move: Open
+Current Strategy: fromFreqs [(Close,1.0)]
+Optimal Payoff: 6408.514433024
+Current Payoff: 3829.5144330239996
+Observable State: (DoesNotAccess,Open)
+Unobservable State: "((((),(DoesNotAccess,Open,User)),(User,DoesNotAccess,Open,Access)),(DoesNotAccess,Open))"
+ --other game-- 
+ --No more information--
+ NEWGAME: 
+----Analytics end----

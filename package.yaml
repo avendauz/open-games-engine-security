@@ -41,7 +41,7 @@ library:
     - Examples.Markov.TestSimpleMonteCarlo
     - Examples.Markov.TestSimpleMonteCarlo.Continuation
     - IDS.IDSDeception
-    - IDS.IDSA
+    - IDS.IDSA    
 dependencies:
     - base >=4.7 && <5
     - mtl

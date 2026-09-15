@@ -11,7 +11,7 @@ import OpenGames.Preprocessor hiding (line)
 import Test.Hspec
 import IDS.IDSA
 import IDS.IDSAStrategies
-import Security.ParameterBuilder
+import Security.ParameterBuilder ( instantiateContext )
 import IDS.IDSAPayoff
 import IDS.IDSAPayoffHP
 import OpenGames.Engine.Diagnostics
@@ -64,6 +64,9 @@ main = hspec $ do
         
         it "improves performance by having more defensive resources for some strategies" $ 
             property $ \params -> or [getIDSHPPayoff x y params > getIDSPayoff params | x <- [0, 0.1 .. 1], y <- [0, 0.1 .. 1]]
+    describe "Basic tests" $ do 
+        it "should deter attacks when the probability of a honeypot is 1" $ 
+            property $ 
     -- describe "repeated games" $ do 
     --     it "should have a stationary equilibrium" $ property $ 
     --         \x -> doRepeatedEvaluation exampleData x 3

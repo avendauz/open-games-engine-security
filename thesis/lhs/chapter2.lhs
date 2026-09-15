@@ -3,9 +3,9 @@
 \subsection{Overview}
 The previous chapter identified compositional patterns amongst a series of related game theoretic models for cybersecurity problems. But the process for analyzing the behaviour of the model requires additional work, specifically as the model increases in complexity. 
 
-In this chapter, we show how to use the Haskell environment to generate parameters and specify the parameter space of games. Therefore, after using the DSL to con
+In this chapter, we show how to use the Haskell environment to generate parameters and specify the parameter space of games. Afterwords, compatible games written in the DSL can be simulated using these parameters.
 
-There are many computational tools that exist in order to solve for equilibria, produce extensive-form game-trees, and SMT-solvers. But what we would like to outline in this chapter is being able to simultaneously generate games in a declarative manner, where the game formulation process is aided by the open games Haskell DSL. In this chapter we'll see how after a few attempts, generalizing these patterns allow for model \textit{reproducability} and \textit{reusability}, ultimately culminating in a small library of 2-player security games. We will see how this simple subset of game scan be used to rapidly generate game theoretic models in a variety of settings. By leveraging abstract data types, polymorphism, and the reader monad, we can parameterize these models with modules that help organize payoff modules and strategies. 
+There are many computational tools that exist in order to solve for equilibria, produce extensive-form game-trees, and SMT-solvers. But what we would like to outline in this chapter is being able to simultaneously generate games in a declarative manner, where the game formulation process is aided by the open games Haskell DSL. We'll see how after a few attempts, generalizing these patterns allow for model \textit{reproducability} and \textit{reusability}, ultimately culminating in a small library of 2-player security games. We will see how this simple subset of game scan be used to rapidly generate game theoretic models in a variety of settings. By leveraging abstract data types, polymorphism, and the reader monad, we can parameterize these models with modules that help organize payoff modules and strategies. 
 
 Providing a small subset of games as a library, this falls short of a clear-cut executable script for a predetermined model. Part of developing or extending a model could be better 
 
@@ -14,9 +14,11 @@ Providing a small subset of games as a library, this falls short of a clear-cut 
 \subsection{Current state-of-the-art for open games}
 This thesis draws on a key motivation proposed by Zahn in \cite{ZahnCybercat}, towards the synthesis of an encoded library of microeconomic models. The process of developing the "correct" model is therefore framed as a software engineering problem. The open-games-engine has demonstrated its use verifying the most recognizable game theory problems like Prisoner's Dilemma, to auction mechanisms. A series of these models have been met with production-level directions, and a codebase of models have grown. While this thesis departs from the application of this field towards cybersecurity, the bulk of the work that is presented here is an attempt to give guidelines for using the open-games-engine effectively. Specifically, the interdisciplinary and workflow possibilities that are provided by producing models in this environment, achieving easy maneuverability and testing that fits naturally with the requirements for synthesizing effective security models. 
 
-\cite{20squares} has a series of completed projects for auctions and blockchain staking protocols. Capturing the complexity of models with open games is shown in these previous projects, but this chapter will deliberate on formalizing common techniques used to generate these models. I invite readers to refer to the README for \cite{20squares} projects for the syntax of the open-games DSL and common operators that can be used. 
+\cite{20squares} has a series of completed projects for auctions and blockchain staking protocols. Capturing the complexity of models with open games is shown in these previous projects, but this chapter will deliberate on formalizing common techniques used to generate these models. We invite readers to refer to the README for \cite{20squares} projects for the syntax of the open-games DSL and common operators that can be used. 
 
-\subsection{Formalizing Stackelberg equilibrium in open games}
+Most recently, \cite{tan2022a} demonstrates the open-games-engine use-case for modular law and contracting clauses as a software library \textit{Clause2Game}. The resultant data sets already begin to hint at the need for a methodology for "closing games" with equilibrium analysis driven by random initial conditions using |Test.QuickCheck.Gen|
+
+% \subsection{Formalizing Stackelberg equilibrium in open games}
 
 \subsubsection{Related work}
 The most recent work that uses software-assisted tools for Stackelberg security games is \cite{Phetmanee2024}, using rational verification. Rational verification is a formal-analysis technique for determining the equilibrium properties of multiagent systems. Specifically by encoding these properties in Linear Temporal Logic, practitioners can use model-checkers such as PRISM to verify that given models satisfy properties. After writing these propositions, PRISM can act as an equilibrium checker by checking all possible states of the game. In particular, \cite{Phetmanee2024} extends the PRISM framework to demonstrate the security properties detailed in CVE-2017-8759, and generates data demonstrating the defensive conditions and recommendations for security advisors. 
@@ -63,7 +65,6 @@ Open for extension ,closed for modification. The hallmark of this design strateg
 Having a modular language allows us to construct games open for extension, by interacting with the interfaces exposed by each game. 
 
 IDEA: We want to encode our "assumptions" such as paraemter bounds, sign, and relative values. We cna quickcheck these as part of the simulation process in order to preliminarily check that test parameters used for simulation accurately reflect the given values. 
-\subsubsection{Separation of concerns}
 
 \subsection{Designing payoffs}
 Based on examples provided in \cite{Zahn2024}, some of the following design patterns can be recognized:
@@ -97,69 +98,17 @@ runPayoff params reader = runReader reader params
 
 Notice the parametric type \textit{a}, so we can define a \textit{PayoffReader} for any ADT containing exogenous model parameters. This supports the system-level-first architecture that allows a modeller to introduce relevant variables that are not directly involved and subject to manipulation separate from the interworkings of the open game model. Thus, we can actively test how different payoff schemes affect our game model, either by (1) testing the same game with different system variables or (2) the same system variables with different player capabilities. We can characterize a payoff profile's dependence on two things: the outputs of the open game, and the variables accessible with the \textit{PayoffReader}.
 
-To start with writing payoffs according to the outputs of a game, we can consider the running Bayesian security game example from the previous chapter. Already we can consider branching the payoff functions into helpers associated with each type of player, and pattern-match on these types. If we use the preset template from the Security module, the set of two-player security games requires a \textit{PayoffReader} for each attacker and defender. Then at the execution-level of the game, which runs against the model-level parameters, we use these parameters to instantiate the readers (in this case, \textit{IDSParams}). Thanks to the type-checker, the output type of the model should provide the modeller with the requirements for this \textit{PayoffReader} constructor. In this example, we can define the payoffs as follows: 
-
-% \begin{hscode}\SaveRestoreHook
-% 	\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-% 	\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-% 	\column{14}{@{}>{\hspre}l<{\hspost}@{}}%
-% 	\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-% 	\>[B]{}\Varid{visitorPayoff}\mathbin{::}\Conid{VisitorType}\to \Conid{VisitorMove}\to \Conid{DefenderMove}\to \Conid{PayoffReader}\;\Conid{IDSParams}{}\<[E]%
-% 	\\
-% 	\>[B]{}\Varid{visitorPayoff}\mathrel{=}\lambda \mathbf{case}\;\{\mskip1.5mu {}\<[E]%
-% 	\\
-% 	\>[B]{}\hsindent{5}{}\<[5]%
-% 	\>[5]{}\Conid{Attacker}\to \Varid{attackerPayoff};{}\<[E]%
-% 	\\
-% 	\>[B]{}\hsindent{5}{}\<[5]%
-% 	\>[5]{}\Conid{User}\to {}\<[14]%
-% 	\>[14]{}\Varid{userPayoff}{}\<[E]%
-% 	\\
-% 	\>[B]{}\mskip1.5mu\}{}\<[E]%
-% 	\\[\blanklineskip]%
-% 	\>[B]{}\Varid{defenderPayoff}\mathbin{::}\Conid{VisitorType}\to \Conid{VisitorMove}\to \Conid{DefenderMove}\to \Conid{PayoffReader}\;\Conid{IDSParams}{}\<[E]%
-% 	\\
-% 	\>[B]{}\Varid{defenderPayoff}\mathrel{=}\lambda \mathbf{case}\;\{\mskip1.5mu {}\<[E]%
-% 	\\
-% 	\>[B]{}\hsindent{5}{}\<[5]%
-% 	\>[5]{}\Conid{Attacker}\to \Varid{defenderUnderAttackPayoff};{}\<[E]%
-% 	\\
-% 	\>[B]{}\hsindent{5}{}\<[5]%
-% 	\>[5]{}\Conid{User}\to \Varid{defenderNormalPayoff};{}\<[E]%
-% 	\\
-% 	\>[B]{}\mskip1.5mu\}{}\<[E]%
-% 	\ColumnHook
-% \end{hscode}\resethooks
+To start with writing payoffs according to the outputs of a game, we can consider the running Bayesian security game example from the previous chapter. Already we can consider branching the payoff functions into helpers associated with each type of player, and pattern-match on these types. If we use the preset template from the Security module, the set of two-player security games requires a \textit{PayoffReader} for each attacker and defender. Then at the execution-level of the game, which runs against the model-level parameters, we use these parameters to instantiate the readers (in this case, \textit{IDSParams}). Thanks to the type-checker, the output type of the model should provide the modeller with the requirements for this \textit{PayoffReader} constructor.
 
 The type signature of each of these functions corresponds to the output of the completed open game. Then, we can use helper functions associated with each matched type and define the payoff accordingly. Since we've instantiated the reader with our exogenous parameters, the bottom-level of our payoff functions have access to the data of \textit{IDSParams}. Refer to \textbf{IDS/IDSAPayoff.hs} for the complete implementation.
 
-A key feature of using the reader monad is having fine-tuned control over these parameters without worrying about changing them. And if we do need to change them, it's explicit. Consider the payoff scheme used to slightly adapt the previous example by allowing the defender to not just open or close, but deploy two different kinds of honeypots or remain open under normal operation in \textbf{IDS/IDSAHPPayoff.hs}, 
-
-% \begin{hscode}\SaveRestoreHook
-% 	\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-% 	\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-% 	\column{14}{@{}>{\hspre}l<{\hspost}@{}}%
-% 	\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-% 	\>[B]{}\Varid{defenderPayoffHP}\mathbin{::}\Conid{VisitorType}\to \Conid{VisitorMove}\to \Conid{HoneypotDeploymentMove}\to \Conid{PayoffReader}\;\Conid{IDSParams}{}\<[E]%
-% 	\ColumnHook
-% \end{hscode}\resethooks
-
-The type signature only differs in the third argument to the payoff functions. Intuitively, I will have to write the same pattern-matching structure but over the new datatype \textit{HoneypotDeploymentMove}, but the computation of payoff shouldn't have to be rewritten explicitly. Since in my model, deploying a high-interaction honeypot increases the probability of detecting an adversary, this can be reflected by locally altering the \textit{IDSParams} before using the same formula from IDSAPayoff. So given a \textit{HoneypotDeploymentMove}, I want to update my \textit{PayoffReader} with an augmentation function such as: 
-
-% \begin{hscode}\SaveRestoreHook
-% 	\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-% 	\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-% 	\>[B]{}\Varid{augmentDetectionProb}\mathbin{::}\Conid{HoneypotDeploymentMove}\to (\Conid{PayoffReader}\;\Conid{IDSParams}\to \Conid{PayoffReader}\;\Conid{IDSParams}){}\<[E]%
-% 	\\
-% 	\>[B]{}\Varid{augmentDetectionProb}\;\Conid{HighInteractionHP}\mathrel{=}\Varid{local}\;(\lambda \Varid{params}\to \Varid{params}\;\{\mskip1.5mu \Varid{probDetected}\mathrel{=}\Varid{probDetected}\;\Varid{params}\mathbin{*}\mathrm{1.4}\mskip1.5mu\}){}\<[E]%
-% 	\\
-% 	\>[B]{}\Varid{augmentDetectionProb}\;\Conid{LowInteractionHP}\mathrel{=}\Varid{local}\;(\lambda \Varid{params}\to \Varid{params}\;\{\mskip1.5mu \Varid{probDetected}\mathrel{=}\Varid{probDetected}\;\Varid{params}\mathbin{*}\mathrm{1.25}\mskip1.5mu\}){}\<[E]%
-% 	\\
-% 	\>[B]{}\Varid{augmentDetectionProb}\;\Conid{Normal}\mathrel{=}\Varid{id}{}\<[E]%
-% 	\ColumnHook
-% \end{hscode}\resethooks
 
 
+\begin{mdframed}
+   \begin{example}
+      A key feature of using the reader monad is having fine-tuned control over these parameters without worrying about changing them. And if we do need to change them, it's explicit. Consider the payoff scheme used to slightly adapt the previous example by allowing the defender to not just open or close, but deploy two different kinds of honeypots or remain open under normal operation in \textbf{IDS/IDSAHPPayoff.hs}, 
+
+The type signature only differs in the third argument to the payoff functions. Intuitively, we will have to write the same pattern-matching structure but over the new datatype \textit{HoneypotDeploymentMove}, but the computation of payoff shouldn't have to be rewritten explicitly. Since in our model, deploying a high-interaction honeypot increases the probability of detecting an adversary, this can be reflected by locally altering the \textit{IDSParams} before using the same formula from \textbf{IDSAPayoff}. So given a \textit{HoneypotDeploymentMove}, I want to update my \textit{PayoffReader} with an augmentation function such as: 
 
 To demonstrate the breadth of this granularity, we observe the following example for designing payoffs derived from an initial problem statement.
 
@@ -168,8 +117,9 @@ To demonstrate the breadth of this granularity, we observe the following example
 	\item Assumption: the defender can either allow traffic or close the server 
 \end{enumerate}
 
-The factors that we consider that dictates the payoff would be included in the global config instantiating the model as a Haskell record type. Here, without having to change this global config, I use \textit{local} to adjust the detection probability. 
-
+The factors that we consider that dictates the payoff would be included in the global config instantiating the model as a Haskell record type. Here, without having to change this global config, we use |local| to adjust the detection probability. 
+   \end{example}
+\end{mdframed}
 
 \subsubsection{Repeated payoff game structures}
 As elaborated in \cite{Hedges2019}, we can introduce infinitely-repeated games by conditioning an open game according to some set we'll denote \textit{A}. For our purposes, we can consider conditioning a game by all the possible outcomes played in a stage game, whilst discounting the payoffs at each stage by some $\alpha$. 
@@ -226,5 +176,5 @@ repeatedPayoffGame params payoffReader1 payoffReader2 = [opengame|
           calculateCurrDefenderPayoff x y z = runPayoff params (payoffReader2 x y z)
 
 \end{code}
-\subsection{Collaboration}
-To conceptualize the game requires a translation of the security situation to the game-theoretic situation. Whether we choose tractable solutions like payoffs corresponding to server up-time, there is a need for some system in order to communicate this information. Furthermore, specifications... As demonstrated, we would like reproducability and modularity to rapidly provide analytics according to specifications. (SOURCE CONTROL)
+
+

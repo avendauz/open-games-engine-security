@@ -36,7 +36,7 @@ import IDS.IDSModel
 import IDS.IDSAStrategies
 import Graphics.Rendering.Chart.Easy hiding (Close)
 import Graphics.Rendering.Chart.Backend.Diagrams(toFile)
-
+import IDS.Recursive
 distributionUser = 
   f . priorDistributionAttacker
   where f probAttacker = distFromList [(Attacker, probAttacker), (User, 1 - probAttacker)]
@@ -101,10 +101,18 @@ doRepeatedEvaluation params x n startingState =
         strategies
         (instantiateRepeatedContext x n strategies startingState [0, 0] (idsRepeatedStage params))
     where strategies = repeatedStrategies;
+stageGame params = (repeatedStage 
+            actionSpaceAttacker "Alice" actionSpaceDefender "A" (repeatedPayoffGame params visitorPayoff defenderPayoff))
+doRecursiveEvaluation params x startingState = 
+    evaluate 
+      (repeatFinite 10 (stageGame params)) (instantiateRepeatedContext x 10 strategies startingState [0, 0] (stageGame params))
+      where strategies = repeatedStrategies
 
-totalEval = writeFile "./src/IDS/Test.txt" f
-  where f = concatMap (generateOutputString . doRepeatedEvaluation exampleData 0.6 5) [(Access, Open), (DoesNotAccess, Open)] 
+totalEval = writeFile "./src/IDS/Test1.txt" f
+  where f = concatMap (generateOutputString . doRepeatedEvaluation exampleData 0.6 10) [(Access, Open), (DoesNotAccess, Open)] 
 
+-- recursiveEval = writeFile "./src/IDS/TestRecursive.txt" f 
+--   where f = concatMap (generateOutputString . doRecursiveEvaluation exampleData 0.6 10) [(Access, Open), (DoesNotAccess, Open)]
 propEq x = doRepeatedEvaluation x
 priorAttacker = [0.01, 0.05 .. 0.95]
 

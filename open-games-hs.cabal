@@ -70,6 +70,7 @@ library
       IDS.IDSAStochastic
       IDS.IDSAStrategies
       IDS.IDSModel
+      IDS.Recursive
       IDS.SeparatingEquilibrium
       IDS.Temp
       IDS.TransitionSystem
@@ -77,6 +78,7 @@ library
       OpenGames.Engine.ExternalEnvironment
       OpenGames.Engine.IOGames
       Security.AttackerDefender
+      Security.BiasedCoin
       Security.Evaluator
       Security.ParameterBuilder
       Security.SignallingExample

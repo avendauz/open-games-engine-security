@@ -40,8 +40,56 @@ import Security.SignallingExample (idGame)
 data GiveTypes = T1 | T2 deriving (Eq, Ord, Show)
 data FirstMover = L | R deriving (Eq, Ord, Show)
 data SecondMover = U | D deriving (Eq, Ord, Show)
+data StickToIt = StickTo | Deviate deriving (Eq, Ord, Show)
 natureMove = nature $ distFromList [(T1, 0.6), (T2, 0.4)]
+priorBelief = nature $ distFromList [(StickTo, 0.5), (Deviate, 0.5)]
+data ManType = RealMan | Wimp deriving (Eq, Ord, Show)
+quicheAssign = nature $ distFromList [(RealMan, 0.6), (Wimp, 0.4)]
+beerQuichePayoff :: ManType -> FirstMover -> SecondMover -> (Double, Double) 
+beerQuichePayoff RealMan L U = (0, -1)
+beerQuichePayoff RealMan L D = (2, 0)
+beerQuichePayoff Wimp L U = (1, 1)
+beerQuichePayoff Wimp L D = (3, 0)
+beerQuichePayoff RealMan R U = (1, -1)
+beerQuichePayoff RealMan R D = (3, 0)
+beerQuichePayoff Wimp R U = (0, 1)
+beerQuichePayoff Wimp R D = (2, 0)
 
+quichGame = [opengame|
+   inputs : ;
+   feedback: ;
+   :----------------------------:
+   inputs: ;
+   feedback: ;
+   operation: quicheAssign;
+   outputs: firstMoverType;
+   returns: ;
+
+   inputs: firstMoverType;
+   feedback: ;
+   operation: dependentDecision "first" (const [L, R]);
+   outputs: attackerDecision;
+   returns: fst $ beerQuichePayoff firstMoverType attackerDecision defenderDecision;
+
+   inputs: attackerDecision;
+   feedback: ;
+   operation: dependentDecision "second" (const [U,D]);
+   outputs: defenderDecision;
+   returns: snd $ beerQuichePayoff firstMoverType attackerDecision defenderDecision;
+
+   :----------------------------:
+
+   outputs: ;
+   returns: ;
+
+|]
+runQuicheGame strats = generateOutput $ evaluate quichGame strats void
+poolingStrats = first ::- second ::- Nil 
+  where first = Kleisli $ const $ playDeterministically R 
+        second = Kleisli (\case {
+          R -> playDeterministically U;
+          L -> playDeterministically D;
+        })
 payoffsFirstMover :: GiveTypes -> FirstMover -> SecondMover -> Double 
 payoffsFirstMover T1 L U = 2
 payoffsFirstMover T1 L D = 2
@@ -49,7 +97,8 @@ payoffsFirstMover T2 L U = 4
 payoffsFirstMover T2 L D = 2
 payoffsFirstMover T1 R U = 5
 payoffsFirstMover T1 R D = 3
-payoffsFirstMover T2 R U = 2
+-- payoffsFirstMover T2 R U = 2
+payoffsFirstMover T2 R U = 4
 payoffsFirstMover T2 R D = 3
 
 payoffsSecondMover :: GiveTypes -> FirstMover -> SecondMover -> Double 
@@ -64,15 +113,28 @@ payoffsSecondMover T2 R D = 1
 
 firstMoverStrat :: Kleisli Stochastic GiveTypes FirstMover
 firstMoverStrat = Kleisli (\case {
-    T1 -> distFromList [(R, 0.5), (L, 0.5)] ;
+    -- T1 -> distFromList [(R, 0.5), (L, 0.5)] ;
+    T1 -> playDeterministically R ;
     T2 -> playDeterministically R
 })
 secondMoverStrat :: Kleisli Stochastic FirstMover SecondMover
 secondMoverStrat = Kleisli (\case {
-    R -> playDeterministically U ; 
+    R -> playDeterministically U ;
+    -- R -> distFromList [(U, 0.5), (D, 0.5)] ;
     L -> playDeterministically D 
 })
 
+signallingGame :: OpenGame
+  StochasticOptic
+  StochasticContext
+  '[Kleisli Stochastic GiveTypes FirstMover,
+    Kleisli Stochastic FirstMover SecondMover]
+  '[[DiagnosticInfoBayesian GiveTypes FirstMover],
+    [DiagnosticInfoBayesian FirstMover SecondMover]]
+  ()
+  ()
+  ()
+  ()
 signallingGame = [opengame|
    inputs : ;
    feedback: ;

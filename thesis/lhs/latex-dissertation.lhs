@@ -12,6 +12,7 @@
 \usepackage[backend=biber, style=numeric-comp]{biblatex}
 \usepackage{xcolor}
 \usepackage{etoolbox}
+\usepackage{tabularx}
 \addbibresource{bibliography.bib}
 
 % MACROS 
@@ -50,6 +51,12 @@
 %   \renewcommand{\Conid}[1]{{\color{funcColor}\texttt{#1}}}
 %   \renewcommand{\Varid}[1]{{\color{typeColor}\texttt{#1}}}
 % }
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=false,  
+    pdfborder={0 0 1},  
+    allbordercolors=red 
+}
 
 % 
 %--------------------------------
@@ -117,13 +124,14 @@
 \setstretch{1.5} % 1.5 line spacing. 
 
 %-------------- PRELIMINARIES ------------------
+%include introduction.lhs
+
 %include preliminaries.lhs
 
-%include chapter1.lhs
+%include howToOpenGame.lhs
 
-%include chapter2.lhs
+%include designpatterns.lhs
 
-%include chapter3.lhs
 \include{cyberbattlesim.tex}
 
 %--------------------------------
