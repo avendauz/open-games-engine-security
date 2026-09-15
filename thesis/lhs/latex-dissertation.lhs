@@ -132,7 +132,7 @@
 
 %include designpatterns.lhs
 
-\include{cyberbattlesim.tex}
+\include{othermethods.tex}
 
 %--------------------------------
 % Bibliography

@@ -36,7 +36,7 @@ So beyond developing a system to just construct security games from smaller ones
 
 %For example, consider Figure 2. of a multi-layered security setting from \cite{Jin2018}, strategic interactions are composed graphically as a self-reinforced communication between communicating IDSs and an administrative IDS. 
 
-Resonating the direction provided by \cite{Zhu2024}, \cite{Zhu2025}, \cite{Egan2025}, there is a need to promote cross-collaboration and platforms for better integration of real data. Here we build this platform by giving a wide sandbox to test out new ideas and their impact on a game-theoretic model. 
+Repeating the direction provided by \cite{Zhu2024}, \cite{Zhu2025}, \cite{Egan2025}, there is a need to promote cross-collaboration and platforms for better integration of real data. Here we build this platform by giving a wide sandbox to test out new ideas and their impact on a game-theoretic model. 
 
 
 

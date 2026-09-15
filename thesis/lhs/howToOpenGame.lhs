@@ -1,4 +1,5 @@
 \section{Working with open games}
+
 \subsection{Introduction}
 We'll begin by recounting the construction of open games up to its current implementation. The goal of this section is to present the definitions that are used, and then to explain 
 how to read the corresponding implementation, especially the various types and frequently-used functions. The hope is 
@@ -186,18 +187,6 @@ class Optic o where
 \end{code}
 
 which we can parameterize with the datatype |StochasticOptic| to get our desired operations for "stochastic optics," located in |OpenGames.Engine.OpticClass|. Optic sequential and parallel composition will form the basis of how agent's game-theoretic behaviour compose, with extra details about how to interpret their local contexts given in the next section. We'll also use this opportunity to show how these optics plug together using the type parameters. First, note the type of |(>>>>)| enforces that the output type |a| and the contravariant input type |b| of the first optic correspond to the input type and the contravariant output type of the second optic. Similarly, the type of |(&&&&)| enforces that each of the input and output types are tupled together. Most IDEs will give a pop-up corresponding to the \textbf{ghc} typechecker to help a user line these types up when usingthese operations, or a direct error message will be given when trying to compile in \textbf{ghci}.  
-
-% \begin{mdframed}
-
-% \begin{example}[Composition of Bayesian inverse]\label{example:bayesian-updating}
-
-% We can use the |Optic StochasticOptic| class to facilitate composition of Baye's rule, see \cite{braithwaite2023compositional} for the specific category of \textit{Bayesian lenses} for some fixed initial distribution. Since we're in the discrete case, we can calculate the Bayesian inverse between two random variables $X$ and $Y$ as $P(X @|@ Y) = P(X, Y) \div P(Y)$ 
-
-% Assume we have an observation $X$, conditional distribution 
-
-% \end{example}
-% \end{mdframed}
-
 
 
 \subsection{Open games}
