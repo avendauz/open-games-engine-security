@@ -1,5 +1,5 @@
 \section{Working with open games}
-
+\label{sec:opengames}
 \subsection{Introduction}
 We'll begin by recounting the construction of open games up to its current implementation. The goal of this section is to present the definitions that are used, and then to explain 
 how to read the corresponding implementation, especially the various types and frequently-used functions. The hope is 
@@ -124,7 +124,7 @@ In the classic game-theoretic sense, this strategy assigns some probabilistic ac
 
 \begin{mdframed}
 \begin{example}[Honeypot allocation randomization]
-Say we want to describe a defensive strategy that deploys a high interaction honeypot 75\% of the time, a low-interaction honeypot 25\% of the time, and doesn't activate a honeypot 10\% of the time. We can use the helper function |distFromList| and the data type in Example \ref{example:userTypes} as our set of actions. Assuming we deploy this defensive strategy statically, without any observations, we use the type |()| to describe no input.
+Say we want to describe a defensive strategy that deploys a high interaction honeypot 75\% of the time, a low-interaction honeypot 25\% of the time, and doesn't activate a honeypot 10\% of the time. We can use the helper function |distFromList| and a data type storing each kind of honeypot as our set of actions. Assuming we deploy this defensive strategy statically, without any observations, we use the type |()| to describe no input.
 
 \begin{code}
 defensiveStrategy :: Kleisli Stochastic () Honeypot

@@ -8,7 +8,7 @@ This culminates to a metamodelling design process over the open-games-hs softwar
 	\item Section \ref{designPatterns:state} is a review detailing the need for such a design process
 	\item Section \ref{designPatterns:directTranslation} details a direct translation of models from literature to serve as a baseline and identify key issues (model reuse, scalability, replicability) that should be addressed 
 	\item Section \ref{designPatterns:library} is an introduction of three Haskell modules and one testing framework which encapsulate the design patterns that address those key issues 
-	\item Section \ref{designPatterns:Discussion} discusses project structure using the modules from \ref{designPatterns:code} and project maintenance techniques with version control
+	\item Section \ref{designPatterns:discussion} discusses project structure using the patterns defined in Section \ref{designPatterns:library} and project maintenance techniques with version control
 	\item Section \ref{designPatterns:Iterative} proposes a test-driven, iterative modelling process
 \end{itemize}
 
@@ -164,7 +164,7 @@ To accommodate the infinitely repeated game setting, we constructed two other ge
 
 
 \begin{mdframed}
-\begin{example}
+\begin{example}[Subsystem replication using template games]
 Consider the architecture of a typical IDN as seen in Figure \ref{figure:Fig. 3}. The model developed in \cite{Jin2018} is a two-layer stochastic, game between an attacker and an IDN, where the states of the game are defined by the status of each subsystem. Here, the assumption is that the capabilities of each of the IDSs and their respective attackers as homogenous, but working independently. In particular in the \textit{Simulation} section, the proposed model is evaluated with a specific set of parameters in a network of three IDSs and three independent attackers. If the assumption of homogeneity was to change, the parameters used to evaluate the model must also change. Maintaining consistency across the model requires flexbility, but current game formulation techniques aren't necessarily built with the notion of seamless integration.
 
 From a security design point-of-view, this interaction between subsystems is vital, especially if a vulnerability in one system affects the defensive capabilities of another. After designing games for a subsystem, we can easily direct the flow of the result of the game to a level-higher for resource management. Designing this IDN using open games allows us to work on each subsystem separately from the aggregation mechanism. The disjoint nature of these parts allows for testing the efficacy of a different aggregation mechanisms or subsystems. Each subsystem interaction can then be instantiated as three functions using the template two-player game, but each parameterized accordingly \footnote{In order to run simulations using the constructed model formulation, the authors assigned values such as the detection libraries available to each IDS system $i$ and attacking libraries for each attacker $j$. \cite{He2015}.}. Then, the logic for the aggregation mechanism is defined as a separate open game which takes as input the outputs of the three previous functions. 
@@ -244,7 +244,7 @@ Notice the parametric type \textit{a}, so we can define a |PayoffReader| for any
 
 Already we can consider branching the payoff functions into helpers associated with each type of player, and pattern-match on these types. If we use the preset two-player template from the \textbf{Security} module, the set of two-player security games requires a |PayoffReader| for each attacker and defender. Then at the execution-level of the game, which runs against the model-level parameters, we use these parameters to instantiate the readers (in this case, |IDSParams|). Thanks to the type-checker, the output type of the model should provide the modeller with the requirements for this |PayoffReader| constructor. 
 \begin{mdframed}
-	\begin{example}
+	\begin{example}[Using the Reader monad to access exogenous parameters]
 		To design payoffs, we can start by fixing our model parameters to follow |IDSParams| datatype as defined in \textbf{Module 1}. For one such implementation of describing an attacker's payoff, we can read from our config to assign values according to the (covariant) output of an open game, in this case dependent on the attacker and defender move. Pattern matching over the results can be read as "if the attacker attempted access, and a defender did not allow it, then the attacker recieves |costOfAttack|" Note that |attackerAccessPayoff| collects the values it needs, then does a computation.
 \begin{code}
 
@@ -270,7 +270,7 @@ The implementation of \textbf{Module 2} in the \textbf{Security} library provide
 
 
 \begin{mdframed} 
-   \begin{example}
+   \begin{example}[Model adaptation along the payoff module]
       A key feature of using the reader monad is having fine-tuned control over these parameters without worrying about changing them. And if we do need to change them, it's explicit. Consider the payoff scheme used to slightly adapt the previous example by allowing the defender to not just open or close, but deploy two different kinds of honeypots or remain open under normal operation. Refer to \textbf{IDS/IDSAPayoff.hs} for the complete implementation, and \textbf{IDS/IDSAPayoffHP.hs} which explicitly adapts it. 
 
 The type signature only differs in the third argument to the payoff functions. Intuitively, we will have to write the same pattern-matching structure but over the new datatype |HoneypotDeploymentMove|, but the computation of payoff shouldn't have to be rewritten explicitly. Since in our model, deploying a high-interaction honeypot increases the probability of detecting an adversary, this can be reflected by locally altering the |IDSParams| before using the same formula from \textbf{IDSAPayoff}. So given a |HoneypotDeploymentMove|, we want to update my |PayoffReader| with an augmentation function such as: 
@@ -304,7 +304,7 @@ Here, |myProposition| would be determined by the modeller as a result of evaluat
 This module is intended to be a mixture of both a simulation script and a self-documenting specifications document. This is a vast improvement on a series of Haskell functions calling diagnostic functions on closed games. It's dynamic in the sense that tests can be added, removed, or refactored. The built-in test case generation can also provide modellers insight to how sensitive the model is to certain parameters. \footnote{For occasional graphical analysis, we used |Graphics.Rendering.Chart.Backend.Diagrams| to plot payoffs for each player using the generated data.}  
 
 \subsection{Discussion of design patterns}
-\label{designPatterns:Discussion}
+\label{designPatterns:discussion}
 Equipped with these modules to organize the development and analysis of a model, this should drastically improve the direct translation process from Section \ref{designPatterns:directTranslation}. But more than that, this provides some structure for the game formulation process which ultimately provides modellers with many advantages. 
 
 Rapid generation of models is now possible, since many models can be off-shoots or variants for any given parameterization. The result could be multiple complete games that follow a singular high-level game formulation. The relationships between these variants can be explicitly controlled where it is commonly-used in literature, namely in payoff adaptation or stage game repetition. By fixing this process, practitioners have a common-platform to interpret these models. For example, practitioner Alice may be managing their own unique security situation, for which she can use \textbf{Module 2 and 3} to codify the model parameters. Alice's colleague Bob ran similar experiments but with an older configuration so the parameterization doesn't match, but the open games developed using \textbf{Module 1} by Bob are perfectly applicable. Then Alice's job could be as simple as importing Bob's library. Any future updates can then be maintained through standard Git source control and merging working branches. A future behavioural study involving practitioners of the relevant disciplines to be introduced to this workflow, then be tasked with a model to implement, in order to evaluate the efficacy of treating would help validate (or invalidate) the goals behind these design patterns.

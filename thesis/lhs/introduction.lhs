@@ -52,3 +52,16 @@ Repeating the direction provided by \cite{Zhu2024}, \cite{Zhu2025}, \cite{Egan20
 This thesis fully embraces the Haskell for designing these cybersecurity games. By the end, we hope the reader will have benefited from an explicit account of using the open game engine in its current form. However, the software abstractions needed to engage in this workflow effectively can obfuscate the purpose of the study, namely to bridge the design and simulation of these game-theoretic models in a declarative way. While this thesis strongly persists in using software methodologies to facilitate this design process, ultimately the DSL portion and Haskell portion of this work coalesce. Nonetheless, as this study progressed, we found that Haskell language features such as using monads or property-based testing were effective for simulation, test data generation, and model parameterization. 
 
 On the other hand, a user should  be able to use the DSL as a sufficient environment for the purposes of visualizing information flow and structuring players while hiding the implementation details needed to instantiate the game. This ends up being a significant learning curve by requiring a user to translate simple real-valued reward functions to a Haskell function, or adding model parameters as part of an abstract data type. But the hope is that by adopting this layer as an intermediate language and taking the time to encode these calculations as Haskell functions, this will enable quick-and-easy compatibility of models. Thus a particular area that this thesis addresses is formalizing a "how-to" for games beyond the syntax for using the open-games DSL. 
+
+\subsection{Formatting and structure of thesis}
+
+This thesis was written in Literate Haskell and compiled using \cite{loeh2012lhs2tex} which provided the pretty typesetting for the Haskell code snippets and even allowed in-lining code. We follow a paragraph-style of writing, but intersperse some of the ideas with written code examples, which are boxed for readability. Some frequently-used Haskell datatypes that exist outside these boxes will be in-line and coloured, like |myDataType|. References to Haskell files that are implemented as part of the companion codebase to this thesis are in bold, such as \textbf{IDSModel.hs}
+
+The structure of the thesis is as follows:
+
+\begin{itemize}
+	\item Chapter \ref{sec:prelims} briefly outlines some source material and motivation to assist readers for the remainder of the thesis 
+	\item Chapter \ref{sec:opengames} analyzes the open-games-engine, gives use-case examples, and details the relevant theory
+	\item Chapter \ref{sec:designPatterns} proposes novel design patterns and a overarching workflow to generate models 
+	\item Chapter \ref{sec:multiagent} is the culmination of a 4-month internship at Telecom Paris, during which we developed a middleware to iteratively improving cybersecurity models through model-checking
+\end{itemize}

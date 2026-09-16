@@ -1,4 +1,5 @@
 \section{Preliminaries}
+\label{sec:prelims}
 \subsection{Introduction}
 The primary focus of this thesis is on developing a methodology for the game formulation of cybersecurity models using a Haskell domain-specific-language (DSL) for \textit{open games}. 
 The organization of this chapter is based on the construction of the model of computation
@@ -91,9 +92,6 @@ Treating category theory as a mechanism to interpret systems and mechanisms in o
 \subsection{Haskell and coding fundamentals}
 
 Haskell is a statically-typed, functional programming language. Since a large chunk of this work involves software design patterns, a base assumption for readers is some knowledge of Haskell. We would like to refer readers to the Haskell documentation \cite{haskelldocs}, for which everything up to abstract data types, monads, hspec would all be useful to understand the code examples. We are also heavily inspired by design patterns old-and-new, like the GangOfFour \cite{gamma1994design}, to Agile methodologies \cite{beck2001agile}. The parlance such as "separation-of-concerns" or DRY (don't repeat yourself) caters to a programming-oriented audience, with the intention for game theory modellers to see how these programming strategies might prove useful for organizing and structuring a large library of games.  
-\subsection{Formatting and structure of thesis}
-
-This thesis was written in Literate Haskell and compiled using \cite{loeh2012lhs2tex} which provided the pretty typesetting for the Haskell code snippets and even allowed in-lining code. We follow a paragraph-style of writing, but intersperse some of the ideas with written code examples, which are boxed for readability. Some frequently-used Haskell datatypes that exist outside these boxes will be in-line and coloured, like |myDataType|.  
 
 
 

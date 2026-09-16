@@ -15,6 +15,10 @@
 \usepackage{tabularx}
 \addbibresource{bibliography.bib}
 
+\usepackage{tikz-uml}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, positioning, arrows.meta}
+
 % MACROS 
 \newcommand{\C}{\mathcal{C}}
 \newcommand{\Optic}{\mathbf{Optic}_{\C}}
@@ -46,7 +50,7 @@
 \newtheorem{definition}{Definition}[section]
 \newtheorem{theorem}{Theorem}
 \newtheorem{example}{Example}
-
+\newtheorem{construction}{Construction}
 % \AtBeginEnvironment{example}{
 %   \renewcommand{\Conid}[1]{{\color{funcColor}\texttt{#1}}}
 %   \renewcommand{\Varid}[1]{{\color{typeColor}\texttt{#1}}}
@@ -105,7 +109,7 @@
 \input{abstract}
 \input{declaration}
 \clearpage
-\input{acknowledgements}  % Uncomment to include this page.
+% \input{acknowledgements}  % Uncomment to include this page.
 
 %--------------------------------
 % Tables of contents.
@@ -133,6 +137,8 @@
 %include designpatterns.lhs
 
 \include{othermethods.tex}
+
+\include{conclusion.tex}
 
 %--------------------------------
 % Bibliography

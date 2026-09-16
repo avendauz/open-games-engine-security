@@ -273,6 +273,10 @@
 \usepackage{tabularx}
 \addbibresource{bibliography.bib}
 
+\usepackage{tikz-uml}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, positioning, arrows.meta}
+
 % MACROS 
 \newcommand{\C}{\mathcal{C}}
 \newcommand{\Optic}{\mathbf{Optic}_{\C}}
@@ -302,7 +306,7 @@
 \newtheorem{definition}{Definition}[section]
 \newtheorem{theorem}{Theorem}
 \newtheorem{example}{Example}
-
+\newtheorem{construction}{Construction}
 % \AtBeginEnvironment{example}{
 %   \renewcommand{\Conid}[1]{{\color{funcColor}\texttt{#1}}}
 %   \renewcommand{\Varid}[1]{{\color{typeColor}\texttt{#1}}}
@@ -361,7 +365,7 @@
 \input{abstract}
 \input{declaration}
 \clearpage
-\input{acknowledgements}  % Uncomment to include this page.
+% \input{acknowledgements}  % Uncomment to include this page.
 
 %--------------------------------
 % Tables of contents.
@@ -435,7 +439,21 @@ This thesis fully embraces the Haskell for designing these cybersecurity games. 
 
 On the other hand, a user should  be able to use the DSL as a sufficient environment for the purposes of visualizing information flow and structuring players while hiding the implementation details needed to instantiate the game. This ends up being a significant learning curve by requiring a user to translate simple real-valued reward functions to a Haskell function, or adding model parameters as part of an abstract data type. But the hope is that by adopting this layer as an intermediate language and taking the time to encode these calculations as Haskell functions, this will enable quick-and-easy compatibility of models. Thus a particular area that this thesis addresses is formalizing a "how-to" for games beyond the syntax for using the open-games DSL. 
 
+\subsection{Formatting and structure of thesis}
+
+This thesis was written in Literate Haskell and compiled using \cite{loeh2012lhs2tex} which provided the pretty typesetting for the Haskell code snippets and even allowed in-lining code. We follow a paragraph-style of writing, but intersperse some of the ideas with written code examples, which are boxed for readability. Some frequently-used Haskell datatypes that exist outside these boxes will be in-line and coloured, like \ensuremath{\Varid{myDataType}}. References to Haskell files that are implemented as part of the companion codebase to this thesis are in bold, such as \textbf{IDSModel.hs}
+
+The structure of the thesis is as follows:
+
+\begin{itemize}
+	\item Chapter \ref{sec:prelims} briefly outlines some source material and motivation to assist readers for the remainder of the thesis 
+	\item Chapter \ref{sec:opengames} analyzes the open-games-engine, gives use-case examples, and details the relevant theory
+	\item Chapter \ref{sec:designPatterns} proposes novel design patterns and a overarching workflow to generate models 
+	\item Chapter \ref{sec:multiagent} is the culmination of a 4-month internship at Telecom Paris, during which we developed a middleware to iteratively improving cybersecurity models through model-checking
+\end{itemize}
+
 \section{Preliminaries}
+\label{sec:prelims}
 \subsection{Introduction}
 The primary focus of this thesis is on developing a methodology for the game formulation of cybersecurity models using a Haskell domain-specific-language (DSL) for \textit{open games}. 
 The organization of this chapter is based on the construction of the model of computation
@@ -584,9 +602,6 @@ Treating category theory as a mechanism to interpret systems and mechanisms in o
 \subsection{Haskell and coding fundamentals}
 
 Haskell is a statically-typed, functional programming language. Since a large chunk of this work involves software design patterns, a base assumption for readers is some knowledge of Haskell. We would like to refer readers to the Haskell documentation \cite{haskelldocs}, for which everything up to abstract data types, monads, hspec would all be useful to understand the code examples. We are also heavily inspired by design patterns old-and-new, like the GangOfFour \cite{gamma1994design}, to Agile methodologies \cite{beck2001agile}. The parlance such as "separation-of-concerns" or DRY (don't repeat yourself) caters to a programming-oriented audience, with the intention for game theory modellers to see how these programming strategies might prove useful for organizing and structuring a large library of games.  
-\subsection{Formatting and structure of thesis}
-
-This thesis was written in Literate Haskell and compiled using \cite{loeh2012lhs2tex} which provided the pretty typesetting for the Haskell code snippets and even allowed in-lining code. We follow a paragraph-style of writing, but intersperse some of the ideas with written code examples, which are boxed for readability. Some frequently-used Haskell datatypes that exist outside these boxes will be in-line and coloured, like \ensuremath{\Varid{myDataType}}.  
 
 
 
@@ -607,7 +622,7 @@ This thesis was written in Literate Haskell and compiled using \cite{loeh2012lhs
 
 
 \section{Working with open games}
-
+\label{sec:opengames}
 \subsection{Introduction}
 We'll begin by recounting the construction of open games up to its current implementation. The goal of this section is to present the definitions that are used, and then to explain 
 how to read the corresponding implementation, especially the various types and frequently-used functions. The hope is 
@@ -744,7 +759,7 @@ In the classic game-theoretic sense, this strategy assigns some probabilistic ac
 
 \begin{mdframed}
 \begin{example}[Honeypot allocation randomization]
-Say we want to describe a defensive strategy that deploys a high interaction honeypot 75\% of the time, a low-interaction honeypot 25\% of the time, and doesn't activate a honeypot 10\% of the time. We can use the helper function \ensuremath{\Varid{distFromList}} and the data type in Example \ref{example:userTypes} as our set of actions. Assuming we deploy this defensive strategy statically, without any observations, we use the type \ensuremath{()} to describe no input.
+Say we want to describe a defensive strategy that deploys a high interaction honeypot 75\% of the time, a low-interaction honeypot 25\% of the time, and doesn't activate a honeypot 10\% of the time. We can use the helper function \ensuremath{\Varid{distFromList}} and a data type storing each kind of honeypot as our set of actions. Assuming we deploy this defensive strategy statically, without any observations, we use the type \ensuremath{()} to describe no input.
 
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -1281,7 +1296,7 @@ This culminates to a metamodelling design process over the open-games-hs softwar
 	\item Section \ref{designPatterns:state} is a review detailing the need for such a design process
 	\item Section \ref{designPatterns:directTranslation} details a direct translation of models from literature to serve as a baseline and identify key issues (model reuse, scalability, replicability) that should be addressed 
 	\item Section \ref{designPatterns:library} is an introduction of three Haskell modules and one testing framework which encapsulate the design patterns that address those key issues 
-	\item Section \ref{designPatterns:Discussion} discusses project structure using the modules from \ref{designPatterns:code} and project maintenance techniques with version control
+	\item Section \ref{designPatterns:discussion} discusses project structure using the patterns defined in Section \ref{designPatterns:library} and project maintenance techniques with version control
 	\item Section \ref{designPatterns:Iterative} proposes a test-driven, iterative modelling process
 \end{itemize}
 
@@ -1479,7 +1494,7 @@ To accommodate the infinitely repeated game setting, we constructed two other ge
 
 
 \begin{mdframed}
-\begin{example}
+\begin{example}[Subsystem replication using template games]
 Consider the architecture of a typical IDN as seen in Figure \ref{figure:Fig. 3}. The model developed in \cite{Jin2018} is a two-layer stochastic, game between an attacker and an IDN, where the states of the game are defined by the status of each subsystem. Here, the assumption is that the capabilities of each of the IDSs and their respective attackers as homogenous, but working independently. In particular in the \textit{Simulation} section, the proposed model is evaluated with a specific set of parameters in a network of three IDSs and three independent attackers. If the assumption of homogeneity was to change, the parameters used to evaluate the model must also change. Maintaining consistency across the model requires flexbility, but current game formulation techniques aren't necessarily built with the notion of seamless integration.
 
 From a security design point-of-view, this interaction between subsystems is vital, especially if a vulnerability in one system affects the defensive capabilities of another. After designing games for a subsystem, we can easily direct the flow of the result of the game to a level-higher for resource management. Designing this IDN using open games allows us to work on each subsystem separately from the aggregation mechanism. The disjoint nature of these parts allows for testing the efficacy of a different aggregation mechanisms or subsystems. Each subsystem interaction can then be instantiated as three functions using the template two-player game, but each parameterized accordingly \footnote{In order to run simulations using the constructed model formulation, the authors assigned values such as the detection libraries available to each IDS system $i$ and attacking libraries for each attacker $j$. \cite{He2015}.}. Then, the logic for the aggregation mechanism is defined as a separate open game which takes as input the outputs of the three previous functions. 
@@ -1604,7 +1619,7 @@ Notice the parametric type \textit{a}, so we can define a \ensuremath{\Conid{Pay
 
 Already we can consider branching the payoff functions into helpers associated with each type of player, and pattern-match on these types. If we use the preset two-player template from the \textbf{Security} module, the set of two-player security games requires a \ensuremath{\Conid{PayoffReader}} for each attacker and defender. Then at the execution-level of the game, which runs against the model-level parameters, we use these parameters to instantiate the readers (in this case, \ensuremath{\Conid{IDSParams}}). Thanks to the type-checker, the output type of the model should provide the modeller with the requirements for this \ensuremath{\Conid{PayoffReader}} constructor. 
 \begin{mdframed}
-	\begin{example}
+	\begin{example}[Using the Reader monad to access exogenous parameters]
 		To design payoffs, we can start by fixing our model parameters to follow \ensuremath{\Conid{IDSParams}} datatype as defined in \textbf{Module 1}. For one such implementation of describing an attacker's payoff, we can read from our config to assign values according to the (covariant) output of an open game, in this case dependent on the attacker and defender move. Pattern matching over the results can be read as "if the attacker attempted access, and a defender did not allow it, then the attacker recieves \ensuremath{\Varid{costOfAttack}}" Note that \ensuremath{\Varid{attackerAccessPayoff}} collects the values it needs, then does a computation.
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -1649,7 +1664,7 @@ The implementation of \textbf{Module 2} in the \textbf{Security} library provide
 
 
 \begin{mdframed} 
-   \begin{example}
+   \begin{example}[Model adaptation along the payoff module]
       A key feature of using the reader monad is having fine-tuned control over these parameters without worrying about changing them. And if we do need to change them, it's explicit. Consider the payoff scheme used to slightly adapt the previous example by allowing the defender to not just open or close, but deploy two different kinds of honeypots or remain open under normal operation. Refer to \textbf{IDS/IDSAPayoff.hs} for the complete implementation, and \textbf{IDS/IDSAPayoffHP.hs} which explicitly adapts it. 
 
 The type signature only differs in the third argument to the payoff functions. Intuitively, we will have to write the same pattern-matching structure but over the new datatype \ensuremath{\Conid{HoneypotDeploymentMove}}, but the computation of payoff shouldn't have to be rewritten explicitly. Since in our model, deploying a high-interaction honeypot increases the probability of detecting an adversary, this can be reflected by locally altering the \ensuremath{\Conid{IDSParams}} before using the same formula from \textbf{IDSAPayoff}. So given a \ensuremath{\Conid{HoneypotDeploymentMove}}, we want to update my \ensuremath{\Conid{PayoffReader}} with an augmentation function such as: 
@@ -1692,7 +1707,7 @@ Here, \ensuremath{\Varid{myProposition}} would be determined by the modeller as 
 This module is intended to be a mixture of both a simulation script and a self-documenting specifications document. This is a vast improvement on a series of Haskell functions calling diagnostic functions on closed games. It's dynamic in the sense that tests can be added, removed, or refactored. The built-in test case generation can also provide modellers insight to how sensitive the model is to certain parameters. \footnote{For occasional graphical analysis, we used \ensuremath{\Conid{\Conid{Graphics}.\Conid{Rendering}.Chart}\mathbin{\circ}\Conid{\Conid{Backend}.Diagrams}} to plot payoffs for each player using the generated data.}  
 
 \subsection{Discussion of design patterns}
-\label{designPatterns:Discussion}
+\label{designPatterns:discussion}
 Equipped with these modules to organize the development and analysis of a model, this should drastically improve the direct translation process from Section \ref{designPatterns:directTranslation}. But more than that, this provides some structure for the game formulation process which ultimately provides modellers with many advantages. 
 
 Rapid generation of models is now possible, since many models can be off-shoots or variants for any given parameterization. The result could be multiple complete games that follow a singular high-level game formulation. The relationships between these variants can be explicitly controlled where it is commonly-used in literature, namely in payoff adaptation or stage game repetition. By fixing this process, practitioners have a common-platform to interpret these models. For example, practitioner Alice may be managing their own unique security situation, for which she can use \textbf{Module 2 and 3} to codify the model parameters. Alice's colleague Bob ran similar experiments but with an older configuration so the parameterization doesn't match, but the open games developed using \textbf{Module 1} by Bob are perfectly applicable. Then Alice's job could be as simple as importing Bob's library. Any future updates can then be maintained through standard Git source control and merging working branches. A future behavioural study involving practitioners of the relevant disciplines to be introduced to this workflow, then be tasked with a model to implement, in order to evaluate the efficacy of treating would help validate (or invalidate) the goals behind these design patterns.
@@ -1787,6 +1802,8 @@ Unit tests would ensure the correctness of the payoffs, test data, or helper fun
 
 
 \include{othermethods.tex}
+
+\include{conclusion.tex}
 
 %--------------------------------
 % Bibliography
