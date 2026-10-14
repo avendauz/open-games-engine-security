@@ -274,7 +274,15 @@ The implementation of \textbf{Module 2} in the \textbf{Security} library provide
       A key feature of using the reader monad is having fine-tuned control over these parameters without worrying about changing them. And if we do need to change them, it's explicit. Consider the payoff scheme used to slightly adapt the previous example by allowing the defender to not just open or close, but deploy two different kinds of honeypots or remain open under normal operation. Refer to \textbf{IDS/IDSAPayoff.hs} for the complete implementation, and \textbf{IDS/IDSAPayoffHP.hs} which explicitly adapts it. 
 
 The type signature only differs in the third argument to the payoff functions. Intuitively, we will have to write the same pattern-matching structure but over the new datatype |HoneypotDeploymentMove|, but the computation of payoff shouldn't have to be rewritten explicitly. Since in our model, deploying a high-interaction honeypot increases the probability of detecting an adversary, this can be reflected by locally altering the |IDSParams| before using the same formula from \textbf{IDSAPayoff}. So given a |HoneypotDeploymentMove|, we want to update my |PayoffReader| with an augmentation function such as: 
+\begin{code}
 
+augment :: HoneypotAllocation -> 
+	(PayoffReader IDSParams -> PayoffReader IDSParams)
+augment HighHP = local (\params -> params {probDetected = 0.8})
+augment LowHP = local (\params -> params {probDetected = 0.65})
+augment Normal = local (\params -> params {probDetected = 0.5})
+
+\end{code}
 To demonstrate the breadth of this granularity, we observe the following example for designing payoffs derived from an initial problem statement.
 
 \begin{enumerate}
