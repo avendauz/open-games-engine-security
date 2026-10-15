@@ -131,8 +131,8 @@ defensiveStrategy :: Kleisli Stochastic () Honeypot
 defensiveStrategy = Kleisli $ const $
       distFromList 
          [(HighInteraction, 0.75), 
-         (LowInteraction, 0.25),
-         (Normal, 0.10)]
+         (LowInteraction, 0.20),
+         (Normal, 0.05)]
 \end{code}
 
 \end{example}

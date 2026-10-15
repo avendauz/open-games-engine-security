@@ -49,7 +49,9 @@ library
       Examples.Markov.TestSimpleMonteCarlo.Continuation
       IDS.IDSDeception
       IDS.IDSA
+      IDS
   other-modules:
+      Baseline.IDSMarkovChain
       Data.Utils
       Examples.Markov.NStageMarkov
       Examples.Staking.AndGateMarkov

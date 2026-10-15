@@ -326,7 +326,7 @@ These patterns overcome the rigidity of models by making them easily adaptable. 
 	\caption{Security game translation using design patterns}
 \end{figure}
 
-In Figure \ref{fig:Workflow1}, we distinguish domain experts of the security specifications in the left-blue region, and open games security games developers in teh right-red region. The numbered boxes provide the order of which each step should be taken. Note that the DSL and parameters modules are always instantiated before payoffs, since payoffs are intended to provide the data needed to execute these models. In the last step, security experts can extrapolate results based on the status of the testing suite. Any subsequent changes to "Model specifications" should then result in failing tests in the test specifications, which signals open games developers to make adjustments accordingly.   
+In Figure \ref{fig:Workflow1}, we distinguish domain experts of the security specifications in the left-blue region, and open games security games developers in the right-red region. The numbered boxes provide the order of which each step should be taken. Note that the DSL and parameters modules are always instantiated before payoffs, since payoffs are intended to provide the data needed to execute these models. In the last step, security experts can extrapolate results based on the status of the testing suite. Any subsequent changes to "Model specifications" should then result in failing tests in the test specifications, which signals open games developers to make adjustments accordingly.   
 
 \begin{figure}
 	\centering
@@ -335,6 +335,13 @@ In Figure \ref{fig:Workflow1}, we distinguish domain experts of the security spe
 	\caption{Step-by-step domain expert collaboration for model development}
 \end{figure}
 
+Furthermore, we show an explicit workspace directory structure for maintaining a clean codebase, managed as a Git repository. 
+
+\begin{mdframed}
+	\begin{example}[Hierarchal game by composing models] We refer readers to \textbf{HierarchalIDS.hs}. For this example, we can remark on the dependencies 
+		
+	\end{example}
+\end{mdframed}
 
 \subsection{Iterative modelling using open games}
 \label{designPatterns:Iterative}
@@ -391,6 +398,8 @@ First, we make the following correspondence between types of tests in order to d
 
 Unit tests would ensure the correctness of the payoffs, test data, or helper functions that act as infrastructure to run the high-level specs that reflect the target security specification. We reserve Functional tests as the mechanism for verifying security needs through equilibrium checking. It follows that unit tests serve as a the test suite for the implementation of the model, so all unit tests should go green before running the functional tests. After both types of tests are passing, the results can be fed back to the top-level in order to inform the next iteration of models. Due to the compositional and interdependent nature of this methodology, the next iteration of models will have the previous iteration of models (and its components) at its disposal, like a typical software project. By following the TDD process as seen in Figure \ref{fig:TDD}, security models in open games can be iteratively improved upon, while maintaining consistency with the demands of stakeholders setting high-level specifications. 
 
+Along that vein, we have used these design patterns to separate-concerns for constructing games, which also lends itself to creating specs of unit tests corresponding to each of the elements of the model. For example, a passing spec file of unit tests for \textbf{IDSPayoff.hs} ensures validity for other downstream payoff modules such as \textbf{IDSPayoffHP.hs} which uses that logic. 
+
 
 \begin{figure}
 	\label{fig:TDD}
@@ -398,6 +407,8 @@ Unit tests would ensure the correctness of the payoffs, test data, or helper fun
 	\includegraphics[width=\textwidth]{OpenGamesTDD.png}
 	\caption{Test-driven development (TDD) for writing open games}
 \end{figure}
+
+
 
 
 
