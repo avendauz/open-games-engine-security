@@ -271,7 +271,7 @@
 \usepackage{xcolor}
 \usepackage{etoolbox}
 \usepackage{tabularx}
-\addbibresource{bibliography.bib}
+\addbibresource{zotero.bib}
 
 \usepackage{tikz-uml}
 \usepackage{tikz}
@@ -395,7 +395,7 @@ Let's try to generalize the software engineering process as follows: a software 
 
 Similarly, the transition from real-world phenomena to a game-theoretic model requires observing the real-world, developing abstractions according to standard game-theoretic concepts, and observe the behaviour of the game under certain conditions. Evaluation metrics include observing the respective payoffs of players under certain conditions, or determining whether a strategy profile is a Nash equilibrium. The task is left to collate these metrics and derive expectations of the players' as rational and utility-maximizing. Indeed \textit{mechanism design} is specifically concerned with sculpting these games to achieve a hypothesized outcome under certain conditions. 
 
-The process of instantiating these games are (expectedly) domain-specific. Building a model too general fails to become useful, and a model too specific. Drawing from \cite{Zahn2024}, compositional game theory has enabled a strong correspondence between game-theoretic models and code. With the proper abstractions for piecing models together, developing a library of economic models that can be easily loaded and run as for simulations is within grasp. Focusing in again on "models as code", we can naturally correspond software engineering principles to game-theoretic modelling principles. The practical implications of compositional game theory were first explored in \cite[section 2.3.12]{HedgesThesis}, developing the first steps to compositionally designing problems. Constructing games for these problems using string diagrams ultimately transitioned to an implementation of the category of games as a Haskell library. Hence, we have a mechanical process that can be used to assist a modeler to understand a problem in terms of compositional game theory. However, there has yet to be a more explicit methodology for effectively using the tool, specifically outside microeconomic analysis. Rather than taking a domain-constrained approach to the tool, this thesis seeks to identify techniques using this DSL as part of a larger software-development process in order to build effective models.
+The process of instantiating these games are (expectedly) domain-specific. Building a model too general fails to become useful, and a model too specific could mean repetitive development to solve the same problem. Drawing from \cite{Zahn2024}, compositional game theory has enabled a strong correspondence between game-theoretic models and code. With the proper abstractions for piecing models together, developing a library of economic models that can be easily loaded and run as for simulations is within grasp. Focusing in again on "models as code", we can naturally correspond software engineering principles to game-theoretic modelling principles. The practical implications of compositional game theory were first explored in \cite[section 2.3.12]{HedgesThesis}, developing the first steps to compositionally designing problems. Constructing games for these problems using string diagrams ultimately transitioned to an implementation of the category of games as a Haskell library. Hence, we have a mechanical process that can be used to assist a modeler to understand a problem in terms of compositional game theory. However, there has yet to be a more explicit methodology for effectively using the tool, specifically outside microeconomic analysis. Rather than taking a domain-constrained approach to the tool, this thesis seeks to identify techniques using this DSL as part of a larger software-development process in order to build effective models.
 
 
 
@@ -416,9 +416,9 @@ The process of instantiating these games are (expectedly) domain-specific. Build
 
 The development of cybersecurity models are increasingly more important in today's landscape of technological interconnectivity. It's a modeller's responsibility is to accurately reflect dynamic attack and defensive scenarios, from DDoS (Distributed Denial of Service) attacks on smart grid networks, to intrusion detection and response systems in distributed computer networks. Game-theoretic models have been widely accepted as a tool for enhancing the defensive capabilities of a system. By modelling the interaction between an attacker and defender, where the players are rational actors maximizing their utility, a modeller can derive an optimal defensive strategy or predict an attacker strategy. Using these findings, a security administrator can deploy countermeasures preemptively, or evaluate real-time adjustments to a defensive strategy. 
 
-There has been growing interest in developing these game-theoretic models in a variety of security domains, requiring collaborative expertise between game modelling and cybersecurity. Based on the inherent relationships between these models, we propose a methodology to expressively derive these security games from smaller games using compositional game theory. But why study these relationships in the first place? The answer is to towards developing an answer to an auxiliary question: how do we develop the "correct" models? Or more tractably, which models actually improve the performance of security systems? Evaluating a security system means considering system performance, internal impact between subsystems, and different adversary capabilities. Though the game formulation process is grounded by the same game-theoretic concepts across these models, 
+There has been growing interest in developing these game-theoretic models in a variety of security domains, requiring collaborative expertise between game modelling and cybersecurity. Based on the inherent relationships between these models, we propose a methodology to expressively derive these security games from smaller games using compositional game theory. But why study these relationships in the first place? The first step to take is towards developing an answer to an auxiliary question: how do we develop the "correct" models? Or more tractably, which models actually improve the understanding of our security systems? Evaluating a security system means considering system performance, internal impact between subsystems, and different adversary capabilities. But the interpretation and creation of these models lack a systematic, conceptual \textit{feedback} loop to actively re-interpret them, with fast-changing technologies and specifications.  
 
-So beyond developing a system to just construct security games from smaller ones, the game formulation process should be a \textbf{experiential} and \textbf{collaborative} effort. By modularizing this game formulation process, we can create greater interoperability and rapid model adjustment. Essentially by inverting the process by starting at simple components, we allow for generalization to a security situation through parameterization to \textit{grow} the model, rather than \textit{restrict} a security scenario to fit the confines of the game. 
+So beyond developing a system to just construct security games from smaller ones, the game formulation process should be an \textbf{iterative}, \textbf{experiential} and \textbf{collaborative} effort. By modularizing this game formulation process, we can create greater interoperability and rapid model adjustment. Essentially by inverting the process by starting at simple components, we allow for generalization to a security situation through parameterization to \textit{grow} the model, rather than \textit{restrict} a security scenario to fit the confines of the game. 
 
 %For example, consider Figure 2. of a multi-layered security setting from \cite{Jin2018}, strategic interactions are composed graphically as a self-reinforced communication between communicating IDSs and an administrative IDS. 
 
@@ -449,7 +449,7 @@ The structure of the thesis is as follows:
 	\item Chapter \ref{sec:prelims} briefly outlines some source material and motivation to assist readers for the remainder of the thesis 
 	\item Chapter \ref{sec:opengames} analyzes the open-games-engine, gives use-case examples, and details the relevant theory
 	\item Chapter \ref{sec:designPatterns} proposes novel design patterns and a overarching workflow to generate models 
-	\item Chapter \ref{sec:multiagent} is the culmination of a 4-month internship at Telecom Paris, during which we developed a middleware to iteratively improving cybersecurity models through model-checking
+	\item Chapter \ref{sec:multiagent} is the culmination of a 4-month internship at Telecom Paris, during which we developed a middleware to iteratively improve cybersecurity models using formally-verified strategies in VITAMIN, a model-checking tool
 \end{itemize}
 
 \section{Preliminaries}
@@ -584,6 +584,7 @@ The hope is for readers to use the language given here to help transition from:
 
 where the main contributions of the following chapters focus on a particular security-oriented focus in (3) and (4) using new design patterns.
 
+
 \subsection{Classical game theory}
 
 
@@ -597,27 +598,19 @@ Since we primarily rely on constructing games using compositional game theory, w
 % With the development and deployment of complex "socio-technical" systems, the demand for understanding the behaviour of the system interacting with rational actors has increased. While game theory has seen its applications in an economic sense, analyzing security applications begins with assigning adversarial notions to players. 
 
 \subsection{(Applied) category theory}
-Treating category theory as a mechanism to interpret systems and mechanisms in other disciplines such as engineering, machine learning, programming language theory, quantum theory, and probability theory falls in the more recently-growing area of applied category theory. Whether practitioners of a certain discipline find a useful formalism with a categorical interpretation, or category theorists find constructions useful in a certain discipline, the result is a nice interdisciplinary area of research. But overall, it can be difficult to characterize what applied category theory truly is in a handful of words. We suggest \cite{fong2018sevensketchescompositionalityinvitation} as an introduction to more of these topics. For example, a graphical notation used across some of these applications are string diagrams, which also serve as a nice intuitive language for open games. The "compositional" part of compositional game theory is enabled specifically by defining open games as morphisms of a category. We will briefly use categorical language in the following chapter that is not very self-contained but can be used as a reference for the theory that the \ensuremath{\Varid{open}\mathbin{-}\Varid{games}\mathbin{-}\Varid{engine}} is built upon. \footnote{Since the target audience (hopefully) reaches farther and farther away from just category theory experts, and hopefully growing the broader ACT commmunity as an interdisciplinary effort.} The references that we found most prudent for all the required definitions for open games are \cite{HedgesThesis,BayesianOpenGames} We provide the corresponding references for those specific definitions, and otherwise assume no knowledge of basic category theory. For further reading on that front, we refer to \cite{mac1971categories}. For reading on other categories that are relevant in this thesis such as categories of optics \cite{riley2018categories}.
+Treating category theory as a mechanism to interpret systems and mechanisms in other disciplines such as engineering, machine learning, programming language theory, quantum theory, and probability theory falls in the more recently-growing area of applied category theory. Whether practitioners of a certain discipline find a useful formalism with a categorical interpretation, or category theorists find constructions useful in a certain discipline, the result is a nice interdisciplinary area of research. But overall, it can be difficult to characterize what applied category theory truly is in a handful of words. We suggest \cite{fong2018sevensketchescompositionalityinvitation} as an introduction to more of these topics. For example, a graphical notation used across some of these applications are string diagrams, which also serve as a nice intuitive language for open games. The "compositional" part of compositional game theory is enabled specifically by defining open games as morphisms of a category. We will briefly use categorical language in the following chapter that is not very self-contained but can be used as a reference for the theory that the \ensuremath{\Varid{open}\mathbin{-}\Varid{games}\mathbin{-}\Varid{engine}} is built upon. \footnote{Since the target audience (hopefully) reaches farther and farther away from just category theory experts, and hopefully growing the broader ACT commmunity as an interdisciplinary effort.} The references that we found most prudent for all the required definitions for open games are \cite{HedgesThesis,BayesianOpenGames} We provide the corresponding references for those specific definitions, and otherwise assume no knowledge of basic category theory. For further reading on that front, we refer to \cite{mac1971categories}. For reading on other categories that are relevant, specifically for the coend calculus notation used for Bayesian open games, refer to \cite{riley2018categories}.
+
+Another area of research pertaining to compositional modelling of dynamical systems. This strand of applied category theory research also strongly approaches co-design and composition of models to facilitate reuse and interdisciplinary studies. Similarly, modelling software such as CatColab \cite{catcolab2024} and AlgebraicJulia are platforms to achieve this compositional modelling paradigm, ranging from epidemiological modelling to population dynamics. Overall, the spirit of using compositionality for modelling follows in the same way in this thesis, but here we focus specifically on game-theoretic models. But the ideas of easy extension of models, working on sub-models in isolation, and software-assisted analysis are all reminiscent in modelling approaches inspired by category theoretic approaches. For work in this area, see \cite{baezCategoricalFrameworkModeling2023}and \cite{liCompositionalSystemDynamics2025}
+
 
 \subsection{Haskell and coding fundamentals}
 
 Haskell is a statically-typed, functional programming language. Since a large chunk of this work involves software design patterns, a base assumption for readers is some knowledge of Haskell. We would like to refer readers to the Haskell documentation \cite{haskelldocs}, for which everything up to abstract data types, monads, hspec would all be useful to understand the code examples. We are also heavily inspired by design patterns old-and-new, like the GangOfFour \cite{gamma1994design}, to Agile methodologies \cite{beck2001agile}. The parlance such as "separation-of-concerns" or DRY (don't repeat yourself) caters to a programming-oriented audience, with the intention for game theory modellers to see how these programming strategies might prove useful for organizing and structuring a large library of games.  
 
 
+\subsection{Target audience}
+With a wide range of aforementioned preliminaries, it would be useful to reiterate the concise goal of the thesis and how it relates to the reader. On one hand, we are providing explicit coding paradigms for \textit{game theorists} to use \textit{open-games-hs} as a practical tool for active model development. We take an optimistic view of using the Haskell environment and \textit{open-games-hs} as the common platform for which practitioners would contribute to the development of models. This presents explicit ways to lift payoff tables to functions, action spaces to data types, and so on. On the other hand, we place an emphasis on cybersecurity games by drawing clear boundaries for which domain-specific knowledge is tested and implemented in a model. For example, we propose lifting a static table of model parameters pertaining to a specific defensive technology, to an abstract data type as exogenous parameters of an open game. The advantage is then being able to manipulate these parameters in a programmatic way, and give \textit{security experts} a way to test how these parameters affect a model. The style of this thesis is written in a way to introduce the bare minimum mechanics for \textit{game theorists} to build games in the classical sense, and the testing abstractions for \textit{security experts} to introduce specific model parameters. 
 
-
-% We also have the ability to define custom data types using the keyword |data| to represent actions or outcomes. 
-% \begin{mdframed}
-% \begin{example}[User-defined types]\label{example:userTypes}
-% Say we characterize a honeypot's resource capabilities as three different states: high-interaction, low-interaction, and normal. We can define a type as follows: 
-% \begin{code}
-% data Honeypot = Hinteract | Linteract | Normal deriving (Eq, Show)
-% \end{code}
-
-% where |Honeypot| has three constructors corresponding to the three states. Here there are no type variables. The |deriving| keyword specifies which type classes this data type is an instance of, in this case two type classes |(Eq, Show)| imported from |Prelude|. This gives our data type operations for equality to compare instances of |Honeypot| and the ability to read data in the console as |String|. 
-% \end{example}
-   
-% \end{mdframed}
 
 
 
@@ -1322,7 +1315,7 @@ According to \cite{Collins2025} evaluating 86 different game-theoretic models in
 	\item Allow for more flexible assumptions
 \end{enumerate}
 
-In that same vein, \cite{Egan2025}, \cite{Liang2013} call for better scalability of models, in particular addressing models that account for more than two player games. This falls more closely to tractable game models that more accurately reflect collaborative or networked defensive systems, but requires more complex equilibrium solutions. Similar to other game formulation methods, each model has a large input dataset of parameters to consider.
+In that same vein, \cite{Egan2025}, \cite{Liang2013} call for better scalability of models, in particular addressing models that account for more than two player games. This falls more closely to tractable game models that more accurately reflect collaborative or networked defensive systems, but requires more complex equilibrium solutions. Similar to other game formulation methods, each model has a large input dataset of parameters to consider. 
 
 Is the open-games-hs software equipped to address some of these issues? This thesis draws on a key motivation proposed by Zahn in \cite{ZahnCybercat}, towards the synthesis of an encoded library of microeconomic models. The process of developing the "correct" model is therefore framed as a software engineering problem. The open-games-engine has demonstrated its use verifying the most recognizable game theory problems like Prisoner's Dilemma, to auction mechanisms. A series of these models have been met with production-level directions, and a codebase of models have grown. While this thesis departs from the application of this field towards cybersecurity, the bulk of the work that is presented here is an attempt to give guidelines for using the open-games-engine effectively. Specifically, the interdisciplinary and workflow possibilities that are provided by producing models in this environment, achieving easy maneuverability and testing that fits naturally with the requirements for synthesizing effective security models. 
 
@@ -1665,6 +1658,7 @@ The implementation of \textbf{Module 2} in the \textbf{Security} library provide
 
 \begin{mdframed} 
    \begin{example}[Model adaptation along the payoff module]
+	\label{example:model adaptation}
       A key feature of using the reader monad is having fine-tuned control over these parameters without worrying about changing them. And if we do need to change them, it's explicit. Consider the payoff scheme used to slightly adapt the previous example by allowing the defender to not just open or close, but deploy two different kinds of honeypots or remain open under normal operation. Refer to \textbf{IDS/IDSAPayoff.hs} for the complete implementation, and \textbf{IDS/IDSAPayoffHP.hs} which explicitly adapts it. 
 
 The type signature only differs in the third argument to the payoff functions. Intuitively, we will have to write the same pattern-matching structure but over the new datatype \ensuremath{\Conid{HoneypotDeploymentMove}}, but the computation of payoff shouldn't have to be rewritten explicitly. Since in our model, deploying a high-interaction honeypot increases the probability of detecting an adversary, this can be reflected by locally altering the \ensuremath{\Conid{IDSParams}} before using the same formula from \textbf{IDSAPayoff}. So given a \ensuremath{\Conid{HoneypotDeploymentMove}}, we want to update my \ensuremath{\Conid{PayoffReader}} with an augmentation function such as: 
@@ -1818,7 +1812,21 @@ Along that vein, we have used these design patterns to separate-concerns for con
 	\caption{Test-driven development (TDD) for writing open games}
 \end{figure}
 
+\subsection{Design patterns for cybersecurity games}
+Equipped with these design patterns, we propose brief case-studies to demonstrate their viability in cybersecurity modelling. 
+\subsubsection{Data pipeline through paramterization and payoff module}
+Through the separation-of-concerns principle, 
+\subsubsection{Libraries and model-sharing}
+Following a completed suite meeting the desired specifications, 
 
+Recalling Example \ref{example:model adaptation}, we could envision many such augmented payoff schemes. Adjustments along this module, while fixing all other parts of our model, naturally formulates the process for answering questions related to . If we wanted to evaluate three different system architectures, this would be instantiated as three function calls for a functional test
+\subsubsection{Testing, quantitative analysis and payoff graph generation}
+Lastly, for quantitative and numerical analysis of game-theoretic models for cybersecurity, the proposed methodology can accommodate graphical outputs in addition to property tests. Figure  However, computing optimal defensive strategies hFuture attachments to an external optimizer for computing optimal strategies for repeated game models is left for future work. One kind of round-based analysis that can be done is by computing the aggregate payoffs finitely-repeated games at each round by mapping \ensuremath{\Varid{generatePayoff}} over the number of rounds and an open stage game. But runtime and complexity analysis is required to compare with other softwar etools. Performance and comparative analysis with other tools such as Gambit can be conducted for a future study. But initially, we cite the major advantages of expressibility and modularity of using \textit{open-games-hs} can act as a cursory tool before translating them into equilibrium-solving engines. 
+
+Furthermore, a test-driven development process directly addresses the issues of determining how correctness
+
+\subsubsection{Discussion of DSL for cybersecurity modelling}
+Use of these design patterns are not limited to cybersecurity models. However, the current engine for the DSL does not (easily) support Stackelberg security games or 
 
 
 

@@ -34,7 +34,7 @@ According to \cite{Collins2025} evaluating 86 different game-theoretic models in
 	\item Allow for more flexible assumptions
 \end{enumerate}
 
-In that same vein, \cite{Egan2025}, \cite{Liang2013} call for better scalability of models, in particular addressing models that account for more than two player games. This falls more closely to tractable game models that more accurately reflect collaborative or networked defensive systems, but requires more complex equilibrium solutions. Similar to other game formulation methods, each model has a large input dataset of parameters to consider.
+In that same vein, \cite{Egan2025}, \cite{Liang2013} call for better scalability of models, in particular addressing models that account for more than two player games. This falls more closely to tractable game models that more accurately reflect collaborative or networked defensive systems, but requires more complex equilibrium solutions. Similar to other game formulation methods, each model has a large input dataset of parameters to consider. 
 
 Is the open-games-hs software equipped to address some of these issues? This thesis draws on a key motivation proposed by Zahn in \cite{ZahnCybercat}, towards the synthesis of an encoded library of microeconomic models. The process of developing the "correct" model is therefore framed as a software engineering problem. The open-games-engine has demonstrated its use verifying the most recognizable game theory problems like Prisoner's Dilemma, to auction mechanisms. A series of these models have been met with production-level directions, and a codebase of models have grown. While this thesis departs from the application of this field towards cybersecurity, the bulk of the work that is presented here is an attempt to give guidelines for using the open-games-engine effectively. Specifically, the interdisciplinary and workflow possibilities that are provided by producing models in this environment, achieving easy maneuverability and testing that fits naturally with the requirements for synthesizing effective security models. 
 
@@ -271,6 +271,7 @@ The implementation of \textbf{Module 2} in the \textbf{Security} library provide
 
 \begin{mdframed} 
    \begin{example}[Model adaptation along the payoff module]
+	\label{example:model adaptation}
       A key feature of using the reader monad is having fine-tuned control over these parameters without worrying about changing them. And if we do need to change them, it's explicit. Consider the payoff scheme used to slightly adapt the previous example by allowing the defender to not just open or close, but deploy two different kinds of honeypots or remain open under normal operation. Refer to \textbf{IDS/IDSAPayoff.hs} for the complete implementation, and \textbf{IDS/IDSAPayoffHP.hs} which explicitly adapts it. 
 
 The type signature only differs in the third argument to the payoff functions. Intuitively, we will have to write the same pattern-matching structure but over the new datatype |HoneypotDeploymentMove|, but the computation of payoff shouldn't have to be rewritten explicitly. Since in our model, deploying a high-interaction honeypot increases the probability of detecting an adversary, this can be reflected by locally altering the |IDSParams| before using the same formula from \textbf{IDSAPayoff}. So given a |HoneypotDeploymentMove|, we want to update my |PayoffReader| with an augmentation function such as: 
@@ -408,7 +409,21 @@ Along that vein, we have used these design patterns to separate-concerns for con
 	\caption{Test-driven development (TDD) for writing open games}
 \end{figure}
 
+\subsection{Design patterns for cybersecurity games}
+Equipped with these design patterns, we propose brief case-studies to demonstrate their viability in cybersecurity modelling. 
+\subsubsection{Data pipeline through paramterization and payoff module}
+Through the separation-of-concerns principle, 
+\subsubsection{Libraries and model-sharing}
+Following a completed suite meeting the desired specifications, 
 
+Recalling Example \ref{example:model adaptation}, we could envision many such augmented payoff schemes. Adjustments along this module, while fixing all other parts of our model, naturally formulates the process for answering questions related to . If we wanted to evaluate three different system architectures, this would be instantiated as three function calls for a functional test
+\subsubsection{Testing, quantitative analysis and payoff graph generation}
+Lastly, for quantitative and numerical analysis of game-theoretic models for cybersecurity, the proposed methodology can accommodate graphical outputs in addition to property tests. Figure  However, computing optimal defensive strategies hFuture attachments to an external optimizer for computing optimal strategies for repeated game models is left for future work. One kind of round-based analysis that can be done is by computing the aggregate payoffs finitely-repeated games at each round by mapping |generatePayoff| over the number of rounds and an open stage game. But runtime and complexity analysis is required to compare with other softwar etools. Performance and comparative analysis with other tools such as Gambit can be conducted for a future study. But initially, we cite the major advantages of expressibility and modularity of using \textit{open-games-hs} can act as a cursory tool before translating them into equilibrium-solving engines. 
+
+Furthermore, a test-driven development process directly addresses the issues of determining how correctness
+
+\subsubsection{Discussion of DSL for cybersecurity modelling}
+Use of these design patterns are not limited to cybersecurity models. However, the current engine for the DSL does not (easily) support Stackelberg security games or 
 
 
 

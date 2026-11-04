@@ -13,7 +13,7 @@
 \usepackage{xcolor}
 \usepackage{etoolbox}
 \usepackage{tabularx}
-\addbibresource{bibliography.bib}
+\addbibresource{zotero.bib}
 
 \usepackage{tikz-uml}
 \usepackage{tikz}
