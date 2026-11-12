@@ -65,27 +65,21 @@ badGuesserStrategy = Kleisli $ \case {
 } 
 biasedCoin = [opengame|
 
-   inputs : ;
+   inputs : coinObserved, coinSecret;
    feedback: ;
    :----------------------------:
 
-   inputs: ;
-   feedback: ;
-   operation: nature coinFlip;
-   outputs: (coinSecret, coinObserved);
-   returns: ;
 
    inputs: coinObserved;
    feedback: ;
    operation: dependentDecision "guesser" (const [WasHeads, WasTails]);
    outputs: guess;
-   returns: guesserPayoff coinSecret guess;
+   returns: payoff;
 
    :----------------------------:
 
-   outputs: ;
-   returns: ;
-
+   outputs: coinSecret, guess;
+   returns: payoff;
 
 
 |]
@@ -116,8 +110,11 @@ biasedCoin = [opengame|
 
 
 -- |]
+residualCoinToss = fmap (\x -> ((), x)) coinFlip
 
-runGame strat = evaluate biasedCoin (strat ::- Nil) void
+biasedCoinContext = StochasticContext residualCoinToss (\_ x -> playDeterministically $ uncurry guesserPayoff x)
+
+runGame strat = evaluate biasedCoin (strat ::- Nil) biasedCoinContext
 
 contextPlayer ::- Nil = runGame guesserStrategy
 -- seeContext = map (\x -> x.context (guessersSx.state)) contextPlayer

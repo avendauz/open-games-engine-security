@@ -103,10 +103,10 @@ doRepeatedEvaluation params x n startingState =
     where strategies = repeatedStrategies;
 stageGame params = (repeatedStage 
             actionSpaceAttacker "Alice" actionSpaceDefender "A" (repeatedPayoffGame params visitorPayoff defenderPayoff))
-doRecursiveEvaluation params x startingState = 
-    evaluate 
-      (repeatFinite 10 (stageGame params)) (instantiateRepeatedContext x 10 strategies startingState [0, 0] (stageGame params))
-      where strategies = repeatedStrategies
+-- doRecursiveEvaluation params x startingState = 
+--     evaluate 
+--       (repeatFinite 10 (stageGame params)) (instantiateRepeatedContext x 10 strategies startingState [0, 0] (stageGame params))
+--       where strategies = repeatedStrategies
 
 totalEval = writeFile "./src/IDS/Test1.txt" f
   where f = concatMap (generateOutputString . doRepeatedEvaluation exampleData 0.6 10) [(Access, Open), (DoesNotAccess, Open)] 

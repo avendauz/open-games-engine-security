@@ -4,28 +4,26 @@
 We'll begin by recounting the construction of open games up to its current implementation. The goal of this section is to present the definitions that are used, and then to explain 
 how to read the corresponding implementation, especially the various types and frequently-used functions. The hope is 
 that this builds an intuition for modellers to be able to understand the bare minimimum for constructing 
-models and effectively using the type system. 
+models and effectively using the type system. This section could be read as documentation for the engine, in the sense that a synthesis of the theory that has been implemented in the engine. We progressively make our way through simple open games, which loosely characterize non-stochastic normal form games. Then, we recall the use of coend calculus to capture Bayesian games.
 
 \subsection{Concrete lenses and open games}
 Open games that are used in this thesis first relies on machinery that enables the flow of "forwards" and "backwards" 
 information flow. This is encoded using the language of 
 \textit{lenses}. Historically, open games were constructed without any connection to 
-lenses, but was most recently used for defining Bayesian games in \cite{BayesianOpenGames} using a more general 
-definition which broadly encompasses
-the more familiar term, \textit{lenses}. 
+lenses, but was most recently used for defining Bayesian games in \cite{BayesianOpenGames}. 
 
 Lenses have been used in database theory, defining certain 
 \textit{lens laws} associated with data accessors. These properties dictate the behaviour 
 of a \textit{get} and \textit{put} operations (or colloquially, \textit{view} and \textit{update} operations).
 High-level, \textit{get} allows you to view the contents of a substructure, and 
 \textit{put} allows you to make updates to a substructure, and the lawfullness of these operations ensure that 
-updates to the substrucuture are reflected accordingly in the larger structure. Thus a lens (given by $lens: S \rightarrowtail A$) is a pair of operations typed as $get: S \rightarrow A$
+updates to the substructure are reflected accordingly in the larger structure. Thus a lens (given by $lens: S \rightarrowtail A$) is a pair of operations typed as $get: S \rightarrow A$
 and $put: S \times A \rightarrow S$, where $A$ is the substructure of $S$. But we can relax the requirement of "substructure"
 and generalize \textit{get} and \textit{put} to the definition of concrete lenses:
 
 \begin{definition}(Concrete lenses from \cite[Definition 2.2.1]{BayesianOpenGames}) Let $S$, $T$, $A$, $B$ be objects of 
 the category $\Set$. A \textit{concrete lens} l: $(S,T) \rightarrowtail (A,B)$ is a pair of functions 
-$u: S \rightarrow A$ and $v: S \times T \rightarrow B$
+$u: S \rightarrow A$ and $v: S \times B \rightarrow T$
 \end{definition}
 
 
@@ -46,7 +44,7 @@ or in other words, act as morphisms of a symmetric monoidal category where objec
 We term sequential composition as morphism composition and parallel composition as the tensor product of the 
 symmetric monoidal category. Note that 
 $S$ and $A$ are the types for domain and codomain of the
-covariant morphisms and $R$ and $B$ are the domain and codomain for contravariant morphisms of these lenses.
+covariant morphisms and $T$ and $B$ are the domain and codomain for contravariant morphisms of these lenses.
 
 To hint at where we are headed towards describing open games as \textit{processes that care about their environment}, intuitively
 such a morphism would describe the behaviour of an agent given a certain strategy when operating 
@@ -54,8 +52,8 @@ in a given environment, where:
 \begin{itemize} \label{note:hint}
    \item Makes observations of type $S$
    \item Takes actions of type $A$
-   \item Recieves some feedback from its local environment of type $T$
-   \item Relays information back to the environment of type $B$
+   \item Recieves some feedback from its local environment of type $B$
+   \item Relays information back to the environment of type $T$
 \end{itemize}
 Thus given (1) a strategy $S \rightarrow A$, (2) an observation of type $S$, and (3) some continuation or feedback 
 providing some payoff of type $B$, we will be able to describe what this strategic agent would do to maximize its expected payoff.
@@ -84,8 +82,7 @@ We recall the definition from \cite[Definition 2.0.1]{riley2018categories}
 \end{definition}
 
 Treating $\C$ as $\mathbf{Set}$ produces the definition of the concrete lenses introduced in the previous section. 
-Explicitly, we can treat this set as the pairs of functions $u: S \rightarrow \Theta \otimes A$ and $v: \Theta \otimes B \rightarrow T$
-quotiented by the equivalence relations given by $((f \otimes A)u, v) ~ (u, v(f \otimes B))$ for any 
+Explicitly, we can treat this set as the pairs of functions $u: S \rightarrow \Theta \otimes A$ and $v: \Theta \otimes B \rightarrow T$ quotiented by the equivalence relations given by $((f \otimes A)u, v) \sim (u, v(f \otimes B))$ for any 
 $f: \Theta \rightarrow \Gamma$, $u: S \rightarrow \Theta \otimes A$ and $v: \Gamma \otimes B \rightarrow T$. 
 
 Effectful lenses have been studied in \cite{xie2025effectful,abou2016reflections}, but \cite[Section 4.9]{riley2018categories} implements some desired effectul properties as "effectful 
@@ -124,7 +121,7 @@ In the classic game-theoretic sense, this strategy assigns some probabilistic ac
 
 \begin{mdframed}
 \begin{example}[Honeypot allocation randomization]
-Say we want to describe a defensive strategy that deploys a high interaction honeypot 75\% of the time, a low-interaction honeypot 25\% of the time, and doesn't activate a honeypot 10\% of the time. We can use the helper function |distFromList| and a data type storing each kind of honeypot as our set of actions. Assuming we deploy this defensive strategy statically, without any observations, we use the type |()| to describe no input.
+Say we want to describe a defensive strategy that deploys a high interaction honeypot 75\% of the time, a low-interaction honeypot 25\% of the time, and doesn't activate a honeypot 5\% of the time. We can use the helper function |distFromList| and a data type storing each kind of honeypot as our set of actions. Assuming we deploy this defensive strategy statically, without any observations, we use the type |()| to describe no input.
 
 \begin{code}
 defensiveStrategy :: Kleisli Stochastic () Honeypot
@@ -192,8 +189,8 @@ which we can parameterize with the datatype |StochasticOptic| to get our desired
 \subsection{Open games}
 Now that we've set our formalization for stochastic optics, we can introduce the  interpretation for these morphisms of $\mathbf{Optic}_{\KlD}$, which describes an \textit{open play} according to a supplied strategy. This open play along with a best-response relation over the possible strategies will be the components of an open game. We'll start with the formal definition of general open games from \cite[Definition 3.6.1]{BayesianOpenGames} and then demonstrate each of its components. 
 
-\begin{definition}[Open game]
-   An open game is comprised of the following data, with $(S,T)$ and $(A,B)$ objects of $\StochOpt((S,T), (A,B))$: 
+\begin{definition}[Open game]\label{Definition:OpenGame}
+   An open game is comprised of the following data, with $(S,T)$ and $(A,B)$ objects of $\StochOpt$: 
    \begin{enumerate}
       \item A set of strategies $\Sigma$
       \item A \textit{play function} $P: \Sigma \rightarrow \StochOpt((S,T), (A,B))$
@@ -221,11 +218,13 @@ With the following data type, we've reached the highest level for which modeller
 \begin{minipage}\textwidth
    \begin{code}
    data OpenGame StochasticOptic StochasticContext x y s t a b = OpenGame {
-      play :: List x -> o s t a b,
-      evaluate :: List x -> c x s y r -> List y
+      play :: List x -> StochasticOptic s t a b,
+      evaluate :: List x -> StochasticContext s t a b -> List y
    }
    \end{code}
 \end{minipage}
+
+At this level, we can operate on a well-constructed game through the |play| and |evaluate| functions. For |play|, users supply a strategy profile in $x \in \Sigma$, or a list of behavioural strategies as previously defined, ordered in top-down sequential order of the players written in the code block. Thus, a valid strategy profile to supply to |play| for a two-player simultaneous game like Prisoner's Dilemma would be written as |behaveStrat1 ::- behaveStrat2 ::- Nil|, and the expected type would look like |[Kleisli Stochastic s a, Kleisli Stochastic s, a]| For |evaluate|, since we are computing the strategies that are a best-response to the supplied strategy profile, we expect a subset $y \in \mathcal{P}(\Sigma)$ corresponding to these best-response strategy profiles. To ease the use for the modeller, rather than directly outputting these strategies, the engine computes the payoffs according to each of these strategies, . In Section \ref{sec:eval}, we will see how to read this diagnostic information that corresponds to this output and delve into the type of |y|. 
 
 \begin{mdframed}
 
@@ -248,20 +247,27 @@ natureUser =
 \end{example}
 \end{mdframed}
 
+To summarize, we've provided data types that formally define stochastic open games, built on-top of an implementation of the category of stochastic optics. However, the point of compositional game theory is the ability to compose open games. While the tensor and sequential composition have been made clear in |class Optic|, how would these operators work for |data OpenGame|? 
+
+First, we need to show how this composition works along |play| and along |evaluate|. Since supplying a strategy to |play| results in an optic, it is clear that composing along the play function is simply optic composition. But how does best-response behave under composition? To do this, we will examine the concept of |StochasticContext|.
+
+
+
 \subsection{The context aside}\label{sec:contexts}
 
-So far we alluded to the idea of \textit{context} in open games. Contexts have taken many different forms in the literature, from more bare-bones necessitation of a \textit{history/cohistory} and \textit{continuation} pair, to more formally using a \textit{context functor} to define contexts as elements of $\mathbb{C}((S,T),(A,B))$. 
+Contexts have taken many different forms in the literature, from more bare-bones necessitation of a \textit{history/cohistory} and \textit{continuation} pair, to more formally using a \textit{context functor} to define contexts as elements of $\mathbb{C}((S,T),(A,B))$. Though the double lens categorical structure of $\mathbb{C}$ is useful for diagrammatic proofs \footnote{The string diagrammatic representation of contexts can be seen as a "hole" that describes this player's position, and the rest of the boxes to form the local context for that player.}
+ and showing coherence, we can primarily focus on instantiating a context for evaluating a model.
+
 
 
 % Ideally, a modeller would only need to procedurally type games starting with |OpenGame StochasticOptic StochasticContext ... | and use |void| to , but this works against separation-of-concerns, when in fact the 
 
 % Contexts form the arena for modellers to eventually parameterize and "run" the . Having the categorical definition for open games allows for a well-defined (and well-typed) context, and much of the work of the modeller goes into designing this context to understand how a game behaves given certain constraints. 
 
-The name of the (open) game is to describe rational agents interacting with some environment. Thinking about Nash equilibrium in classical game theory, in equilibrium players are not incentivized to change their action assuming they know the other players' strategy. In the field of view of players, we act according to how we expect other players to act. Essentially we have a characterization of describing this pre/post behaviour of other players, which becomes part of the player's field of vision, or \textit{local context}. 
+The name of the (open) game is to describe rational agents interacting with some environment. Thinking about Nash equilibrium in classical game theory, in equilibrium players are not incentivized to change their action assuming they know the other players' strategy. In the field of view of players, we act according to how we expect other players to act. Essentially we have a characterization of describing this pre/post behaviour of other players, which becomes part of the player's field of vision, or \textit{local context}. The formation of this \textit{local context} is a vital mechanism for computing best-response for each agent in a game, but internal and not necessarily important for game simulation.
 
-In the string-diagrammatic calculus of open games, a context is given by two components of a coend diagram, with (1) a triangle on the far-left side of the diagram and (2) a triangle on the far-right side of the diagram that essentially "close" our games. The graphical calculus gives an intuitive "hole" that describes this player's position, and the rest of the boxes to form the local context for that player.
 
-In practice for the open-game-engine, the  characterization of contexts is the datatype: 
+In practice for the open-game-engine, the characterization of contexts is the datatype: 
 
 \begin{code}
 data StochasticContext s t a b where
@@ -269,19 +275,28 @@ data StochasticContext s t a b where
       -> StochasticContext s t a b
 \end{code}
 
-which represents the aforementioned history/cohistory and continuation pair of functions to close an open game. The first parameter for the data constructor represents the initial state to input into a game representing the computations conducted before the open game, and the second parameter describes how to transform outputs of a game into a real-valued payoff or any feedback information from other games as part of that context. 
-
-
+which represents the aforementioned history/cohistory and continuation pair of functions to close an open game. The first parameter for the data constructor represents the initial state of type |s| to input into a game representing the computations conducted before the open game, and the second parameter of type |b| describes how to transform outputs of a game into a real-valued payoff \footnote{This can be of type \textit{Double} to represent payoffs} or any feedback information from other games as part of that context. Thus, the |StochasticContext| datatype is best-suited as the place to define the logic for supplying payoffs at the top-level of any open game. 
 
 \begin{mdframed}
-\begin{example}[A simple maximization problem with uncertainty]\label{example:context}
-Consider the one-shot case adapted from \cite{la2016deceptive}, where a defender is responsible for ensuring the security of an IoT network using a honeypot deployment system. This defender is uncertain about the type of users attempting to access certain servers. Based on historical trends from access records and previous attacks, assume a prior probability of encountering an active attacker as 0.5, where an active attacker is attempting real-time exploits rather than passively collecting information and drawing less attention. In this game model, assuming the defender as the only strategic agent, must maximize his expected reward over the possible types of users he'll encounter. The defender can either For a worked-out example of the same structure, a biased coin, see \cite[Example 4.5.1]{BayesianOpenGames}. We'll consider a direct correlation between the prior and the actual behaviour of the attacker. Here, we can represent this with the following code: 
+   \begin{example}[Instantiating a context]
+   Assume we have an open game with type (in shorthand) |myGame :: OpenGame () () Action Double| corresponding to a game that outputs an "action" and expects a payoff. In order to evaluate a strategy for |myGame|, we need to supply it an appropriate context. First, we can use the type-checker to draw two conclusions: (1) there is no history that needs to be pipelined in and (2) the continuation function should be a function |payoff :: Action -> Stochastic Double|. We can start with implementing the payoff function, and injecting it into the |StochasticContext| datatype in the second argument, as follows: 
 
-\begin{code}
+   \begin{code}
+   myContext :: StochasticContext () () Action Double 
+   myContext = StochasticContext 
+      (return ((),())) (\_, action -> payoff action)
 
-\end{code}
-\end{example}
+   \end{code}
+   Thus, we have a context that typechecks with |myGame|, and allows for analysis of |myGame| tied with the implementation of the payoff function. Note this already hints at a code-based dependence between the analysis and execution of models, which we seek to concretize in Chapter \ref{sec:designPatterns}. We also once again see the residual |z| placeholder variable, but can be disregarded for any direct manipulation or observation by a practitioner.
+   \end{example}
 \end{mdframed}
+
+
+
+
+Getting back to the concept of \textit{local context}, we can define the best-response of a composite game by computing the best-response for each of the components of the game, under their modified \textit{local context}. Defining these modified contexts are encapsulated as part of the engine and automatically calculated, as long as the types match up appropariately. For technical brevity, we omit these details in the thesis, and leave the explanation of the implementation of |StochasticContext|\footnote{See \textbf{OpenGames.Engine.OpticClass} and \textbf{OpenGames.Engine.OpenGames}} and its operations to later work. But conceptually, we can summarize how these modified contexts are formed. 
+
+For a composite game $\mathcal{G} \circ \mathcal{H}$ by sequential composition, we want to evaluate the best-response of the composite game given strategy profiles for its constituent parts $\mathcal{G}$ and $\mathcal{H}$, where the constituent parts each satisfy Definition \ref{Definition:OpenGame}. The context of $\mathcal{G} \circ \mathcal{H}$ is the product of the best-response strategies determined by $\mathcal{G}$ and $\mathcal{H}$. These best-response strategies are calculated using their respective \textit{local contexts}, which each assumes the other game has executed their strategy in the proper order. That is, the best-response strategies of $\mathcal{G}$ is determined by running |evaluate| with a context that assumes a history where we ran |play| for $\mathcal{H}$. Similarly, the best-response strategies of $\mathcal{H}$ is determined with |evaluate| under a context that assumes the continuation (payoff) was calculated using the result of |play| for $\mathcal{G}$. The same conceptual argument applies for tensor composite games $\mathcal{G} \otimes \mathcal{H}$, with a different ordering of |play| relative to the constituent game. One major difference is that the constituent game does \textbf{not} observe or react (covariantly) to the |play| of the other, whereas in the sequential case $\mathcal{G}$ can. For readers interested in the explicit formulation of \textit{local contexts} for composed open games, refer to \cite[Section 3.7]{BayesianOpenGames}. 
 
 
 
@@ -289,11 +304,10 @@ Consider the one-shot case adapted from \cite{la2016deceptive}, where a defender
 \subsection{The category of open games and operations}
 
 By \cite[Theorem 3.10.2]{BayesianOpenGames}, a category of Bayesian open games exists where objects are pairs 
-of objects in the Kleisli category of the distribution monad $\mathbf{Kl}(\textbf{D})$ and morphisms are equivalence classes of open games. So modellers will have access to operations that govern sequential and parallel composition of open games as |(>>>)| and |(&&&)| respectively. The same thought-process for piping together these games applies when piping together optics as described in a previous section. 
-
+of objects in the Kleisli category of the distribution monad $\mathbf{Kl}(\textbf{D})$ and morphisms are equivalence classes of open games. So modellers will have access to operations that govern sequential and parallel composition of open games as |(>>>)| and |(&&&)| respectively. 
 
 By precomposing a game that makes an observation with a copy operation (\cite[Definition 4.4.3]{BayesianOpenGames}), we give the rest of the model access to this observation. Now we can use the previous sections and build more explicitly on the ideas alluded to in Section \ref{note:hint}.
-Without the DSL, we can write Haskell functions for the \textit{copy} and \textit{delete} operations to write a formula for completing \hyperref[example:nature]{Example 5} game as follows: 
+Without the DSL, we can write Haskell functions for the \textit{copy} and \textit{delete} operations to write a formula for completing Example \hyperref[example:nature] game as follows: 
 
 \begin{code}
 userGame:: OpenGame
@@ -316,12 +330,7 @@ Reading this equationally is not as clear to give an interpretation, with deleti
 The most important function for modellers to use that bakes in Bayesian updating and maximization of the expected payoff after updating their belief is the |dependentDecision| function which implements the selection function given in \cite[Definition 4.4.1]{BayesianOpenGames} for Bayesian agents. 
 
 
-
-
-The intuition (as described in \cite[Section 2.1.1]{HedgesThesis}) is to begin thinking 
-of an open game as a process, open to and interacting with its local environment through its inputs 
-and outputs. A commonly-used representation of an open game is as a box (representing the process or morphism)
-with two incoming and two outgoing wires (representing objects of the category).
+We strongly motivate the usage of open games in the Haskell environment, but preceding this interpretation of open games is directly through the formal syntax known as string diagrams (as described in \cite[Section 2.1.1]{HedgesThesis}). Since the category of open games is symmetric monoidal, we can present the boxes (morphisms) as open games and input and output wires of the boxes (objects) as the types $S, T, A, B$ as presented throughout this chapter. An interesting direction to take in the context of this study is whether collaborative model development benefits from first sketching string diagrams to easily represent the information flow of a game. Several string diagrammatic tools exist that allow digital manipulation of these diagrams, which would allow some visual context for the template games and how they may compose. While this could be useful from a conceptual, brainstorming standpoint, mechanising the process to a software-development workflow gives computational results.  
 
 \begin{figure}[h]
 	\centering
@@ -331,36 +340,8 @@ with two incoming and two outgoing wires (representing objects of the category).
 \end{figure}
 
 
-this $\Theta$ may be some prior distribution representing an agent's belief of their type. Given a prior joint distribution $\Prob(\Theta \times S)$ where $\Theta$ is the unobservables and $S$ is the observable states, the agent can update this prior to a posterior and maximize their expected utility. 
-
-
-Starting to think of each of these open games as programs, an open game has four types associated with it. 
-Here variables $X, Y$ are flowing covariantly (intuitively, flowing forwards) and $S, R$ are flowing contravariantly (which represent the feedback of information). Specifically: 
-\begin{itemize}
-	\item $X$ is the set of inputs that the open game can observe 
-	\item $Y$ is the set of actions that the open game can take, or \textit{outcomes}
-	\item $S$ is the set of \textit{co-outcomes} with the purpose of propagating information to precomposed games. 
-	\item $R$ is the set of \textit{outcomes}
-\end{itemize}
-
-Note that there is no sense of agency attached to open games right off the bat. We have flexibility to define the behaviour of the open system according to our needs, whether as 
-a representation of a utility-maximizing agent, or simply a function.  
-
-The type of $\Sigma$, like a pure strategy profile in normal-form games, can be selecting an action from the set of actions. 
-For sequential games, a strategy would typically involve choosing an action in response to each possible observed action played previously, 
-thus such a strategy would be a function of type $X \rightarrow Y$. For the relevant functions that take these strategies as input, such as |evaluate|, these are types as |List x| i.e. a list of strategies. We have to supply a list of the same length as the number of |dependentDecision| operators present in an open game, or in other words a strategy for each utility-maximizing player. To construct this list, we use the |(::-)| operator, like: 
-
-\begin{code}
-stratp1 = playDeterministically Confess  
-stratp2 = playDeterministically Silent 
-
-prisonersDilemmaStrategy = stratp1 ::- stratp2 ::- Nil 
-\end{code}
-
-Note this list must also be ordered corresponding to the top-down or left-right sequencing of an open game, though the compiler will respond accordingly for any type mismatching.
-
 \subsection{Reading the DSL}
-Rather than constructing games using the aforementioned functions, we can use a DSL that compiles to Haskell. In this section, we'll explain the DSL syntax. We will use the following example of the prisoner's dilemma game.
+Rather than constructing games using the aforementioned functions, we can use a DSL that compiles to Haskell, which automatically induces the kind of composition of games as described in the previous section. In this section, we'll explain the DSL syntax. We will use the following example of the prisoner's dilemma game.
 \begin{mdframed}
 \begin{example}[Prisoner's Dilemma in the DSL]\label{example:prisoner}
 The following example is an open game representation of the well-known Prisoner's Dilemma. For simultaneous play, we would consider the tensor of two utility-maximizing agents each represented by an open game generated by the |dependentDecision| function. In the DSl, we can stack code blocks representing these agents, and pipe their fields together accordingly. The input fields remain blank because neither player makes any observations prior to making their move. Two variables are declared in the outputs fields, |decisionPlayer1| and |decisionPlayer2|, which makes these values accessible to other games. Although the player2 open game is below player1, the Haskell expression in the returns fields have access to both variables |decisionPlayer1| and |decisionPlayer2| to calculate the payoff that each agent recieves. 
@@ -419,15 +400,72 @@ myOpenGame :: OpenGame
    
 \end{minipage}
 
+\begin{mdframed}
+\begin{example}[Bayesian agent maximizing utility]\label{example:context}
+% Consider the one-shot case adapted from \cite{la2016deceptive}, where a defender is responsible for ensuring the security of an IoT network using a honeypot deployment system. This defender is uncertain about the type of users attempting to access certain servers. Based on historical trends from access records and previous attacks, assume a prior probability of encountering an active attacker as 0.5, where an active attacker is attempting real-time exploits rather than passively collecting information and drawing less attention. In this game model, assuming the defender as the only strategic agent, must maximize his expected reward over the possible types of users he'll encounter. For a worked-out example of the same structure, a biased coin, see \cite[Example 4.5.1]{BayesianOpenGames}. We'll consider a direct correlation between the prior and the actual behaviour of the attacker. Here, we can represent this with the following code: 
+To better understand a context for a utility-maximizing agent under uncertainty, we can consider the following example derived from \cite{BayesianOpenGames}. Here, two identically-biased coins are flipped. One is flipped in secret, another is flipped and observed by the agent. The coin is equally likely to be biased towards heads or tails, with a 75\% of favouring a side. The joint probabilitIES for all the resultant outcomes of the two flips from $\mathcal{D}(\{Heads, Tails\}^{2})$ can be represented as a Haskell function: 
+\begin{code}
+coinFlip = distFromList [
+   ((Heads, Heads), 5/16), 
+   ((Tails, Tails), 5/16), 
+   ((Heads, Tails), 3/16), 
+   ((Tails, Heads), 3/16)]
 
-\subsection{Evaluation and reading analytics}
+\end{code}
+
+
+We would like to model this interaction as an open game. An open game representing a Bayesian agent is insantiated with the |dependentDecision| operator. We can wrap this agent into a code block to expose the decision the agent makes, and provide it with the payoff feedbacked from its environment. To work towards a separation-of-concerns approach to creating these games, the coin flipping and payoffs are determined externally (in the environment, or context) of the game.   
+\begin{code}
+guesser = [opengame|
+
+   inputs : coinObserved, coinSecret;
+   feedback: ;
+   :----------------------------:
+
+
+   inputs: coinObserved;
+   feedback: ;
+   operation: dependentDecision "guesser" (const [WasHeads, WasTails]);
+   outputs: guess;
+   returns: payoff;
+
+   :----------------------------:
+
+   outputs: coinSecret, guess;
+   returns: payoff;
+
+
+|]
+
+
+\end{code}
+
+
+
+For the agent |guesser|, we expect two inputs, expect it to produce two outputs, and expect some payoff piplined back to the agent. Notice the passthrough of |coinSecret|, which is a necessary variable for calculating the payoff. We can instantiate the compatible context by supplying a history that does the coin-flipping, and an arbitrary function satisfying the type |guesserPayoff :: (Move, Guess) -> Double|. 
+
+\begin{code}
+
+biasedCoinContext = 
+   StochasticContext resCoinToss 
+      (\_, (m, g) -> playDeterministically $ guesserPayoff (m,g))
+         where resCoinToss = fmap (\(t1, t2) -> ((), (t1, t2))) coinFlip
+\end{code}
+
+Here, |resCoinToss| is necessary to kick-off the empty residual type |()| and retaining the result of the two coin tosses to send to the agent. |t1| and |t2| are the observed and secret results of the coin tosses, respectively, corresponding to the |coinObserved| and |coinSecret| declared variables in the |guesser| game 
+
+\end{example}
+\end{mdframed}
+
+\subsection{Evaluation and reading analytics}\label{sec:eval}
 As mentioned previously, Nash equilibrium corresponds to fixpoints of the best-response function of games. Correspondingly in the typical engine output, modellers can read an optimal move and the strategic move and the corresponding expected payoffs for a certain strategy.
 
 Specifying a context for a game to do this evaluation can happen in two ways: (1) specifying the initial history and continuation within in the DSL as embedded Haskell functions, (2) specifying the initial history and continuation payoffs when calling the |evaluate| function. To get a human-readable output In the case of (1), a game with a closed type can then be viewed with the following function: 
 
 \begin{code}
   
-runDiagnostics = generateOutput $ evaluate myClosedGame myStrategy void
+runDiagnostics = generateOutput $ 
+   evaluate myClosedGame myStrategy void
 \end{code}
 where |void| is an identity context. 
 
@@ -441,9 +479,18 @@ However, outside a classical sense, we can construct \textit{Bayesian sequential
 
 \begin{figure}[t]
    \centering
-   \includegraphics[width=\textwidth, height=0.22\textheight, keepaspectratio]{SimpleDiagnostic.png}
+   \includegraphics[width=\textwidth, height=0.5\textheight, keepaspectratio]{SimpleDiagnostic.png}
    \caption{Diagnostic output when running the \textbf{BiasedCoin.hs} game in ghc} 
    \label{figure:simpleDiagnostic}
+\end{figure}
+
+Explicitly, the output of |evaluate| is a (nested) list of lists of type |DiagnosticInfoBayesian|. Since these are defined "player-wise," interpreting a game-wide strategy profile is achieved by zipping together lists of |DiagnosticInfoBayesian|. However, we can see how each of the player's strategies correspond to one another by observing the unobservable state. Since the engine only computes payoffs for all possible actions with positive probability, the unobservable state field exactly details which strategy a player is responding to. To see this, we can follow the diagnostic output from \textbf{IDS.IDSA}. We can see that the output is separated between four-blocks, with \textit{Alice}-blocks on top and \textit{A}-blocks below that. Since \textit{Alice} is the first-mover with a private type, the engine maximizes over her two possible types, as depicted by the first tuple of the unobservable state field. Given that she has a fixed strategy (i.e. always accessing a server), the second-mover \textit{A} will only have to maximize over the possibility of seeing an access move. Expectedly, the third block detailing \textit{A}s payoff is in the situation where \textit{Alice} had type attacker and accessed. If \textit{Alice} was given a mixed strategy instead, then we would expect a total of six blocks, where \textit{A} would have four blocks. 
+
+\begin{figure}[t]
+   \centering
+   \includegraphics[width=\textwidth, height=0.5\textheight, keepaspectratio]{DiagnosticExample.png}
+   \caption{Diagnostic output when running the \textbf{IDS.IDSA} game in ghc} 
+   \label{figure:diagnosticIDS}
 \end{figure}
 
 % To see this, consider the following counterexample in the classic beer-quiche game of imperfect information, where the engine claims 

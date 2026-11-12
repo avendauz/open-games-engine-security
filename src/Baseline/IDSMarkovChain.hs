@@ -1,7 +1,7 @@
 {-# LANGUAGE GADTs #-}
 {-# LANGUAGE DataKinds #-}
 
-module OpenGames.Engine.IDSMarkovChain where
+module Baseline.IDSMarkovChain where
 
 import           OpenGames.Engine.Engine hiding (StochasticStatefulOptic
                                       , StochasticStatefulBayesianOpenGame(..)
