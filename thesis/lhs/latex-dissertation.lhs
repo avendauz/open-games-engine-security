@@ -3,6 +3,7 @@
 %include polycode.fmt
 \usepackage{haskell}
 \usepackage{amsmath}
+\usepackage{booktabs}
 \usepackage{listings}
 \usepackage{strath-dissertation}
 \usepackage{setspace}

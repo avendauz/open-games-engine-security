@@ -22,7 +22,7 @@
     \entry{20squares}{misc}{}{}
       \name{author}{1}{}{%
         {{hash=39b3bf3d30a6ba1cff9d1138899de12c}{%
-           family={20squares},
+           family={{20squares}},
            familyi={2\bibinitperiod}}}%
       }
       \list{publisher}{1}{%
@@ -40,28 +40,20 @@
       \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{howpublished}{\url{https://github.com/20squares/pbs-auctions}}
-      \field{journaltitle}{GitHub repository}
-      \field{title}{pbs-auction}
+      \field{title}{Pbs-Auction}
       \field{year}{2023}
     \endentry
     \entry{ZahnCybercat}{misc}{}{}
       \field{sortinit}{A}
       \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
       \field{labeltitlesource}{title}
-      \field{title}{A software engine for game theoretic modelling part 2}
-      \verb{urlraw}
-      \verb https://cybercat.institute/2022/06/24/a-software-engine-for-game-theoretic-modelling-part-2/
-      \endverb
-      \verb{url}
-      \verb https://cybercat.institute/2022/06/24/a-software-engine-for-game-theoretic-modelling-part-2/
-      \endverb
+      \field{title}{A Software Engine for Game Theoretic Modelling Part 2}
     \endentry
     \entry{abou2016reflections}{article}{}{}
       \name{author}{5}{}{%
         {{hash=f09daed03358906ed02c09500a5429ec}{%
-           family={Abou-Saleh},
-           familyi={A\bibinithyphendelim S\bibinitperiod},
+           family={{Abou-Saleh}},
+           familyi={A\bibinitperiod},
            given={Faris},
            giveni={F\bibinitperiod}}}%
         {{hash=f4919fe7a53de0806121150ca7f0372b}{%
@@ -101,10 +93,215 @@
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{A List of Successes That Can Change the World: Essays Dedicated to Philip Wadler on the Occasion of His 60th Birthday}
-      \field{title}{Reflections on monadic lenses}
+      \field{title}{Reflections on Monadic Lenses}
       \field{year}{2016}
       \field{pages}{1\bibrangedash 31}
       \range{pages}{31}
+    \endentry
+    \entry{baezCategoricalFrameworkModeling2023}{misc}{}{}
+      \name{author}{5}{}{%
+        {{hash=77c130b1ed4688a565b29481eee08ae3}{%
+           family={Baez},
+           familyi={B\bibinitperiod},
+           given={John\bibnamedelima C.},
+           giveni={J\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+        {{hash=3e02cc9d81e7945b95c1d4499a7a6e75}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Xiaoyan},
+           giveni={X\bibinitperiod}}}%
+        {{hash=33bda5bc38c3b05f23e9a99b5e4efb27}{%
+           family={Libkind},
+           familyi={L\bibinitperiod},
+           given={Sophie},
+           giveni={S\bibinitperiod}}}%
+        {{hash=1ebb1cfbaeac838499baef5a6672f1d6}{%
+           family={Osgood},
+           familyi={O\bibinitperiod},
+           given={Nathaniel\bibnamedelima D.},
+           giveni={N\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+        {{hash=bde9de01ca0882122cd1d5d5f57d31f7}{%
+           family={Redekopp},
+           familyi={R\bibinitperiod},
+           given={Eric},
+           giveni={E\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {arXiv}%
+      }
+      \strng{namehash}{deec2c72800ebea7c36efc6ef5c92961}
+      \strng{fullhash}{b8c73af56c8d27387362338f0eb34266}
+      \strng{fullhashraw}{b8c73af56c8d27387362338f0eb34266}
+      \strng{bibnamehash}{deec2c72800ebea7c36efc6ef5c92961}
+      \strng{authorbibnamehash}{deec2c72800ebea7c36efc6ef5c92961}
+      \strng{authornamehash}{deec2c72800ebea7c36efc6ef5c92961}
+      \strng{authorfullhash}{b8c73af56c8d27387362338f0eb34266}
+      \strng{authorfullhashraw}{b8c73af56c8d27387362338f0eb34266}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Stock and flow diagrams are already an important tool in epidemiology, but category theory lets us go further and treat these diagrams as mathematical entities in their own right. In this chapter we use communicable disease models created with our software, StockFlow.jl, to explain the benefits of the categorical approach. We first explain the category of stock-flow diagrams and note the clear separation between the syntax of these diagrams and their semantics, demonstrating three examples of semantics already implemented in the software: ODEs, causal loop diagrams, and system structure diagrams. We then turn to two methods for building large stock-flow diagrams from smaller ones in a modular fashion: composition and stratification. Finally, we introduce the open-source ModelCollab software for diagram-based collaborative modeling. The graphical user interface of this web-based software lets modelers take advantage of the ideas discussed here without any knowledge of their categorical foundations.}
+      \field{eprintclass}{cs.LO}
+      \field{eprinttype}{arXiv}
+      \field{month}{1}
+      \field{number}{arXiv:2211.01290}
+      \field{title}{A {{Categorical Framework}} for {{Modeling}} with {{Stock}} and {{Flow Diagrams}}}
+      \field{urlday}{20}
+      \field{urlmonth}{10}
+      \field{urlyear}{2026}
+      \field{year}{2023}
+      \field{urldateera}{ce}
+      \verb{doi}
+      \verb 10.48550/arXiv.2211.01290
+      \endverb
+      \verb{eprint}
+      \verb 2211.01290
+      \endverb
+      \verb{file}
+      \verb /home/avendauz/Zotero/storage/HAWXUHHQ/Baez et al. - 2023 - A Categorical Framework for Modeling with Stock and Flow Diagrams.pdf;/home/avendauz/Zotero/storage/5NAYVIY5/2211.html
+      \endverb
+      \keyw{Computer Science - Computation and Language,Computer Science - Logic in Computer Science}
+    \endentry
+    \entry{baier2008principles}{book}{}{}
+      \name{author}{3}{}{%
+        {{hash=7725f3db070a985fe46a5feb0bcee960}{%
+           family={Baier},
+           familyi={B\bibinitperiod},
+           given={Christel},
+           giveni={C\bibinitperiod}}}%
+        {{hash=392d5825b15ef7f81f68632c7a49fdef}{%
+           family={Katoen},
+           familyi={K\bibinitperiod},
+           given={Joost-Pieter},
+           giveni={J\bibinithyphendelim P\bibinitperiod}}}%
+        {{hash=b4e7304ebb3a5b91bf463d0565d270d7}{%
+           family={Larsen},
+           familyi={L\bibinitperiod},
+           given={Kim\bibnamedelima Guldstrand},
+           giveni={K\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {MIT press Cambridge}%
+      }
+      \strng{namehash}{64c8344cdd57d443720d28cf182f8122}
+      \strng{fullhash}{64c8344cdd57d443720d28cf182f8122}
+      \strng{fullhashraw}{64c8344cdd57d443720d28cf182f8122}
+      \strng{bibnamehash}{64c8344cdd57d443720d28cf182f8122}
+      \strng{authorbibnamehash}{64c8344cdd57d443720d28cf182f8122}
+      \strng{authornamehash}{64c8344cdd57d443720d28cf182f8122}
+      \strng{authorfullhash}{64c8344cdd57d443720d28cf182f8122}
+      \strng{authorfullhashraw}{64c8344cdd57d443720d28cf182f8122}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Principles of Model Checking}
+      \field{volume}{735}
+      \field{year}{2008}
+    \endentry
+    \entry{beck2001agile}{misc}{}{}
+      \name{author}{17}{}{%
+        {{hash=c5dcbe71f60a8d55caa11fe1493614d0}{%
+           family={Beck},
+           familyi={B\bibinitperiod},
+           given={Kent},
+           giveni={K\bibinitperiod}}}%
+        {{hash=b081a82bcbc247aeb2a2ca9ae72f9566}{%
+           family={Beedle},
+           familyi={B\bibinitperiod},
+           given={Mike},
+           giveni={M\bibinitperiod}}}%
+        {{hash=e3333b2399cb2fb4adfb9b013292c54c}{%
+           family={{van Bennekum}},
+           familyi={v\bibinitperiod},
+           given={Arie},
+           giveni={A\bibinitperiod}}}%
+        {{hash=c1e5acec4259bb4c17ca1a00866f32e1}{%
+           family={Cockburn},
+           familyi={C\bibinitperiod},
+           given={Alistair},
+           giveni={A\bibinitperiod}}}%
+        {{hash=dc98036d5d01f88b9fdd0b5ff2bc8a2d}{%
+           family={Cunningham},
+           familyi={C\bibinitperiod},
+           given={Ward},
+           giveni={W\bibinitperiod}}}%
+        {{hash=312ac886938a9b2be4f8eb607567fe4c}{%
+           family={Fowler},
+           familyi={F\bibinitperiod},
+           given={Martin},
+           giveni={M\bibinitperiod}}}%
+        {{hash=61bdeb09cfbfab0465639014ab3b69be}{%
+           family={Grenning},
+           familyi={G\bibinitperiod},
+           given={James},
+           giveni={J\bibinitperiod}}}%
+        {{hash=bae406ad0a87e2f65be045fff38c80ad}{%
+           family={Highsmith},
+           familyi={H\bibinitperiod},
+           given={Jim},
+           giveni={J\bibinitperiod}}}%
+        {{hash=10383d05f32f2a21518b493a3c546e5c}{%
+           family={Hunt},
+           familyi={H\bibinitperiod},
+           given={Andrew},
+           giveni={A\bibinitperiod}}}%
+        {{hash=3673ee61a410ba25401f2aeaf593748a}{%
+           family={Jeffries},
+           familyi={J\bibinitperiod},
+           given={Ron},
+           giveni={R\bibinitperiod}}}%
+        {{hash=0dd621758d63b6f0b80fb66db4c3f61e}{%
+           family={Kern},
+           familyi={K\bibinitperiod},
+           given={Jon},
+           giveni={J\bibinitperiod}}}%
+        {{hash=f520225da3039cab062eedb1e4ddc8d0}{%
+           family={Marick},
+           familyi={M\bibinitperiod},
+           given={Brian},
+           giveni={B\bibinitperiod}}}%
+        {{hash=6f41df64eb0dc4855be70172368604c2}{%
+           family={Martin},
+           familyi={M\bibinitperiod},
+           given={Robert\bibnamedelima C.},
+           giveni={R\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+        {{hash=4cb11e054d62acdcf1ec319dcc4920b4}{%
+           family={Mellor},
+           familyi={M\bibinitperiod},
+           given={Stephen},
+           giveni={S\bibinitperiod}}}%
+        {{hash=ee6f08fcba839e09471a0bc69152b6a5}{%
+           family={Schwaber},
+           familyi={S\bibinitperiod},
+           given={Ken},
+           giveni={K\bibinitperiod}}}%
+        {{hash=6e3f26f6f816a26c6ab36bc7a899bcde}{%
+           family={Sutherland},
+           familyi={S\bibinitperiod},
+           given={Jeff},
+           giveni={J\bibinitperiod}}}%
+        {{hash=eb92fc3e1bc50392c9349cc38124af4c}{%
+           family={Thomas},
+           familyi={T\bibinitperiod},
+           given={Dave},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{e0e8f5a23c6124fea7c2eb7da286ea5e}
+      \strng{fullhash}{6ef4da1c0710f9f8d4edf19ca1735671}
+      \strng{fullhashraw}{6ef4da1c0710f9f8d4edf19ca1735671}
+      \strng{bibnamehash}{e0e8f5a23c6124fea7c2eb7da286ea5e}
+      \strng{authorbibnamehash}{e0e8f5a23c6124fea7c2eb7da286ea5e}
+      \strng{authornamehash}{e0e8f5a23c6124fea7c2eb7da286ea5e}
+      \strng{authorfullhash}{6ef4da1c0710f9f8d4edf19ca1735671}
+      \strng{authorfullhashraw}{6ef4da1c0710f9f8d4edf19ca1735671}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Manifesto for Agile Software Development}
+      \field{year}{2001}
     \endentry
     \entry{BoltThesis}{thesis}{}{}
       \name{author}{1}{}{%
@@ -126,7 +323,7 @@
       \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{title}{Probability and nondeterminism in compositional game theory}
+      \field{title}{Probability and Nondeterminism in Compositional Game Theory}
       \field{type}{phdthesis}
       \field{year}{2019}
     \endentry
@@ -177,11 +374,49 @@
       \field{labeltitlesource}{title}
       \field{abstract}{This paper generalises the treatment of compositional game theory as introduced by the second and third authors with Ghani and Winschel, where games are modelled as morphisms of a symmetric monoidal category. From an economic modelling perspective, the existing notion of an open game is not expressive enough for many applications. This includes stochastic environments, stochastic choices by players, as well as incomplete information regarding the game being played. The current paper addresses these three issue all at once. To achieve this we make significant use of category theory, especially the 'coend optics' of Riley.}
       \field{journaltitle}{arXiv: Computer Science and Game Theory}
-      \field{title}{Bayesian open games.}
+      \field{title}{Bayesian Open Games.}
       \field{year}{2019}
       \verb{doi}
       \verb 10.32408/compositionality-5-9
       \endverb
+    \endentry
+    \entry{booth2013national}{report}{}{}
+      \name{author}{3}{}{%
+        {{hash=837ea23f2ee91f2677e0f7eb6f6b4ba3}{%
+           family={Booth},
+           familyi={B\bibinitperiod},
+           given={Harold},
+           giveni={H\bibinitperiod}}}%
+        {{hash=8d2d40f2cfe434e7e1cb90bd82f23349}{%
+           family={Rike},
+           familyi={R\bibinitperiod},
+           given={Doug},
+           giveni={D\bibinitperiod}}}%
+        {{hash=809c7790b5042769ddd351e092d9fd15}{%
+           family={Witte},
+           familyi={W\bibinitperiod},
+           given={Gregory\bibnamedelima A.},
+           giveni={G\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {National Institute of Standards and Technology}%
+      }
+      \strng{namehash}{c4d8df2fbf23b1468bf6d02fca569221}
+      \strng{fullhash}{c4d8df2fbf23b1468bf6d02fca569221}
+      \strng{fullhashraw}{c4d8df2fbf23b1468bf6d02fca569221}
+      \strng{bibnamehash}{c4d8df2fbf23b1468bf6d02fca569221}
+      \strng{authorbibnamehash}{c4d8df2fbf23b1468bf6d02fca569221}
+      \strng{authornamehash}{c4d8df2fbf23b1468bf6d02fca569221}
+      \strng{authorfullhash}{c4d8df2fbf23b1468bf6d02fca569221}
+      \strng{authorfullhashraw}{c4d8df2fbf23b1468bf6d02fca569221}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{12}
+      \field{title}{The {{National Vulnerability Database}} ({{NVD}}): {{Overview}}}
+      \field{type}{{{ITL Bulletin}}}
+      \field{year}{2013}
     \endentry
     \entry{capucci2021translating}{article}{}{}
       \name{author}{4}{}{%
@@ -218,9 +453,13 @@
       \field{sortinithash}{4d103a86280481745c9c897c925753c0}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
+      \field{eprinttype}{arXiv}
       \field{journaltitle}{arXiv preprint arXiv:2105.06763}
-      \field{title}{Translating extensive form games to open games with agency}
+      \field{title}{Translating Extensive Form Games to Open Games with Agency}
       \field{year}{2021}
+      \verb{eprint}
+      \verb 2105.06763
+      \endverb
     \endentry
     \entry{Carroll2009}{inproceedings}{}{}
       \name{author}{2}{}{%
@@ -255,7 +494,7 @@
       \verb{doi}
       \verb 10.1109/ICCCN.2009.5235344
       \endverb
-      \keyw{Game theory;Information systems;Protection;Computer science;Computer networks;Bayesian methods;Military computing;Computer security;Uncertainty;Computer hacking}
+      \keyw{Bayesian methods,Computer hacking,Computer networks,Computer science,Computer security,Game theory,Information systems,Military computing,Protection,Uncertainty}
     \endentry
     \entry{EGTAOnline}{inproceedings}{}{}
       \name{author}{2}{}{%
@@ -305,9 +544,9 @@
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{Empirical game-theoretic analysis (EGTA) is a promising methodology for studying complex strategic scenarios through agent-based simulation. One challenge of utilizing this methodology is that it can require tremendous amounts of computation. Constructing the payoff matrix for a game of even moderate complexity entails significant data gathering and management concerns. We present EGTAOnline, an experiment management system that simplifies the application of the EGTA methodology to large games. We describe the architecture of EGTAOnline, explain why such a tool is practically important, and discuss avenues of research that are suggested through the use of EGTAOnline.}
-      \field{booktitle}{Multi-Agent-Based Simulation XIII}
+      \field{booktitle}{Multi-Agent-Based Simulation {{XIII}}}
       \field{isbn}{978-3-642-38859-0}
-      \field{title}{EGTAOnline: An Experiment Manager for Simulation-Based Game Studies}
+      \field{title}{{{EGTAOnline}}: {{An}} Experiment Manager for Simulation-Based Game Studies}
       \field{year}{2013}
       \field{pages}{85\bibrangedash 100}
       \range{pages}{16}
@@ -348,7 +587,7 @@
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{booktitle}{Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems}
-      \field{title}{Obstruction alternating-time temporal logic: A strategic logic to reason about dynamic models}
+      \field{title}{Obstruction Alternating-Time Temporal Logic: {{A}} Strategic Logic to Reason about Dynamic Models}
       \field{year}{2024}
       \field{pages}{271\bibrangedash 280}
       \range{pages}{10}
@@ -389,7 +628,7 @@
       \field{journaltitle}{IEEE Security \& Privacy}
       \field{month}{9}
       \field{number}{05}
-      \field{title}{{ Improving Security Policy Decisions with Models }}
+      \field{title}{Improving Security Policy Decisions with Models}
       \field{volume}{13}
       \field{year}{2015}
       \field{pages}{34\bibrangedash 41}
@@ -397,13 +636,7 @@
       \verb{doi}
       \verb 10.1109/MSP.2015.97
       \endverb
-      \verb{urlraw}
-      \verb https://doi.ieeecomputersociety.org/10.1109/MSP.2015.97
-      \endverb
-      \verb{url}
-      \verb https://doi.ieeecomputersociety.org/10.1109/MSP.2015.97
-      \endverb
-      \keyw{Biological system modeling;Computer security;Mathematical model;Computational modeling;Productivity}
+      \keyw{Biological system modeling,Computational modeling,Computer security,Mathematical model,Productivity}
     \endentry
     \entry{Caulfield2014}{inproceedings}{}{}
       \name{author}{3}{}{%
@@ -490,7 +723,7 @@
            given={Boon-Hee},
            giveni={B\bibinithyphendelim H\bibinitperiod}}}%
       }
-      \list{organization}{1}{%
+      \list{publisher}{1}{%
         {Springer}%
       }
       \strng{namehash}{d603d2d990b62bfb70f62af3a55e90fe}
@@ -505,8 +738,8 @@
       \field{sortinithash}{4d103a86280481745c9c897c925753c0}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{booktitle}{International conference on decision and game theory for security}
-      \field{title}{Deception-based game theoretical approach to mitigate DoS attacks}
+      \field{booktitle}{International Conference on Decision and Game Theory for Security}
+      \field{title}{Deception-Based Game Theoretical Approach to Mitigate {{DoS}} Attacks}
       \field{year}{2016}
       \field{pages}{18\bibrangedash 38}
       \range{pages}{21}
@@ -546,7 +779,7 @@
       \verb{doi}
       \verb 10.1109/TIFS.2009.2019154
       \endverb
-      \keyw{Game theory;Intrusion detection;Guidelines;Nash equilibrium;Monitoring;Computational modeling;Computer networks;Distributed computing;Data security;Information security;Game theory;intrusion detection system (IDS);Nash equilibrium (NE)}
+      \keyw{Computational modeling,Computer networks,Data security,Distributed computing,Game theory,Guidelines,Information security,Intrusion detection,intrusion detection system (IDS),Monitoring,Nash equilibrium,Nash equilibrium (NE)}
     \endentry
     \entry{Collins2025}{misc}{}{}
       \name{author}{3}{}{%
@@ -580,16 +813,10 @@
       \field{labeltitlesource}{title}
       \field{eprintclass}{cs.GT}
       \field{eprinttype}{arXiv}
-      \field{title}{Game-Theoretic Cybersecurity: the Good, the Bad and the Ugly}
+      \field{title}{Game-Theoretic Cybersecurity: The Good, the Bad and the Ugly}
       \field{year}{2025}
       \verb{eprint}
       \verb 2401.13815
-      \endverb
-      \verb{urlraw}
-      \verb https://arxiv.org/abs/2401.13815
-      \endverb
-      \verb{url}
-      \verb https://arxiv.org/abs/2401.13815
       \endverb
     \endentry
     \entry{Egan2025}{inproceedings}{}{}
@@ -605,8 +832,8 @@
            given={Mukesh},
            giveni={M\bibinitperiod}}}%
         {{hash=827d3fc858c0d9e3e0b6164a117b8b32}{%
-           family={Ben-Idris},
-           familyi={B\bibinithyphendelim I\bibinitperiod},
+           family={{Ben-Idris}},
+           familyi={B\bibinitperiod},
            given={Mohammed},
            giveni={M\bibinitperiod}}}%
       }
@@ -622,7 +849,7 @@
       \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{booktitle}{2025 IEEE Kansas Power and Energy Conference (KPEC)}
+      \field{booktitle}{2025 {{IEEE}} Kansas Power and Energy Conference ({{KPEC}})}
       \field{title}{Game Theory in Cybersecurity: A Review of Applications, Models, and Challenges}
       \field{year}{2025}
       \field{pages}{1\bibrangedash 5}
@@ -630,7 +857,7 @@
       \verb{doi}
       \verb 10.1109/KPEC65465.2025.11045006
       \endverb
-      \keyw{Training;Privacy;Reviews;Information sharing;Games;Nash equilibrium;Information age;Planning;Internet;Computer security;Colonel Blotto systems;Cybersecurity;Game Theory;Nash equilibrium}
+      \keyw{Colonel Blotto systems,Computer security,Cybersecurity,Game Theory,Games,Information age,Information sharing,Internet,Nash equilibrium,Planning,Privacy,Reviews,Training}
     \endentry
     \entry{fong2018sevensketchescompositionalityinvitation}{misc}{}{}
       \name{author}{2}{}{%
@@ -659,17 +886,91 @@
       \field{labeltitlesource}{title}
       \field{eprintclass}{math.CT}
       \field{eprinttype}{arXiv}
-      \field{title}{Seven Sketches in Compositionality: An Invitation to Applied Category Theory}
+      \field{title}{Seven Sketches in Compositionality: {{An}} Invitation to Applied Category Theory}
       \field{year}{2018}
       \verb{eprint}
       \verb 1803.05316
       \endverb
-      \verb{urlraw}
-      \verb https://arxiv.org/abs/1803.05316
+    \endentry
+    \entry{FUDENBERG1991236}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=590edd5dea58f11155a2e574136ff683}{%
+           family={Fudenberg},
+           familyi={F\bibinitperiod},
+           given={Drew},
+           giveni={D\bibinitperiod}}}%
+        {{hash=00e537376470e49a45c05eab98111caa}{%
+           family={Tirole},
+           familyi={T\bibinitperiod},
+           given={Jean},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{13b2de8a5a2f3daffc85eba8dbd0910d}
+      \strng{fullhash}{13b2de8a5a2f3daffc85eba8dbd0910d}
+      \strng{fullhashraw}{13b2de8a5a2f3daffc85eba8dbd0910d}
+      \strng{bibnamehash}{13b2de8a5a2f3daffc85eba8dbd0910d}
+      \strng{authorbibnamehash}{13b2de8a5a2f3daffc85eba8dbd0910d}
+      \strng{authornamehash}{13b2de8a5a2f3daffc85eba8dbd0910d}
+      \strng{authorfullhash}{13b2de8a5a2f3daffc85eba8dbd0910d}
+      \strng{authorfullhashraw}{13b2de8a5a2f3daffc85eba8dbd0910d}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{We introduce a formal definition of perfect Bayesian equilibrium (PBE) for multi-period games with observed actions. In a PBE, (P) the strategies form a Bayesian equilibrium for each continuation game, given the specified beliefs, and (B) beliefs are updated from period to period in accordance with Bayes rule whenever possible, and satisfy a ``no-signaling-what-you-don't-know'' condition. PBE is equivalent to sequential equilibrium if each player has only two types, or there are only two periods, but differs otherwise. Equivalence is restored by requiring that (B) apply to the relative probabilities of types with posterior probability zero.}
+      \field{issn}{0022-0531}
+      \field{journaltitle}{Journal of Economic Theory}
+      \field{number}{2}
+      \field{title}{Perfect {{Bayesian}} Equilibrium and Sequential Equilibrium}
+      \field{volume}{53}
+      \field{year}{1991}
+      \field{pages}{236\bibrangedash 260}
+      \range{pages}{25}
+      \verb{doi}
+      \verb 10.1016/0022-0531(91)90155-W
       \endverb
-      \verb{url}
-      \verb https://arxiv.org/abs/1803.05316
-      \endverb
+    \endentry
+    \entry{gamma1994design}{book}{}{}
+      \name{author}{4}{}{%
+        {{hash=abd927bf30d6566be0ac66a66e893fdd}{%
+           family={Gamma},
+           familyi={G\bibinitperiod},
+           given={Erich},
+           giveni={E\bibinitperiod}}}%
+        {{hash=233f891813bda0f3920985f97a4a7554}{%
+           family={Helm},
+           familyi={H\bibinitperiod},
+           given={Richard},
+           giveni={R\bibinitperiod}}}%
+        {{hash=fd79e5e249b219ff553fc2d811104d78}{%
+           family={Johnson},
+           familyi={J\bibinitperiod},
+           given={Ralph},
+           giveni={R\bibinitperiod}}}%
+        {{hash=e032589f0b9a38804483ab7cf5ccad7f}{%
+           family={Vlissides},
+           familyi={V\bibinitperiod},
+           given={John},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Addison-Wesley Professional}%
+      }
+      \strng{namehash}{4d2492409a24d4ed208ae6670cb91945}
+      \strng{fullhash}{5cb4a6d7baf30d11bae6682eca698b4f}
+      \strng{fullhashraw}{5cb4a6d7baf30d11bae6682eca698b4f}
+      \strng{bibnamehash}{4d2492409a24d4ed208ae6670cb91945}
+      \strng{authorbibnamehash}{4d2492409a24d4ed208ae6670cb91945}
+      \strng{authornamehash}{4d2492409a24d4ed208ae6670cb91945}
+      \strng{authorfullhash}{5cb4a6d7baf30d11bae6682eca698b4f}
+      \strng{authorfullhashraw}{5cb4a6d7baf30d11bae6682eca698b4f}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-0-201-63361-0}
+      \field{title}{Design Patterns: {{Elements}} of Reusable Object-Oriented Software}
+      \field{year}{1994}
     \endentry
     \entry{ghani2017compositionaltreatmentiteratedopen}{misc}{}{}
       \name{author}{4}{}{%
@@ -713,12 +1014,27 @@
       \verb{eprint}
       \verb 1711.07968
       \endverb
-      \verb{urlraw}
-      \verb https://arxiv.org/abs/1711.07968
-      \endverb
-      \verb{url}
-      \verb https://arxiv.org/abs/1711.07968
-      \endverb
+    \endentry
+    \entry{haskelldocs}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=a212c0f1561df043256ee0a0c329a133}{%
+           family={{Haskell.org}},
+           familyi={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{a212c0f1561df043256ee0a0c329a133}
+      \strng{fullhash}{a212c0f1561df043256ee0a0c329a133}
+      \strng{fullhashraw}{a212c0f1561df043256ee0a0c329a133}
+      \strng{bibnamehash}{a212c0f1561df043256ee0a0c329a133}
+      \strng{authorbibnamehash}{a212c0f1561df043256ee0a0c329a133}
+      \strng{authornamehash}{a212c0f1561df043256ee0a0c329a133}
+      \strng{authorfullhash}{a212c0f1561df043256ee0a0c329a133}
+      \strng{authorfullhashraw}{a212c0f1561df043256ee0a0c329a133}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Haskell Documentation}
+      \field{year}{2026}
     \endentry
     \entry{Hausken2024}{article}{}{}
       \name{author}{3}{}{%
@@ -750,21 +1066,15 @@
       \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{abstract}{The focus of this review is the long and broad history of attacker–defender games as a foundation for the narrower and shorter history of cyber security. The purpose is to illustrate the role of game theory in cyber security and which areas have received attention and to indicate future research directions. The methodology uses the search terms game theory, attack, defense, and cyber security in Web of Science, augmented with the authors’ knowledge of the field. Games may involve multiple attackers and defenders over multiple periods. Defense involves security screening and inspection, the detection of invaders, jamming, secrecy, and . Incomplete information is reviewed due to its inevitable presence in cyber security. The findings pertain to players sharing information weighted against the security investment, influenced by social planning. Attackers stockpile zero-day cyber vulnerabilities. Defenders build deterrent resilient systems. Stochastic cyber security games play a role due to uncertainty and the need to build probabilistic models. Such games can be further developed. Cyber security games based on traffic and transportation are reviewed; they are influenced by the more extensive communication of GPS data. Such games should be extended to comprise air, land, and sea. Finally, cyber security education and board games are reviewed, which play a prominent role.}
+      \field{abstract}{The focus of this review is the long and broad history of attacker--defender games as a foundation for the narrower and shorter history of cyber security. The purpose is to illustrate the role of game theory in cyber security and which areas have received attention and to indicate future research directions. The methodology uses the search terms game theory, attack, defense, and cyber security in Web of Science, augmented with the authors' knowledge of the field. Games may involve multiple attackers and defenders over multiple periods. Defense involves security screening and inspection, the detection of invaders, jamming, secrecy, and . Incomplete information is reviewed due to its inevitable presence in cyber security. The findings pertain to players sharing information weighted against the security investment, influenced by social planning. Attackers stockpile zero-day cyber vulnerabilities. Defenders build deterrent resilient systems. Stochastic cyber security games play a role due to uncertainty and the need to build probabilistic models. Such games can be further developed. Cyber security games based on traffic and transportation are reviewed; they are influenced by the more extensive communication of GPS data. Such games should be extended to comprise air, land, and sea. Finally, cyber security education and board games are reviewed, which play a prominent role.}
       \field{issn}{2073-4336}
       \field{journaltitle}{Games}
-      \field{number}{4}
-      \field{title}{A Review of Attacker–Defender Games and Cyber Security}
+      \field{number}{28}
+      \field{title}{A Review of Attacker--Defender Games and Cyber Security}
       \field{volume}{15}
       \field{year}{2024}
       \verb{doi}
       \verb 10.3390/g15040028
-      \endverb
-      \verb{urlraw}
-      \verb https://www.mdpi.com/2073-4336/15/4/28
-      \endverb
-      \verb{url}
-      \verb https://www.mdpi.com/2073-4336/15/4/28
       \endverb
     \endentry
     \entry{He2015}{inproceedings}{}{}
@@ -790,7 +1100,7 @@
            given={Rudra},
            giveni={R\bibinitperiod}}}%
       }
-      \list{organization}{1}{%
+      \list{publisher}{1}{%
         {IEEE}%
       }
       \strng{namehash}{4702dc4aaf7139b6c01bf6ee268244be}
@@ -805,13 +1115,13 @@
       \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{booktitle}{2015 IEEE Global Communications Conference (GLOBECOM)}
-      \field{title}{Dynamic IDS configuration in the presence of intruder type uncertainty}
+      \field{booktitle}{2015 {{IEEE}} Global Communications Conference ({{GLOBECOM}})}
+      \field{title}{Dynamic {{IDS}} Configuration in the Presence of Intruder Type Uncertainty}
       \field{year}{2015}
       \field{pages}{1\bibrangedash 6}
       \range{pages}{6}
     \endentry
-    \entry{Hedges2019}{misc}{}{}
+    \entry{hedgeslearning}{misc}{}{}
       \name{author}{1}{}{%
         {{hash=a54c9ab370ba6f2ac86897eb2730d2ee}{%
            family={Hedges},
@@ -832,15 +1142,10 @@
       \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{month}{10}
-      \field{title}{Are open games useful for my problem?}
-      \field{year}{2019}
-      \verb{urlraw}
-      \verb https://julesh.com/2019/10/13/are-open-games-useful-for-my-problem/
-      \endverb
-      \verb{url}
-      \verb https://julesh.com/2019/10/13/are-open-games-useful-for-my-problem/
-      \endverb
+      \field{howpublished}{Cybercat Institute Blog}
+      \field{month}{6}
+      \field{title}{From Equilibrium Checking to Learning with the Open Game Engine}
+      \field{year}{2025}
     \endentry
     \entry{hedges2017morphismsopengames}{misc}{}{}
       \name{author}{1}{}{%
@@ -865,16 +1170,10 @@
       \field{labeltitlesource}{title}
       \field{eprintclass}{cs.GT}
       \field{eprinttype}{arXiv}
-      \field{title}{Morphisms of open games}
+      \field{title}{Morphisms of Open Games}
       \field{year}{2017}
       \verb{eprint}
       \verb 1711.07059
-      \endverb
-      \verb{urlraw}
-      \verb https://arxiv.org/abs/1711.07059
-      \endverb
-      \verb{url}
-      \verb https://arxiv.org/abs/1711.07059
       \endverb
     \endentry
     \entry{HedgesThesis}{thesis}{}{}
@@ -898,7 +1197,7 @@
       \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{title}{Towards compositional game theory}
+      \field{title}{Towards Compositional Game Theory}
       \field{type}{phdthesis}
       \field{year}{2016}
     \endentry
@@ -934,7 +1233,7 @@
       \field{labeltitlesource}{title}
       \field{journaltitle}{IEEE Transactions on Cognitive Communications and Networking}
       \field{number}{4}
-      \field{title}{Collaborative IDS Configuration: A Two-Layer Game-Theoretic Approach}
+      \field{title}{Collaborative {{IDS}} Configuration: A Two-Layer Game-Theoretic Approach}
       \field{volume}{4}
       \field{year}{2018}
       \field{pages}{803\bibrangedash 815}
@@ -942,7 +1241,7 @@
       \verb{doi}
       \verb 10.1109/TCCN.2018.2856207
       \endverb
-      \keyw{Collaborative work;Intrusion detection;Game theory;Nash equilibrium;Resource management;Load modeling;Collaborative intrusion detection systems;game theory;Nash-Q learning}
+      \keyw{Collaborative intrusion detection systems,Collaborative work,game theory,Game theory,Intrusion detection,Load modeling,Nash equilibrium,Nash-Q learning,Resource management}
     \endentry
     \entry{la2016deceptive}{article}{}{}
       \name{author}{5}{}{%
@@ -989,7 +1288,7 @@
       \field{labeltitlesource}{title}
       \field{journaltitle}{IEEE Internet of Things Journal}
       \field{number}{6}
-      \field{title}{Deceptive attack and defense game in honeypot-enabled networks for the internet of things}
+      \field{title}{Deceptive Attack and Defense Game in Honeypot-Enabled Networks for the Internet of Things}
       \field{volume}{3}
       \field{year}{2016}
       \field{pages}{1025\bibrangedash 1035}
@@ -998,8 +1297,8 @@
     \entry{leyton2008essentials}{book}{}{}
       \name{author}{2}{}{%
         {{hash=91d47c0d6ebf96d50082140932162381}{%
-           family={Leyton-Brown},
-           familyi={L\bibinithyphendelim B\bibinitperiod},
+           family={{Leyton-Brown}},
+           familyi={L\bibinitperiod},
            given={Kevin},
            giveni={K\bibinitperiod}}}%
         {{hash=774e2e16526f33f383bed004b13bf326}{%
@@ -1023,8 +1322,69 @@
       \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{title}{Essentials of game theory: A concise multidisciplinary introduction}
+      \field{title}{Essentials of Game Theory: {{A}} Concise Multidisciplinary Introduction}
       \field{year}{2008}
+    \endentry
+    \entry{liCompositionalSystemDynamics2025}{misc}{}{}
+      \name{author}{4}{}{%
+        {{hash=3e02cc9d81e7945b95c1d4499a7a6e75}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Xiaoyan},
+           giveni={X\bibinitperiod}}}%
+        {{hash=318b3f8d6da4d1c854033da07460a0cd}{%
+           family={Patterson},
+           familyi={P\bibinitperiod},
+           given={Evan},
+           giveni={E\bibinitperiod}}}%
+        {{hash=fb81537b9c27db8b62f21cdd893aad25}{%
+           family={Mabry},
+           familyi={M\bibinitperiod},
+           given={Patricia\bibnamedelima L.},
+           giveni={P\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
+        {{hash=1ebb1cfbaeac838499baef5a6672f1d6}{%
+           family={Osgood},
+           familyi={O\bibinitperiod},
+           given={Nathaniel\bibnamedelima D.},
+           giveni={N\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {arXiv}%
+      }
+      \strng{namehash}{dfd8d90ad2de68ac150a6f4c7810f9a7}
+      \strng{fullhash}{386af24e3d946f563f60d14f0df552cb}
+      \strng{fullhashraw}{386af24e3d946f563f60d14f0df552cb}
+      \strng{bibnamehash}{dfd8d90ad2de68ac150a6f4c7810f9a7}
+      \strng{authorbibnamehash}{dfd8d90ad2de68ac150a6f4c7810f9a7}
+      \strng{authornamehash}{dfd8d90ad2de68ac150a6f4c7810f9a7}
+      \strng{authorfullhash}{386af24e3d946f563f60d14f0df552cb}
+      \strng{authorfullhashraw}{386af24e3d946f563f60d14f0df552cb}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{This work establishes a robust mathematical foundation for compositional System Dynamics modeling, leveraging category theory to formalize and enhance the representation, analysis, and composition of system models. Here, System Dynamics diagrams, such as stock \& flow diagrams, system structure diagrams, and causal loop diagrams, are formulated as categorical constructs, enabling scalable, transparent, and systematic reasoning. By encoding these diagrams as data using attributed C-sets and utilizing advanced categorical tools like structured cospans, pushouts, pullbacks, and functor mappings, the framework supports modular composition, stratification, and seamless mapping between syntax and semantics. The approach underwrites traditional practice with firm mathematical structure, facilitates the identification of certain forms of pathways and feedback loops, the detection of simple patterns within complex diagrams, common structure between diagrams, and structure-preserving mappings between diverse diagram types. Additionally, this framework supports alternative semantics, such as stochastic transition dynamics, extending beyond traditional ordinary differential equation (ODE) representations. Applications in compositional modeling, modularity, and team-based collaboration demonstrate the practical advantages of this advanced framework. Future directions include integrating dimensional annotations, supporting hybrid and agent-based modeling paradigms, and expanding the framework's applicability to global and local temporal reasoning through temporal sheaves. By revealing and formalizing the hidden mathematical structure of System Dynamics diagrams, this work empowers practitioners to tackle complex systems with clarity, scalability, and rigor.}
+      \field{eprintclass}{eess.SY}
+      \field{eprinttype}{arXiv}
+      \field{month}{9}
+      \field{number}{arXiv:2509.18475}
+      \field{shorttitle}{Compositional {{System Dynamics}}}
+      \field{title}{Compositional {{System Dynamics}}: {{The Higher Mathematics Underlying System Dynamics Diagrams}} \& {{Practice}}}
+      \field{urlday}{20}
+      \field{urlmonth}{10}
+      \field{urlyear}{2026}
+      \field{year}{2025}
+      \field{urldateera}{ce}
+      \verb{doi}
+      \verb 10.48550/arXiv.2509.18475
+      \endverb
+      \verb{eprint}
+      \verb 2509.18475
+      \endverb
+      \verb{file}
+      \verb /home/avendauz/Zotero/storage/4WPMR669/Li et al. - 2025 - Compositional System Dynamics The Higher Mathematics Underlying System Dynamics Diagrams & Practice.pdf;/home/avendauz/Zotero/storage/EDEL6ZKS/2509.html
+      \endverb
+      \keyw{Electrical Engineering and Systems Science - Systems and Control,Mathematics - Category Theory,Mathematics - Dynamical Systems}
     \endentry
     \entry{li2019game}{article}{}{}
       \name{author}{3}{}{%
@@ -1061,7 +1421,7 @@
       \field{labeltitlesource}{title}
       \field{journaltitle}{Future Internet}
       \field{number}{3}
-      \field{title}{A game-theoretic analysis for distributed honeypots}
+      \field{title}{A Game-Theoretic Analysis for Distributed Honeypots}
       \field{volume}{11}
       \field{year}{2019}
       \field{pages}{65}
@@ -1093,7 +1453,7 @@
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Communications Surveys \& Tutorials, IEEE}
-      \field{month}{01}
+      \field{month}{1}
       \field{title}{Game Theory for Network Security}
       \field{volume}{15}
       \field{year}{2013}
@@ -1102,6 +1462,29 @@
       \verb{doi}
       \verb 10.1109/SURV.2012.062612.00056
       \endverb
+    \endentry
+    \entry{loeh2012lhs2tex}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=dea227d45d0919684686f3671a2987f6}{%
+           family={Löh},
+           familyi={L\bibinitperiod},
+           given={Andres},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{dea227d45d0919684686f3671a2987f6}
+      \strng{fullhash}{dea227d45d0919684686f3671a2987f6}
+      \strng{fullhashraw}{dea227d45d0919684686f3671a2987f6}
+      \strng{bibnamehash}{dea227d45d0919684686f3671a2987f6}
+      \strng{authorbibnamehash}{dea227d45d0919684686f3671a2987f6}
+      \strng{authornamehash}{dea227d45d0919684686f3671a2987f6}
+      \strng{authorfullhash}{dea227d45d0919684686f3671a2987f6}
+      \strng{authorfullhashraw}{dea227d45d0919684686f3671a2987f6}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{{{lhs2TeX}}: {{Preprocessor}} for Typeset Haskell Sources}
+      \field{year}{2012}
     \endentry
     \entry{lye2005game}{article}{}{}
       \name{author}{2}{}{%
@@ -1133,7 +1516,7 @@
       \field{labeltitlesource}{title}
       \field{journaltitle}{International Journal of Information Security}
       \field{number}{1}
-      \field{title}{Game strategies in network security}
+      \field{title}{Game Strategies in Network Security}
       \field{volume}{4}
       \field{year}{2005}
       \field{pages}{71\bibrangedash 86}
@@ -1167,7 +1550,7 @@
       \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{title}{Categories for the working mathematician}
+      \field{title}{Categories for the Working Mathematician}
       \field{volume}{5}
       \field{year}{1971}
     \endentry
@@ -1219,22 +1602,16 @@
       \field{labeltitlesource}{title}
       \field{abstract}{This survey provides a structured and comprehensive overview of research on security and privacy in computer and communication networks that use game-theoretic approaches. We present a selected set of works to highlight the application of game theory in addressing different forms of security and privacy problems in computer networks and mobile applications. We organize the presented works in six main categories: security of the physical and MAC layers, security of self-organizing networks, intrusion detection systems, anonymity and privacy, economics of network security, and cryptography. In each category, we identify security problems, players, and game models. We summarize the main results of selected works, such as equilibrium analysis and security mechanism designs. In addition, we provide a discussion on the advantages, drawbacks, and future direction of using game theory in this field. In this survey, our goal is to instill in the reader an enhanced understanding of different research approaches in applying game-theoretic methods to network security. This survey can also help researchers from various fields develop game-theoretic solutions to current and emerging security problems in computer networking.}
       \field{issn}{0360-0300}
-      \field{journaltitle}{ACM Comput. Surv.}
+      \field{journaltitle}{Acm Computing Surveys}
       \field{month}{7}
       \field{number}{3}
-      \field{title}{Game theory meets network security and privacy}
+      \field{title}{Game Theory Meets Network Security and Privacy}
       \field{volume}{45}
       \field{year}{2013}
       \verb{doi}
       \verb 10.1145/2480741.2480742
       \endverb
-      \verb{urlraw}
-      \verb https://doi.org/10.1145/2480741.2480742
-      \endverb
-      \verb{url}
-      \verb https://doi.org/10.1145/2480741.2480742
-      \endverb
-      \keyw{wireless security,revocation,network security and privacy,multiparty computation,location privacy,intrusion detection system,cryptography,Game theory}
+      \keyw{cryptography,Game theory,intrusion detection system,location privacy,multiparty computation,network security and privacy,revocation,wireless security}
     \endentry
     \entry{Nochenson2012}{inproceedings}{}{}
       \name{author}{2}{}{%
@@ -1288,7 +1665,6 @@
       \field{isbn}{978-3-642-34266-0}
       \field{title}{Simulation and Game-Theoretic Analysis of an Attacker-Defender Game}
       \field{year}{2012}
-      \field{dateera}{ce}
       \field{pages}{138\bibrangedash 151}
       \range{pages}{14}
     \endentry
@@ -1330,22 +1706,16 @@
       \field{labeltitlesource}{title}
       \field{abstract}{Cyberattacks on both databases and critical infrastructure have threatened public and private sectors. Ubiquitous tracking and wearable computing have infringed upon privacy. Advocates and engineers have recently proposed using defensive deception as a means to leverage the information asymmetry typically enjoyed by attackers as a tool for defenders. The term deception, however, has been employed broadly and with a variety of meanings. In this article, we survey 24 articles from 2008 to 2018 that use game theory to model defensive deception for cybersecurity and privacy. Then, we propose a taxonomy that defines six types of deception: perturbation, moving target defense, obfuscation, mixing, honey-x, and attacker engagement. These types are delineated by their information structures, agents, actions, and duration: precisely concepts captured by game theory. Our aims are to rigorously define types of defensive deception, to capture a snapshot of the state of the literature, to provide a menu of models that can be used for applied research, and to identify promising areas for future work. Our taxonomy provides a systematic foundation for understanding different types of defensive deception commonly encountered in cybersecurity and privacy.}
       \field{issn}{0360-0300}
-      \field{journaltitle}{ACM Comput. Surv.}
+      \field{journaltitle}{Acm Computing Surveys}
       \field{month}{8}
       \field{number}{4}
-      \field{title}{A Game-theoretic Taxonomy and Survey of Defensive Deception for Cybersecurity and Privacy}
+      \field{title}{A Game-Theoretic Taxonomy and Survey of Defensive Deception for Cybersecurity and Privacy}
       \field{volume}{52}
       \field{year}{2019}
       \verb{doi}
       \verb 10.1145/3337772
       \endverb
-      \verb{urlraw}
-      \verb https://doi.org/10.1145/3337772
-      \endverb
-      \verb{url}
-      \verb https://doi.org/10.1145/3337772
-      \endverb
-      \keyw{Cybersecurity,attacker engagement,deception,game theory,honeypot,mix network,moving target defense,obfuscation,perturbation,privacy,survey,taxonomy}
+      \keyw{attacker engagement,Cybersecurity,deception,game theory,honeypot,mix network,moving target defense,obfuscation,perturbation,privacy,survey,taxonomy}
     \endentry
     \entry{Pawlick2015}{misc}{}{}
       \name{author}{2}{}{%
@@ -1374,16 +1744,10 @@
       \field{labeltitlesource}{title}
       \field{eprintclass}{cs.CR}
       \field{eprinttype}{arXiv}
-      \field{title}{Deception by Design: Evidence-Based Signaling Games for Network Defense}
+      \field{title}{Deception by Design: {{Evidence}}-Based Signaling Games for Network Defense}
       \field{year}{2015}
       \verb{eprint}
       \verb 1503.05458
-      \endverb
-      \verb{urlraw}
-      \verb https://arxiv.org/abs/1503.05458
-      \endverb
-      \verb{url}
-      \verb https://arxiv.org/abs/1503.05458
       \endverb
     \endentry
     \entry{Phetmanee2024}{inproceedings}{}{}
@@ -1405,7 +1769,7 @@
            giveni={O\bibinitperiod}}}%
       }
       \list{location}{1}{%
-        {Manchester, United Kingdom}%
+        {Berlin, Heidelberg}%
       }
       \list{publisher}{1}{%
         {Springer-Verlag}%
@@ -1423,25 +1787,19 @@
       \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{abstract}{We present StEVe, a prototype tool modelling Stackelberg Security Games (SSGs) and employing rational verification based on bespoke Stackelberg equilibrium computation. StEVe automatically extracts technical details from public vulnerability databases, transforming these into Attack Defence Trees and then into SSG models. By using the temporal logic rPATL, the tool enables the synthesis of optimal defence strategies through Stackelberg equilibrium analysis, which is implemented as a PRISM-games extension. Preliminary results demonstrate StEVe’s ability to model and counteract cyber threats, reducing potential damages and financial losses.}
-      \field{booktitle}{Integrated Formal Methods: 19th International Conference, IFM 2024, Manchester, UK, November 13–15, 2024, Proceedings}
+      \field{abstract}{We present StEVe, a prototype tool modelling Stackelberg Security Games (SSGs) and employing rational verification based on bespoke Stackelberg equilibrium computation. StEVe automatically extracts technical details from public vulnerability databases, transforming these into Attack Defence Trees and then into SSG models. By using the temporal logic rPATL, the tool enables the synthesis of optimal defence strategies through Stackelberg equilibrium analysis, which is implemented as a PRISM-games extension. Preliminary results demonstrate StEVe's ability to model and counteract cyber threats, reducing potential damages and financial losses.}
+      \field{booktitle}{Integrated Formal Methods: 19th International Conference, {{IFM}} 2024, Manchester, {{UK}}, November 13--15, 2024, Proceedings}
       \field{isbn}{978-3-031-76553-7}
-      \field{title}{StEVe: A Rational Verification Tool for Stackelberg Security Games}
+      \field{title}{{{StEVe}}: A Rational Verification Tool for Stackelberg Security Games}
       \field{year}{2024}
       \field{pages}{267\bibrangedash 275}
       \range{pages}{9}
       \verb{doi}
       \verb 10.1007/978-3-031-76554-4_15
       \endverb
-      \verb{urlraw}
-      \verb https://doi.org/10.1007/978-3-031-76554-4_15
-      \endverb
-      \verb{url}
-      \verb https://doi.org/10.1007/978-3-031-76554-4_15
-      \endverb
       \keyw{Rational Verification,Security Games,Temporal Logic}
     \endentry
-    \entry{phetmanee_2024_13338608}{software}{}{}
+    \entry{phetmanee_2024_13338608}{misc}{}{}
       \name{author}{3}{}{%
         {{hash=429c83eaf499436643ced1e201012204}{%
            family={Phetmanee},
@@ -1459,9 +1817,6 @@
            given={Oana},
            giveni={O\bibinitperiod}}}%
       }
-      \list{publisher}{1}{%
-        {Zenodo}%
-      }
       \strng{namehash}{d8ed7046becfef4b0b06d9950e2313bf}
       \strng{fullhash}{d8ed7046becfef4b0b06d9950e2313bf}
       \strng{fullhashraw}{d8ed7046becfef4b0b06d9950e2313bf}
@@ -1475,17 +1830,12 @@
       \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
+      \field{howpublished}{Zenodo}
       \field{month}{8}
-      \field{title}{StEVe: A Rational Verification Tool for Stackelberg Security Games}
+      \field{title}{{{StEVe}}: A Rational Verification Tool for Stackelberg Security Games}
       \field{year}{2024}
       \verb{doi}
       \verb 10.5281/zenodo.13338608
-      \endverb
-      \verb{urlraw}
-      \verb https://doi.org/10.5281/zenodo.13338608
-      \endverb
-      \verb{url}
-      \verb https://doi.org/10.5281/zenodo.13338608
       \endverb
     \endentry
     \entry{Wellman2015}{inproceedings}{}{}
@@ -1502,7 +1852,7 @@
            giveni={M\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
       }
       \list{location}{1}{%
-        {Denver, Colorado, USA}%
+        {New York, NY, USA}%
       }
       \list{publisher}{1}{%
         {Association for Computing Machinery}%
@@ -1520,21 +1870,15 @@
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{The effectiveness of a moving target defense depends on how it is deployed through specific system operations over time, and how attackers may respond to this deployment. We define a generic cyber-defense scenario, and examine the interplay between attack and defense strategies using empirical game-theoretic techniques. In this approach, the scenario is defined procedurally by a simulator, and data derived from systematic simulation is used to induce a game model. We explore a space of 72 game instances, defined by differences in agent objectives, attack cost, and ability of the defender to detect attack actions. We observe a range of qualitative strategic behaviors, which vary in clear patterns across environmental conditions. In particular, we find that the efficacy of deterrent defense is critically sensitive to detection capability, and in the absence of perfect detection the defender is often driven to proactive moving-target actions.}
-      \field{booktitle}{Proceedings of the Second ACM Workshop on Moving Target Defense}
-      \field{isbn}{9781450338233}
-      \field{series}{MTD '15}
+      \field{booktitle}{Proceedings of the Second {{ACM}} Workshop on Moving Target Defense}
+      \field{isbn}{978-1-4503-3823-3}
+      \field{series}{Mtd '15}
       \field{title}{Empirical Game-Theoretic Analysis for Moving Target Defense}
       \field{year}{2015}
       \field{pages}{57\bibrangedash 65}
       \range{pages}{9}
       \verb{doi}
       \verb 10.1145/2808475.2808483
-      \endverb
-      \verb{urlraw}
-      \verb https://doi.org/10.1145/2808475.2808483
-      \endverb
-      \verb{url}
-      \verb https://doi.org/10.1145/2808475.2808483
       \endverb
       \keyw{cyber security,game theory,moving target defense}
     \endentry
@@ -1558,44 +1902,161 @@
       \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
+      \field{eprinttype}{arXiv}
       \field{journaltitle}{arXiv preprint arXiv:1809.00738}
-      \field{title}{Categories of optics}
+      \field{title}{Categories of Optics}
       \field{year}{2018}
+      \verb{eprint}
+      \verb 1809.00738
+      \endverb
+    \endentry
+    \entry{rodriguezsakamoto2026categorical}{thesis}{}{}
+      \name{author}{1}{}{%
+        {{hash=9f43342ab9383d6bc096a47c96e28c94}{%
+           family={Rodriguez\bibnamedelima Sakamoto},
+           familyi={R\bibinitperiod\bibinitdelim S\bibinitperiod},
+           given={Riu},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {University of Strathclyde}%
+      }
+      \strng{namehash}{9f43342ab9383d6bc096a47c96e28c94}
+      \strng{fullhash}{9f43342ab9383d6bc096a47c96e28c94}
+      \strng{fullhashraw}{9f43342ab9383d6bc096a47c96e28c94}
+      \strng{bibnamehash}{9f43342ab9383d6bc096a47c96e28c94}
+      \strng{authorbibnamehash}{9f43342ab9383d6bc096a47c96e28c94}
+      \strng{authornamehash}{9f43342ab9383d6bc096a47c96e28c94}
+      \strng{authorfullhash}{9f43342ab9383d6bc096a47c96e28c94}
+      \strng{authorfullhashraw}{9f43342ab9383d6bc096a47c96e28c94}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Categorical Models in Control Theory \& Reinforcement Learning}
+      \field{type}{phdthesis}
+      \field{year}{2026}
     \endentry
     \entry{tan2022a}{thesis}{}{}
       \name{author}{2}{}{%
-        {{hash=2ca377c2911fee6d6da5222856cd5fcc}{%
+        {{hash=07c4d16d817723c2482bf3670ea0a038}{%
            family={Tan},
            familyi={T\bibinitperiod},
-           given={JZ},
-           giveni={J\bibinitperiod}}}%
+           given={{\relax JZ}},
+           giveni={_\bibinitperiod}}}%
         {{hash=9fe5cdf69e7c21fb4768948b13101d02}{%
            family={Abramsky},
            familyi={A\bibinitperiod},
            given={S},
            giveni={S\bibinitperiod}}}%
       }
-      \list{institution}{1}{%
+      \list{institution}{2}{%
+        {University of Oxford}%
         {University of Oxford}%
       }
-      \list{publisher}{1}{%
-        {University of Oxford}%
-      }
-      \strng{namehash}{6c736532f1d244bc9151db9db96ecb25}
-      \strng{fullhash}{6c736532f1d244bc9151db9db96ecb25}
-      \strng{fullhashraw}{6c736532f1d244bc9151db9db96ecb25}
-      \strng{bibnamehash}{6c736532f1d244bc9151db9db96ecb25}
-      \strng{authorbibnamehash}{6c736532f1d244bc9151db9db96ecb25}
-      \strng{authornamehash}{6c736532f1d244bc9151db9db96ecb25}
-      \strng{authorfullhash}{6c736532f1d244bc9151db9db96ecb25}
-      \strng{authorfullhashraw}{6c736532f1d244bc9151db9db96ecb25}
+      \strng{namehash}{c7fa274963089dac53b5ca7302b66aa3}
+      \strng{fullhash}{c7fa274963089dac53b5ca7302b66aa3}
+      \strng{fullhashraw}{c7fa274963089dac53b5ca7302b66aa3}
+      \strng{bibnamehash}{c7fa274963089dac53b5ca7302b66aa3}
+      \strng{authorbibnamehash}{c7fa274963089dac53b5ca7302b66aa3}
+      \strng{authornamehash}{c7fa274963089dac53b5ca7302b66aa3}
+      \strng{authorfullhash}{c7fa274963089dac53b5ca7302b66aa3}
+      \strng{authorfullhashraw}{c7fa274963089dac53b5ca7302b66aa3}
       \field{sortinit}{T}
       \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{title}{Institutions under composition}
+      \field{title}{Institutions under Composition}
       \field{type}{phdthesis}
       \field{year}{2022}
+    \endentry
+    \entry{msft:cyberbattlesim}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=e8af831634619916a69dc82e402cc4be}{%
+           family={Team.},
+           familyi={T\bibinitperiod},
+           given={Microsoft\bibnamedelimb Defender\bibnamedelima Research},
+           giveni={M\bibinitperiod\bibinitdelim D\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {GitHub}%
+      }
+      \strng{namehash}{e8af831634619916a69dc82e402cc4be}
+      \strng{fullhash}{e8af831634619916a69dc82e402cc4be}
+      \strng{fullhashraw}{e8af831634619916a69dc82e402cc4be}
+      \strng{bibnamehash}{e8af831634619916a69dc82e402cc4be}
+      \strng{authorbibnamehash}{e8af831634619916a69dc82e402cc4be}
+      \strng{authornamehash}{e8af831634619916a69dc82e402cc4be}
+      \strng{authorfullhash}{e8af831634619916a69dc82e402cc4be}
+      \strng{authorfullhashraw}{e8af831634619916a69dc82e402cc4be}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{{{CyberBattleSim}}}
+      \field{year}{2021}
+    \endentry
+    \entry{ccyberbattle}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=0d495634a118bfb4efc603ccacd91859}{%
+           family={Terranova},
+           familyi={T\bibinitperiod},
+           given={Franco},
+           giveni={F\bibinitperiod}}}%
+        {{hash=f9ac6d5be954f5f72e662dbe692f57b9}{%
+           family={Lahmadi},
+           familyi={L\bibinitperiod},
+           given={Abdelkader},
+           giveni={A\bibinitperiod}}}%
+        {{hash=77b20b0ea7b66d4b93adf6081e67a845}{%
+           family={Chrisment},
+           familyi={C\bibinitperiod},
+           given={Isabelle},
+           giveni={I\bibinitperiod}}}%
+      }
+      \strng{namehash}{0410f64dfb444d0447497230e15e499c}
+      \strng{fullhash}{0410f64dfb444d0447497230e15e499c}
+      \strng{fullhashraw}{0410f64dfb444d0447497230e15e499c}
+      \strng{bibnamehash}{0410f64dfb444d0447497230e15e499c}
+      \strng{authorbibnamehash}{0410f64dfb444d0447497230e15e499c}
+      \strng{authornamehash}{0410f64dfb444d0447497230e15e499c}
+      \strng{authorfullhash}{0410f64dfb444d0447497230e15e499c}
+      \strng{authorfullhashraw}{0410f64dfb444d0447497230e15e499c}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{2025 28th International Symposium on Research in Attacks, Intrusions and Defenses ({{RAID}})}
+      \field{title}{Scalable and Generalizable {{RL}} Agents for Attack Path Discovery via Continuous Invariant Spaces}
+      \field{year}{2025}
+      \field{pages}{440\bibrangedash 457}
+      \range{pages}{18}
+      \verb{doi}
+      \verb 10.1109/RAID67961.2025.00029
+      \endverb
+      \keyw{Attack Path Discovery,Continuous Spaces,Current measurement,Deep reinforcement learning,Deep Reinforcement Learning,Invariant Agents,Knowledge transfer,Pipelines,Resource management,Scalability,Scenario generation,Simulation Environments,Testing,Threat modeling,Training}
+    \endentry
+    \entry{catcolab2024}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=00bb8ba8c2ce8c26ac045aad5de87577}{%
+           family={{Topos Institute}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{00bb8ba8c2ce8c26ac045aad5de87577}
+      \strng{fullhash}{00bb8ba8c2ce8c26ac045aad5de87577}
+      \strng{fullhashraw}{00bb8ba8c2ce8c26ac045aad5de87577}
+      \strng{bibnamehash}{00bb8ba8c2ce8c26ac045aad5de87577}
+      \strng{authorbibnamehash}{00bb8ba8c2ce8c26ac045aad5de87577}
+      \strng{authornamehash}{00bb8ba8c2ce8c26ac045aad5de87577}
+      \strng{authorfullhash}{00bb8ba8c2ce8c26ac045aad5de87577}
+      \strng{authorfullhashraw}{00bb8ba8c2ce8c26ac045aad5de87577}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{GitHub}
+      \field{title}{{{CatColab}}. {{A}} Collaborative Environment for Formal, Interoperable, Conceptual Modeling}
+      \field{year}{2024}
     \endentry
     \entry{wellman2006methods}{inproceedings}{}{}
       \name{author}{1}{}{%
@@ -1617,14 +2078,14 @@
       \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{booktitle}{AAAI}
-      \field{title}{Methods for empirical game-theoretic analysis}
+      \field{booktitle}{{{AAAI}}}
+      \field{title}{Methods for Empirical Game-Theoretic Analysis}
       \field{volume}{980}
       \field{year}{2006}
       \field{pages}{1552\bibrangedash 1556}
       \range{pages}{5}
     \endentry
-    \entry{Wellman2019}{inbook}{}{}
+    \entry{Wellman2019}{incollection}{}{}
       \name{author}{3}{}{%
         {{hash=1b765f5dca25c61f99b31403087f0586}{%
            family={Wellman},
@@ -1692,7 +2153,7 @@
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{Game-theoretic applications in cyber-security are often restricted by the need to simplify complex domains to render them amenable to analysis. In the empirical game-theoretic analysis approach, games are modeled by simulation, thus significantly increasing the level of complexity that can be addressed. We survey applications of this approach to scenarios of adaptive cyber-defense, illustrating how the method operates, and assessing its strengths and limitations.}
-      \field{booktitle}{Adversarial and Uncertain Reasoning for Adaptive Cyber Defense: Control- and Game-Theoretic Approaches to Cyber Security}
+      \field{booktitle}{Adversarial and Uncertain Reasoning for Adaptive Cyber Defense: {{Control}}- and Game-Theoretic Approaches to Cyber Security}
       \field{isbn}{978-3-030-30719-6}
       \field{title}{Empirical Game-Theoretic Methods for Adaptive Cyber-Defense}
       \field{year}{2019}
@@ -1700,12 +2161,6 @@
       \range{pages}{17}
       \verb{doi}
       \verb 10.1007/978-3-030-30719-6_6
-      \endverb
-      \verb{urlraw}
-      \verb https://doi.org/10.1007/978-3-030-30719-6_6
-      \endverb
-      \verb{url}
-      \verb https://doi.org/10.1007/978-3-030-30719-6_6
       \endverb
     \endentry
     \entry{xie2025effectful}{article}{}{}
@@ -1743,7 +2198,7 @@
       \field{labeltitlesource}{title}
       \field{journaltitle}{Proceedings of the ACM on Programming Languages}
       \field{number}{ICFP}
-      \field{title}{Effectful Lenses: There and Back with Different Monads}
+      \field{title}{Effectful Lenses: {{There}} and Back with Different Monads}
       \field{volume}{9}
       \field{year}{2025}
       \field{pages}{541\bibrangedash 566}
@@ -1769,15 +2224,124 @@
       \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{journaltitle}{Cybercat Institute}
-      \field{month}{07}
-      \field{title}{Compositionality and the mass customization of Economic Models}
+      \field{month}{7}
+      \field{title}{Compositionality and the Mass Customization of Economic Models}
       \field{year}{2024}
-      \verb{urlraw}
-      \verb https://cybercat.institute/2024/07/15/usefulness-models/
+    \endentry
+    \entry{zenitani2023attack}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=3bfcbcb123586b6cc6027f3078c55180}{%
+           family={Zenitani},
+           familyi={Z\bibinitperiod},
+           given={Kengo},
+           giveni={K\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier}%
+      }
+      \strng{namehash}{3bfcbcb123586b6cc6027f3078c55180}
+      \strng{fullhash}{3bfcbcb123586b6cc6027f3078c55180}
+      \strng{fullhashraw}{3bfcbcb123586b6cc6027f3078c55180}
+      \strng{bibnamehash}{3bfcbcb123586b6cc6027f3078c55180}
+      \strng{authorbibnamehash}{3bfcbcb123586b6cc6027f3078c55180}
+      \strng{authornamehash}{3bfcbcb123586b6cc6027f3078c55180}
+      \strng{authorfullhash}{3bfcbcb123586b6cc6027f3078c55180}
+      \strng{authorfullhashraw}{3bfcbcb123586b6cc6027f3078c55180}
+      \field{sortinit}{Z}
+      \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Computers \& Security}
+      \field{title}{Attack Graph Analysis: {{An}} Explanatory Guide}
+      \field{volume}{126}
+      \field{year}{2023}
+      \field{pages}{103081}
+      \range{pages}{1}
+    \endentry
+    \entry{Zhu2025}{incollection}{}{}
+      \name{author}{1}{}{%
+        {{hash=ac733f1ebc4d357170b624d9dd702e07}{%
+           family={Zhu},
+           familyi={Z\bibinitperiod},
+           given={Quanyan},
+           giveni={Q\bibinitperiod}}}%
+      }
+      \name{editor}{2}{}{%
+        {{hash=50cb4d4b2e02cc52784398051157495e}{%
+           family={Linkov},
+           familyi={L\bibinitperiod},
+           given={Igor},
+           giveni={I\bibinitperiod}}}%
+        {{hash=8ad8b8b50a57200f02308065a2f5fbcd}{%
+           family={Kott},
+           familyi={K\bibinitperiod},
+           given={Alexander},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Cham}%
+      }
+      \list{publisher}{1}{%
+        {Springer Nature Switzerland}%
+      }
+      \strng{namehash}{ac733f1ebc4d357170b624d9dd702e07}
+      \strng{fullhash}{ac733f1ebc4d357170b624d9dd702e07}
+      \strng{fullhashraw}{ac733f1ebc4d357170b624d9dd702e07}
+      \strng{bibnamehash}{ac733f1ebc4d357170b624d9dd702e07}
+      \strng{authorbibnamehash}{ac733f1ebc4d357170b624d9dd702e07}
+      \strng{authornamehash}{ac733f1ebc4d357170b624d9dd702e07}
+      \strng{authorfullhash}{ac733f1ebc4d357170b624d9dd702e07}
+      \strng{authorfullhashraw}{ac733f1ebc4d357170b624d9dd702e07}
+      \strng{editorbibnamehash}{3c80f902e628ab9a44e70a62c7dc059d}
+      \strng{editornamehash}{3c80f902e628ab9a44e70a62c7dc059d}
+      \strng{editorfullhash}{3c80f902e628ab9a44e70a62c7dc059d}
+      \strng{editorfullhashraw}{3c80f902e628ab9a44e70a62c7dc059d}
+      \field{sortinit}{Z}
+      \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Cyber resilience is a complementary concept to cybersecurity, focusing on the preparation, response, and recovery from cyber threats that are challenging to prevent. Organizations increasingly face such threats in an evolving cyber threat landscape. Understanding and establishing foundations for cyber resilience provide a quantitative and systematic approach to cyber risk assessment, mitigation policy evaluation, and risk-informed defense design. A systems-scientific view toward cyber risks provides holistic and system-level solutions. This chapter starts with a systemic view toward cyber risks and presents the confluence of game theory, control theory, and learning theories, which are three major pillars for the design of cyber resilience mechanisms to counteract increasingly sophisticated and evolving threats in our networks and organizations. Game and control theoretic methods provide a set of modeling frameworks to capture the strategic and dynamic interactions between defenders and attackers. Control and learning frameworks together provide a feedback-driven mechanism that enables autonomous and adaptive responses to threats. Game and learning frameworks offer a data-driven approach to proactively reason about adversarial behaviors and resilient strategies. The confluence of the three lays the theoretical foundations for the analysis and design of cyber resilience. This chapter presents various theoretical paradigms, including dynamic asymmetric games, moving horizon control, conjectural learning, and meta-learning, as recent advances at the intersection. This chapter concludes with future directions and discussions of the role of neurosymbolic learning and the synergy between foundation models and game models in cyber resilience.}
+      \field{booktitle}{Cyber Resilience: {{Applied}} Perspectives}
+      \field{isbn}{978-3-031-90109-6}
+      \field{title}{Foundations of Cyber Resilience: {{The}} Confluence of Game, Control, and Learning Theories}
+      \field{year}{2025}
+      \field{pages}{27\bibrangedash 58}
+      \range{pages}{32}
+      \verb{doi}
+      \verb 10.1007/978-3-031-90109-6_2
       \endverb
-      \verb{url}
-      \verb https://cybercat.institute/2024/07/15/usefulness-models/
+    \endentry
+    \entry{Zhu2024}{misc}{}{}
+      \name{author}{2}{}{%
+        {{hash=ac733f1ebc4d357170b624d9dd702e07}{%
+           family={Zhu},
+           familyi={Z\bibinitperiod},
+           given={Quanyan},
+           giveni={Q\bibinitperiod}}}%
+        {{hash=70fa925cb5f5e3bd935b997f073ca47a}{%
+           family={Başar},
+           familyi={B\bibinitperiod},
+           given={Tamer},
+           giveni={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{bb7a5b9e3e6df5d8264d8effaf74e389}
+      \strng{fullhash}{bb7a5b9e3e6df5d8264d8effaf74e389}
+      \strng{fullhashraw}{bb7a5b9e3e6df5d8264d8effaf74e389}
+      \strng{bibnamehash}{bb7a5b9e3e6df5d8264d8effaf74e389}
+      \strng{authorbibnamehash}{bb7a5b9e3e6df5d8264d8effaf74e389}
+      \strng{authornamehash}{bb7a5b9e3e6df5d8264d8effaf74e389}
+      \strng{authorfullhash}{bb7a5b9e3e6df5d8264d8effaf74e389}
+      \strng{authorfullhashraw}{bb7a5b9e3e6df5d8264d8effaf74e389}
+      \field{sortinit}{Z}
+      \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{eess.SY}
+      \field{eprinttype}{arXiv}
+      \field{title}{Revisiting Game-Theoretic Control in Socio-Technical Networks: {{Emerging}} Design Frameworks and Contemporary Applications}
+      \field{year}{2024}
+      \verb{eprint}
+      \verb 2411.01794
       \endverb
     \endentry
     \entry{Zhu2012}{article}{}{}
@@ -1817,7 +2381,7 @@
       \field{labeltitlesource}{title}
       \field{journaltitle}{IEEE Journal on Selected Areas in Communications}
       \field{number}{11}
-      \field{title}{GUIDEX: A Game-Theoretic Incentive-Based Mechanism for Intrusion Detection Networks}
+      \field{title}{{{GUIDEX}}: A Game-Theoretic Incentive-Based Mechanism for Intrusion Detection Networks}
       \field{volume}{30}
       \field{year}{2012}
       \field{pages}{2220\bibrangedash 2230}
@@ -1825,10 +2389,11 @@
       \verb{doi}
       \verb 10.1109/JSAC.2012.121214
       \endverb
-      \keyw{Economics;Telecommunication services;Communication networks;Computer crime;Computer security;Security;Intrusion detection;Intrusion detection systems;collaborative networks;game theory;network optimization;incentive compatibility;network security and economics}
+      \keyw{collaborative networks,Communication networks,Computer crime,Computer security,Economics,game theory,incentive compatibility,Intrusion detection,Intrusion detection systems,network optimization,network security and economics,Security,Telecommunication services}
     \endentry
   \enddatalist
   \missing{3}
+  \missing{SOMETHING ABOUT ALPCAN IDS}
 \endrefsection
 \endinput
 

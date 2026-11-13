@@ -261,6 +261,7 @@
 %
 \usepackage{haskell}
 \usepackage{amsmath}
+\usepackage{booktabs}
 \usepackage{listings}
 \usepackage{strath-dissertation}
 \usepackage{setspace}
@@ -1400,7 +1401,7 @@ A general procedure for developing these models can be (roughly) summarized in t
 	\item Conduct simulations with a fixed strategy, determine the highest expected utility for players and evaluate system performance under these conditions
 \end{enumerate}
 
-However, the most recent concerns with evolving attacker threats and dynamic security situations requires more complex game-theoretic models. These games can be part of a larger automated defensive system to update defensive strategies in real time as part of a larger infrastructure such as in \cite{Jin2018}, \cite{Zhu2012}. The progression of these models often relies on the extension and variation of these game-theoretic models. For example, we may need to consider scaling the number of players or repeating strategic interactions. The models presented in \cite{Chen2009}, \cite{Nochenson2012} suggest the use of the models as a basis for extensions and increased-complexity for other security scenarios. Similarly in \cite{Pawlick2015}, the signalling game structure are derived from \cite{Carroll2009}, with adjustments to the utilities. We'll see later how these models written in open games allow for easy extensionality.
+However, the most recent concerns with evolving attacker threats and dynamic security situations requires more complex game-theoretic models. These games can be part of a larger automated defensive system to update defensive strategies in real time as part of a larger infrastructure such as in \cite{Jin2018}, \cite{Zhu2012}. The progression of these models often relies on the extension and variation of these game-theoretic models. For example, we may need to consider scaling the number of players or repeating strategic interactions. The models presented in \cite{Chen2009}, \cite{Nochenson2012} suggest the use of the models as a basis for extensions and increased-complexity for other security scenarios. Similarly in \cite{Pawlick2015}, the signalling game structure is derived from \cite{Carroll2009}, with adjustments to the utilities. We'll see later how these models written in open games allow for easy extensionality.
 
 According to \cite{Collins2025} evaluating 86 different game-theoretic models in cybersecurity, there already exists a sense of homogeneity between these models, where 76\% of models only cover a two-player security interaction, and 79\% use Nash (or variants of) equilibrium solution concepts for analysis. The authors also recommended a formal method for modellers to state their assumptions of the model that follow more in-line with cybersecurity concepts. Expanding on this idea in particular, we propose that code-based methods for stating assumptions allows for clear, testable specifications. Only 24 of the 86 studies shown consider "multiple variants" of the constructed model. The specification of two criterion: (1) "Efficacy of Modelling" and (2) "Practicality of Solutions" serve as a framework for evaluating the tractability of game-theoretic models' representation of the underlying real cyber-interaction. The resulting recommendations should then be considered: \label{topic:collinsrec}
 \begin{enumerate}
@@ -1453,29 +1454,38 @@ For the final step, no metric has been established for conducting a comparative 
 
 Ultimately, direct translation is a non-uniform process at first glance, since the structure and parameters of the game are highly-dependent on the game type. Each source game model comes with its own specification in differing formats. A natural language description of the game formulation is the initial descriptor of the model, but later use tables for storing game parameters, conditions, and graphical notations like extensive-form game trees as in \textbf{Honey} and transition graphs as in \textbf{IDSMark}. In \ref{figure:DirectTranslation}, the red arrows demonstrate the process of a modeller reading the source game formulation and directly implementing it into an open game. However, we can't establish a relationship between the analyses on the far left to any analysis in the open-game-engine on the far right. The open-game-engine analysis is only dependent on the types and functions required to make the open game code block executable such as strategies. 
 
-The black dotted lines in the "Game model specification" represent a qualitative or quantitative dependency from one game to another. An example \label{example:quantDepend} of an explicit quantitative dependency is where \cite{Pawlick2015} specifically adapts a signalling game from \cite{Carroll2009} by maintaining the same game structure and payoff scheme. For a qualitative dependency, we note a similar game formulation between \textbf{Decep} and \textbf{Honey} centered around the uncertainty of the attacker's type and the problem of the defender to act according to some prior belief. We immediately recognize near-identical \ensuremath{\Conid{Nature}} operators, data types corresponding to whether a server is a honeypot or normal, and the payoffs using constants such as probability of detection associated with a specific detection library. At the game formulation level, any such adaptation would then be conducted by-hand, citing a particular security specification. We would like to show that the blue dotted lines in "Open games DSL" and "Open games engine" can be explicitly established thus allowing reproducibility and consistency in-code rather than by-hand/ \footnote{We would also like any upstream changes in dependencies to be reflected in the resultant models}
+The black dotted lines in the "Game model specification" represent a qualitative or quantitative dependency from one game to another. An example \label{example:quantDepend} of an explicit quantitative dependency is where \cite{Pawlick2015} specifically adapts a signalling game from \cite{Carroll2009} by maintaining the same game structure and payoff scheme. For a qualitative dependency, we note a similar game formulation between \textbf{Decep} and \textbf{Honey} centered around the uncertainty of the attacker's type and the problem of the defender to act according to some prior belief. We immediately recognize near-identical \ensuremath{\Conid{Nature}} operators, data types corresponding to whether a server is a honeypot or normal, and the payoffs using constants such as probability of detection associated with a specific detection library. At the game formulation level, any such adaptation would then be conducted by-hand, citing a particular security specification. We would like to show that the blue dotted lines in "Open games DSL" and "Open games engine" can be explicitly established thus allowing reproducibility and consistency in-code rather than by-hand. \footnote{We would also like any upstream changes in dependencies to be reflected in the resultant models}
 
 Examining the resultant modules shows clear repetition along various facets, such as the DSL formulation since every game is two players, with the same attacker-followed-by-defender sequencing, with the exception of \textbf{IDSMark} which requires more operators to accommodate the repeated move structure. At the specification level, there is no implementable common language for these models to easily interchange the non-moving parts of the model such as the environment constants used to calculate payoffs or the action spaces. But after translation, the relationships between the components of the games can now be in a Haskell environment for which standard programming techniques can be applied. Recalling the explicit quantitative dependency mentioned in the previous paragraph (\ref{example:quantDepend}), the function implementing the payoff scheme should be the same for both models as open games.
 
 \begin{table}[h!]
 \centering
-\begin{tabularx}{\textwidth}{|l l l X|} 
+\setlength{\tabcolsep}{4pt} % Reduces space between columns (default is 6pt)
+\renewcommand{\arraystretch}{1.3} % Adds vertical breathing room for wrapped lines
+
+\begin{tabularx}{\textwidth}{| >{\hsize=0.85\hsize}X 
+                               >{\hsize=0.80\hsize}X 
+                               >{\hsize=0.75\hsize}X 
+                               >{\hsize=1.60\hsize}X |} 
  \hline
- Module & Model name/Citation & Game type & Description \\ [0.5ex] 
+ \textbf{Module} & \textbf{Model name / Citation} & \textbf{Game type} & \textbf{Description} \\ 
  \hline\hline
  Deception.hs & \textbf{Decep} \cite{cceker2016deception} & Bayesian, two-player & Deception game to mitigate DDoS attacks \\ 
  Honeypot.hs & \textbf{Honey} \cite{li2019game} & Bayesian, two-player & Distributed honeypot deployment mechanism game models \\
- IDS.hs & \textbf{IDS} \cite{Chen2009} & Bayesian, two-player & Intrusion detection systems for heterogenous networks game models \\
- IDSMarkovChain.hs & \textbf{IDSMark}\cite{lye2005game} & Stochastic, two-player & Stochastic game over network state, simplified for brevity \\ [1ex] 
+ IDS.hs & \textbf{IDS} \cite{Chen2009} & Bayesian, two-player & Intrusion detection systems for heterogeneous networks game models \\
+ IDSMarkov.hs & \textbf{IDSMark} \cite{lye2005game} & Stochastic, two-player & Stochastic game over network state, simplified \\ 
  \hline
 \end{tabularx}
 \caption{Baseline model implementations}
 \label{table:baseline}
 \end{table}
 
+
+
+
 Furthermore, out-of-the-box equilibrium checker can verify equilibrium results from the paper (i.e. parameter values for which equilibrium is achieved), there is no analogous equilibrium-solving process in open games. However, with the input data for running the equilibrium checker comprised (typically) of floating point numbers, it should be possible to check for equilibrium under certain conditions. Additionally, the diagnostics are well-suited for reading expected payoffs as a result of the game. 
 
-Lastly, the analysis in some of these models use solution concepts that have not yet been developed in open games like Bayesian perfect equilibrium and sequential equilibrium \cite{FUDENBERG1991236}. A decent chunk of investigative hours went into attempting to formalize these concepts in open games \footnote{see \textbf{SeparatingEquilbrium.hs} to see the class beer-quiche game.}, which resulted in a rabbit hole that was less pertinent to the overall target design process for modelling. Nonetheless, future work down this path would greatly enhance the translatability of pre-existing classical models to open games. Based on \cite{ghani2017compositionaltreatmentiteratedopen}, \textbf{IDSMark} was implementable as expected by treating it as an infinitely-repeated game with discounted payoffs. Each step was dictated by a transition graph that described the status of the network following each action. In open games, solving for stationary equilibrium strategies would involve iterating over possible strategies (actions for each state), for each possible initial condition for the system, which quickly leads to a computationally unyieldy simulation. 
+Lastly, the analysis in some of these models use solution concepts that have not yet been developed in open games like Bayesian perfect equilibrium and sequential equilibrium \cite{FUDENBERG1991236}. Over the course of the study, some time was dedicated to fomralizing these concepts in open games \footnote{see \textbf{SeparatingEquilbrium.hs} to see the class beer-quiche game.}, which resulted in a tangent that was less pertinent to the overall target design process for modelling. Nonetheless, future work down this path would greatly enhance the translatability of pre-existing classical models to open games. Based on \cite{ghani2017compositionaltreatmentiteratedopen}, \textbf{IDSMark} was implementable as expected by treating it as an infinitely-repeated game with discounted payoffs. Each step was dictated by a transition graph that described the status of the network following each action. In open games, solving for stationary equilibrium strategies would involve iterating over possible strategies (actions for each state), for each possible initial condition for the system, which quickly leads to a computationally unyieldy simulation. 
 
 
 
@@ -1567,7 +1577,7 @@ In the Bayesian setting, we want to allow players to be able to observe a privat
 
 Treating this open game as a first-class citizen for implementing large, complex models comes with many advantages. These can be composed sequentially, leading to possible chains of independent 2-player security interactions. Composing in parallel allows a modeller to dictate simultaneous play \footnote{conceptually, not necessarily physically playing simultaneously} of these security interactions. Since the payoffs are determined external to this building block, calculations can be written in a separate module. 
 
-To accommodate the infinitely repeated game setting, we constructed two other generic template games \ensuremath{\Varid{repeatedStage}} and \ensuremath{\Varid{repeatedPayoffGame}}. The former essentially serves as template for running a payoff computation that accummulates discounted rewards by preloading the behaviour according to the suppied strategy (i.e. repeated \ensuremath{\Varid{play}}). This will later be executed and packaged as a context to evaluate a game of a particular format (where the types of both covariant inputs match those of its own contravariant inputs. see \cite{ghani2017compositionaltreatmentiteratedopen}). This brings us to the latter game \ensuremath{\Varid{repeatedPayoffGame}} which splits continuation payoffs to pass to the appropriate player. 
+To accommodate the infinitely repeated game setting, we constructed two other generic template games \ensuremath{\Varid{repeatedStage}} and \ensuremath{\Varid{repeatedPayoffGame}}. The former essentially serves as template for running a payoff computation that accummulates discounted rewards by preloading the behaviour according to the supplied strategy (i.e. repeated \ensuremath{\Varid{play}}). This will later be executed and packaged as a context to evaluate a game of a particular format (where the types of both covariant inputs match those of its own contravariant inputs. see \cite{ghani2017compositionaltreatmentiteratedopen}). This brings us to the latter game \ensuremath{\Varid{repeatedPayoffGame}} which splits continuation payoffs to pass to the appropriate player. 
 
 
 
@@ -1581,7 +1591,7 @@ To accommodate the infinitely repeated game setting, we constructed two other ge
 
 \begin{mdframed}
 \begin{example}[Subsystem replication using template games]
-Consider the architecture of a typical IDN as seen in Figure \ref{figure:Fig. 3}. The model developed in \cite{Jin2018} is a two-layer stochastic, game between an attacker and an IDN, where the states of the game are defined by the status of each subsystem. Here, the assumption is that the capabilities of each of the IDSs and their respective attackers as homogenous, but working independently. In particular in the \textit{Simulation} section, the proposed model is evaluated with a specific set of parameters in a network of three IDSs and three independent attackers. If the assumption of homogeneity was to change, the parameters used to evaluate the model must also change. Maintaining consistency across the model requires flexbility, but current game formulation techniques aren't necessarily built with the notion of seamless integration.
+Consider the architecture of a typical intrusion detection network (IDN), which is comprised of multiple intrusion detection systems (IDS) as seen in Figure \ref{figure:Fig. 3}. The model developed in \cite{Jin2018} is a two-layer stochastic, game between an attacker and an IDN, where the states of the game are defined by the status of each subsystem. Here, the assumption is that the capabilities of each of the IDSs and their respective attackers as homogenous, but working independently. In particular in the \textit{Simulation} section, the proposed model is evaluated with a specific set of parameters in a network of three IDSs and three independent attackers. If the assumption of homogeneity was to change, the parameters used to evaluate the model must also change. Maintaining consistency across the model requires flexbility, but current game formulation techniques aren't necessarily built with the notion of seamless integration.
 
 From a security design point-of-view, this interaction between subsystems is vital, especially if a vulnerability in one system affects the defensive capabilities of another. After designing games for a subsystem, we can easily direct the flow of the result of the game to a level-higher for resource management. Designing this IDN using open games allows us to work on each subsystem separately from the aggregation mechanism. The disjoint nature of these parts allows for testing the efficacy of a different aggregation mechanisms or subsystems. Each subsystem interaction can then be instantiated as three functions using the template two-player game, but each parameterized accordingly \footnote{In order to run simulations using the constructed model formulation, the authors assigned values such as the detection libraries available to each IDS system $i$ and attacking libraries for each attacker $j$. \cite{He2015}.}. Then, the logic for the aggregation mechanism is defined as a separate open game which takes as input the outputs of the three previous functions. 
 
@@ -1591,7 +1601,7 @@ From a security design point-of-view, this interaction between subsystems is vit
 
 \subsubsection{Module 2: model parameterization}
 
-Outside the structure of the game, we organize the pipelined data necessary for decision making and payoff calculation into a single module. This module is the arena for modellers to construct abstract data types (ADT) corresponding to model-relevant parameters. Exogenous parameters, or parameters defined outside of an open game, can be hardcoded values. Exposing this module to all other modules allows each of them to access the relevant data as needed. No logic related to the game structure or calculating payoffs, we treat this module closer to a configuration file to dictate the available types that can be used. This also places no restriction on how many models use these parameters, allowing for related variant models accomplishing different tasks. Expectedly, any changes made at this level would reflect on its dependencies as a compile-error, for example in the case of adding a new parameter called for by the specification team. 
+Outside the structure of the game, we organize the pipelined data necessary for decision making and payoff calculation into a single module. This module is the arena for modellers to construct abstract data types (ADT) corresponding to model-relevant parameters. Exogenous parameters, or parameters defined outside of an open game, can be hardcoded values. Exposing this module to all other modules allows each of them to access the relevant data as needed. With no logic related to the game structure or calculating payoffs, we treat this module closer to a configuration file to dictate the available types that can be used. This also places no restriction on how many models use these parameters, allowing for related variant models accomplishing different tasks. Expectedly, any changes made at this level would reflect on its dependencies as a compile-error, for example in the case of adding a new parameter called for by the specification team. 
 \begin{minipage}\textwidth
 	\begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -1679,7 +1689,7 @@ Below, we can generate test-data varying along the prior probability of an IDS e
 A vital part of ensuring correctness when designing games is also the relative values of these parameters. In \cite{la2016deceptive}, the authors assume that the reward for an attacker's successful exploit (encoded as \ensuremath{\Varid{attSucc}} ) is strictly greater than the reward for probing a non-honeypot target (\ensuremath{\Varid{attProbeSucc}}). Encoding these restrictions must then be used as a wrapper for our test generator \ensuremath{\Varid{flip}\;\Varid{suchThat}\;\Varid{checkAttReward}\mathbin{::}\Conid{Gen}\;\Varid{a}\to \Conid{Gen}\;\Varid{a}} where any assumption can be encoded as a function that accesses the appropriate variable from the model datatype \ensuremath{\Varid{checkAttReward}\mathrel{=}(\mathbin{>})\mathbin{<\$>}\Varid{attSucc}\mathbin{<*>}\Varid{attProbeSucc}}. As part of this model instantiation module, there can be more than one assumption which can then be composed such that all assumptions must be satisfied when generating the test data. 
 
 \subsubsection{Module 3: designing payoffs}
-We can also recognize the similarities between how these types are used for computing payoffs. The instantiation of games by action space informs the types exactly available for designing payoffs. Since a model doesn't 'require' any specific payoff behaviour beyond these types (and maybe fitting into a test infrastructure). We can loosely characterize payoff functions by their dependence on the following information: 
+We can also recognize the similarities between how these types are used for computing payoffs. The instantiation of games by action space informs the types exactly available for designing payoffs. Since a model doesn't 'require' any specific payoff behaviour beyond these types (and maybe fitting into a test infrastructure), we can independently develop payoff logic away from the structure of the game. We can loosely characterize payoff functions by their dependence on the following information: 
 \begin{enumerate}
 	\item The output of the open game 
 	\item Model-level exogenous parameters from \textbf{Module 2}
@@ -1706,7 +1716,7 @@ Notice the parametric type \textit{a}, so we can define a \ensuremath{\Conid{Pay
 Already we can consider branching the payoff functions into helpers associated with each type of player, and pattern-match on these types. If we use the preset two-player template from the \textbf{Security} module, the set of two-player security games requires a \ensuremath{\Conid{PayoffReader}} for each attacker and defender. Then at the execution-level of the game, which runs against the model-level parameters, we use these parameters to instantiate the readers (in this case, \ensuremath{\Conid{IDSParams}}). Thanks to the type-checker, the output type of the model should provide the modeller with the requirements for this \ensuremath{\Conid{PayoffReader}} constructor. 
 \begin{mdframed}
 	\begin{example}[Using the Reader monad to access exogenous parameters]
-		To design payoffs, we can start by fixing our model parameters to follow \ensuremath{\Conid{IDSParams}} datatype as defined in \textbf{Module 1}. For one such implementation of describing an attacker's payoff, we can read from our config to assign values according to the (covariant) output of an open game, in this case dependent on the attacker and defender move. Pattern matching over the results can be read as "if the attacker attempted access, and a defender did not allow it, then the attacker recieves \ensuremath{\Varid{costOfAttack}}" Note that \ensuremath{\Varid{attackerAccessPayoff}} collects the values it needs, then does a computation.
+		To design payoffs, we can start by fixing our model parameters to follow \ensuremath{\Conid{IDSParams}} datatype as defined in \textbf{Module 1}. For one such implementation of describing an attacker's payoff, we can read from our config to assign values according to the (covariant) output of an open game, in this case dependent on the attacker and defender move. Pattern matching over the results can be read as "if the attacker attempted access, and a defender did not allow it, then the attacker recieves \ensuremath{\Varid{costOfAttack}}" Note that \ensuremath{\Varid{attAccessPayoff}} collects the values it needs, then does a computation.
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{5}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -1804,9 +1814,11 @@ A single experimentation test should be generalized under a broad goal using \en
 \end{hscode}\resethooks
 \end{minipage}
 
-Here, \ensuremath{\Varid{myProposition}} would be determined by the modeller as a result of evaluating a target model. Extra code to extract payoffs for specific players are necessary, but this logic would be designed to extract propositions such as "for all the test data, my model is in equilibrium". In terms of complexity, this evaluation is run for each test case of \ensuremath{\Varid{params}}. But how are these test cases generated? Precisely by the test data and model-wide data instantiation in \textbf{Module 1}. Without an explicit implementation of \ensuremath{\Conid{\Conid{Test}.\Conid{QuickCheck}.Gen}} for the supplied data type, we can end up with a number of test cases on the order of all the possible combinations over all the possible values within the natural range of each of the fields. This isn't computational feasible, but conceptually not useful to modellers anyways. Any experiment to extract results means investigating how one or two exogenous parameters affects equilibrium or payoffs. 
+Here, \ensuremath{\Varid{myProposition}} would be determined by the modeller as a result of evaluating a target model. Extra code to extract payoffs for specific players are necessary, but this logic would be designed to extract propositions such as "for all the test data, my model is in equilibrium". In terms of complexity, this evaluation is run for each test case of \ensuremath{\Varid{params}}. But how are these test cases generated? Precisely by the test data and model-wide data instantiation in \textbf{Module 1}. Without an explicit implementation of \ensuremath{\Conid{\Conid{Test}.\Conid{QuickCheck}.Gen}} for the supplied data type, we can end up with a number of test cases on the order of all the possible combinations over all the possible values within the natural range of each of the fields. This isn't computationally feasible, but conceptually not useful to modellers anyways. Any experiment to extract results means investigating how one or two exogenous parameters affects equilibrium or payoffs. 
 
 This module is intended to be a mixture of both a simulation script and a self-documenting specifications document. This is a vast improvement on a series of Haskell functions calling diagnostic functions on closed games. It's dynamic in the sense that tests can be added, removed, or refactored. The built-in test case generation can also provide modellers insight to how sensitive the model is to certain parameters. \footnote{For occasional graphical analysis, we used \ensuremath{\Conid{\Conid{Graphics}.\Conid{Rendering}.Chart}\mathbin{\circ}\Conid{\Conid{Backend}.Diagrams}} to plot payoffs for each player using the generated data.}  
+
+A typical software project management or CI pipeline could be applied, however here we can accumulate a series of \textit{.spec} files containing these property tests. Since the \textit{open-games-engine} is managed using \textbf{stack}, practitioners can simply run \textit{stack test} to automatically run and direct test results from all spec files in the project to the console. 
 
 \subsection{Discussion of design patterns}
 \label{designPatterns:discussion}
@@ -1832,13 +1844,86 @@ In Figure \ref{fig:Workflow1}, we distinguish domain experts of the security spe
 	\caption{Step-by-step domain expert collaboration for model development}
 \end{figure}
 
-Furthermore, we show an explicit workspace directory structure for maintaining a clean codebase, managed as a Git repository. 
-
 \begin{mdframed}
-	\begin{example}[Hierarchal game by composing models] We refer readers to \textbf{HierarchalIDS.hs}. For this example, we can remark on the dependencies 
-		
+	\begin{example}[Hierarchal game by composing models] \label{example:Hierarchal}We refer readers to \textbf{HierarchalIDS.hs}, which imports models from \textbf{IDS.IDSModel} and \textbf{IDS.Deception}. For this example, we can remark on the dependencies of this composite model. Below is the template code for scaffolding an IDN network comprised of two IDS systems. These two IDS systems are , resultiong in a four Bayesian agent model with two attackers \ensuremath{\text{\ttfamily \char34 A1\char34}} and \ensuremath{\text{\ttfamily \char34 A2\char34}} and two defenders \ensuremath{\text{\ttfamily \char34 D1\char34}} and \ensuremath{\text{\ttfamily \char34 D2\char34}}. 
+
+	\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{4}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Varid{twoIDS}\;\Varid{idsParams}\;\Varid{deceptionParams}\mathrel{=}[\mskip1.5mu \Varid{opengame}\mid {}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{inputs}\mathbin{:}\Varid{a1},\Varid{d1},\Varid{a2},\Varid{d2};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{feedback}\mathbin{:};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\mathbin{:----------------------------:}{}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{inputs}\mathbin{:}\Varid{a1},\Varid{d1};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{feedback}\mathbin{:};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{operation}\mathbin{:}\Varid{ids}\;\Varid{idsParams}\;\text{\ttfamily \char34 A1\char34}\;\text{\ttfamily \char34 D1\char34};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{outputs}\mathbin{:}\Varid{a1Type},\Varid{a1New},\Varid{d1New};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{returns}\mathbin{:}[\mskip1.5mu \Varid{payoffIndexer}\;\Varid{initPayoffs}\;\mathrm{0},\Varid{payoffIndexer}\;\Varid{initPayoffs}\;\mathrm{1}\mskip1.5mu];{}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{inputs}\mathbin{:}\Varid{a2},\Varid{d2};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{feedback}\mathbin{:};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{operation}\mathbin{:}\Varid{deceptionGame}\;\Varid{deceptionParams}\;\text{\ttfamily \char34 A2\char34}\;\text{\ttfamily \char34 D2\char34};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{outputs}\mathbin{:}\Varid{a2Type},\Varid{a2New},\Varid{d2New};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{returns}\mathbin{:}[\mskip1.5mu \Varid{payoffIndexer}\;\Varid{initPayoffs}\;\mathrm{2},\Varid{payoffIndexer}\;\Varid{initPayoffs}\;\mathrm{3}\mskip1.5mu];{}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\mathbin{:----------------------------:}{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{outputs}\mathbin{:}\Varid{a1Type},\Varid{a1New},\Varid{d1New},\Varid{a2Type},\Varid{a2New},\Varid{d2New};{}\<[E]%
+\\
+\>[B]{}\hsindent{4}{}\<[4]%
+\>[4]{}\Varid{returns}\mathbin{:}\Varid{initPayoffs};{}\<[E]%
+\\
+\>[B]{}\mid \mskip1.5mu]{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+	Here, we see that we can use both \ensuremath{\Conid{IDSParams}} and \ensuremath{\Conid{DeceptionParams}} in this composite model, which characterize each of the IDS-Attacker games individually. This allows for a complex strategic security interaction, where the direct relation between players is defined outside of \ensuremath{\Varid{twoIDS}}. This follows the separation-of-concerns principle, by defining the logic (such as auctioning schemes, payoff distribution mechanisms for a network manager) outside this template game. 
 	\end{example}
 \end{mdframed}
+\subsubsection{Libraries and model-sharing}
+
+Recalling the example on model adaptation (Example \ref{example:adapt}), we could envision many such augmented payoff schemes. Adjustments along this module, while fixing all other parts of our model, naturally formulates the process for answering questions of how any other game model improves on the other. 
+
+Following the one-shot signalling game models from \cite{la2016deceptive}, \cite{boumkheldHoneypotTypeSelection2019}, \cite{Carroll2009} and how the authors approach in the analysis of the model, we can comment on the advantages of using open games for the conception of the security model in natural language rather than repetitive a payoff table or extensive-form game tree. One primary advantage is that we have an active simulation environment for which practitioners can examine how the proposed variables change the overall model. Furthermore, along \textbf{Module 1}, we can programmatically manipulate these variables for a wide-ranging series of tests. We address the issue of allowing flexible assumptions (from the earlier part of this chapter at \ref{topic:collinsrec}) by providing a framework to test these assumptions.
+
+Taking the step to writing payoffs in Haskell comes with several tradeoffs. The most notable downside is Haskell is less-suited for numerical computing, especially for more complex payoff schemes, in comparison with other languages. While we hoped to mitigate this using the payoff scheme of \textbf{Module 3}, there could be easier ways to inject these calculations into a model. On the upside, writing payoff schemes into an executable format allows for reuse and maintainability as exports of a software package, rather than a collection of findings that must be re0derived or reanalyzed by hand.  
+
+% We can also remark on the similarity of models across literature following the signalling game structure. By the separation-of-concerns principle enabled by \textbf{Module 2} and \textbf{Module 3}, 
+
+% \begin{mdframed}
+% 	\begin{example}[Functional tests for adapting \cite{la2016deceptive}]
+		
+% 	\end{example}
+% \end{mdframed}
+Similarly, there is a deep disconnect between static models that are evaluated numerically, and derived optimal defensive (or attacker) strategies that can inform systems in real time. When implementing findings from these models and performance in the real-world, \cite{kiennertSurveyGameTheoreticApproaches2018} shows a majority of the work in literature does not provide this kind of validation. We hope that this programmatic approach could be pipelined and more easily accessible for the introduction of new model parameters, and subsequently, the derived strategies integrated into a particular system (such as integration with signature-based IDS SNORT as in \cite{zonouzRREGametheoreticIntrusion2009}). Whether the methodology presented here would be an adequate platform for linking with a network-simulation or test-bed platform remains to be seen, however the models-as-code paradigm should allow for easy coupling with other software. 
+
 
 \subsection{Iterative modelling using open games}
 \label{designPatterns:Iterative}
@@ -1895,42 +1980,74 @@ First, we make the following correspondence between types of tests in order to d
 
 Unit tests would ensure the correctness of the payoffs, test data, or helper functions that act as infrastructure to run the high-level specs that reflect the target security specification. We reserve Functional tests as the mechanism for verifying security needs through equilibrium checking. It follows that unit tests serve as a the test suite for the implementation of the model, so all unit tests should go green before running the functional tests. After both types of tests are passing, the results can be fed back to the top-level in order to inform the next iteration of models. Due to the compositional and interdependent nature of this methodology, the next iteration of models will have the previous iteration of models (and its components) at its disposal, like a typical software project. By following the TDD process as seen in Figure \ref{fig:TDD}, security models in open games can be iteratively improved upon, while maintaining consistency with the demands of stakeholders setting high-level specifications. 
 
-Along that vein, we have used these design patterns to separate-concerns for constructing games, which also lends itself to creating specs of unit tests corresponding to each of the elements of the model. For example, a passing spec file of unit tests for \textbf{IDSPayoff.hs} ensures validity for other downstream payoff modules such as \textbf{IDSPayoffHP.hs} which uses that logic. 
+ We have used these design patterns to separate-concerns for constructing games, which also lends itself to creating specs of unit tests corresponding to each of the elements of the model. For example, a passing spec file of unit tests for \textbf{IDSPayoff.hs} ensures validity for other downstream payoff modules such as \textbf{IDSPayoffHP.hs} which uses that logic. 
 
 
-\begin{figure}
+ \begin{figure}
 	\label{fig:TDD}
 	\centering
-	\includegraphics[width=\textwidth]{OpenGamesTDD.png}
+	\includegraphics[width=0.5\textwidth]{OpenGamesTDD.png}
 	\caption{Test-driven development (TDD) for writing open games}
 \end{figure}
 
-\subsection{Design patterns for cybersecurity games}
-Equipped with these design patterns, we exime brief case-studies to demonstrate their viability in cybersecurity modelling. 
-\subsubsection{Data pipeline through paramterization and payoff module}
-Through the separation-of-concerns principle, 
-\subsubsection{Libraries and model-sharing}
-Following a completed suite meeting the desired specifications,
 
-Recalling the example on model adaptation (Example \ref{example:adapt}), we could envision many such augmented payoff schemes. Adjustments along this module, while fixing all other parts of our model, naturally formulates the process for answering questions related to . If we wanted to evaluate three different system architectures, this would be instantiated as three function calls for a functional test. 
 
-Following the one-shot signalling game model from \cite{la2016deceptive} and how the authors approach in the analysis of the model, we can comment on the advantages of using open games for the conception of the security model in natural language into a payoff table or extensive-form game tree. One primary advantage is that we have an active simulation environment for which practiioners can examine how the proposed variables change the overall model. Furthermore, along \textbf{Module 1}, we can programmatically manipulate these variables for a wide-ranging series of tests. We address the issue of allowing flexible assumptions (from the earlier part of this chapter at \ref{topic:collinsrec}). We get the added benefit of ensuring correctness of models by implementing unit tests pertaining to these assumptions. 
+ \begin{mdframed}
+	\begin{example}[Unit test for the deceptive model]
+	This example describes a unit test (as per \textbf{Module 4}) for guaranteeing assumptions as in \cite{la2016deceptive} and implemented in \textbf{IDS.DeceptiveModel}. We can guarantee that our assumptions are made in the test data provided for the rest of the model and its construction in the repository. Any supplied parameters must conform to these unit tests, otherwise the methodology would immediately display failing tests. 
 
-\begin{mdframed}
-	\begin{example}[Unit tests for ensuring correctness for parameterization]
-	This example describes a unit test for guaranteeing assumptions as in \cite{la2016deceptive} and implemented in \textbf{IDS.DeceptiveModel}We can guarantee that our assumptions are made in the test data provided for the rest of the model and its construction in the repository. Any supplied parameters must conform to these unit tests, otherwise the methodology would immediately display failing tests.
+	Our goal is to write unit tests associated with the generated test data for \ensuremath{\Conid{Gen}\;\Conid{DeceptionParams}}, where \ensuremath{\Conid{DeceptionParams}} are the exogenous parameters for the \textbf{IDS.DeceptiveModel}. Such restrictions are direct consequences of the interpretation of the security game, namely (1) the reward for the attacker is strictly greater for a successful attack over a probe move and (2) the cost for the defender is strictly greater for getting compromised over an unnecessary deployment of a honeypot. Furthermore, we want a human-readable format to document these models as a result of the model-wide parameters set in \textbf{IDS.DeceptiveModel}
+	
+	Since we are doing TDD, we write our unit tests first to describe these restrictions and bake these assumptions into our model. A spec file like \textbf{DeceptiveModel.spec} could contain a test like the following.
+
+	\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{9}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{17}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{25}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[9]{}\Varid{describe}\;\text{\ttfamily \char34 Parameter~tests~for~deception~model\char34}\mid {}\<[E]%
+\\
+\>[9]{}\hsindent{8}{}\<[17]%
+\>[17]{}\Varid{it}\;\text{\ttfamily \char34 reward~for~attack~greater~than~probe~\char34}\mathbin{\$}{}\<[E]%
+\\
+\>[17]{}\hsindent{8}{}\<[25]%
+\>[25]{}\Varid{property}\mathbin{\$}\lambda \Varid{params}\to \Varid{attackerSuccess}\;\Varid{params}\mathbin{>}\Varid{attackerProbSuccess}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
+
 	\end{example}
+
+	Provided these unit tests pass, other payoff modules that import and adapt \textbf{IDS.DeceptiveModel} will also conform to the same restrictions in a project-wide testing infrastructure. This is specifically relevant for the parameterization used for running interdependent models like \textbf{IDS.HierarchalIDS} (see Example \ref{example:Hierarchal})
 \end{mdframed}
 
-More generally, we can notice that this process allows for fine-tuned control of our model. THis gives practiioners the ability to test the numerous system or network-specific tradeoffs \cite{SOMETHING ABOUT ALPCAN IDS}
+
+
+
 
 \subsubsection{Testing, quantitative analysis and payoff graph generation}
-Lastly, for quantitative and numerical analysis of game-theoretic models for cybersecurity, the proposed methodology can accommodate graphical outputs in addition to property tests. Figure  However, computing optimal defensive strategies hFuture attachments to an external optimizer for computing optimal strategies for repeated game models is left for future work. One kind of round-based analysis that can be done is by computing the aggregate payoffs finitely-repeated games at each round by mapping \ensuremath{\Varid{generatePayoff}} over the number of rounds and an open stage game. But runtime and complexity analysis is required to compare with other softwar etools. Performance and comparative analysis with other tools such as Gambit can be conducted for a future study. But initially, we cite the major advantages of expressibility and modularity of using \textit{open-games-hs} can act as a cursory tool before translating them into equilibrium-solving engines. 
+Lastly, for quantitative and numerical analysis of game-theoretic models for cybersecurity, the proposed methodology can accommodate graphical outputs in addition to property tests. Future attachments to an external optimizer for computing optimal strategies for repeated game models is left for future work. One kind of round-based analysis that can be done is by computing the aggregate payoffs finitely-repeated games at each round by mapping \ensuremath{\Varid{generatePayoff}} over the number of rounds and an open stage game. But runtime and complexity analysis is required to compare with other software tools. Performance and comparative analysis with other tools such as Gambit can be conducted for a future study. But initially, we cite the major advantages of expressibility and modularity of using open games can act as a cursory tool before translating them into equilibrium-solving engines.
 
-Furthermore, a test-driven development process directly addresses the issues of determining how correctness
+\begin{figure}\label{fig:payoff}
+	\centering
+	\includegraphics[width=0.75\linewidth]{Payoff.png}
+ 	\caption{A preliminary payoff graph from a 3-IDS system game, with a manager player allocating defensive resources to each IDS. }  
+\end{figure}
 
-\subsubsection{Discussion of DSL for cybersecurity modelling}
-Use of these design patterns are not limited to cybersecurity models. However, the current engine for the DSL does not (easily) support Stackelberg security games or 
+
+Consider Figure \ref{fig:payoff}, where a modeller can evaluate the impact of the common prior probability of encountering an attacker rather than a normal user. The defensive system with a certain reputation, corresponding to a type \ensuremath{\Conid{Active},\Conid{Passive}} (along the x-axis) for an open-game model, is also drawn probabilistically in the usual sense. This figure was generated using \textbf{Graphics.Rendering.Chart}. Each line depicts the corresponding payoff for the resource allocator deploying a strategy (encoded by colour), who's strategies represent the deployment different countermeasures to three subsystems. For example, "high active" in blue corresponds to the strategy of the allocator with type \ensuremath{\Conid{Active}} to deploy the maximum defensive resources. For this experiment, each of the three subsystems can be tweaked independently (for example, by a degree of importance in the network or energy consumption). For this figure, we can say that deploying the normal strategy outperforms others. Similarly, as the chance of an attacker increases, the more involved defensive strategies perform greater better. Some avenues that can be taken given our methodology could be the following experiments, by analyzing the model that produced this figure: 
+\begin{enumerate}
+	\item Write unit tests pertaining to the payoff module associated with the \ensuremath{\Varid{high}\;\Varid{active}} strategy to improve performance 
+	\item Write functional tests for determining the threshold for which an importance value for one of three one of three IDS systems can be increased while maintaining similar performance
+\end{enumerate}
+
+For (1), modellers can work in \textbf{Module 2} and \textbf{Module 3} without touching the original game structure. For (2), the singular IDS game has already been written as an open game, and can be tested independently and then reintegrated to the larger model by \textbf{Module 1}.
+
+Expectedly, a graphing module was required to parse through the diagnostic output of the evaluative module of the open-game-engine. This involves filtering out non-equilibrium strategies, identifying players, and parsing through an inconvenient tuple detailing unobservable state. We also found the parallel-processing (evaluating multiple open-games models simultaneously to populate graphs) lead to significant runtime issues. However, 
+
+
+
+
 
 
 
