@@ -504,7 +504,7 @@ Consider Figure \ref{fig:payoff}, where a modeller can evaluate the impact of th
 
 For (1), modellers can work in \textbf{Module 2} and \textbf{Module 3} without touching the original game structure. For (2), the singular IDS game has already been written as an open game, and can be tested independently and then reintegrated to the larger model by \textbf{Module 1}.
 
-Expectedly, a graphing module was required to parse through the diagnostic output of the evaluative module of the open-game-engine. This involves filtering out non-equilibrium strategies, identifying players, and parsing through an inconvenient tuple detailing unobservable state. We also found the parallel-processing (evaluating multiple open-games models simultaneously to populate graphs) lead to significant runtime issues. However, 
+Expectedly, a graphing module was required to parse through the diagnostic output of the evaluative module of the open-game-engine. This involves filtering out non-equilibrium strategies, identifying players, and parsing through an inconvenient tuple detailing unobservable state. We also found the parallel-processing (evaluating multiple open-games models simultaneously to populate graphs) lead to significant runtime issues. Future changes to \textit{open-game-hs} to optimize evaluation or reimplementation of the engine in another language may help with more efficient workflows. 
 
 
 

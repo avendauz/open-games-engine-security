@@ -34,7 +34,6 @@ There has been growing interest in developing these game-theoretic models in a v
 
 So beyond developing a system to just construct security games from smaller ones, the game formulation process should be an \textbf{iterative}, \textbf{experiential} and \textbf{collaborative} effort. By modularizing this game formulation process, we can create greater interoperability and rapid model adjustment. Essentially by inverting the process by starting at simple components, we allow for generalization to a security situation through parameterization to \textit{grow} the model, rather than \textit{restrict} a security scenario to fit the confines of the game. 
 
-%For example, consider Figure 2. of a multi-layered security setting from \cite{Jin2018}, strategic interactions are composed graphically as a self-reinforced communication between communicating IDSs and an administrative IDS. 
 
 Repeating the direction provided by \cite{Zhu2024}, \cite{Zhu2025}, \cite{Egan2025}, there is a need to promote cross-collaboration and platforms for better integration of real data. Here we build this platform by giving a wide sandbox to test out new ideas and their impact on a game-theoretic model. 
 
