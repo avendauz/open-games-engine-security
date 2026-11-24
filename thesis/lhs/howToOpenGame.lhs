@@ -1,7 +1,9 @@
 \section{Working with open games}
 \label{sec:opengames}
 \subsection{Introduction}
-We'll begin by recounting the construction of open games up to its current implementation. The goal of this section is to present the definitions that are used, and then to explain 
+A weaker element of the previous chapter is the reusability of the CyberBattleSim models. As soon as a CyberBattleSim model is created, there is no direct relationship or data retention between past and future iterations given our methodology. Tools like \cite{EGTAOnline} are able to accomplish this, but more generally speaking, the experiments generated from that methodology remain disjoint and bounded to specific cybersecurity games, despite repetitive game structures and analyses. 
+
+However, among the class of cybersecurity models based on game theory, developments in compositional game theory could enable greater reusability and model analysis techniques. We'll begin by recounting the construction of open games up to its current implementation. The goal of this section is to present the definitions that are used, and then to explain 
 how to read the corresponding implementation, especially the various types and frequently-used functions. The hope is 
 that this builds an intuition for modellers to be able to understand the bare minimimum for constructing 
 models and effectively using the type system. This section could be read as documentation for the engine, in the sense that a synthesis of the theory that has been implemented in the engine. We progressively make our way through simple open games, which loosely characterize non-stochastic normal form games. Then, we recall the use of coend calculus to capture Bayesian games.

@@ -133,11 +133,12 @@
 
 %include preliminaries.lhs
 
+\include{othermethods.tex}
+
 %include howToOpenGame.lhs
 
 %include designpatterns.lhs
 
-\include{othermethods.tex}
 
 \include{conclusion.tex}
 

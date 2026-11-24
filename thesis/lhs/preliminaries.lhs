@@ -1,18 +1,16 @@
 \section{Preliminaries}
 \label{sec:prelims}
-\subsection{Introduction}
-The primary focus of this thesis is on developing a methodology for the game formulation of cybersecurity models using a Haskell domain-specific-language (DSL) for \textit{open games}. 
-The organization of this chapter is based on the construction of the model of computation
-for open games. These constructions will then be accompanied by their corresponding implementation,
-available as typeclasses or type constructors as part of |OpenGame.Engine.Engine|. The remaining chapters of the thesis 
-will propose design patterns and techniques for rapidly developing security models using the tool presented here.
 
+\subsection{Model checking and multiagent systems}
+For an introduction on model-checking and linear-time temporal logics and its variants for modelling concurrent systems, refer to \cite{baier2008principles}. For specific applications of verification of multiagent systems, such as coordinating robots, see \cite{jamroga2015logical}. Primarily, we employ the use of obstruction alternating time temporal logic (OATL) for interpreting CyberBattleSim attacker-defender models as concurrent systems. \cite{catta2024obstruction} is relatively self-contained as a reference for using OATL for the models we present in this thesis. Chapter \ref{sec:CyberBattleSim} does not assume working knowledge of CyberBattleSim, but readers can refer to the fork of this software (\hyperref{https://github.com/avendauz/CyberBattleSim}) containing the implementation of the translation of the simulation environment to a concurrent game structure.  
+
+\subsection{Compositional game theory}
 Compositionality in game theory enables a wider range possibilities for modelling, in particular how to develop a particular way to refine this model modularly. Even based on the intuition of deciding the rationality of agents, we can confer their behaviour based on their percieved context, whether that's actions of other agents they directly observe, or the result of some sort of computation. 
 Furthermore, abstracting away the specific behaviour of agents by describing a well-defined type system, allowing a software engineering approach, can enable a contextual understanding of an agent as part of a larger system. 
 That dependence and ability to decouple the problem is enabled by considering utility-maximizing agents as a kind of open system, reacting to its environment. 
 In the case of compositional game theory, we can start by using the concept of an open game. The properties of an open game allow a particular modelling workflow to assist a 
 user in testing modelling assumptions or design choices programmatically. If the end goal is for users to treat open games as first-class citizens of this workflow, we want to delve into the underlying theory before 
-describing these design patterns. 
+describing these design patterns. Chapter \ref{sec:opengames} will be for a deep-dive into compositional game theory, before Chapter \ref{sec:designPatterns} which will cover these design patterns.
 
 To get started with the tool, users will need \href{https://www.haskell.org/ghcup/install/}{\textbf{ghc}}, 
 and a package manager such as \href{https://docs.haskellstack.org/en/stable/}{Stack}. 
@@ -72,7 +70,7 @@ The hope is for readers to use the language given here to help transition from:
 (3) thinking in a software-oriented sense for building these models.\\
 (4) writing the code \\
 
-where the main contributions of the following chapters focus on a particular security-oriented focus in (3) and (4) using new design patterns.
+where the main contributions of the following chapters focus on a particular security-oriented focus in (3) and (4) using new design patterns. 
 
 
 \subsection{Classical game theory}
@@ -98,8 +96,12 @@ Another area of research pertaining to compositional modelling of dynamical syst
 Haskell is a statically-typed, functional programming language. Since a large chunk of this work involves software design patterns, a base assumption for readers is some knowledge of Haskell. We would like to refer readers to the Haskell documentation \cite{haskelldocs}, for which everything up to abstract data types, monads, hspec would all be useful to understand the code examples. We are also heavily inspired by design patterns old-and-new, like the GangOfFour \cite{gamma1994design}, to Agile methodologies \cite{beck2001agile}. The parlance such as "separation-of-concerns" or DRY (don't repeat yourself) caters to a programming-oriented audience, with the intention for game theory modellers to see how these programming strategies might prove useful for organizing and structuring a large library of games.  
 
 
+
 \subsection{Target audience}
-With a wide range of aforementioned preliminaries, it would be useful to reiterate the concise goal of the thesis and how it relates to the reader. On one hand, we are providing explicit coding paradigms for \textit{game theorists} to use \textit{open-games-hs} as a practical tool for active model development. We take an optimistic view of using the Haskell environment and \textit{open-games-hs} as the common platform for which practitioners would contribute to the development of models. This presents explicit ways to lift payoff tables to functions, action spaces to data types, and so on. On the other hand, we place an emphasis on cybersecurity games by drawing clear boundaries for which domain-specific knowledge is tested and implemented in a model. For example, we propose lifting a static table of model parameters pertaining to a specific defensive technology, to an abstract data type as exogenous parameters of an open game. The advantage is then being able to manipulate these parameters in a programmatic way, and give \textit{security experts} a way to test how these parameters affect a model. The style of this thesis is written in a way to introduce the bare minimum mechanics for \textit{game theorists} to build games in the classical sense, and the testing abstractions for \textit{security experts} to introduce specific model parameters. 
+
+One way to summarize the efforts of this study is to . Does modularity and compositionality help practitioners construct "better" cybersecurity models more efficiently and collaboratively? With this in mind, we would like to target two categories of readers: (1) users (or eventual users) of the modelling software that is used, mainly CyberBattleSim and \textit{open-games-hs} (2) cybersecurity modellers curious to see how to better integrate domain knowledge into cybersecurity models  
+
+For (1), we are providing explicit coding paradigms for \textit{game theorists} to use \textit{open-games-hs} as a practical tool for active model development. We take an optimistic view of using the Haskell environment and \textit{open-games-hs} as the common platform for which practitioners would contribute to the development of models. This presents explicit ways to lift payoff tables to functions, action spaces to data types, and so on. On the other hand, we place an emphasis on cybersecurity models by drawing clear boundaries for which domain-specific knowledge is tested and implemented in a model. For example, we propose lifting a static table of model parameters pertaining to a specific defensive technology, to an abstract data type as exogenous parameters of an open game. The advantage is then being able to manipulate these parameters in a programmatic way, and give \textit{security experts} a way to test how these parameters affect a model. We try to introduce the bare minimum mechanics for \textit{game theorists} to build games in the classical sense, and the testing abstractions for \textit{cybersecurity experts} to introduce specific model parameters. Similarly, we aim for CyberBattleSim users to validate their constructed simulation models with minimal knowledge requirements for model-checking and VITAMIN.  
 
 
 
