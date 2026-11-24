@@ -9,7 +9,7 @@ that this builds an intuition for modellers to be able to understand the bare mi
 models and effectively using the type system. This section could be read as documentation for the engine, in the sense that a synthesis of the theory that has been implemented in the engine. We progressively make our way through simple open games, which loosely characterize non-stochastic normal form games. Then, we recall the use of coend calculus to capture Bayesian games.
 
 \subsection{Concrete lenses and open games}
-Open games that are used in this thesis first relies on machinery that enables the flow of "forwards" and "backwards" 
+Open games that are used in this thesis first relies on machinery that enables the flow of ``forwards'' and ``backwards'' 
 information flow. This is encoded using the language of 
 \textit{lenses}. Historically, open games were constructed without any connection to 
 lenses, but was most recently used for defining Bayesian games in \cite{BayesianOpenGames}. 
@@ -20,7 +20,7 @@ of a \textit{get} and \textit{put} operations (or colloquially, \textit{view} an
 High-level, \textit{get} allows you to view the contents of a substructure, and 
 \textit{put} allows you to make updates to a substructure, and the lawfullness of these operations ensure that 
 updates to the substructure are reflected accordingly in the larger structure. Thus a lens (given by $lens: S \rightarrowtail A$) is a pair of operations typed as $get: S \rightarrow A$
-and $put: S \times A \rightarrow S$, where $A$ is the substructure of $S$. But we can relax the requirement of "substructure"
+and $put: S \times A \rightarrow S$, where $A$ is the substructure of $S$. But we can relax the requirement of ``substructure''
 and generalize \textit{get} and \textit{put} to the definition of concrete lenses:
 
 \begin{definition}(Concrete lenses from \cite[Definition 2.2.1]{BayesianOpenGames}) Let $S$, $T$, $A$, $B$ be objects of 
@@ -141,7 +141,7 @@ defensiveStrategy = Kleisli $ const $
 Using this Kleisli category over the finite distribution monad as the category of interest in Definition \ref{Definition:Coends}, we have a way of keeping track of 
 joint probability distributions between \textit{unobservables} and directly observed inputs. 
 Using $\Theta$ as a type variable to 
-store priors as information to be used later, we can directly express Bayesian updating for agents. \footnote{See \href{Bruno Gavaranovic's blog post}{https://www.brunogavranovic.com/posts/2022-02-10-optics-vs-lenses-operationally.html} for an explanation for how composition works with a nice graphical simulation of how this "internal state" works} 
+store priors as information to be used later, we can directly express Bayesian updating for agents. \footnote{See \href{Bruno Gavaranovic's blog post}{https://www.brunogavranovic.com/posts/2022-02-10-optics-vs-lenses-operationally.html} for an explanation for how composition works with a nice graphical simulation of how this ``internal state'' works} 
 
 For the purposes of the \textit{open-game-engine}, the implementation that is used of coend lenses ties this definition together 
 as a data type:
@@ -156,7 +156,7 @@ as a data type:
 \end{minipage}
 
 
-Note the implicit quantification |forall z| as part of this data type, which was explicitly given as $\Theta$ in Definition \ref{Definition:Coends}. We retain the value of |z|, the "residual" to be used in computing the backwards pass, which is given as the second argument given to this data constructor. 
+Note the implicit quantification |forall z| as part of this data type, which was explicitly given as $\Theta$ in Definition \ref{Definition:Coends}. We retain the value of |z|, the ``residual'' to be used in computing the backwards pass, which is given as the second argument given to this data constructor. 
 
 \begin{mdframed}
 \begin{example}[Forward probabilistic function]\label{example:forward}
@@ -185,7 +185,7 @@ class Optic o where
   (&&&&) :: o s1 t1 a1 b1 -> o s2 t2 a2 b2 -> o (s1, s2) (t1, t2) (a1, a2) (b1, b2)
 \end{code}
 
-which we can parameterize with the datatype |StochasticOptic| to get our desired operations for "stochastic optics," located in |OpenGames.Engine.OpticClass|. Optic sequential and parallel composition will form the basis of how agent's game-theoretic behaviour compose, with extra details about how to interpret their local contexts given in the next section. We'll also use this opportunity to show how these optics plug together using the type parameters. First, note the type of |(>>>>)| enforces that the output type |a| and the contravariant input type |b| of the first optic correspond to the input type and the contravariant output type of the second optic. Similarly, the type of |(&&&&)| enforces that each of the input and output types are tupled together. Most IDEs will give a pop-up corresponding to the \textbf{ghc} typechecker to help a user line these types up when usingthese operations, or a direct error message will be given when trying to compile in \textbf{ghci}.  
+which we can parameterize with the datatype |StochasticOptic| to get our desired operations for ``stochastic optics,'' located in |OpenGames.Engine.OpticClass|. Optic sequential and parallel composition will form the basis of how agent's game-theoretic behaviour compose, with extra details about how to interpret their local contexts given in the next section. We'll also use this opportunity to show how these optics plug together using the type parameters. First, note the type of |(>>>>)| enforces that the output type |a| and the contravariant input type |b| of the first optic correspond to the input type and the contravariant output type of the second optic. Similarly, the type of |(&&&&)| enforces that each of the input and output types are tupled together. Most IDEs will give a pop-up corresponding to the \textbf{ghc} typechecker to help a user line these types up when usingthese operations, or a direct error message will be given when trying to compile in \textbf{ghci}.  
 
 
 \subsection{Open games}
@@ -200,7 +200,7 @@ Now that we've set our formalization for stochastic optics, we can introduce the
    \end{enumerate}
 \end{definition}
 
-Given a strategy from the set of strategies from (1) that assigns an outcome of type |Stochastic a| representing probability distribution over actions for each observation of type |s|, we generate a stochastic optic that is "preloaded" with the behaviour of this strategy. This optic |StochasticOptic s t a b| is open in the sense that it's ready to respond by choosing an action according to its local \textit{context} \footnote{see the following section, \ref{sec:contexts}}. So we can describe a family of optics indexed by behavioural strategies using the Haskell function:
+Given a strategy from the set of strategies from (1) that assigns an outcome of type |Stochastic a| representing probability distribution over actions for each observation of type |s|, we generate a stochastic optic that is ``preloaded'' with the behaviour of this strategy. This optic |StochasticOptic s t a b| is open in the sense that it's ready to respond by choosing an action according to its local \textit{context} \footnote{see the following section, \ref{sec:contexts}}. So we can describe a family of optics indexed by behavioural strategies using the Haskell function:
 \begin{code}
 play: Kleisli Stochastic s a -> StochasticOptic s () a Double
 play strategy = StochasticOptic 
@@ -257,14 +257,14 @@ First, we need to show how this composition works along |play| and along |evalua
 
 \subsection{The context aside}\label{sec:contexts}
 
-Contexts have taken many different forms in the literature, from more bare-bones necessitation of a \textit{history/cohistory} and \textit{continuation} pair, to more formally using a \textit{context functor} to define contexts as elements of $\mathbb{C}((S,T),(A,B))$. Though the double lens categorical structure of $\mathbb{C}$ is useful for diagrammatic proofs \footnote{The string diagrammatic representation of contexts can be seen as a "hole" that describes this player's position, and the rest of the boxes to form the local context for that player.}
+Contexts have taken many different forms in the literature, from more bare-bones necessitation of a \textit{history/cohistory} and \textit{continuation} pair, to more formally using a \textit{context functor} to define contexts as elements of $\mathbb{C}((S,T),(A,B))$. Though the double lens categorical structure of $\mathbb{C}$ is useful for diagrammatic proofs \footnote{The string diagrammatic representation of contexts can be seen as a ``hole'' that describes this player's position, and the rest of the boxes to form the local context for that player.}
  and showing coherence, we can primarily focus on instantiating a context for evaluating a model.
 
 
 
 % Ideally, a modeller would only need to procedurally type games starting with |OpenGame StochasticOptic StochasticContext ... | and use |void| to , but this works against separation-of-concerns, when in fact the 
 
-% Contexts form the arena for modellers to eventually parameterize and "run" the . Having the categorical definition for open games allows for a well-defined (and well-typed) context, and much of the work of the modeller goes into designing this context to understand how a game behaves given certain constraints. 
+% Contexts form the arena for modellers to eventually parameterize and ``run'' the . Having the categorical definition for open games allows for a well-defined (and well-typed) context, and much of the work of the modeller goes into designing this context to understand how a game behaves given certain constraints. 
 
 The name of the (open) game is to describe rational agents interacting with some environment. Thinking about Nash equilibrium in classical game theory, in equilibrium players are not incentivized to change their action assuming they know the other players' strategy. In the field of view of players, we act according to how we expect other players to act. Essentially we have a characterization of describing this pre/post behaviour of other players, which becomes part of the player's field of vision, or \textit{local context}. The formation of this \textit{local context} is a vital mechanism for computing best-response for each agent in a game, but internal and not necessarily important for game simulation.
 
@@ -281,7 +281,7 @@ which represents the aforementioned history/cohistory and continuation pair of f
 
 \begin{mdframed}
    \begin{example}[Instantiating a context]
-   Assume we have an open game with type (in shorthand) |myGame :: OpenGame () () Action Double| corresponding to a game that outputs an "action" and expects a payoff. In order to evaluate a strategy for |myGame|, we need to supply it an appropriate context. First, we can use the type-checker to draw two conclusions: (1) there is no history that needs to be pipelined in and (2) the continuation function should be a function |payoff :: Action -> Stochastic Double|. We can start with implementing the payoff function, and injecting it into the |StochasticContext| datatype in the second argument, as follows: 
+   Assume we have an open game with type (in shorthand) |myGame :: OpenGame () () Action Double| corresponding to a game that outputs an ``action'' and expects a payoff. In order to evaluate a strategy for |myGame|, we need to supply it an appropriate context. First, we can use the type-checker to draw two conclusions: (1) there is no history that needs to be pipelined in and (2) the continuation function should be a function |payoff :: Action -> Stochastic Double|. We can start with implementing the payoff function, and injecting it into the |StochasticContext| datatype in the second argument, as follows: 
 
    \begin{code}
    myContext :: StochasticContext () () Action Double 
@@ -475,9 +475,9 @@ It's possible to write wrappers in order to codify information into a CSV file w
 
 For equilibrium-checking use-cases, |generateIsEq| goes over the diagnostic information and returns True if the strategy profile is optimal, and False along with the conditions for which the payoff is not optimal. This in particular would be the main entry point to conduct rational verification. 
 
-% In a more simulation-focused case of determining the payoff for a particular action, we can "pre-load" the behaviour of an agent by calling |loadedAgent :: StochasticOptic s t a b = play agent1 strategy|, then 
+% In a more simulation-focused case of determining the payoff for a particular action, we can ``pre-load'' the behaviour of an agent by calling |loadedAgent :: StochasticOptic s t a b = play agent1 strategy|, then 
 
-However, outside a classical sense, we can construct \textit{Bayesian sequential games} from \cite[Example 7.7.1.4]{BoltThesis}. Using the diagnostic information, we will have to analyze the payoff for each "alternative world" that our system is simulated in, which can be read from the \textit{Unobservable state} field given in the output. This line manifests as a tuple for every possible state in the support over the distribution of inputs into a given game. This corresponds to "on-equilibrium" paths in the classical sense, where the second-mover must compute their expected payoff for each potential outcome that the first-mover dictates according to their strategy. Notably, this would \textbf{not} correspond to maximizing over all possible subgames. For example, in Figure \ref{figure:simpleDiagnostic}, since the guesser is maximizing over the possible outcomes of two coin flips, each of the four sub-outputs has in the \textit{Unobservable state} field one of four possible ways the coins can be flipped. Note that the resultant payoff in each of these scenarios according to the supplied strategy |guesserStrategy| is equal to the optimal payoff, which would designate this strategy profile as equilibrium.  
+However, outside a classical sense, we can construct \textit{Bayesian sequential games} from \cite[Example 7.7.1.4]{BoltThesis}. Using the diagnostic information, we will have to analyze the payoff for each ``alternative world'' that our system is simulated in, which can be read from the \textit{Unobservable state} field given in the output. This line manifests as a tuple for every possible state in the support over the distribution of inputs into a given game. This corresponds to ``on-equilibrium'' paths in the classical sense, where the second-mover must compute their expected payoff for each potential outcome that the first-mover dictates according to their strategy. Notably, this would \textbf{not} correspond to maximizing over all possible subgames. For example, in Figure \ref{figure:simpleDiagnostic}, since the guesser is maximizing over the possible outcomes of two coin flips, each of the four sub-outputs has in the \textit{Unobservable state} field one of four possible ways the coins can be flipped. Note that the resultant payoff in each of these scenarios according to the supplied strategy |guesserStrategy| is equal to the optimal payoff, which would designate this strategy profile as equilibrium.  
 
 \begin{figure}[t]
    \centering
@@ -486,7 +486,7 @@ However, outside a classical sense, we can construct \textit{Bayesian sequential
    \label{figure:simpleDiagnostic}
 \end{figure}
 
-Explicitly, the output of |evaluate| is a (nested) list of lists of type |DiagnosticInfoBayesian|. Since these are defined "player-wise," interpreting a game-wide strategy profile is achieved by zipping together lists of |DiagnosticInfoBayesian|. However, we can see how each of the player's strategies correspond to one another by observing the unobservable state. Since the engine only computes payoffs for all possible actions with positive probability, the unobservable state field exactly details which strategy a player is responding to. To see this, we can follow the diagnostic output from \textbf{IDS.IDSA}. We can see that the output is separated between four-blocks, with \textit{Alice}-blocks on top and \textit{A}-blocks below that. Since \textit{Alice} is the first-mover with a private type, the engine maximizes over her two possible types, as depicted by the first tuple of the unobservable state field. Given that she has a fixed strategy (i.e. always accessing a server), the second-mover \textit{A} will only have to maximize over the possibility of seeing an access move. Expectedly, the third block detailing \textit{A}s payoff is in the situation where \textit{Alice} had type attacker and accessed. If \textit{Alice} was given a mixed strategy instead, then we would expect a total of six blocks, where \textit{A} would have four blocks. 
+Explicitly, the output of |evaluate| is a (nested) list of lists of type |DiagnosticInfoBayesian|. Since these are defined ``player-wise,'' interpreting a game-wide strategy profile is achieved by zipping together lists of |DiagnosticInfoBayesian|. However, we can see how each of the player's strategies correspond to one another by observing the unobservable state. Since the engine only computes payoffs for all possible actions with positive probability, the unobservable state field exactly details which strategy a player is responding to. To see this, we can follow the diagnostic output from \textbf{IDS.IDSA}. We can see that the output is separated between four-blocks, with \textit{Alice}-blocks on top and \textit{A}-blocks below that. Since \textit{Alice} is the first-mover with a private type, the engine maximizes over her two possible types, as depicted by the first tuple of the unobservable state field. Given that she has a fixed strategy (i.e. always accessing a server), the second-mover \textit{A} will only have to maximize over the possibility of seeing an access move. Expectedly, the third block detailing \textit{A}s payoff is in the situation where \textit{Alice} had type attacker and accessed. If \textit{Alice} was given a mixed strategy instead, then we would expect a total of six blocks, where \textit{A} would have four blocks. 
 
 \begin{figure}[t]
    \centering
